@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.Bus = new Vue();
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17,5 +18,6 @@ window.Vue = require('vue');
 Vue.component('booth', require('./components/Booth.vue'));
 
 const app = new Vue({
-    el: '#booth'
+  el: '#booth',
+  template: '<booth />',
 });

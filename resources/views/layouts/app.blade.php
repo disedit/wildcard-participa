@@ -8,6 +8,7 @@
 
     <title>{{ config('app.name', 'Wildcard Participa') }}</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
