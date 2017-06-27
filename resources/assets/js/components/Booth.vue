@@ -129,6 +129,12 @@
                     phone: this.phone
                 }).then(response => {
                     this.smsRequested = true;
+                    if(response.flag){
+                        Bus.$emit('setFlag', response.flag);
+                        if(response.flag.name == 'SMS_exceeded'){
+                            this.phone = response.flag.info.last_number;
+                        }
+                    }
                 }).catch(errors => {
                     this.errors = errors
                 }).then(() => Bus.$emit('VerifyPhoneLoading', false));

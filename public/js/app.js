@@ -2122,6 +2122,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 phone: this.phone
             }).then(function (response) {
                 _this3.smsRequested = true;
+                if (response.flag) {
+                    Bus.$emit('setFlag', response.flag);
+                    if (response.flag.name == 'SMS_exceeded') {
+                        _this3.phone = response.flag.info.last_number;
+                    }
+                }
             }).catch(function (errors) {
                 _this3.errors = errors;
             }).then(function () {
@@ -30063,6 +30069,8 @@ if(false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary__);
 //
 //
 //
@@ -30074,8 +30082,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
+
 
 
 
@@ -30083,7 +30090,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'booth-verify',
 
     components: {
-        VerifyPhone: __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone___default.a
+        VerifyPhone: __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone___default.a,
+        VerifySummary: __WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary___default.a
     },
 
     props: {
@@ -30091,12 +30099,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         selected: Array,
         smsCode: String,
         smsRequested: Boolean
-    },
-
-    methods: {
-        goBack: function goBack() {
-            Bus.$emit('goToStep', 1);
-        }
     }
 });
 
@@ -30154,7 +30156,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-6"
-  }, [_c('pre', [_vm._v(_vm._s(_vm.selected))])]), _vm._v(" "), _c('div', {
+  }, [_c('verify-summary', {
+    attrs: {
+      "selected": _vm.selected
+    }
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('verify-phone', {
     attrs: {
@@ -30162,14 +30168,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "sms-code": _vm.smsCode,
       "sms-requested": _vm.smsRequested
     }
-  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    on: {
-      "click": function($event) {
-        _vm.goBack()
-      }
-    }
-  }, [_vm._v("Tornar")])], 1)])
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -30211,6 +30210,23 @@ if(false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_focus__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_focus___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_focus__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_Spinner__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_Spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__helpers_Spinner__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VerifyFlags__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__VerifyFlags___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__VerifyFlags__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -30248,8 +30264,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'verify-phone',
+
+    directives: {
+        focus: __WEBPACK_IMPORTED_MODULE_0_vue_focus__["focus"]
+    },
+
+    components: {
+        Spinner: __WEBPACK_IMPORTED_MODULE_1__helpers_Spinner___default.a,
+        VerifyFlags: __WEBPACK_IMPORTED_MODULE_2__VerifyFlags___default.a
+    },
 
     props: {
         phone: String,
@@ -30259,7 +30288,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            isLoading: false
+            isLoading: false,
+            phoneFocused: false,
+            smsCodeFocused: false,
+            flag: false
         };
     },
 
@@ -30267,14 +30299,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         disabled: function disabled() {
             return this.isLoading ? ' disabled' : '';
+        },
+        canBeModified: function canBeModified() {
+            var SMS_exceeded = false;
+            if (_typeof(this.flag) == 'object') {
+                if (this.flag.name == 'SMS_exceeded') SMS_exceeded = true;
+            }
+            return this.smsRequested == true && !SMS_exceeded;
         }
     },
 
     created: function created() {
         var _this = this;
 
+        this.phoneFocused = true;
         Bus.$on('VerifyPhoneLoading', function (isLoading) {
             return _this.isLoading = isLoading;
+        });
+        Bus.$on('setFlag', function (flag) {
+            return _this.flag = flag;
         });
     },
 
@@ -30286,8 +30329,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateSMSCode: function updateSMSCode(value) {
             Bus.$emit('FieldUpdated', 'smsCode', value);
         },
+        modifyPhone: function modifyPhone() {
+            Bus.$emit('FieldUpdated', 'smsRequested', false);
+            this.flag = false;
+            this.smsCodeFocused = false;
+            this.phoneFocused = true;
+        },
         requestSMS: function requestSMS() {
             Bus.$emit('requestSMS');
+            this.phoneFocused = false;
+            this.smsCodeFocused = true;
         },
         castBallot: function castBallot() {
             Bus.$emit('castBallot');
@@ -30353,7 +30404,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.requestSMS($event)
       }
     }
-  }, [_c('h2', [_vm._v("Phone")]), _vm._v(" "), _c('input', {
+  }, [_c('h2', [_vm._v("\n            Phone\n            "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.canBeModified),
+      expression: "canBeModified"
+    }],
+    staticClass: "btn btn-default btn-small",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.modifyPhone
+    }
+  }, [_vm._v("Modifica")])]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "focus",
+      rawName: "v-focus",
+      value: (_vm.phoneFocused),
+      expression: "phoneFocused"
+    }],
     staticClass: "form-control input-lg",
     attrs: {
       "type": "text",
@@ -30366,6 +30437,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         _vm.updatePhone($event.target.value)
+      },
+      "focus": function($event) {
+        _vm.phoneFocused = true
+      },
+      "blur": function($event) {
+        _vm.phoneFocused = false
       }
     }
   }), _vm._v(" "), _c('button', {
@@ -30379,17 +30456,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit"
     }
-  }, [(_vm.disabled) ? _c('i', {
-    staticClass: "fa fa-circle-o-notch fa-spin",
+  }, [_c('spinner', {
     attrs: {
-      "aria-hidden": "true"
+      "icon": "bullhorn",
+      "loading": _vm.isLoading
     }
-  }) : _c('i', {
-    staticClass: "fa fa-bullhorn",
+  }), _vm._v("\n            Send SMS\n        ")], 1)]), _vm._v(" "), _c('verify-flags', {
     attrs: {
-      "aria-hidden": "true"
+      "flag": _vm.flag
     }
-  }), _vm._v("\n            Send SMS\n        ")])]), _vm._v(" "), (_vm.smsRequested) ? _c('form', {
+  }), _vm._v(" "), (_vm.smsRequested) ? _c('form', {
     on: {
       "submit": function($event) {
         $event.preventDefault();
@@ -30397,6 +30473,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('input', {
+    directives: [{
+      name: "focus",
+      rawName: "v-focus",
+      value: (_vm.smsCodeFocused),
+      expression: "smsCodeFocused"
+    }],
     staticClass: "form-control input-lg",
     attrs: {
       "type": "text",
@@ -30408,6 +30490,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         _vm.updateSMSCode($event.target.value)
+      },
+      "focus": function($event) {
+        _vm.smsCodeFocused = true
+      },
+      "blur": function($event) {
+        _vm.smsCodeFocused = false
       }
     }
   }), _vm._v(" "), _c('button', {
@@ -30415,17 +30503,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit"
     }
-  }, [(_vm.disabled) ? _c('i', {
-    staticClass: "fa fa-circle-o-notch fa-spin",
+  }, [_c('spinner', {
     attrs: {
-      "aria-hidden": "true"
+      "icon": "bullhorn",
+      "loading": _vm.isLoading
     }
-  }) : _c('i', {
-    staticClass: "fa fa-bullhorn",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v("\n            Verify SMS\n        ")])]) : _vm._e()])
+  }), _vm._v("\n            Verify SMS\n        ")], 1)]) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -30453,6 +30536,369 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7d542226\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyPhone.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7d542226\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyPhone.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 81 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'verify-summary',
+
+    props: {
+        selected: Array
+    },
+
+    methods: {
+        goBack: function goBack() {
+            Bus.$emit('goToStep', 1);
+        }
+    }
+});
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(85)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(81),
+  /* template */
+  __webpack_require__(84),
+  /* scopeId */
+  "data-v-0be0c136",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/guillem/Developer/wildcard-participa/resources/assets/js/components/verify/VerifySummary.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VerifySummary.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0be0c136", Component.options)
+  } else {
+    hotAPI.reload("data-v-0be0c136", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('button', {
+    staticClass: "btn btn-default",
+    on: {
+      "click": function($event) {
+        _vm.goBack()
+      }
+    }
+  }, [_vm._v("Tornar")]), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.selected))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0be0c136", module.exports)
+  }
+}
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(82);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("d950dfca", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0be0c136\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifySummary.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0be0c136\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifySummary.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Vue = __webpack_require__(56);
+Vue = 'default' in Vue ? Vue['default'] : Vue;
+
+var version = '2.1.0';
+
+var compatible = (/^2\./).test(Vue.version);
+if (!compatible) {
+  Vue.util.warn('VueFocus ' + version + ' only supports Vue 2.x, and does not support Vue ' + Vue.version);
+}
+
+var focus = {
+  inserted: function(el, binding) {
+    if (binding.value) el.focus();
+    else el.blur();
+  },
+
+  componentUpdated: function(el, binding) {
+    if (binding.modifiers.lazy) {
+      if (Boolean(binding.value) === Boolean(binding.oldValue)) {
+        return;
+      }
+    }
+
+    if (binding.value) el.focus();
+    else el.blur();
+  },
+};
+
+var mixin = {
+  directives: {
+    focus: focus,
+  },
+};
+
+exports.version = version;
+exports.focus = focus;
+exports.mixin = mixin;
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'spinner',
+
+    props: {
+        icon: String,
+        loading: Boolean
+    }
+});
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(87),
+  /* template */
+  __webpack_require__(89),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/guillem/Developer/wildcard-participa/resources/assets/js/components/helpers/Spinner.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Spinner.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d364119e", Component.options)
+  } else {
+    hotAPI.reload("data-v-d364119e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', [(_vm.loading) ? _c('i', {
+    staticClass: "fa fa-circle-o-notch fa-spin",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }) : _c('i', {
+    class: 'fa fa-' + _vm.icon,
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-d364119e", module.exports)
+  }
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'verify-flags',
+
+    props: {
+        flag: [Boolean, Object]
+    }
+});
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(94)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(90),
+  /* template */
+  __webpack_require__(92),
+  /* scopeId */
+  "data-v-b32b28f4",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/guillem/Developer/wildcard-participa/resources/assets/js/components/verify/VerifyFlags.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VerifyFlags.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b32b28f4", Component.options)
+  } else {
+    hotAPI.reload("data-v-b32b28f4", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "flag"
+  }, [(_vm.flag.name == 'SMS_already_sent') ? _c('div', [_vm._v("\n        SMS_already_sent\n    ")]) : _vm._e(), _vm._v(" "), (_vm.flag.name == 'SMS_exceeded') ? _c('div', [_vm._v("\n        SMS_exceeded\n    ")]) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-b32b28f4", module.exports)
+  }
+}
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(93);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("a48e37fe", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-b32b28f4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyFlags.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-b32b28f4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyFlags.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

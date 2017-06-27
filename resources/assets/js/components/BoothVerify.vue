@@ -1,24 +1,24 @@
 <template>
     <div class="row">
         <div class="col-md-6">
-            <pre>{{ selected }}</pre>
+            <verify-summary :selected="selected" />
         </div>
         <div class="col-md-6">
             <verify-phone :phone="phone" :sms-code="smsCode" :sms-requested="smsRequested" />
-            <hr />
-            <button @click="goBack()" class="btn btn-primary">Tornar</button>
         </div>
     </div>
 </template>
 
 <script>
     import VerifyPhone from './verify/VerifyPhone';
+    import VerifySummary from './verify/VerifySummary';
 
     export default {
         name: 'booth-verify',
 
         components: {
-            VerifyPhone
+            VerifyPhone,
+            VerifySummary
         },
 
         props: {
@@ -26,12 +26,6 @@
             selected: Array,
             smsCode: String,
             smsRequested: Boolean
-        },
-
-        methods: {
-            goBack() {
-                Bus.$emit('goToStep', 1);
-            }
         }
     }
 </script>
