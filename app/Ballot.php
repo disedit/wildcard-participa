@@ -33,9 +33,21 @@ class Ballot extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function create_ballot($options)
+    public function create_ballot($ballot)
     {
-        return base64_encode(serialize($options));
+        $ballot_to_encode = array();
+
+        foreach($ballot as $question)
+        {
+            $options = array();
+            foreach($question['options'] as $option)
+            {
+                $options[] = $option['id'];
+            }
+            $ballot_to_encode[$question['id']] = $options;
+        }
+
+        return base64_encode(serialize($ballot_to_encode));
     }
 
     /**
@@ -64,7 +76,7 @@ class Ballot extends Model
     public function cast($request, $voter, $edition_id, $booth_mode = false)
     {
         $this->edition_id = $edition_id;
-        $this->ballot = $this->create_ballot($request->input('options'));
+        $this->ballot = $this->create_ballot($request->input('ballot'));
         $this->ref = $this->create_ref();
         $this->cast_at = date("Y-m-d H:i:s");
         $this->signature = $this->create_signature();

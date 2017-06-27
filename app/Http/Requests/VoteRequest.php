@@ -56,7 +56,7 @@ class VoteRequest extends FormRequest
 
         // if SMS code is required!!
         if($is_requestSMS || $is_castBallot) $rules['phone'] = 'required|check_phone_format|check_phone_duplicity';
-        if($is_castBallot) $rules['SMS_code'] = 'required|check_SMS_code';
+        if($is_castBallot) $rules['SMS_code'] = 'required|check_sms_code';
 
         return $rules;
     }
@@ -76,6 +76,8 @@ class VoteRequest extends FormRequest
 
         if(substr($value,0,2) == '00'){
            $value = substr($value,2);
+        } elseif(substr($value,0,2) == '34'){
+            $value = substr($value,2);
         } else {
            $value = "34" . $value;
         }

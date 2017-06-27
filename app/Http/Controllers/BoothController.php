@@ -29,6 +29,16 @@ class BoothController extends Controller
     }
 
     /**
+     * JSON object with edition information, including ballot questions
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ballot_json()
+    {
+        return response()->json($this->edition);
+    }
+
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
@@ -37,16 +47,6 @@ class BoothController extends Controller
     {
         return response()
             ->json(['success' => true]);
-    }
-
-    /**
-     * JSON object with edition information, including ballot questions
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function ballot_json()
-    {
-        return response()->json($this->edition);
     }
 
     /**
@@ -80,6 +80,7 @@ class BoothController extends Controller
             else
             {
                 $submitted = $voter->SMS_submit($phone);
+                
                 if(!$submitted) return response()->json([
                     'success' => false,
                     'flag' => 'SMS_error'
