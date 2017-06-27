@@ -2,32 +2,47 @@
     <div>
         {{ step }}
         <div v-if="step == 1">
-            <booth-ballot :ballot="ballot" :selected="selected" />
+            <booth-ballot
+                :identifier="ID"
+                :ballot="ballot"
+                :selected="selected" />
             <pre>{{ ID }}</pre>
         </div>
         <div v-else-if="step == 2">
-
+            <booth-verify
+                :phone="phone"
+                :selected="selected"
+                :sms-code="smsCode"
+                :sms-requested="smsRequested" />
+            <pre>{{ phone }}</pre>
+        </div>
+        <div v-else-if="step == 3">
+            <h1>Thanks</h1>
         </div>
     </div>
 </template>
 
 <script>
     import BoothBallot from './BoothBallot';
+    import BoothVerify from './BoothVerify';
 
     export default {
         name: 'booth',
 
         components: {
-            BoothBallot
+            BoothBallot,
+            BoothVerify
         },
 
         data() {
           return {
             ballot: {},
             selected: [],
+            errors: [],
             ID: '',
             phone: '',
-            SMS_code: '',
+            smsCode: '',
+            smsRequested: false,
             step: 1
           }
         },
@@ -39,12 +54,23 @@
                 });
 
             Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
-            Bus.$on('IDUpdated', (ID) => this.ID = ID);
+            Bus.$on('FieldUpdated', (field, value) => this[field] = value);
             Bus.$on('submitBallotForVerification', () => this.submitBallotForVerification());
+            Bus.$on('requestSMS', () => this.requestSMS());
+            Bus.$on('castBallot', () => this.castBallot());
+            Bus.$on('goToStep', (step) => this.step = step);
+        },
+
+        watch: {
+            errors: function() {
+                if(Object.keys(this.errors).length > 0) {
+                    alert('Errors');
+                    console.log(this.errors);
+                }
+            }
         },
 
         methods: {
-
             handleOptionChange(option, type) {
                 if(type == 'radio') {
                     this.radioOptions(option);
@@ -80,7 +106,47 @@
             },
 
             submitBallotForVerification() {
-                this.step = 2;
+                Bus.$emit('BoothBallotLoading', true);
+
+                Participa.precheck({
+                    ballot: Participa.prepareBallot(this.selected),
+                    SID: this.ID
+                }).then(response => {
+                    this.step = 2;
+                }).catch(errors => {
+                    this.errors = errors
+                }).then(() => Bus.$emit('BoothBallotLoading', false));
+
+
+            },
+
+            requestSMS() {
+                Bus.$emit('VerifyPhoneLoading', true);
+
+                Participa.requestSMS({
+                    ballot: Participa.prepareBallot(this.selected),
+                    SID: this.ID,
+                    phone: this.phone
+                }).then(response => {
+                    this.smsRequested = true;
+                }).catch(errors => {
+                    this.errors = errors
+                }).then(() => Bus.$emit('VerifyPhoneLoading', false));
+            },
+
+            castBallot() {
+                Bus.$emit('VerifyPhoneLoading', true);
+
+                Participa.castBallot({
+                    ballot: Participa.prepareBallot(this.selected),
+                    SID: this.ID,
+                    phone: this.phone,
+                    SMS_code: this.smsCode
+                }).then(response => {
+                    this.step = 3;
+                }).catch(errors => {
+                    this.errors = errors
+                }).then(() => Bus.$emit('VerifyPhoneLoading', false));
             }
         }
 

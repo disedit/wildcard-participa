@@ -1100,12 +1100,18 @@ module.exports = g;
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api__ = __webpack_require__(35);
 __webpack_require__(36);
 
 window.Vue = __webpack_require__(56);
 window.Bus = new Vue();
+
+
+window.Participa = new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* default */]();
 
 Vue.component('booth', __webpack_require__(43));
 
@@ -1967,9 +1973,27 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BoothBallot__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BoothBallot___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__BoothBallot__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BoothBallot__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BoothBallot___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__BoothBallot__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BoothVerify__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BoothVerify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__BoothVerify__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1985,29 +2009,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'booth',
 
     components: {
-        BoothBallot: __WEBPACK_IMPORTED_MODULE_1__BoothBallot___default.a
+        BoothBallot: __WEBPACK_IMPORTED_MODULE_0__BoothBallot___default.a,
+        BoothVerify: __WEBPACK_IMPORTED_MODULE_1__BoothVerify___default.a
     },
 
     data: function data() {
         return {
-            api: new __WEBPACK_IMPORTED_MODULE_0__api__["a" /* default */](),
             ballot: {},
             selected: [],
+            errors: [],
+            ID: '',
+            phone: '',
+            smsCode: '',
+            smsRequested: false,
             step: 1
         };
     },
     created: function created() {
         var _this = this;
 
-        this.api.getBallot().then(function (response) {
+        Participa.getBallot().then(function (response) {
             _this.ballot = response;
         });
 
         Bus.$on('optionSelected', function (option, type) {
             return _this.handleOptionChange(option, type);
         });
+        Bus.$on('FieldUpdated', function (field, value) {
+            return _this[field] = value;
+        });
+        Bus.$on('submitBallotForVerification', function () {
+            return _this.submitBallotForVerification();
+        });
+        Bus.$on('requestSMS', function () {
+            return _this.requestSMS();
+        });
+        Bus.$on('castBallot', function () {
+            return _this.castBallot();
+        });
+        Bus.$on('goToStep', function (step) {
+            return _this.step = step;
+        });
     },
 
+
+    watch: {
+        errors: function errors() {
+            if (Object.keys(this.errors).length > 0) {
+                alert('Errors');
+                console.log(this.errors);
+            }
+        }
+    },
 
     methods: {
         handleOptionChange: function handleOptionChange(option, type) {
@@ -2041,6 +2094,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             this.$set(this.selected, option.question_id, selected[option.question_id]);
+        },
+        submitBallotForVerification: function submitBallotForVerification() {
+            var _this2 = this;
+
+            Bus.$emit('BoothBallotLoading', true);
+
+            Participa.precheck({
+                ballot: Participa.prepareBallot(this.selected),
+                SID: this.ID
+            }).then(function (response) {
+                _this2.step = 2;
+            }).catch(function (errors) {
+                _this2.errors = errors;
+            }).then(function () {
+                return Bus.$emit('BoothBallotLoading', false);
+            });
+        },
+        requestSMS: function requestSMS() {
+            var _this3 = this;
+
+            Bus.$emit('VerifyPhoneLoading', true);
+
+            Participa.requestSMS({
+                ballot: Participa.prepareBallot(this.selected),
+                SID: this.ID,
+                phone: this.phone
+            }).then(function (response) {
+                _this3.smsRequested = true;
+            }).catch(function (errors) {
+                _this3.errors = errors;
+            }).then(function () {
+                return Bus.$emit('VerifyPhoneLoading', false);
+            });
+        },
+        castBallot: function castBallot() {
+            var _this4 = this;
+
+            Bus.$emit('VerifyPhoneLoading', true);
+
+            Participa.castBallot({
+                ballot: Participa.prepareBallot(this.selected),
+                SID: this.ID,
+                phone: this.phone,
+                SMS_code: this.smsCode
+            }).then(function (response) {
+                _this4.step = 3;
+            }).catch(function (errors) {
+                _this4.errors = errors;
+            }).then(function () {
+                return Bus.$emit('VerifyPhoneLoading', false);
+            });
         }
     }
 
@@ -2054,6 +2158,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ballot_BallotQuestion__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ballot_BallotQuestion___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ballot_BallotQuestion__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ballot_BallotIdentification__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ballot_BallotIdentification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ballot_BallotIdentification__);
 //
 //
 //
@@ -2062,6 +2168,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
 
 
 
@@ -2069,12 +2178,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'booth-ballot',
 
     components: {
-        BallotQuestion: __WEBPACK_IMPORTED_MODULE_0__ballot_BallotQuestion___default.a
+        BallotQuestion: __WEBPACK_IMPORTED_MODULE_0__ballot_BallotQuestion___default.a,
+        BallotIdentification: __WEBPACK_IMPORTED_MODULE_1__ballot_BallotIdentification___default.a
     },
+
+    data: function data() {
+        return {
+            isLoading: false
+        };
+    },
+
 
     props: {
         ballot: Object,
-        selected: Array
+        selected: Array,
+        identifier: String
+    },
+
+    created: function created() {
+        var _this = this;
+
+        Bus.$on('BoothBallotLoading', function (isLoading) {
+            return _this.isLoading = isLoading;
+        });
+    },
+
+
+    methods: {
+        submitBallot: function submitBallot() {
+            this.isLoading = true;
+            Bus.$emit('submitBallotForVerification');
+        }
     }
 });
 
@@ -2084,6 +2218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -2165,8 +2300,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return false;
         },
         isDisabled: function isDisabled(option) {
-            var overLimit = false;
-
             // Limits are not applied to radio questions
             if (this.question.max_options == 1) return false;
 
@@ -2174,10 +2307,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.selected.hasOwnProperty(option.question_id)) return false;
 
             // Find if we're over the limit of allowed selections
-            overLimit = this.selected[option.question_id].length >= this.question.max_options ? true : false;
-
-            console.log(this.selected[option.question_id].length, '>=', this.question.max_options);
-            console.log(overLimit);
+            var overLimit = this.selected[option.question_id].length >= this.question.max_options ? true : false;
 
             // If we're not over limit, no options are disabled
             if (!overLimit) return false;
@@ -2202,14 +2332,41 @@ var Participa = function () {
   function Participa() {
     _classCallCheck(this, Participa);
 
-    this.apiURL = '';
+    this.apiURL = '/api/';
   }
 
   _createClass(Participa, [{
     key: 'getBallot',
     value: function getBallot() {
+      return this._call('get', 'ballot');
+    }
+  }, {
+    key: 'precheck',
+    value: function precheck(data) {
+      return this._call('post', 'precheck', data);
+    }
+  }, {
+    key: 'requestSMS',
+    value: function requestSMS(data) {
+      return this._call('post', 'request_sms', data);
+    }
+  }, {
+    key: 'castBallot',
+    value: function castBallot(data) {
+      return this._call('post', 'cast_ballot', data);
+    }
+  }, {
+    key: 'prepareBallot',
+    value: function prepareBallot(ballot) {
+      return ballot;
+    }
+  }, {
+    key: '_call',
+    value: function _call(type, url, data) {
+      var _this = this;
+
       return new Promise(function (resolve, reject) {
-        axios.get('/api/ballot').then(function (response) {
+        axios[type](_this.apiURL + url, data).then(function (response) {
           resolve(response.data);
         }).catch(function (error) {
           reject(error.response.data);
@@ -19758,7 +19915,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": _vm.disabled
     },
     domProps: {
-      "value": _vm.option.id
+      "value": _vm.option.id,
+      "checked": _vm.selected
     },
     on: {
       "change": function($event) {
@@ -19780,12 +19938,20 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('booth-ballot', {
+  return _c('div', [_vm._v("\n    " + _vm._s(_vm.step) + "\n    "), (_vm.step == 1) ? _c('div', [_c('booth-ballot', {
     attrs: {
+      "identifier": _vm.ID,
       "ballot": _vm.ballot,
       "selected": _vm.selected
     }
-  }), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.selected))])], 1)
+  }), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.ID))])], 1) : (_vm.step == 2) ? _c('div', [_c('booth-verify', {
+    attrs: {
+      "phone": _vm.phone,
+      "selected": _vm.selected,
+      "sms-code": _vm.smsCode,
+      "sms-requested": _vm.smsRequested
+    }
+  }), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.phone))])], 1) : (_vm.step == 3) ? _c('div', [_c('h1', [_vm._v("Thanks")])]) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -19800,14 +19966,26 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', _vm._l((_vm.ballot.questions), function(question) {
+  return _c('form', {
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.submitBallot($event)
+      }
+    }
+  }, [_vm._l((_vm.ballot.questions), function(question) {
     return _c('div', [_c('ballot-question', {
       attrs: {
         "question": question,
         "selected": _vm.selected
       }
     })], 1)
-  }))
+  }), _vm._v(" "), _c('ballot-identification', {
+    attrs: {
+      "identifier": _vm.identifier,
+      "loading": _vm.isLoading
+    }
+  })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -29712,6 +29890,576 @@ module.exports = function(module) {
 __webpack_require__(11);
 module.exports = __webpack_require__(12);
 
+
+/***/ }),
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'ballot-identification',
+
+    props: {
+        loading: Boolean,
+        identifier: String
+    },
+
+    computed: {
+        disabled: function disabled() {
+            return this.loading ? ' disabled' : '';
+        }
+    },
+
+    methods: {
+        updateID: function updateID(value) {
+            Bus.$emit('FieldUpdated', 'ID', value);
+        }
+    }
+
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(70)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(66),
+  /* template */
+  __webpack_require__(69),
+  /* scopeId */
+  "data-v-257164c2",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/guillem/Developer/wildcard-participa/resources/assets/js/components/ballot/BallotIdentification.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] BallotIdentification.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-257164c2", Component.options)
+  } else {
+    hotAPI.reload("data-v-257164c2", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('h2', [_vm._v("ID")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control input-lg",
+    attrs: {
+      "type": "text",
+      "name": "identification"
+    },
+    domProps: {
+      "value": _vm.identifier
+    },
+    on: {
+      "input": function($event) {
+        _vm.updateID($event.target.value)
+      }
+    }
+  }), _vm._v(" "), _c('button', {
+    class: 'btn btn-primary btn-lg' + _vm.disabled,
+    attrs: {
+      "type": "submit"
+    }
+  }, [(_vm.disabled) ? _c('i', {
+    staticClass: "fa fa-circle-o-notch fa-spin",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }) : _c('i', {
+    staticClass: "fa fa-bullhorn",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n        Vota\n    ")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-257164c2", module.exports)
+  }
+}
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(67);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("07035a44", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-257164c2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BallotIdentification.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-257164c2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BallotIdentification.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'booth-verify',
+
+    components: {
+        VerifyPhone: __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone___default.a
+    },
+
+    props: {
+        phone: String,
+        selected: Array,
+        smsCode: String,
+        smsRequested: Boolean
+    },
+
+    methods: {
+        goBack: function goBack() {
+            Bus.$emit('goToStep', 1);
+        }
+    }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(75)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(71),
+  /* template */
+  __webpack_require__(74),
+  /* scopeId */
+  "data-v-0412791e",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/guillem/Developer/wildcard-participa/resources/assets/js/components/BoothVerify.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] BoothVerify.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0412791e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0412791e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6"
+  }, [_c('pre', [_vm._v(_vm._s(_vm.selected))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  }, [_c('verify-phone', {
+    attrs: {
+      "phone": _vm.phone,
+      "sms-code": _vm.smsCode,
+      "sms-requested": _vm.smsRequested
+    }
+  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        _vm.goBack()
+      }
+    }
+  }, [_vm._v("Tornar")])], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0412791e", module.exports)
+  }
+}
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(72);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("2bf6361a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0412791e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BoothVerify.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0412791e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BoothVerify.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'verify-phone',
+
+    props: {
+        phone: String,
+        smsCode: String,
+        smsRequested: Boolean
+    },
+
+    data: function data() {
+        return {
+            isLoading: false
+        };
+    },
+
+
+    computed: {
+        disabled: function disabled() {
+            return this.isLoading ? ' disabled' : '';
+        }
+    },
+
+    created: function created() {
+        var _this = this;
+
+        Bus.$on('VerifyPhoneLoading', function (isLoading) {
+            return _this.isLoading = isLoading;
+        });
+    },
+
+
+    methods: {
+        updatePhone: function updatePhone(value) {
+            Bus.$emit('FieldUpdated', 'phone', value);
+        },
+        updateSMSCode: function updateSMSCode(value) {
+            Bus.$emit('FieldUpdated', 'smsCode', value);
+        },
+        requestSMS: function requestSMS() {
+            Bus.$emit('requestSMS');
+        },
+        castBallot: function castBallot() {
+            Bus.$emit('castBallot');
+        }
+    }
+
+});
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(80)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(76),
+  /* template */
+  __webpack_require__(79),
+  /* scopeId */
+  "data-v-7d542226",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/guillem/Developer/wildcard-participa/resources/assets/js/components/verify/VerifyPhone.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VerifyPhone.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7d542226", Component.options)
+  } else {
+    hotAPI.reload("data-v-7d542226", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('form', {
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.requestSMS($event)
+      }
+    }
+  }, [_c('h2', [_vm._v("Phone")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control input-lg",
+    attrs: {
+      "type": "text",
+      "name": "phone",
+      "disabled": _vm.smsRequested
+    },
+    domProps: {
+      "value": _vm.phone
+    },
+    on: {
+      "input": function($event) {
+        _vm.updatePhone($event.target.value)
+      }
+    }
+  }), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.smsRequested),
+      expression: "!smsRequested"
+    }],
+    class: 'btn btn-primary btn-lg' + _vm.disabled,
+    attrs: {
+      "type": "submit"
+    }
+  }, [(_vm.disabled) ? _c('i', {
+    staticClass: "fa fa-circle-o-notch fa-spin",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }) : _c('i', {
+    staticClass: "fa fa-bullhorn",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n            Send SMS\n        ")])]), _vm._v(" "), (_vm.smsRequested) ? _c('form', {
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.castBallot($event)
+      }
+    }
+  }, [_c('input', {
+    staticClass: "form-control input-lg",
+    attrs: {
+      "type": "text",
+      "name": "sms_code"
+    },
+    domProps: {
+      "value": _vm.smsCode
+    },
+    on: {
+      "input": function($event) {
+        _vm.updateSMSCode($event.target.value)
+      }
+    }
+  }), _vm._v(" "), _c('button', {
+    class: 'btn btn-primary btn-lg' + _vm.disabled,
+    attrs: {
+      "type": "submit"
+    }
+  }, [(_vm.disabled) ? _c('i', {
+    staticClass: "fa fa-circle-o-notch fa-spin",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }) : _c('i', {
+    staticClass: "fa fa-bullhorn",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n            Verify SMS\n        ")])]) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7d542226", module.exports)
+  }
+}
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(77);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("1b1dc755", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7d542226\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyPhone.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7d542226\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyPhone.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

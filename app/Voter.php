@@ -60,7 +60,7 @@ class Voter extends Model
     public function SMS_new_token()
     {
         $code = random_int(111111,999999);
-        return hash('sha512', $code . $this->SID);
+        return $code;
     }
 
     /**

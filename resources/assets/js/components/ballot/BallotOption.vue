@@ -5,6 +5,7 @@
             :value="option.id"
             :type="type"
             :disabled="disabled"
+            :checked="selected"
             @change="selectOption(option, type)" />
         {{ option.option }}
         {{ selected }}

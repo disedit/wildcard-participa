@@ -4,7 +4,7 @@
             <ballot-question :question="question" :selected="selected" />
         </div>
 
-        <ballot-identification />
+        <ballot-identification :identifier="identifier" :loading="isLoading" />
     </form>
 </template>
 
@@ -20,13 +20,25 @@
             BallotIdentification
         },
 
+        data() {
+            return {
+                isLoading: false
+            }
+        },
+
         props: {
             ballot: Object,
-            selected: Array
+            selected: Array,
+            identifier: String,
+        },
+
+        created() {
+            Bus.$on('BoothBallotLoading', (isLoading) => this.isLoading = isLoading);
         },
 
         methods: {
             submitBallot() {
+                this.isLoading = true;
                 Bus.$emit('submitBallotForVerification');
             }
         }
