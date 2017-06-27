@@ -1,7 +1,12 @@
 <template>
     <div>
         <button @click="goBack()" class="btn btn-default">Tornar</button>
-        <pre>{{ selected }}</pre>
+        <div v-for="question in selected">
+            <h2>{{ question.question }}</h2>
+            <li v-for="option in question.options">
+                {{ option.option }}
+            </li>
+        </div>
     </div>
 </template>
 

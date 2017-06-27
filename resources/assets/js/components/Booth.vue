@@ -1,12 +1,10 @@
 <template>
     <div>
-        {{ step }}
         <div v-if="step == 1">
             <booth-ballot
                 :identifier="ID"
                 :ballot="ballot"
                 :selected="selected" />
-            <pre>{{ ID }}</pre>
         </div>
         <div v-else-if="step == 2">
             <booth-verify
@@ -51,13 +49,16 @@
             Participa.getBallot()
                 .then(response => {
                     this.ballot = response;
+                    this.initialSelected();
                 });
 
             Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
             Bus.$on('FieldUpdated', (field, value) => this[field] = value);
+
             Bus.$on('submitBallotForVerification', () => this.submitBallotForVerification());
             Bus.$on('requestSMS', () => this.requestSMS());
             Bus.$on('castBallot', () => this.castBallot());
+
             Bus.$on('goToStep', (step) => this.step = step);
         },
 
@@ -81,35 +82,43 @@
 
             radioOptions(option) {
                 let selected = this.selected;
+                const questionIndex = selected.findIndex((q) => q.id == option.question_id);
 
-                selected[option.question_id] = new Array(option);
+                selected[questionIndex].options = new Array(option);
 
-                this.$set(this.selected, option.question_id, selected[option.question_id]);
+                this.$set(this.selected, questionIndex, selected[questionIndex]);
 
             },
 
             checkboxOptions(option) {
                 let selected = this.selected;
+                const questionIndex = selected.findIndex((q) => q.id == option.question_id);
+                let optionIndex = selected[questionIndex].options.findIndex((o) => o.id == option.id);
 
-                if(!selected.hasOwnProperty(option.question_id)){
-                    selected[option.question_id] = new Array();
-                }
-
-                let selectedIndex = selected[option.question_id].findIndex((o) => o.id == option.id);
-                if(selectedIndex >= 0){
-                    selected[option.question_id].splice(selectedIndex, 1);
+                if(optionIndex >= 0){
+                    selected[questionIndex].options.splice(optionIndex, 1);
                 } else {
-                    selected[option.question_id].push(option);
+                    selected[questionIndex].options.push(option);
                 }
 
-                this.$set(this.selected, option.question_id, selected[option.question_id]);
+                this.$set(this.selected, questionIndex, selected[questionIndex]);
+            },
+
+            initialSelected() {
+                let ballot = JSON.parse( JSON.stringify( this.ballot.questions ) );
+
+                ballot.forEach(function(question, index) {
+                    ballot[index].options = new Array();
+                });
+
+                this.selected = ballot;
             },
 
             submitBallotForVerification() {
                 Bus.$emit('BoothBallotLoading', true);
 
                 Participa.precheck({
-                    ballot: Participa.prepareBallot(this.selected),
+                    ballot: this.selected,
                     SID: this.ID
                 }).then(response => {
                     this.step = 2;
@@ -124,7 +133,7 @@
                 Bus.$emit('VerifyPhoneLoading', true);
 
                 Participa.requestSMS({
-                    ballot: Participa.prepareBallot(this.selected),
+                    ballot: this.selected,
                     SID: this.ID,
                     phone: this.phone
                 }).then(response => {
@@ -144,7 +153,7 @@
                 Bus.$emit('VerifyPhoneLoading', true);
 
                 Participa.castBallot({
-                    ballot: Participa.prepareBallot(this.selected),
+                    ballot: this.selected,
                     SID: this.ID,
                     phone: this.phone,
                     SMS_code: this.smsCode

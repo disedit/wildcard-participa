@@ -30,23 +30,17 @@
 
         methods: {
             isSelected(option) {
-                // if option.id is present in selected[option.question_id]
-                if(this.selected.hasOwnProperty(option.question_id)){
-                    return this.selected[option.question_id].filter((o) => o.id == option.id).length != 0 ? true : false;
-                }
-
-                return false;
+                const questionIndex = this.selected.findIndex((q) => q.id == option.question_id);
+                return this.selected[questionIndex].options.filter((o) => o.id == option.id).length == 0 ? false : true;
             },
 
             isDisabled(option) {
                 // Limits are not applied to radio questions
                 if(this.question.max_options == 1) return false;
 
-                // If question key is not set, we can't be over limit
-                if(!this.selected.hasOwnProperty(option.question_id)) return false;
-
                 // Find if we're over the limit of allowed selections
-                const overLimit = this.selected[option.question_id].length >= this.question.max_options ? true : false;
+                const questionIndex = this.selected.findIndex((q) => q.id == option.question_id);
+                const overLimit = this.selected[questionIndex].options.length >= this.question.max_options ? true : false;
 
                 // If we're not over limit, no options are disabled
                 if(!overLimit) return false;

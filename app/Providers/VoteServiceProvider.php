@@ -58,15 +58,15 @@ class VoteServiceProvider extends ServiceProvider
         });
 
         Validator::extend('ballot_validity', function($attribute, $questions, $parameters, $validator) {
-            foreach($questions as $question_id => $options){
-                $question = Question::where('id', '=', $question_id)->first();
-                if(!$question) return FALSE;
+            foreach($questions as $question_key => $question){
+                $check_question = Question::where('id', '=', $question['id'])->first();
+                if(!$check_question) return FALSE;
 
-                if(count($options) > $question->max_options) return FALSE;
+                if(count($question['options']) > $check_question->max_options) return FALSE;
 
-                foreach($options as $key => $option_id){
-                    $option = Option::where('id', '=', $option_id)->where('question_id', '=', $question_id)->first();
-                    if(!$option) return FALSE;
+                foreach($question['options'] as $option_key => $option){
+                    $check_option = Option::where('id', '=', $option['id'])->where('question_id', '=', $question['id'])->first();
+                    if(!$check_option) return FALSE;
                 }
             }
             return TRUE;

@@ -105,6 +105,7 @@
 
             modifyPhone(){
                 Bus.$emit('FieldUpdated', 'smsRequested', false);
+                Bus.$emit('FieldUpdated', 'smsCode', '');
                 this.flag = false;
                 this.smsCodeFocused = false;
                 this.phoneFocused = true;

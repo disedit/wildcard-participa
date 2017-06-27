@@ -1999,8 +1999,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -2030,6 +2028,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Participa.getBallot().then(function (response) {
             _this.ballot = response;
+            _this.initialSelected();
         });
 
         Bus.$on('optionSelected', function (option, type) {
@@ -2038,6 +2037,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Bus.$on('FieldUpdated', function (field, value) {
             return _this[field] = value;
         });
+
         Bus.$on('submitBallotForVerification', function () {
             return _this.submitBallotForVerification();
         });
@@ -2047,6 +2047,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Bus.$on('castBallot', function () {
             return _this.castBallot();
         });
+
         Bus.$on('goToStep', function (step) {
             return _this.step = step;
         });
@@ -2072,28 +2073,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         radioOptions: function radioOptions(option) {
             var selected = this.selected;
+            var questionIndex = selected.findIndex(function (q) {
+                return q.id == option.question_id;
+            });
 
-            selected[option.question_id] = new Array(option);
+            selected[questionIndex].options = new Array(option);
 
-            this.$set(this.selected, option.question_id, selected[option.question_id]);
+            this.$set(this.selected, questionIndex, selected[questionIndex]);
         },
         checkboxOptions: function checkboxOptions(option) {
             var selected = this.selected;
-
-            if (!selected.hasOwnProperty(option.question_id)) {
-                selected[option.question_id] = new Array();
-            }
-
-            var selectedIndex = selected[option.question_id].findIndex(function (o) {
+            var questionIndex = selected.findIndex(function (q) {
+                return q.id == option.question_id;
+            });
+            var optionIndex = selected[questionIndex].options.findIndex(function (o) {
                 return o.id == option.id;
             });
-            if (selectedIndex >= 0) {
-                selected[option.question_id].splice(selectedIndex, 1);
+
+            if (optionIndex >= 0) {
+                selected[questionIndex].options.splice(optionIndex, 1);
             } else {
-                selected[option.question_id].push(option);
+                selected[questionIndex].options.push(option);
             }
 
-            this.$set(this.selected, option.question_id, selected[option.question_id]);
+            this.$set(this.selected, questionIndex, selected[questionIndex]);
+        },
+        initialSelected: function initialSelected() {
+            var ballot = JSON.parse(JSON.stringify(this.ballot.questions));
+
+            ballot.forEach(function (question, index) {
+                ballot[index].options = new Array();
+            });
+
+            this.selected = ballot;
         },
         submitBallotForVerification: function submitBallotForVerification() {
             var _this2 = this;
@@ -2101,7 +2113,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Bus.$emit('BoothBallotLoading', true);
 
             Participa.precheck({
-                ballot: Participa.prepareBallot(this.selected),
+                ballot: this.selected,
                 SID: this.ID
             }).then(function (response) {
                 _this2.step = 2;
@@ -2117,7 +2129,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Bus.$emit('VerifyPhoneLoading', true);
 
             Participa.requestSMS({
-                ballot: Participa.prepareBallot(this.selected),
+                ballot: this.selected,
                 SID: this.ID,
                 phone: this.phone
             }).then(function (response) {
@@ -2140,7 +2152,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Bus.$emit('VerifyPhoneLoading', true);
 
             Participa.castBallot({
-                ballot: Participa.prepareBallot(this.selected),
+                ballot: this.selected,
                 SID: this.ID,
                 phone: this.phone,
                 SMS_code: this.smsCode
@@ -2296,24 +2308,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         isSelected: function isSelected(option) {
-            // if option.id is present in selected[option.question_id]
-            if (this.selected.hasOwnProperty(option.question_id)) {
-                return this.selected[option.question_id].filter(function (o) {
-                    return o.id == option.id;
-                }).length != 0 ? true : false;
-            }
-
-            return false;
+            var questionIndex = this.selected.findIndex(function (q) {
+                return q.id == option.question_id;
+            });
+            return this.selected[questionIndex].options.filter(function (o) {
+                return o.id == option.id;
+            }).length == 0 ? false : true;
         },
         isDisabled: function isDisabled(option) {
             // Limits are not applied to radio questions
             if (this.question.max_options == 1) return false;
 
-            // If question key is not set, we can't be over limit
-            if (!this.selected.hasOwnProperty(option.question_id)) return false;
-
             // Find if we're over the limit of allowed selections
-            var overLimit = this.selected[option.question_id].length >= this.question.max_options ? true : false;
+            var questionIndex = this.selected.findIndex(function (q) {
+                return q.id == option.question_id;
+            });
+            var overLimit = this.selected[questionIndex].options.length >= this.question.max_options ? true : false;
 
             // If we're not over limit, no options are disabled
             if (!overLimit) return false;
@@ -2360,11 +2370,6 @@ var Participa = function () {
     key: 'castBallot',
     value: function castBallot(data) {
       return this._call('post', 'cast_ballot', data);
-    }
-  }, {
-    key: 'prepareBallot',
-    value: function prepareBallot(ballot) {
-      return ballot;
     }
   }, {
     key: '_call',
@@ -19944,13 +19949,13 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._v("\n    " + _vm._s(_vm.step) + "\n    "), (_vm.step == 1) ? _c('div', [_c('booth-ballot', {
+  return _c('div', [(_vm.step == 1) ? _c('div', [_c('booth-ballot', {
     attrs: {
       "identifier": _vm.ID,
       "ballot": _vm.ballot,
       "selected": _vm.selected
     }
-  }), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.ID))])], 1) : (_vm.step == 2) ? _c('div', [_c('booth-verify', {
+  })], 1) : (_vm.step == 2) ? _c('div', [_c('booth-verify', {
     attrs: {
       "phone": _vm.phone,
       "selected": _vm.selected,
@@ -30331,6 +30336,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         },
         modifyPhone: function modifyPhone() {
             Bus.$emit('FieldUpdated', 'smsRequested', false);
+            Bus.$emit('FieldUpdated', 'smsCode', '');
             this.flag = false;
             this.smsCodeFocused = false;
             this.phoneFocused = true;
@@ -30557,6 +30563,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'verify-summary',
@@ -30629,7 +30640,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.goBack()
       }
     }
-  }, [_vm._v("Tornar")]), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.selected))])])
+  }, [_vm._v("Tornar")]), _vm._v(" "), _vm._l((_vm.selected), function(question) {
+    return _c('div', [_c('h2', [_vm._v(_vm._s(question.question))]), _vm._v(" "), _vm._l((question.options), function(option) {
+      return _c('li', [_vm._v("\n            " + _vm._s(option.option) + "\n        ")])
+    })], 2)
+  })], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
