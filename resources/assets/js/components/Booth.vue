@@ -1,53 +1,76 @@
 <template>
     <div>
-        {{ selected }}
-        <div v-for="question in ballot.questions">
-            <ballot-question :question="question" />
-        </div>
+        <booth-ballot :ballot="ballot" :selected="selected" />
+        <pre>{{ selected }}</pre>
     </div>
 </template>
 
 <script>
     import Participa from '../api';
-    import BallotQuestion from './ballot/BallotQuestion';
+    import BoothBallot from './BoothBallot';
 
     export default {
         name: 'booth',
 
         components: {
-            BallotQuestion
+            BoothBallot
         },
 
         data() {
           return {
             api: new Participa(),
-            ballot: [],
-            selected: []
+            ballot: {},
+            selected: [],
+            step: 1
           }
         },
 
         created() {
-            var self = this;
-
             this.api.getBallot()
                 .then(response => {
                     this.ballot = response;
                 });
 
-            Bus.$on('optionSelected', (option) => {
-                console.log(option, self.selected);
-                let isSelected = this.selected.filter((o) => o.id == option.id);
-
-                if(isSelected){
-                    self.selected.push({ hello: 'yes', option: option });
-                }
-
-            });
+            Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
         },
 
         methods: {
 
+            handleOptionChange(option, type) {
+                if(type == 'radio') {
+                    this.radioOptions(option);
+                } else {
+                    this.checkboxOptions(option);
+                }
+            },
+
+            radioOptions(option) {
+                let selected = this.selected;
+
+                selected[option.question_id] = new Array(option);
+
+                this.$set(this.selected, option.question_id, selected[option.question_id]);
+
+            },
+
+            checkboxOptions(option) {
+                let selected = this.selected;
+
+                if(!selected.hasOwnProperty(option.question_id)){
+                    selected[option.question_id] = new Array();
+                }
+
+                let selectedIndex = selected[option.question_id].findIndex((o) => o.id == option.id);
+                if(selectedIndex >= 0){
+                    selected[option.question_id].splice(selectedIndex, 1);
+                } else {
+                    selected[option.question_id].push(option);
+                }
+
+                this.$set(this.selected, option.question_id, selected[option.question_id]);
+            }
         }
+
     }
 </script>
 
