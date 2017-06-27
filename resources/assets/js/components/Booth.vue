@@ -1,12 +1,17 @@
 <template>
     <div>
-        <booth-ballot :ballot="ballot" :selected="selected" />
-        <pre>{{ selected }}</pre>
+        {{ step }}
+        <div v-if="step == 1">
+            <booth-ballot :ballot="ballot" :selected="selected" />
+            <pre>{{ ID }}</pre>
+        </div>
+        <div v-else-if="step == 2">
+
+        </div>
     </div>
 </template>
 
 <script>
-    import Participa from '../api';
     import BoothBallot from './BoothBallot';
 
     export default {
@@ -18,20 +23,24 @@
 
         data() {
           return {
-            api: new Participa(),
             ballot: {},
             selected: [],
+            ID: '',
+            phone: '',
+            SMS_code: '',
             step: 1
           }
         },
 
         created() {
-            this.api.getBallot()
+            Participa.getBallot()
                 .then(response => {
                     this.ballot = response;
                 });
 
             Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
+            Bus.$on('IDUpdated', (ID) => this.ID = ID);
+            Bus.$on('submitBallotForVerification', () => this.submitBallotForVerification());
         },
 
         methods: {
@@ -68,6 +77,10 @@
                 }
 
                 this.$set(this.selected, option.question_id, selected[option.question_id]);
+            },
+
+            submitBallotForVerification() {
+                this.step = 2;
             }
         }
 
