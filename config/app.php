@@ -167,7 +167,7 @@ return [
          * Package Service Providers...
          */
         NotificationChannels\Messagebird\MessagebirdServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -226,7 +226,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Messagebird' => Bjrnblm\Messagebird\Facades\Messagebird::class
+        'Messagebird' => Bjrnblm\Messagebird\Facades\Messagebird::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class
 
     ],
 
