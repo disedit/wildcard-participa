@@ -76,9 +76,7 @@ class VoteRequest extends FormRequest
 
         if(substr($value,0,2) == '00'){
            $value = substr($value,2);
-        } elseif(substr($value,0,2) == '34'){
-            $value = substr($value,2);
-        } else {
+        } elseif(substr($value,0,2) != '34'){
            $value = "34" . $value;
         }
 

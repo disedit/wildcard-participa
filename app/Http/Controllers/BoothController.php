@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\VoteRequest;
-use App\Http\Requests\SmsRequest;
 use App\Edition;
 use App\Voter;
 use App\Ballot;
@@ -15,7 +14,6 @@ use App\Option;
 
 class BoothController extends Controller
 {
-    private $edition = null;
 
     /**
      * Create a new controller instance.
@@ -24,8 +22,7 @@ class BoothController extends Controller
      */
     public function __construct()
     {
-        $edition = new Edition;
-        $this->edition = $edition->current();
+
     }
 
     /**
@@ -35,7 +32,9 @@ class BoothController extends Controller
      */
     public function ballot_json()
     {
-        return response()->json($this->edition);
+        $edition = new Edition;
+        $edition = $edition->current('ballot');
+        return response()->json($edition);
     }
 
     /**
@@ -56,13 +55,15 @@ class BoothController extends Controller
      */
     public function request_sms(VoteRequest $request)
     {
+        $edition = new Edition;
+        $edition = $edition->current();
 
         $booth_mode = false;
         $flag       = false;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
 
-        $voter      = Voter::find_by_SID($SID, $this->edition->id);
+        $voter      = Voter::find_by_SID($SID, $edition->id);
 
         if(!$booth_mode)
         {
@@ -80,7 +81,7 @@ class BoothController extends Controller
             else
             {
                 $submitted = $voter->SMS_submit($phone);
-                
+
                 if(!$submitted) return response()->json([
                     'success' => false,
                     'flag' => 'SMS_error'
@@ -101,11 +102,14 @@ class BoothController extends Controller
      */
     public function cast_ballot(VoteRequest $request)
     {
+        $edition = new Edition;
+        $edition = $edition->current();
+
         $booth_mode = false;
         $sms_code   = $request->input('sms_code');
         $SID        = $request->input('SID');
 
-        $voter = Voter::find_by_SID($SID, $this->edition->id);
+        $voter = Voter::find_by_SID($SID, $edition->id);
 
         // Mark voter
         $marked = $voter->mark($request, $booth_mode);
@@ -115,7 +119,7 @@ class BoothController extends Controller
         {
 
             $ballot = new Ballot;
-            $cast = $ballot->cast($request, $voter, $this->edition->id, $booth_mode);
+            $cast = $ballot->cast($request, $voter, $edition->id, $booth_mode);
 
             if(!$cast)
             {

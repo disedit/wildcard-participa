@@ -42,23 +42,30 @@ class Edition extends Model
     /**
      * Get the current edition
      */
-    public function current($random = TRUE, $published = 1)
+    public function current($with_ballot = FALSE, $random = TRUE, $published = 1)
     {
+
         $this->random = $random;
 
-        return Self::where('published', '=', $published)
-                ->with(['questions' => function($questions_query){
-                    $questions_query->with(['options' => function($options_query){
-                        if($this->random) $options_query->orderByRaw('rand()');
-                    }])->orderBy('id', 'asc');
-                }])->orderBy('id', 'desc')->first();
+        $edition = Self::where('published', '=', $published);
+
+        if($with_ballot)
+        {
+            $edition->with(['questions' => function($questions_query){
+                $questions_query->with(['options' => function($options_query){
+                    if($this->random) $options_query->orderByRaw('rand()');
+                }])->orderBy('id', 'asc');
+            }]);
+        }
+
+        return $edition->orderBy('id', 'desc')->first();
     }
 
     /**
      * Get the results for the edition
      */
     public function results(){
-        
+
     }
 
 }

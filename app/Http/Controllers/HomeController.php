@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $edition = new Edition;
-        $this->edition = $edition->current();
+        $this->edition = $edition->current(false);
     }
 
     /**

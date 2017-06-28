@@ -25,7 +25,6 @@ class VoteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         $edition = new Edition;
         $this->edition_id = $edition->current()->id;
 
