@@ -96,9 +96,22 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'SID' => [
+            'on_census' => 'No census',
+            'has_not_voted'=> 'Ja has votat',
+            'ip_limit' => 'Limit IP',
+
         ],
+        'ballot' => [
+            'ballot_validity' => 'Papereta no valida'
+        ],
+        'phone' => [
+            'check_phone_format' => 'Format incorrecte',
+            'check_phone_duplicity' => 'Tel ja ha votat'
+        ],
+        'SMS_code' => [
+            'check_sms_code' => 'Codi SMS'
+        ]
     ],
 
     /*
@@ -112,6 +125,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'SID' => 'Identificador',
+        'ballot' => 'Papereta',
+        'phone' => 'Mòbil',
+        'SMS_code' => 'Codi SMS'
+    ],
 
 ];

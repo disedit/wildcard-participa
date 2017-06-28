@@ -1,45 +1,49 @@
 <template>
     <div>
-        <form @submit.prevent="requestSMS">
-            <h2>
-                Phone
-                <button v-show="canBeModified" @click="modifyPhone" class="btn btn-default btn-small" type="button">Modifica</button>
-            </h2>
-            <input
-                type="text"
-                class="form-control input-lg"
-                name="phone"
-                :value="phone"
-                @input="updatePhone($event.target.value)"
-                :disabled="smsRequested"
-                v-focus="phoneFocused"
-                @focus="phoneFocused = true"
-                @blur="phoneFocused = false" />
+        <transition name="fade" appear>
+            <form @submit.prevent="requestSMS">
+                <h2>
+                    Phone
+                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-default btn-small" type="button">Modifica</button>
+                </h2>
+                <input
+                    type="text"
+                    class="form-control input-lg"
+                    name="phone"
+                    :value="phone"
+                    @input="updatePhone($event.target.value)"
+                    :disabled="smsRequested"
+                    v-focus="phoneFocused"
+                    @focus="phoneFocused = true"
+                    @blur="phoneFocused = false" />
 
-            <button v-show="!smsRequested" :class="'btn btn-primary btn-lg' + disabled" type="submit">
-                <spinner icon="bullhorn" :loading="isLoading" />
-                Send SMS
-            </button>
-        </form>
+                <button v-show="!smsRequested" :class="'btn btn-primary btn-lg' + disabled" type="submit">
+                    <spinner icon="bullhorn" :loading="isLoading" />
+                    Send SMS
+                </button>
+            </form>
+        </transition>
 
         <verify-flags :flag="flag" />
 
-        <form v-if="smsRequested" @submit.prevent="castBallot">
-            <input
-                type="text"
-                class="form-control input-lg"
-                name="sms_code"
-                :value="smsCode"
-                @input="updateSMSCode($event.target.value)"
-                v-focus="smsCodeFocused"
-                @focus="smsCodeFocused = true"
-                @blur="smsCodeFocused = false" />
+        <transition name="fade">
+            <form v-if="smsRequested" @submit.prevent="castBallot">
+                <input
+                    type="text"
+                    class="form-control input-lg"
+                    name="sms_code"
+                    :value="smsCode"
+                    @input="updateSMSCode($event.target.value)"
+                    v-focus="smsCodeFocused"
+                    @focus="smsCodeFocused = true"
+                    @blur="smsCodeFocused = false" />
 
-            <button :class="'btn btn-primary btn-lg' + disabled" type="submit">
-                <spinner icon="bullhorn" :loading="isLoading" />
-                Verify SMS
-            </button>
-        </form>
+                <button :class="'btn btn-primary btn-lg' + disabled" type="submit">
+                    <spinner icon="bullhorn" :loading="isLoading" />
+                    Verify SMS
+                </button>
+            </form>
+        </transition>
     </div>
 </template>
 

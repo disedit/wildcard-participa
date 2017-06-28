@@ -17,26 +17,30 @@
         <div v-else-if="step == 3">
             <h1>Thanks</h1>
         </div>
+
+        <error-modal :errors="errors" />
     </div>
 </template>
 
 <script>
     import BoothBallot from './BoothBallot';
     import BoothVerify from './BoothVerify';
+    import ErrorModal from './helpers/ErrorModal';
 
     export default {
         name: 'booth',
 
         components: {
             BoothBallot,
-            BoothVerify
+            BoothVerify,
+            ErrorModal
         },
 
         data() {
           return {
             ballot: {},
             selected: [],
-            errors: [],
+            errors: {},
             ID: '',
             phone: '',
             smsCode: '',
@@ -65,7 +69,7 @@
         watch: {
             errors: function() {
                 if(Object.keys(this.errors).length > 0) {
-                    alert('Errors');
+                    //alert('Errors');
                     console.log(this.errors);
                 }
             }
