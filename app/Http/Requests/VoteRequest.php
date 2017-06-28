@@ -30,7 +30,6 @@ class VoteRequest extends FormRequest
 
         if(isset($attributes['SID'])) $attributes['SID'] = $this->cleanSID($attributes['SID']);
         if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($attributes['phone']);
-        if(isset($attributes['SMS_code'])) $attributes['SMS_code'] = trim($attributes['SMS_code']);
 
         return $attributes;
     }

@@ -28,35 +28,34 @@ class VoteServiceProvider extends ServiceProvider
         $edition = new Edition;
         $this->edition_id = $edition->current()->id;
 
-        Validator::extend('on_census', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('on_census', function($attribute, $value) {
             $this->voter = $this->setVoter($value);
             return ($this->voter) ? TRUE : FALSE;
         });
 
-        Validator::extend('has_not_voted', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('has_not_voted', function() {
             if(!$this->voter) return TRUE;
             return ($this->voter->ballot_cast == 0) ? TRUE : FALSE;
         });
 
-        Validator::extend('ip_limit', function($attribute, $value, $parameters, $validator) {
-            $request = new Request;
+        Validator::extend('ip_limit', function() {
             $max = config('participa.max_per_ip');
-            $IPs = Voter::where('ip_address', '=', $request->ip())->count();
+            $IPs = Voter::where('ip_address', '=', $this->app->request->ip())->count();
             return ($IPs < $max) ? TRUE : FALSE;
         });
 
-        Validator::extend('check_phone_format', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('check_phone_format', function($attribute, $value) {
             //Maybe add more rules here?
             if(!is_numeric($value)) return FALSE;
             return TRUE;
         });
 
-        Validator::extend('check_phone_duplicity', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('check_phone_duplicity', function($attribute, $value) {
             $phone_registered = Voter::where('SMS_phone', '=', $value)->where('SMS_verified', '=', 1)->where('edition_id', '=', $this->edition_id)->count();
             return ($phone_registered == 0) ? TRUE : FALSE;
         });
 
-        Validator::extend('ballot_validity', function($attribute, $questions, $parameters, $validator) {
+        Validator::extend('ballot_validity', function($attribute, $questions) {
             foreach($questions as $question_key => $question){
                 $check_question = Question::where('id', '=', $question['id'])->first();
                 if(!$check_question) return FALSE;
@@ -71,7 +70,7 @@ class VoteServiceProvider extends ServiceProvider
             return TRUE;
         });
 
-        Validator::extend('check_sms_code', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('check_sms_code', function($attribute, $value) {
             $voter_token = $this->voter->SMS_token;
             // $provided_token = hash('sha512', $value . $this->voter->SID);
             $provided_token = $value;
