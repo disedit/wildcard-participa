@@ -20,7 +20,6 @@ class CreateQuestionsTable extends Migration
             $table->string('description');
             $table->integer('min_options');
             $table->integer('max_options');
-            $table->boolean('can_be_blank');
             $table->timestamps();
         });
     }
