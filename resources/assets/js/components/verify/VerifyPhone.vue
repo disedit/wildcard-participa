@@ -1,6 +1,5 @@
 <template>
     <div>
-        <transition name="fade" appear>
             <form @submit.prevent="requestSMS">
                 <h2>
                     Phone
@@ -17,10 +16,12 @@
                     @focus="phoneFocused = true"
                     @blur="phoneFocused = false" />
 
-                <button v-show="!smsRequested" :class="'btn btn-primary btn-lg' + disabled" type="submit">
-                    <spinner icon="bullhorn" :loading="isLoading" />
-                    Send SMS
-                </button>
+                <transition name="fade">
+                    <button v-show="!smsRequested" :class="'btn btn-primary btn-lg' + disabled" type="submit">
+                        <spinner icon="bullhorn" :loading="isLoading" />
+                        Send SMS
+                    </button>
+                </transition>
             </form>
         </transition>
 

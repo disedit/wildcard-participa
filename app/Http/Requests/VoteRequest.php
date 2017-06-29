@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Edition;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class VoteRequest extends FormRequest
 {
@@ -46,16 +47,23 @@ class VoteRequest extends FormRequest
         $is_castBallot = $this->is('api/cast_ballot');
 
         //If in booth mode ignore some rules;
-        $booth_mode = false;
+        $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
 
+        $booth_mode = (isset($payload['booth_mode'])) ? $payload['booth_mode'] : false;
+
+        $ip_limit = (!$booth_mode) ? '|ip_limit' : '';
+        $phone_required = (!$booth_mode) ? 'required|check_phone_format|check_phone_duplicity' : '';
+        $sms_required = (!$booth_mode) ? 'required|check_sms_code' : '';
+
+        // Rules
         $rules = [
-            'SID' => 'required|on_census|has_not_voted|ip_limit',
+            'SID' => 'required|on_census|has_not_voted' . $ip_limit,
             'ballot' => 'ballot_validity',
         ];
 
         // if SMS code is required!!
-        if($is_requestSMS || $is_castBallot) $rules['phone'] = 'required|check_phone_format|check_phone_duplicity';
-        if($is_castBallot) $rules['SMS_code'] = 'required|check_sms_code';
+        if($is_requestSMS || $is_castBallot) $rules['phone'] = $phone_required;
+        if($is_castBallot) $rules['SMS_code'] = $sms_required;
 
         return $rules;
     }

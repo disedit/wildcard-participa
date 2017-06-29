@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Edition;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 class HomeController extends Controller
 {
@@ -26,7 +30,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $now = time();
@@ -35,7 +39,19 @@ class HomeController extends Controller
         // If within voting window dates, show voting booth
         if(strtotime($edition->start_date) <= $now
         && strtotime($edition->end_date) > $now){
-            return view('booth.ballot', compact('edition'));
+
+            $booth_mode = true;
+
+            $claims = ['booth_mode' => $booth_mode];
+            $payload = JWTFactory::make($claims);
+
+            try {
+                $token = JWTAuth::encode($payload);
+            } catch (JWTException $e) {
+                return redirect('error')->with('error', 'Error al crear token de seguretat');
+            }
+
+            return view('booth.ballot', compact('edition', 'token', 'booth_mode'));
         }
 
         // If in limbo (after end_date and before publish_results), show placeholder

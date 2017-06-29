@@ -11947,8 +11947,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__verify_VerifyInPerson__ = __webpack_require__(406);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__verify_VerifyInPerson___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__verify_VerifyInPerson__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verify_VerifySummary__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__verify_VerifySummary___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__verify_VerifySummary__);
 //
 //
 //
@@ -11960,6 +11962,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
@@ -11969,7 +11973,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     components: {
         VerifyPhone: __WEBPACK_IMPORTED_MODULE_0__verify_VerifyPhone___default.a,
-        VerifySummary: __WEBPACK_IMPORTED_MODULE_1__verify_VerifySummary___default.a
+        VerifyInPerson: __WEBPACK_IMPORTED_MODULE_1__verify_VerifyInPerson___default.a,
+        VerifySummary: __WEBPACK_IMPORTED_MODULE_2__verify_VerifySummary___default.a
     },
 
     props: {
@@ -11977,6 +11982,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         selected: Array,
         smsCode: String,
         smsRequested: Boolean
+    },
+
+    data: function data() {
+        return {
+            booth_mode: false
+        };
+    },
+    created: function created() {
+        this.booth_mode = window.BoothMode;
     }
 });
 
@@ -12279,6 +12293,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
 
 
 
@@ -12411,6 +12426,7 @@ var Participa = function () {
     _classCallCheck(this, Participa);
 
     this.apiURL = '/api/';
+    this.token = document.head.querySelector('meta[name="jwt-token"]').content;
   }
 
   _createClass(Participa, [{
@@ -12438,8 +12454,9 @@ var Participa = function () {
     value: function _call(type, url, data) {
       var _this = this;
 
+      console.log(this.token);
       return new Promise(function (resolve, reject) {
-        axios[type](_this.apiURL + url, data).then(function (response) {
+        axios[type](_this.apiURL + url + '?token=' + _this.token, data).then(function (response) {
           resolve(response.data);
         }).catch(function (error) {
           reject(error.response.data);
@@ -30320,7 +30337,7 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "row"
+    staticClass: "row ballot-verify"
   }, [_c('div', {
     staticClass: "col-md-6"
   }, [_c('verify-summary', {
@@ -30329,7 +30346,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
-  }, [_c('verify-phone', {
+  }, [(_vm.booth_mode) ? _c('verify-in-person') : _c('verify-phone', {
     attrs: {
       "phone": _vm.phone,
       "sms-code": _vm.smsCode,
@@ -30573,12 +30590,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('transition', {
-    attrs: {
-      "name": "fade",
-      "appear": ""
-    }
-  }, [_c('form', {
+  return _c('div', [_c('form', {
     on: {
       "submit": function($event) {
         $event.preventDefault();
@@ -30626,7 +30638,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.phoneFocused = false
       }
     }
-  }), _vm._v(" "), _c('button', {
+  }), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "fade"
+    }
+  }, [_c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -30642,7 +30658,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "icon": "bullhorn",
       "loading": _vm.isLoading
     }
-  }), _vm._v("\n                Send SMS\n            ")], 1)])]), _vm._v(" "), _c('verify-flags', {
+  }), _vm._v("\n                    Send SMS\n                ")], 1)])], 1), _vm._v(" "), _c('verify-flags', {
     attrs: {
       "flag": _vm.flag
     }
@@ -40986,6 +41002,169 @@ return Tether;
 
 }));
 
+
+/***/ }),
+/* 404 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_Spinner__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_Spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__helpers_Spinner__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'verify-in-person',
+
+    components: {
+        Spinner: __WEBPACK_IMPORTED_MODULE_0__helpers_Spinner___default.a
+    },
+
+    data: function data() {
+        return {
+            isLoading: false
+        };
+    },
+
+
+    computed: {
+        disabled: function disabled() {
+            return this.isLoading ? ' disabled' : '';
+        }
+    },
+
+    created: function created() {
+        var _this = this;
+
+        Bus.$on('VerifyPhoneLoading', function (isLoading) {
+            return _this.isLoading = isLoading;
+        });
+    },
+
+
+    methods: {
+        castBallot: function castBallot() {
+            Bus.$emit('castBallot');
+        }
+    }
+
+});
+
+/***/ }),
+/* 405 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 406 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(408)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(404),
+  /* template */
+  __webpack_require__(407),
+  /* scopeId */
+  "data-v-b126d1aa",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/guillem/Developer/wildcard-participa/resources/assets/js/components/verify/VerifyInPerson.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VerifyInPerson.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-b126d1aa", Component.options)
+  } else {
+    hotAPI.reload("data-v-b126d1aa", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 407 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('form', {
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.castBallot($event)
+      }
+    }
+  }, [_c('button', {
+    class: 'btn btn-primary btn-lg' + _vm.disabled,
+    attrs: {
+      "type": "submit"
+    }
+  }, [_c('spinner', {
+    attrs: {
+      "icon": "bullhorn",
+      "loading": _vm.isLoading
+    }
+  }), _vm._v("\n            Confirmar\n        ")], 1)])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-b126d1aa", module.exports)
+  }
+}
+
+/***/ }),
+/* 408 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(405);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("c96572f2", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-b126d1aa\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyInPerson.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-b126d1aa\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VerifyInPerson.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

@@ -18,7 +18,9 @@ class CreateQuestionsTable extends Migration
             $table->integer('edition_id');
             $table->string('question');
             $table->string('description');
+            $table->integer('min_options');
             $table->integer('max_options');
+            $table->boolean('can_be_blank');
             $table->timestamps();
         });
     }
