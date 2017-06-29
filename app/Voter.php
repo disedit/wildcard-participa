@@ -91,15 +91,15 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function mark($request, $booth_mode = false)
+    public function mark($request, $user_id = 0)
     {
         $this->ballot_cast = 1;
         $this->ballot_time = date("Y-m-d H:i:s");
         $this->ip_address = $request->ip();
         $this->user_agent = $request->header('User-Agent');
         $this->signature = $this->create_signature();
-        $this->in_person = ($booth_mode) ? 1 : 0;
-        $this->by_user = 0;
+        $this->in_person = ($user_id) ? 1 : 0;
+        $this->by_user = $user_id;
 
         return $this->save();
     }

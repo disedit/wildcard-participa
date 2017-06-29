@@ -39,18 +39,10 @@ class HomeController extends Controller
         // If within voting window dates, show voting booth
         if(strtotime($edition->start_date) <= $now
         && strtotime($edition->end_date) > $now){
-
-            $booth_mode = true;
-
-            $claims = ['booth_mode' => $booth_mode];
-            $payload = JWTFactory::make($claims);
-
-            try {
-                $token = JWTAuth::encode($payload);
-            } catch (JWTException $e) {
-                return redirect('error')->with('error', 'Error al crear token de seguretat');
-            }
-
+            $user = $request->user();
+            $user_id = ($user) ? $user->id : 0;
+            $token = $this->create_booth_token($user_id);
+            $booth_mode = ($user_id) ? true : false;
             return view('booth.ballot', compact('edition', 'token', 'booth_mode'));
         }
 
@@ -69,5 +61,23 @@ class HomeController extends Controller
 
         return view('home', compact('edition'));
 
+    }
+
+    /**
+     * Generates a JWT to validate booth_mode
+     *
+     * @return String
+     */
+    private function create_booth_token($user_id)
+    {
+        $booth_mode = ($user_id) ? true : false;
+        $claims = ['booth_mode' => $booth_mode, 'user_id' => $user_id];
+        $payload = JWTFactory::make($claims);
+
+        try {
+            return JWTAuth::encode($payload);
+        } catch (JWTException $e) {
+            return redirect('error')->with('error', 'Error al crear token de seguretat');
+        }
     }
 }

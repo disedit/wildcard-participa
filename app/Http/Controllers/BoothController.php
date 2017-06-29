@@ -11,19 +11,10 @@ use App\Voter;
 use App\Ballot;
 use App\Question;
 use App\Option;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class BoothController extends Controller
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
 
     /**
      * JSON object with edition information, including ballot questions
@@ -58,7 +49,7 @@ class BoothController extends Controller
         $edition = new Edition;
         $edition = $edition->current();
 
-        $booth_mode = false;
+        $booth_mode = $this->booth_mode();
         $flag       = false;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
@@ -105,7 +96,7 @@ class BoothController extends Controller
         $edition = new Edition;
         $edition = $edition->current();
 
-        $booth_mode = false;
+        $booth_mode = $this->booth_mode();
         $sms_code   = $request->input('sms_code');
         $SID        = $request->input('SID');
 
@@ -136,5 +127,18 @@ class BoothController extends Controller
         }
 
         return response()->json(['success' => true, 'ballot' => '']);
+    }
+
+    /**
+     * Checks if we are in booth_mode and returns user's ID, or 0 if false
+     *
+     * @return int
+     */
+    private function booth_mode()
+    {
+        $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
+        if(!isset($payload['booth_mode']) || !isset($payload['user_id'])) return false;
+
+        return ($payload['booth_mode']) ? $payload['user_id'] : 0;
     }
 }

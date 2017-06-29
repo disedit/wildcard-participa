@@ -8,7 +8,7 @@
     @if(isset($token))
         <meta name="jwt-token" content="{{ $token }}">
     @endif
-    
+
     <title>{{ config('app.name', 'Wildcard Participa') }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
@@ -22,7 +22,8 @@
 </div>
 
     <!-- Scripts -->
-    <script>window.BoothMode = true;</script>
+    <?php $booth_mode = (isset($booth_mode)) ? var_export($booth_mode, true) : 'false'; ?>
+    <script>window.BoothMode = {{ $booth_mode }};</script>
     <script src="{{ mix('js/app.js') }}"></script>
 
 </body>

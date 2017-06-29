@@ -73,14 +73,14 @@ class Ballot extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function cast($request, $voter, $edition_id, $booth_mode = false)
+    public function cast($request, $voter, $edition_id, $user_id = 0)
     {
         $this->edition_id = $edition_id;
         $this->ballot = $this->create_ballot($request->input('ballot'));
         $this->ref = $this->create_ref();
         $this->cast_at = date("Y-m-d H:i:s");
         $this->signature = $this->create_signature();
-        $this->by_user = 0;
+        $this->by_user = $user_id;
 
         if(config('participa.anonymous_voting') === false){
             $this->voter_id = $voter->id;
