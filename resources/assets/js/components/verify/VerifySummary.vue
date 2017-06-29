@@ -20,7 +20,7 @@
 
         methods: {
             goBack() {
-                Bus.$emit('goToStep', 1);
+                Bus.$emit('goToStep', '/');
             }
         }
     }

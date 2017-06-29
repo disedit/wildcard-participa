@@ -1,38 +1,58 @@
 <template>
     <div>
-        <div v-if="step == 1">
+        <router-link to="/">Step 1</router-link>
+        <router-link to="/verify">Step 2</router-link>
+        <router-link to="/confirmed">Step 3</router-link>
+
+        <transition name="fade">
             <booth-ballot
+                v-if="$route.name == 'ballot'"
                 :identifier="ID"
                 :ballot="ballot"
                 :selected="selected" />
-        </div>
-        <div v-else-if="step == 2">
+        </transition>
+        <transition name="fade">
             <booth-verify
+                v-if="$route.name == 'verify'"
                 :phone="phone"
                 :selected="selected"
                 :sms-code="smsCode"
                 :sms-requested="smsRequested" />
-            <pre>{{ phone }}</pre>
-        </div>
-        <div v-else-if="step == 3">
-            <h1>Thanks</h1>
-        </div>
+        </transition>
+        <transition>
+            <booth-confirmation v-if="$route.name == 'confirmed'" />
+        </transition>
 
         <error-modal :errors="errors" />
     </div>
 </template>
 
 <script>
+    import VueRouter from 'vue-router';
     import BoothBallot from './BoothBallot';
     import BoothVerify from './BoothVerify';
+    import BoothConfirmation from './BoothConfirmation';
     import ErrorModal from './helpers/ErrorModal';
+
+    const router = new VueRouter({
+      mode: 'history',
+      routes: [
+        { name: 'ballot', path: '/', component: BoothBallot },
+        { name: 'verify', path: '/verify', component: BoothVerify },
+        { name: 'confirmed', path: '/confirmed', component: BoothConfirmation }
+      ]
+    });
+
 
     export default {
         name: 'booth',
 
+        router,
+
         components: {
             BoothBallot,
             BoothVerify,
+            BoothConfirmation,
             ErrorModal
         },
 
@@ -44,8 +64,7 @@
             ID: '',
             phone: '',
             smsCode: '',
-            smsRequested: false,
-            step: 1
+            smsRequested: false
           }
         },
 
@@ -55,7 +74,7 @@
                     this.ballot = response;
                     this.initialSelected();
                 });
-
+            console.log(this.$route);
             Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
             Bus.$on('FieldUpdated', (field, value) => this[field] = value);
 
@@ -63,7 +82,7 @@
             Bus.$on('requestSMS', () => this.requestSMS());
             Bus.$on('castBallot', () => this.castBallot());
 
-            Bus.$on('goToStep', (step) => this.step = step);
+            Bus.$on('goToStep', (path) => router.push({ path }));
         },
 
         watch: {
@@ -125,7 +144,7 @@
                     ballot: this.selected,
                     SID: this.ID
                 }).then(response => {
-                    this.step = 2;
+                    router.push({ path: '/verify' });
                 }).catch(errors => {
                     this.errors = errors
                 }).then(() => Bus.$emit('BoothBallotLoading', false));
@@ -162,7 +181,7 @@
                     phone: this.phone,
                     SMS_code: this.smsCode
                 }).then(response => {
-                    this.step = 3;
+                    router.push({ path: '/confirmed' });
                 }).catch(errors => {
                     this.errors = errors
                 }).then(() => Bus.$emit('VerifyPhoneLoading', false));

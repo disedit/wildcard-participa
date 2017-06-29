@@ -3,6 +3,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.Bus = new Vue();
 
+
 import Participa from './api';
 import BootstrapVue from 'bootstrap-vue';
 
