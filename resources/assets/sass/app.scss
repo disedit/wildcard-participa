@@ -2,8 +2,9 @@
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-//@import "node_modules/bootstrap/scss/bootstrap";
+// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/dist/bootstrap-vue";
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s

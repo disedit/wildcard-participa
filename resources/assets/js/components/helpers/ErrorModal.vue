@@ -1,35 +1,25 @@
 <template>
-    <modal v-if="anyErrors">
-        <h4 slot="header">Error</h4>
+    <b-modal id="errorsModal" @hidden="close" :ok-only="true" ok-title="Torna" size="lg" :hide-header="true" :visible="anyErrors">
+
+        <h4 slot="modal-title">Errors</h4>
 
         <div>
             {{ errors }}
         </div>
 
-        <div slot="buttons">
-            Here be buttons
-        </div>
-    </modal>
+    </b-modal>
 </template>
 
 <script>
-    import Modal from './Modal';
-
     export default {
         name: 'error-modal',
-
-        components: {
-            Modal
-        },
 
         props: {
             errors: Object
         },
 
         computed: {
-            anyErrors: function() {
-                return Object.keys(this.errors).length > 0;
-            }
+            anyErrors: function() { return Object.keys(this.errors).length > 0; }
         },
 
         methods: {
