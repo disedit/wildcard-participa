@@ -28,7 +28,7 @@
 
         methods: {
             updateID(value) {
-                Bus.$emit('FieldUpdated', 'ID', value);
+                Bus.$emit('fieldUpdated', 'ID', value);
             }
         }
 

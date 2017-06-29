@@ -11752,18 +11752,13 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     created: function created() {
         var _this = this;
 
-        Participa.getBallot().then(function (response) {
-            _this.ballot = response;
-            _this.initialSelected();
-        });
-        console.log(this.$route);
+        this.loadBallot();
         Bus.$on('optionSelected', function (option, type) {
             return _this.handleOptionChange(option, type);
         });
-        Bus.$on('FieldUpdated', function (field, value) {
+        Bus.$on('fieldUpdated', function (field, value) {
             return _this[field] = value;
         });
-
         Bus.$on('submitBallotForVerification', function () {
             return _this.submitBallotForVerification();
         });
@@ -11773,23 +11768,38 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
         Bus.$on('castBallot', function () {
             return _this.castBallot();
         });
-
         Bus.$on('goToStep', function (path) {
             return router.push({ path: path });
         });
     },
 
 
-    watch: {
-        errors: function errors() {
-            if (Object.keys(this.errors).length > 0) {
-                //alert('Errors');
-                console.log(this.errors);
-            }
-        }
-    },
-
     methods: {
+
+        /* Fetch ballot from server */
+        loadBallot: function loadBallot() {
+            var _this2 = this;
+
+            Participa.getBallot().then(function (response) {
+                _this2.ballot = response;
+                _this2.initialSelected();
+            });
+        },
+
+
+        /* Load an emtpy ballot onto 'selected' */
+        initialSelected: function initialSelected() {
+            var ballot = JSON.parse(JSON.stringify(this.ballot.questions));
+
+            ballot.forEach(function (question, index) {
+                ballot[index].options = new Array();
+            });
+
+            this.selected = ballot;
+        },
+
+
+        /* When user selects an option */
         handleOptionChange: function handleOptionChange(option, type) {
             if (type == 'radio') {
                 this.radioOptions(option);
@@ -11797,6 +11807,9 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
                 this.checkboxOptions(option);
             }
         },
+
+
+        /* Handles option selection for single-choice questions */
         radioOptions: function radioOptions(option) {
             var selected = this.selected;
             var questionIndex = selected.findIndex(function (q) {
@@ -11807,6 +11820,9 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
             this.$set(this.selected, questionIndex, selected[questionIndex]);
         },
+
+
+        /* Handles option selection for multiple-choice questions */
         checkboxOptions: function checkboxOptions(option) {
             var selected = this.selected;
             var questionIndex = selected.findIndex(function (q) {
@@ -11824,17 +11840,11 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
             this.$set(this.selected, questionIndex, selected[questionIndex]);
         },
-        initialSelected: function initialSelected() {
-            var ballot = JSON.parse(JSON.stringify(this.ballot.questions));
 
-            ballot.forEach(function (question, index) {
-                ballot[index].options = new Array();
-            });
 
-            this.selected = ballot;
-        },
+        /* Precheck before step 2. Checks if ID exists or has been used */
         submitBallotForVerification: function submitBallotForVerification() {
-            var _this2 = this;
+            var _this3 = this;
 
             Bus.$emit('BoothBallotLoading', true);
 
@@ -11844,13 +11854,16 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
             }).then(function (response) {
                 router.push({ path: '/verify' });
             }).catch(function (errors) {
-                _this2.errors = errors;
+                _this3.errors = errors;
             }).then(function () {
                 return Bus.$emit('BoothBallotLoading', false);
             });
         },
+
+
+        /* Request SMS code to verify ballot */
         requestSMS: function requestSMS() {
-            var _this3 = this;
+            var _this4 = this;
 
             Bus.$emit('VerifyPhoneLoading', true);
 
@@ -11859,21 +11872,24 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
                 SID: this.ID,
                 phone: this.phone
             }).then(function (response) {
-                _this3.smsRequested = true;
+                _this4.smsRequested = true;
                 if (response.flag) {
                     Bus.$emit('setFlag', response.flag);
                     if (response.flag.name == 'SMS_exceeded') {
-                        _this3.phone = response.flag.info.last_number;
+                        _this4.phone = response.flag.info.last_number;
                     }
                 }
             }).catch(function (errors) {
-                _this3.errors = errors;
+                _this4.errors = errors;
             }).then(function () {
                 return Bus.$emit('VerifyPhoneLoading', false);
             });
         },
+
+
+        /* Submit SMS code to register ballot */
         castBallot: function castBallot() {
-            var _this4 = this;
+            var _this5 = this;
 
             Bus.$emit('VerifyPhoneLoading', true);
 
@@ -11885,13 +11901,12 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
             }).then(function (response) {
                 router.push({ path: '/confirmed' });
             }).catch(function (errors) {
-                _this4.errors = errors;
+                _this5.errors = errors;
             }).then(function () {
                 return Bus.$emit('VerifyPhoneLoading', false);
             });
         }
     }
-
 });
 
 /***/ }),
@@ -12047,7 +12062,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         updateID: function updateID(value) {
-            Bus.$emit('FieldUpdated', 'ID', value);
+            Bus.$emit('fieldUpdated', 'ID', value);
         }
     }
 
@@ -12192,7 +12207,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         close: function close() {
-            Bus.$emit('FieldUpdated', 'errors', {});
+            Bus.$emit('fieldUpdated', 'errors', {});
         }
     }
 });
@@ -12372,14 +12387,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     methods: {
         updatePhone: function updatePhone(value) {
-            Bus.$emit('FieldUpdated', 'phone', value);
+            Bus.$emit('fieldUpdated', 'phone', value);
         },
         updateSMSCode: function updateSMSCode(value) {
-            Bus.$emit('FieldUpdated', 'smsCode', value);
+            Bus.$emit('fieldUpdated', 'smsCode', value);
         },
         modifyPhone: function modifyPhone() {
-            Bus.$emit('FieldUpdated', 'smsRequested', false);
-            Bus.$emit('FieldUpdated', 'smsCode', '');
+            Bus.$emit('fieldUpdated', 'smsRequested', false);
+            Bus.$emit('fieldUpdated', 'smsCode', '');
             this.flag = false;
             this.smsCodeFocused = false;
             this.phoneFocused = true;

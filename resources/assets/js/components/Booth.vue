@@ -43,7 +43,6 @@
       ]
     });
 
-
     export default {
         name: 'booth',
 
@@ -69,32 +68,38 @@
         },
 
         created() {
-            Participa.getBallot()
-                .then(response => {
-                    this.ballot = response;
-                    this.initialSelected();
-                });
-            console.log(this.$route);
+            this.loadBallot();
             Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
-            Bus.$on('FieldUpdated', (field, value) => this[field] = value);
-
+            Bus.$on('fieldUpdated', (field, value) => this[field] = value);
             Bus.$on('submitBallotForVerification', () => this.submitBallotForVerification());
             Bus.$on('requestSMS', () => this.requestSMS());
             Bus.$on('castBallot', () => this.castBallot());
-
             Bus.$on('goToStep', (path) => router.push({ path }));
         },
 
-        watch: {
-            errors: function() {
-                if(Object.keys(this.errors).length > 0) {
-                    //alert('Errors');
-                    console.log(this.errors);
-                }
-            }
-        },
-
         methods: {
+
+            /* Fetch ballot from server */
+            loadBallot() {
+                Participa.getBallot()
+                    .then(response => {
+                        this.ballot = response;
+                        this.initialSelected();
+                    });
+            },
+
+            /* Load an emtpy ballot onto 'selected' */
+            initialSelected() {
+                let ballot = JSON.parse( JSON.stringify( this.ballot.questions ) );
+
+                ballot.forEach(function(question, index) {
+                    ballot[index].options = new Array();
+                });
+
+                this.selected = ballot;
+            },
+
+            /* When user selects an option */
             handleOptionChange(option, type) {
                 if(type == 'radio') {
                     this.radioOptions(option);
@@ -103,6 +108,7 @@
                 }
             },
 
+            /* Handles option selection for single-choice questions */
             radioOptions(option) {
                 let selected = this.selected;
                 const questionIndex = selected.findIndex((q) => q.id == option.question_id);
@@ -113,6 +119,7 @@
 
             },
 
+            /* Handles option selection for multiple-choice questions */
             checkboxOptions(option) {
                 let selected = this.selected;
                 const questionIndex = selected.findIndex((q) => q.id == option.question_id);
@@ -127,16 +134,7 @@
                 this.$set(this.selected, questionIndex, selected[questionIndex]);
             },
 
-            initialSelected() {
-                let ballot = JSON.parse( JSON.stringify( this.ballot.questions ) );
-
-                ballot.forEach(function(question, index) {
-                    ballot[index].options = new Array();
-                });
-
-                this.selected = ballot;
-            },
-
+            /* Precheck before step 2. Checks if ID exists or has been used */
             submitBallotForVerification() {
                 Bus.$emit('BoothBallotLoading', true);
 
@@ -148,10 +146,9 @@
                 }).catch(errors => {
                     this.errors = errors
                 }).then(() => Bus.$emit('BoothBallotLoading', false));
-
-
             },
 
+            /* Request SMS code to verify ballot */
             requestSMS() {
                 Bus.$emit('VerifyPhoneLoading', true);
 
@@ -172,6 +169,7 @@
                 }).then(() => Bus.$emit('VerifyPhoneLoading', false));
             },
 
+            /* Submit SMS code to register ballot */
             castBallot() {
                 Bus.$emit('VerifyPhoneLoading', true);
 
@@ -187,7 +185,6 @@
                 }).then(() => Bus.$emit('VerifyPhoneLoading', false));
             }
         }
-
     }
 </script>
 

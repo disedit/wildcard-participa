@@ -60,7 +60,8 @@ class VoteServiceProvider extends ServiceProvider
                 $check_question = Question::where('id', '=', $question['id'])->first();
                 if(!$check_question) return FALSE;
 
-                if(count($question['options']) > $check_question->max_options) return FALSE;
+                if(count($question['options']) > $check_question->max_options
+                || count($question['options']) < $check_question->min_options) return FALSE;
 
                 foreach($question['options'] as $option_key => $option){
                     $check_option = Option::where('id', '=', $option['id'])->where('question_id', '=', $question['id'])->first();

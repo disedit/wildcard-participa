@@ -24,7 +24,7 @@
 
         methods: {
             close() {
-                Bus.$emit('FieldUpdated', 'errors', {});
+                Bus.$emit('fieldUpdated', 'errors', {});
             }
         }
     }

@@ -101,16 +101,16 @@
 
         methods: {
             updatePhone(value) {
-                Bus.$emit('FieldUpdated', 'phone', value);
+                Bus.$emit('fieldUpdated', 'phone', value);
             },
 
             updateSMSCode(value) {
-                Bus.$emit('FieldUpdated', 'smsCode', value);
+                Bus.$emit('fieldUpdated', 'smsCode', value);
             },
 
             modifyPhone(){
-                Bus.$emit('FieldUpdated', 'smsRequested', false);
-                Bus.$emit('FieldUpdated', 'smsCode', '');
+                Bus.$emit('fieldUpdated', 'smsRequested', false);
+                Bus.$emit('fieldUpdated', 'smsCode', '');
                 this.flag = false;
                 this.smsCodeFocused = false;
                 this.phoneFocused = true;
