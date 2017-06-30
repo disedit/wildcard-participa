@@ -11,20 +11,16 @@
 
     <title>{{ config('app.name', 'Wildcard Participa') }}</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 </head>
 <body>
-<div class="container">
-    @yield('content')
-</div>
 
-    <!-- Scripts -->
-    <?php $booth_mode = (isset($booth_mode)) ? var_export($booth_mode, true) : 'false'; ?>
-    <script>window.BoothMode = {{ $booth_mode }};</script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    @yield('content')
+
+    @yield('scripts')
 
 </body>
 </html>

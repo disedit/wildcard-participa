@@ -1,10 +1,10 @@
 @extends('layouts.public')
 
 @section('content')
-<div class="container">
-<h1>{{ $edition->name }}</h1>
+<div class="container main-container">
+    <h1>{{ $edition->name }}</h1>
 
-<div id="booth"></div>
+    <div id="booth"></div>
 </div>
 @endsection
 

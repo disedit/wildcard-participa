@@ -1,11 +1,18 @@
 <template>
-    <form @submit.prevent="submitBallot">
-        <div v-for="question in ballot.questions">
-            <ballot-question :question="question" :selected="selected" />
-        </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <form @submit.prevent="submitBallot">
+                <div v-for="question in ballot.questions">
+                    <ballot-question :question="question" :selected="selected" />
+                </div>
 
-        <ballot-identification :identifier="identifier" :loading="isLoading" />
-    </form>
+                <ballot-identification :identifier="identifier" :loading="isLoading" />
+            </form>
+        </div>
+        <div class="col-sm-4">
+            Sidebarf
+        </div>
+    </div>
 </template>
 
 <script>

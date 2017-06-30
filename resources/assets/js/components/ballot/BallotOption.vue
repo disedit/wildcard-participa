@@ -1,5 +1,5 @@
 <template>
-    <label :class="{ 'disabled-option': disabled, 'selected-option': selected, 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
+    <div :class="{ 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
         <input
             :name="'ballot[' + option.question_id + ']'"
             :value="option.id"
@@ -9,8 +9,8 @@
             @change="selectOption(option, type)"
             class="custom-control-input" />
         <span class="custom-control-indicator"></span>
-        <span class="custom-control-description">{{ option.option }} {{ selected }}</span>
-    </label>
+        <span class="custom-control-description">{{ option.option }} <i v-if="selected" class="fa fa-check" aria-hidden="true"></i></span>
+    </div>
 </template>
 
 <script>
@@ -33,13 +33,9 @@
 </script>
 
 <style scoped lang="scss">
-    label {
-        display: flex;
-        margin: -0.75rem -1.25rem;
-        padding: 0.75rem 1.25rem;
-    }
+    @import '../../../sass/_variables';
 
     .disabled-option {
-        color: grey;
+        color: $gray-lighter;
     }
 </style>

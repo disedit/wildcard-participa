@@ -4,7 +4,7 @@
         <router-link to="/booth/verify">Step 2</router-link>
         <router-link to="/booth/receipt">Step 3</router-link>
 
-        <transition :name="transitionName">
+        <transition :name="transitionName" mode="out-in">
             <router-view
                 class="child-view"
                 :identifier="ID"
@@ -48,10 +48,16 @@
         beforeRouteUpdate (to, from, next) {
             let transitionName = 'slide-left';
 
-            if(from.path == '/booth/verify' && to.path == '/') transitionName = 'slide-right';
+            if(from.path == '/booth/verify' && to.path == '/'
+            || from.path == '/booth/receipt' && to.path == '/') transitionName = 'slide-right';
+
+            if(from.path == '/booth/receipt' && to.path == '/booth/verify'){
+                // Should not be allowed. Redirect to first step
+                this.$router.push({ path: '/' });
+            }
 
             this.transitionName = transitionName;
-            next()
+            next();
         },
 
         created() {

@@ -1,11 +1,18 @@
 <template>
-    <div>
-        <h2>{{ question.question }} {{ question.max_options }}</h2>
-        <ul class="list-group">
-            <li v-for="option in question.options" :class="{ 'list-group-item': true, 'disabled' : isDisabled(option) }">
+    <div class="question">
+        <hr />
+        <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> {{ question.question }}</h2>
+        <p class="description">{{ question.description }}</p>
+        <div class="list-group">
+            <label v-for="option in question.options"
+                :class="{
+                    'list-group-item list-group-item-action': true,
+                    'disabled' : isDisabled(option),
+                    'selected' : isSelected(option)
+                }">
                 <ballot-option :type="questionType" :option="option" :selected="isSelected(option)" :disabled="isDisabled(option)" />
-            </li>
-        </ul>
+            </label>
+        </div>
     </div>
 </template>
 
@@ -56,5 +63,22 @@
 </script>
 
 <style scoped lang="scss">
+    @import '../../../sass/_variables';
 
+    .question {
+
+    }
+
+    h2 {
+        font-size: 1.65rem;
+    }
+
+    .description {
+        color: $gray-light;
+    }
+
+    .selected {
+        background: lighten($brand-primary, 50%);
+        border-right: 4px $brand-primary solid;
+    }
 </style>
