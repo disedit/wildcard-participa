@@ -15460,6 +15460,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'error-modal',
@@ -15607,6 +15622,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_CountryCodes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__helpers_CountryCodes__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -40239,13 +40258,17 @@ module.exports = Component.exports
 /* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(415)
+
 var Component = __webpack_require__(16)(
   /* script */
   __webpack_require__(153),
   /* template */
   __webpack_require__(376),
   /* scopeId */
-  null,
+  "data-v-2f35fe9d",
   /* cssModules */
   null
 )
@@ -40459,13 +40482,13 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('button', {
-    staticClass: "btn btn-default",
+    staticClass: "btn btn-secondary btn-sm",
     on: {
       "click": function($event) {
         _vm.goBack()
       }
     }
-  }, [_vm._v("Tornar")]), _vm._v(" "), _vm._l((_vm.selected), function(question) {
+  }, [_vm._v("Modifica")]), _vm._v(" "), _vm._l((_vm.selected), function(question) {
     return _c('div', [_c('h2', [_vm._v(_vm._s(question.question))]), _vm._v(" "), _vm._l((question.options), function(option) {
       return _c('li', [_vm._v("\n            " + _vm._s(option.option) + "\n        ")])
     })], 2)
@@ -40489,7 +40512,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "content": "Online!"
     }
   }, [_vm._v("\n            Help\n        ")])], 1), _vm._v(" "), _c('input', {
-    staticClass: "form-control input-lg",
+    staticClass: "form-control form-control-lg",
     attrs: {
       "type": "text",
       "name": "identification"
@@ -40572,10 +40595,9 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('b-modal', {
+    ref: "errorsModal",
     attrs: {
       "id": "errorsModal",
-      "ok-only": true,
-      "ok-title": "Torna",
       "size": "lg",
       "hide-header": true,
       "visible": _vm.anyErrors
@@ -40583,9 +40605,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "hidden": _vm.close
     }
-  }, [_c('h4', {
-    slot: "modal-title"
-  }, [_vm._v("Errors")]), _vm._v(" "), _c('div', [_vm._v("\n        " + _vm._s(_vm.errors) + "\n    ")])])
+  }, [_c('div', {
+    staticClass: "error"
+  }, [_c('div', {
+    staticClass: "error__header"
+  }, [_c('i', {
+    staticClass: "fa fa-hand-o-down",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" "), _c('h2', [_vm._v("Error")])]), _vm._v(" "), _vm._l((_vm.errors), function(errorField) {
+    return _c('div', _vm._l((errorField), function(error) {
+      return _c('div', {
+        staticClass: "error__message"
+      }, [_vm._v("\n                " + _vm._s(error) + "\n            ")])
+    }))
+  }), _vm._v(" "), _c('div', {
+    staticClass: "error__message error__message--contest"
+  }, [_vm._v("\n            Si penses que es tracta d'un error o necessites ajuda, posa't en contacte amb tavernes@disedit.com\n        ")])], 2), _vm._v(" "), _c('div', {
+    staticClass: "error__footer",
+    slot: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        _vm.$refs.errorsModal.hide();
+      }
+    }
+  }, [_vm._v("Torna a la votació")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -40729,25 +40776,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.canBeModified),
       expression: "canBeModified"
     }],
-    staticClass: "btn btn-default btn-small",
+    staticClass: "btn btn-secondary btn-sm",
     attrs: {
       "type": "button"
     },
     on: {
       "click": _vm.modifyPhone
     }
-  }, [_vm._v("Modifica")])]), _vm._v(" "), _c('country-codes', {
+  }, [_vm._v("Modifica")])]), _vm._v(" "), _c('div', {
+    staticClass: "input-group"
+  }, [_c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('country-codes', {
     attrs: {
-      "value": _vm.countryCode
+      "value": _vm.countryCode,
+      "disabled": _vm.smsRequested
     }
-  }), _vm._v(" "), _c('input', {
+  })], 1), _vm._v(" "), _c('input', {
     directives: [{
       name: "focus",
       rawName: "v-focus",
       value: (_vm.phoneFocused),
       expression: "phoneFocused"
     }],
-    staticClass: "form-control input-lg",
+    staticClass: "form-control form-control-lg",
     attrs: {
       "type": "text",
       "name": "phone",
@@ -40767,7 +40819,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.phoneFocused = false
       }
     }
-  }), _vm._v(" "), _c('transition', {
+  })]), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "fade"
     }
@@ -43906,7 +43958,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'country-codes',
 
     props: {
-        value: Number
+        value: Number,
+        disabled: Boolean
     },
 
     data: function data() {
@@ -43964,6 +44017,9 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('select', {
     staticClass: "custom-select",
+    attrs: {
+      "disabled": _vm.disabled
+    },
     domProps: {
       "value": _vm.value
     },
@@ -43977,7 +44033,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": code.dialCode
       }
-    }, [_vm._v("+" + _vm._s(code.dialCode) + " " + _vm._s(code.name))])
+    }, [_vm._v("+" + _vm._s(code.dialCode))])
   }))
 },staticRenderFns: []}
 module.exports.render._withStripped = true
@@ -44238,6 +44294,39 @@ if (false) {
   "zw": { "code": "zw", "name": "Zimbabwe", "dialCode": 263, "phoneFormat": "071 123 4567" },
   "ax": { "code": "ax", "name": "Åland Islands", "dialCode": 358, "phoneFormat": "041 2345678" }
 });
+
+/***/ }),
+/* 414 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(23)();
+exports.push([module.i, "\n.error__header[data-v-2f35fe9d] {\n  text-align: center;\n  margin-top: 20px;\n}\n.error__header i[data-v-2f35fe9d] {\n    font-size: 68px;\n    color: #888;\n}\n.error__header h2[data-v-2f35fe9d] {\n    font-size: 46px;\n}\n.error__message[data-v-2f35fe9d] {\n  text-align: center;\n  width: 100%;\n  max-width: 500px;\n  margin: 15px auto;\n  border: 2px #e53720 solid;\n  color: #e53720;\n  border-radius: 5px;\n  padding: 12px;\n  font-size: 18px;\n}\n.error__message--contest[data-v-2f35fe9d] {\n  background: #FFF;\n  color: #555;\n  font-size: 14px;\n  border: 2px #CCC solid;\n}\n.error__footer[data-v-2f35fe9d] {\n  width: 100%;\n  display: block;\n  text-align: center;\n}\n", ""]);
+
+/***/ }),
+/* 415 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(414);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(24)("5cc8d5d5", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2f35fe9d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ErrorModal.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2f35fe9d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ErrorModal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

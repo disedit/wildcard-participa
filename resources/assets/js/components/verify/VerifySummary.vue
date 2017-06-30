@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="goBack()" class="btn btn-default">Tornar</button>
+        <button @click="goBack()" class="btn btn-secondary btn-sm">Modifica</button>
         <div v-for="question in selected">
             <h2>{{ question.question }}</h2>
             <li v-for="option in question.options">

@@ -1,6 +1,6 @@
 <template>
-    <select :value="value" @change="updateCountryCode($event.target.value)"  class="custom-select">
-        <option v-for="code in countryCodes" :value="code.dialCode">+{{ code.dialCode }} {{ code.name }}</option>
+    <select :value="value" @change="updateCountryCode($event.target.value)" :disabled="disabled"  class="custom-select">
+        <option v-for="code in countryCodes" :value="code.dialCode">+{{ code.dialCode }}</option>
     </select>
 </template>
 
@@ -12,7 +12,8 @@
         name: 'country-codes',
 
         props: {
-            value: Number
+            value: Number,
+            disabled: Boolean
         },
 
         data() {

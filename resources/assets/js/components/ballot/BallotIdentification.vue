@@ -6,7 +6,7 @@
                 Help
             </b-tooltip>
         </h2>
-        <input type="text" class="form-control input-lg" name="identification" :value="identifier" @input="updateID($event.target.value)" />
+        <input type="text" class="form-control form-control-lg" name="identification" :value="identifier" @input="updateID($event.target.value)" />
 
         <button :class="'btn btn-primary btn-lg' + disabled" type="submit">
             <i v-if="disabled" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>

@@ -3,21 +3,25 @@
             <form @submit.prevent="requestSMS">
                 <h2>
                     Phone
-                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-default btn-small" type="button">Modifica</button>
+                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-secondary btn-sm" type="button">Modifica</button>
                 </h2>
 
-                <country-codes :value="countryCode" />
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <country-codes :value="countryCode" :disabled="smsRequested" />
+                    </span>
 
-                <input
-                    type="text"
-                    class="form-control input-lg"
-                    name="phone"
-                    :value="phone"
-                    @input="updatePhone($event.target.value)"
-                    :disabled="smsRequested"
-                    v-focus="phoneFocused"
-                    @focus="phoneFocused = true"
-                    @blur="phoneFocused = false" />
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        name="phone"
+                        :value="phone"
+                        @input="updatePhone($event.target.value)"
+                        :disabled="smsRequested"
+                        v-focus="phoneFocused"
+                        @focus="phoneFocused = true"
+                        @blur="phoneFocused = false" />
+                </div>
 
                 <transition name="fade">
                     <button v-show="!smsRequested" :class="'btn btn-primary btn-lg' + disabled" type="submit">
