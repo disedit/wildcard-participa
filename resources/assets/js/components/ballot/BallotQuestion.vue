@@ -1,5 +1,5 @@
 <template>
-    <div class="question">
+    <div :class="'question template-' + question.template">
         <hr />
         <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> {{ question.question }}</h2>
         <p class="description">{{ question.description }}</p>
@@ -10,7 +10,12 @@
                     'disabled' : isDisabled(option),
                     'selected' : isSelected(option)
                 }">
-                <ballot-option :type="questionType" :option="option" :selected="isSelected(option)" :disabled="isDisabled(option)" />
+                <ballot-option
+                    :type="questionType"
+                    :option="option"
+                    :selected="isSelected(option)"
+                    :disabled="isDisabled(option)"
+                    :display-cost="question.display_cost" />
             </label>
         </div>
     </div>

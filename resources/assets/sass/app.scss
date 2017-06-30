@@ -22,3 +22,9 @@ input,
 button {
     font-family: $font-family-base;
 }
+
+.ballot-box {
+    background: $gray-lighter;
+    margin-top: 2rem;
+    padding: 1rem;
+}

@@ -8,8 +8,15 @@
             :checked="selected"
             @change="selectOption(option, type)"
             class="custom-control-input" />
+
         <span class="custom-control-indicator"></span>
-        <span class="custom-control-description">{{ option.option }} <i v-if="selected" class="fa fa-check" aria-hidden="true"></i></span>
+
+        <span class="custom-control-description">
+            <span class="option-name">{{ option.option }}</span>
+            <span v-if="display_cost && option.cost > 0" class="option-cost">{{ option.cost }}</span>
+            <i v-if="selected" class="fa fa-check" aria-hidden="true"></i>
+            <a href="#" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
+        </span>
     </div>
 </template>
 
@@ -21,12 +28,17 @@
             option: Object,
             type: String,
             selected: Boolean,
-            disabled: Boolean
+            disabled: Boolean,
+            display_cost: Boolean
         },
 
         methods: {
             selectOption(option, type) {
                 Bus.$emit('optionSelected', option, type);
+            },
+
+            displayInfo() {
+                console.log(this.option);
             }
         }
     }

@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->enum('template', ['simple', '2column']);
             $table->integer('min_options');
             $table->integer('max_options');
+            $table->boolean('display_cost');
             $table->timestamps();
         });
     }
