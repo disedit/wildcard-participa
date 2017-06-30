@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('edition_id');
             $table->string('question');
             $table->string('description');
+            $table->enum('template', ['simple', '2column']);
             $table->integer('min_options');
             $table->integer('max_options');
             $table->timestamps();

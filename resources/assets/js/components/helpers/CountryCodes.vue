@@ -1,5 +1,5 @@
 <template>
-    <select :value="value" @change="updateCountryCode($event.target.value)" :disabled="disabled"  class="custom-select">
+    <select :value="value" @change="$emit('update', $event.target.value)" :disabled="disabled"  class="custom-select">
         <option v-for="code in countryCodes" :value="code.dialCode">+{{ code.dialCode }}</option>
     </select>
 </template>
@@ -21,11 +21,5 @@
                 countryCodes: country_codes
             }
         },
-
-        methods: {
-            updateCountryCode(value) {
-                Bus.$emit('fieldUpdated', 'countryCode', value)
-            }
-        }
     }
 </script>

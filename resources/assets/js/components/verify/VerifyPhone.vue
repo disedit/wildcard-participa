@@ -8,7 +8,7 @@
 
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <country-codes :value="countryCode" :disabled="smsRequested" />
+                        <country-codes @update="updateCountryCode" :value="countryCode" :disabled="smsRequested" />
                     </span>
 
                     <input
@@ -116,6 +116,11 @@
 
             updateSMSCode(value) {
                 Bus.$emit('fieldUpdated', 'smsCode', value);
+            },
+
+            updateCountryCode(value) {
+                Bus.$emit('fieldUpdated', 'countryCode', Number(value));
+                this.phoneFocused = true;
             },
 
             modifyPhone(){

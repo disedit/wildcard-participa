@@ -1,14 +1,12 @@
 <template>
-    <div>
-        <h2>
-            ID
-            <b-tooltip content="Online!">
-                Help
-            </b-tooltip>
-        </h2>
-        <input type="text" class="form-control form-control-lg" name="identification" :value="identifier" @input="updateID($event.target.value)" />
+    <div class="ballot-identification">
+        <h3><i class="fa fa-user" aria-hidden="true"></i> Identificació</h3>
+        <p>Pots votar si tens més de <strong>16 anys</strong> i estàs empadronat a <strong>La Font de la Figuera</strong></p>
+        <text-input name="identification" label="DNI/NIE o Pasaporte" tooltip="Help" icon="user" :required="true" :value="identifier" @update="updateID" />
 
-        <button :class="'btn btn-primary btn-lg' + disabled" type="submit">
+        <hr />
+
+        <button :class="'btn btn-vote btn-primary btn-lg btn-block' + disabled" type="submit">
             <i v-if="disabled" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
             <i v-else class="fa fa-bullhorn" aria-hidden="true"></i>
             Vota
@@ -17,8 +15,14 @@
 </template>
 
 <script>
+    import TextInput from '../helpers/TextInput';
+
     export default {
         name: 'ballot-identification',
+
+        components: {
+            TextInput
+        },
 
         props: {
             loading: Boolean,
@@ -41,5 +45,16 @@
 </script>
 
 <style scoped lang="scss">
+    @import '../../../sass/_variables';
+
+    .ballot-identification {
+        background: $gray-lighter;
+        margin-top: 2rem;
+        padding: 1rem;
+    }
+
+    h3 {
+        font-weight: bold;
+    }
 
 </style>
