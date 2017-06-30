@@ -5,6 +5,9 @@
                     Phone
                     <button v-show="canBeModified" @click="modifyPhone" class="btn btn-default btn-small" type="button">Modifica</button>
                 </h2>
+
+                <country-codes :value="countryCode" />
+
                 <input
                     type="text"
                     class="form-control input-lg"
@@ -52,6 +55,7 @@
     import { focus } from 'vue-focus';
     import Spinner from '../helpers/Spinner';
     import VerifyFlags from './VerifyFlags';
+    import CountryCodes from '../helpers/CountryCodes';
 
     export default {
         name: 'verify-phone',
@@ -62,11 +66,13 @@
 
         components: {
             Spinner,
-            VerifyFlags
+            VerifyFlags,
+            CountryCodes,
         },
 
         props: {
             phone: String,
+            countryCode: Number,
             smsCode: String,
             smsRequested: Boolean,
         },

@@ -12,9 +12,9 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('/ballot', 'HomeController@index');
-Route::get('/verify', 'HomeController@index');
-Route::get('/confirmed', 'HomeController@index');
+Route::get('/booth/ballot', 'HomeController@index');
+Route::get('/booth/verify', 'HomeController@index');
+Route::get('/booth/receipt', 'HomeController@index');
 
 Auth::routes();
 

@@ -1,8 +1,8 @@
 <template>
     <div>
         <router-link to="/">Step 1</router-link>
-        <router-link to="/verify">Step 2</router-link>
-        <router-link to="/confirmed">Step 3</router-link>
+        <router-link to="/booth/verify">Step 2</router-link>
+        <router-link to="/booth/receipt">Step 3</router-link>
 
         <transition name="fade">
             <booth-ballot
@@ -15,12 +15,15 @@
             <booth-verify
                 v-if="$route.name == 'verify'"
                 :phone="phone"
+                :country-code="countryCode"
                 :selected="selected"
                 :sms-code="smsCode"
                 :sms-requested="smsRequested" />
         </transition>
         <transition>
-            <booth-confirmation v-if="$route.name == 'confirmed'" />
+            <booth-receipt
+                v-if="$route.name == 'receipt'"
+                :receipt="receipt" />
         </transition>
 
         <error-modal :errors="errors" />
@@ -28,30 +31,18 @@
 </template>
 
 <script>
-    import VueRouter from 'vue-router';
     import BoothBallot from './BoothBallot';
     import BoothVerify from './BoothVerify';
-    import BoothConfirmation from './BoothConfirmation';
+    import BoothReceipt from './BoothReceipt';
     import ErrorModal from './helpers/ErrorModal';
-
-    const router = new VueRouter({
-      mode: 'history',
-      routes: [
-        { name: 'ballot', path: '/', component: BoothBallot },
-        { name: 'verify', path: '/verify', component: BoothVerify },
-        { name: 'confirmed', path: '/confirmed', component: BoothConfirmation }
-      ]
-    });
 
     export default {
         name: 'booth',
 
-        router,
-
         components: {
             BoothBallot,
             BoothVerify,
-            BoothConfirmation,
+            BoothReceipt,
             ErrorModal
         },
 
@@ -60,8 +51,10 @@
             ballot: {},
             selected: [],
             errors: {},
+            receipt: {},
             ID: '',
             phone: '',
+            countryCode: 34,
             smsCode: '',
             smsRequested: false
           }
@@ -74,7 +67,7 @@
             Bus.$on('submitBallotForVerification', () => this.submitBallotForVerification());
             Bus.$on('requestSMS', () => this.requestSMS());
             Bus.$on('castBallot', () => this.castBallot());
-            Bus.$on('goToStep', (path) => router.push({ path }));
+            Bus.$on('goToStep', (path) => this.$router.push({ path }));
         },
 
         methods: {
@@ -142,7 +135,7 @@
                     ballot: this.selected,
                     SID: this.ID
                 }).then(response => {
-                    router.push({ path: '/verify' });
+                    this.$router.push({ path: '/booth/verify' });
                 }).catch(errors => {
                     this.errors = errors
                 }).then(() => Bus.$emit('BoothBallotLoading', false));
@@ -155,7 +148,7 @@
                 Participa.requestSMS({
                     ballot: this.selected,
                     SID: this.ID,
-                    phone: this.phone
+                    phone: '00' + this.countryCode + this.phone
                 }).then(response => {
                     this.smsRequested = true;
                     if(response.flag){
@@ -176,10 +169,11 @@
                 Participa.castBallot({
                     ballot: this.selected,
                     SID: this.ID,
-                    phone: this.phone,
+                    phone: '00' + this.countryCode + this.phone,
                     SMS_code: this.smsCode
                 }).then(response => {
-                    router.push({ path: '/confirmed' });
+                    this.receipt = response.ballot;
+                    this.$router.push({ path: '/booth/receipt' });
                 }).catch(errors => {
                     this.errors = errors
                 }).then(() => Bus.$emit('VerifyPhoneLoading', false));

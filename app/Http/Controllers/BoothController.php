@@ -126,7 +126,7 @@ class BoothController extends Controller
             return response()->json(['success' => false, 'error' => 'Error sistema']);
         }
 
-        return response()->json(['success' => true, 'ballot' => '']);
+        return response()->json(['success' => true, 'ballot' => $ballot]);
     }
 
     /**

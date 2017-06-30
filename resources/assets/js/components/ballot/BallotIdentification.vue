@@ -1,6 +1,11 @@
 <template>
     <div>
-        <h2>ID</h2>
+        <h2>
+            ID
+            <b-tooltip content="Online!">
+                Help
+            </b-tooltip>
+        </h2>
         <input type="text" class="form-control input-lg" name="identification" :value="identifier" @input="updateID($event.target.value)" />
 
         <button :class="'btn btn-primary btn-lg' + disabled" type="submit">

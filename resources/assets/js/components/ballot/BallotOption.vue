@@ -1,14 +1,15 @@
 <template>
-    <label :class="{ 'disabled-option': disabled } ">
+    <label :class="{ 'disabled-option': disabled, 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
         <input
             :name="'ballot[' + option.question_id + ']'"
             :value="option.id"
             :type="type"
             :disabled="disabled"
             :checked="selected"
-            @change="selectOption(option, type)" />
-        {{ option.option }}
-        {{ selected }}
+            @change="selectOption(option, type)"
+            class="custom-control-input" />
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ option.option }} {{ selected }}</span>
     </label>
 </template>
 

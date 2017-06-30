@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-6">
             <verify-in-person v-if="booth_mode" />
-            <verify-phone v-else :phone="phone" :sms-code="smsCode" :sms-requested="smsRequested" />
+            <verify-phone v-else :phone="phone" :country-code="countryCode" :sms-code="smsCode" :sms-requested="smsRequested" />
         </div>
     </div>
 </template>
@@ -26,6 +26,7 @@
 
         props: {
             phone: String,
+            countryCode: Number,
             selected: Array,
             smsCode: String,
             smsRequested: Boolean
