@@ -1,9 +1,11 @@
 <template>
     <div>
         <h2>{{ question.question }} {{ question.max_options }}</h2>
-        <li v-for="option in question.options">
-            <ballot-option :type="questionType" :option="option" :selected="isSelected(option)" :disabled="isDisabled(option)" />
-        </li>
+        <ul class="list-group">
+            <li v-for="option in question.options" :class="{ 'list-group-item': true, 'disabled' : isDisabled(option) }">
+                <ballot-option :type="questionType" :option="option" :selected="isSelected(option)" :disabled="isDisabled(option)" />
+            </li>
+        </ul>
     </div>
 </template>
 

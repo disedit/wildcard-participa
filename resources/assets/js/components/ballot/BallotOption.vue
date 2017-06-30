@@ -1,5 +1,5 @@
 <template>
-    <label :class="{ 'disabled-option': disabled, 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
+    <label :class="{ 'disabled-option': disabled, 'selected-option': selected, 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
         <input
             :name="'ballot[' + option.question_id + ']'"
             :value="option.id"
@@ -33,6 +33,12 @@
 </script>
 
 <style scoped lang="scss">
+    label {
+        display: flex;
+        margin: -0.75rem -1.25rem;
+        padding: 0.75rem 1.25rem;
+    }
+
     .disabled-option {
         color: grey;
     }

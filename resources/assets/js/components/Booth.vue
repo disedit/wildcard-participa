@@ -1,29 +1,19 @@
 <template>
-    <div>
+    <div class="booth">
         <router-link to="/">Step 1</router-link>
         <router-link to="/booth/verify">Step 2</router-link>
         <router-link to="/booth/receipt">Step 3</router-link>
 
-        <transition name="fade">
-            <booth-ballot
-                v-if="$route.name == 'ballot'"
+        <transition :name="transitionName">
+            <router-view
+                class="child-view"
                 :identifier="ID"
                 :ballot="ballot"
-                :selected="selected" />
-        </transition>
-        <transition name="fade">
-            <booth-verify
-                v-if="$route.name == 'verify'"
+                :selected="selected"
                 :phone="phone"
                 :country-code="countryCode"
-                :selected="selected"
                 :sms-code="smsCode"
                 :sms-requested="smsRequested" />
-        </transition>
-        <transition>
-            <booth-receipt
-                v-if="$route.name == 'receipt'"
-                :receipt="receipt" />
         </transition>
 
         <error-modal :errors="errors" />
@@ -31,18 +21,12 @@
 </template>
 
 <script>
-    import BoothBallot from './BoothBallot';
-    import BoothVerify from './BoothVerify';
-    import BoothReceipt from './BoothReceipt';
     import ErrorModal from './helpers/ErrorModal';
 
     export default {
         name: 'booth',
 
         components: {
-            BoothBallot,
-            BoothVerify,
-            BoothReceipt,
             ErrorModal
         },
 
@@ -56,8 +40,18 @@
             phone: '',
             countryCode: 34,
             smsCode: '',
-            smsRequested: false
+            smsRequested: false,
+            transitionName: 'slide-left'
           }
+        },
+
+        beforeRouteUpdate (to, from, next) {
+            let transitionName = 'slide-left';
+
+            if(from.path == '/booth/verify' && to.path == '/') transitionName = 'slide-right';
+
+            this.transitionName = transitionName;
+            next()
         },
 
         created() {

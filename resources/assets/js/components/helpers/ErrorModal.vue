@@ -46,19 +46,22 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../../sass/_variables';
+
     .error {
 
         &__header {
             text-align: center;
             margin-top: 20px;
-            
+
             i {
                 font-size: 68px;
-                color: #888;
+                color: $gray;
             }
 
             h2 {
                 font-size: 46px;
+                color: $gray;
             }
         }
 
@@ -67,8 +70,8 @@
             width: 100%;
             max-width: 500px;
             margin: 15px auto;
-            border: 2px #e53720 solid;
-            color: #e53720;
+            border: 2px $brand-danger solid;
+            color: $brand-danger;
             border-radius: 5px;
             padding: 12px;
             font-size: 18px;
@@ -76,9 +79,9 @@
 
         &__message--contest {
             background: #FFF;
-            color: #555;
+            color: $gray-light;
             font-size: 14px;
-            border: 2px #CCC solid;
+            border: 2px $gray-light solid;
         }
 
         &__footer {
