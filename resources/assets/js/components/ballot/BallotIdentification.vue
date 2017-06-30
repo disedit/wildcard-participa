@@ -6,7 +6,6 @@
             name="identification"
             :label="$t('booth_identification.label')"
             :tooltip="$t('booth_identification.tooltip')"
-            icon="user"
             :required="true"
             :value="identifier"
             @update="updateID" />
@@ -69,10 +68,6 @@
 
 <style scoped lang="scss">
     @import '../../../sass/_variables';
-
-    h3 {
-        font-weight: bold;
-    }
 
     .anonymous {
         text-align: center;

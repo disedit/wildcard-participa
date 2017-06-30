@@ -1,38 +1,29 @@
 <template>
-    <div>
-            <form @submit.prevent="requestSMS">
-                <h2>
-                    Phone
-                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-secondary btn-sm" type="button">Modifica</button>
-                </h2>
+    <div class="verify-phone">
+        <transition name="fade">
+            <form v-if="!smsRequested" @submit.prevent="requestSMS">
+                <button v-show="canBeModified" @click="modifyPhone" class="btn btn-secondary btn-sm" type="button">Modifica</button>
+                <h3>
+                    <i class="fa fa-mobile" aria-hidden="true"></i> {{ $t('verify_phone.heading') }}
+                </h3>
 
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <country-codes @update="updateCountryCode" :value="countryCode" :disabled="smsRequested" />
-                    </span>
+                <phone-input
+                    name="phone"
+                    :label="$t('verify_phone.label')"
+                    :tooltip="$t('verify_phone.tooltip')"
+                    :required="true"
+                    :value="phone"
+                    :country-code="countryCode"
+                    :disabled="smsRequested"
+                    @update="updatePhone"
+                    @updateCountryCode="updateCountryCode" />
 
-                    <input
-                        type="text"
-                        class="form-control form-control-lg"
-                        name="phone"
-                        :value="phone"
-                        @input="updatePhone($event.target.value)"
-                        :disabled="smsRequested"
-                        v-focus="phoneFocused"
-                        @focus="phoneFocused = true"
-                        @blur="phoneFocused = false" />
-                </div>
-
-                <transition name="fade">
-                    <button v-show="!smsRequested" :class="'btn btn-primary btn-lg' + disabled" type="submit">
-                        <spinner icon="bullhorn" :loading="isLoading" />
-                        Send SMS
-                    </button>
-                </transition>
+                <button v-show="!smsRequested" :class="'btn btn-primary btn-block btn-lg' + disabled" type="submit">
+                    <spinner icon="bullhorn" :loading="isLoading" />
+                    Send SMS
+                </button>
             </form>
         </transition>
-
-        <verify-flags :flag="flag" />
 
         <transition name="fade">
             <form v-if="smsRequested" @submit.prevent="castBallot">
@@ -46,6 +37,8 @@
                     @focus="smsCodeFocused = true"
                     @blur="smsCodeFocused = false" />
 
+                <verify-flags :flag="flag" />
+
                 <button :class="'btn btn-primary btn-lg' + disabled" type="submit">
                     <spinner icon="bullhorn" :loading="isLoading" />
                     Verify SMS
@@ -56,22 +49,19 @@
 </template>
 
 <script>
-    import { focus } from 'vue-focus';
     import Spinner from '../helpers/Spinner';
     import VerifyFlags from './VerifyFlags';
     import CountryCodes from '../helpers/CountryCodes';
+    import PhoneInput from '../helpers/PhoneInput';
 
     export default {
         name: 'verify-phone',
-
-        directives: {
-            focus: focus
-        },
 
         components: {
             Spinner,
             VerifyFlags,
             CountryCodes,
+            PhoneInput,
         },
 
         props: {
@@ -84,7 +74,6 @@
         data() {
             return {
                 isLoading: false,
-                phoneFocused: false,
                 smsCodeFocused: false,
                 flag: false
             }
@@ -104,7 +93,6 @@
         },
 
         created() {
-            this.phoneFocused = true;
             Bus.$on('VerifyPhoneLoading', (isLoading) => this.isLoading = isLoading);
             Bus.$on('setFlag', (flag) => this.flag = flag);
         },
@@ -120,20 +108,16 @@
 
             updateCountryCode(value) {
                 Bus.$emit('fieldUpdated', 'countryCode', Number(value));
-                this.phoneFocused = true;
             },
 
             modifyPhone(){
                 Bus.$emit('fieldUpdated', 'smsRequested', false);
                 Bus.$emit('fieldUpdated', 'smsCode', '');
                 this.flag = false;
-                this.smsCodeFocused = false;
-                this.phoneFocused = true;
             },
 
             requestSMS() {
                 Bus.$emit('requestSMS');
-                this.phoneFocused = false;
                 this.smsCodeFocused = true;
             },
 
@@ -146,5 +130,13 @@
 </script>
 
 <style scoped lang="scss">
+    .verify-phone {
+        position: relative;
+        height: 200px;
 
+        form {
+            position: absolute;
+            width: 100%;
+        }
+    }
 </style>

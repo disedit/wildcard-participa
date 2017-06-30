@@ -9,5 +9,13 @@ export default {
     },
     booth_option: {
         more_info: 'More info',
+    },
+    verify_summary: {
+        edit: 'Edit ballot'
+    },
+    verify_phone: {
+        heading: 'Verify your ballot',
+        label: 'Mobile',
+        tooltip: 'Tooltip'
     }
 };

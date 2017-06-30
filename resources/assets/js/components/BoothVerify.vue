@@ -4,7 +4,7 @@
             <verify-summary :selected="selected" />
         </div>
         <div class="col-md-12">
-            <div class="ballot-box">
+            <div class="ballot-box ballot-phone">
                 <verify-in-person v-if="booth_mode" />
                 <verify-phone v-else :phone="phone" :country-code="countryCode" :sms-code="smsCode" :sms-requested="smsRequested" />
             </div>
@@ -47,5 +47,8 @@
 </script>
 
 <style scoped lang="scss">
-
+    .ballot-phone {
+        max-width: 500px;
+        margin: 0 auto;
+    }
 </style>
