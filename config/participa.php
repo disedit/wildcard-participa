@@ -6,6 +6,7 @@ return [
     'sms_max_attempts' => 3,
     'anonymous_voting' => false,
     'min_age' => 16,
+    'council_url' => 'https://anycity.com',
     'header_links' => [
         'web' => '',
         'twitter' => '',

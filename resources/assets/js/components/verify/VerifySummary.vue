@@ -68,14 +68,16 @@
 
         h3 {
             font-size: 1.2rem;
+            font-weight: bold;
         }
 
         .options {
             list-style: none;
             padding-left: 0;
+            line-height: 175%;
 
-            li {
-
+            .fa {
+                margin-right: 10px;
             }
         }
 

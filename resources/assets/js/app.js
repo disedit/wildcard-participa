@@ -4,7 +4,7 @@ window.Vue = require('vue');
 window.Bus = new Vue();
 
 import VueRouter from 'vue-router';
-import VueI18n from 'vue-i18n'
+import VueI18n from 'vue-i18n';
 import BootstrapVue from 'bootstrap-vue';
 
 import Participa from './api';
@@ -25,7 +25,11 @@ Vue.use(VueI18n);
 Vue.use(BootstrapVue);
 
 const scrollBehavior = (to, from, savedPosition) => {
-    return { x: 0, y: 0 };
+    if (savedPosition) {
+        return savedPosition;
+    } else {
+        return { x: 0, y: 0 };
+    }
 };
 
 const router = new VueRouter({
@@ -39,7 +43,7 @@ const router = new VueRouter({
                 { path: '', component: BoothBallot },
                 { path: 'booth/verify', component: BoothVerify },
                 { path: 'booth/receipt', component: BoothReceipt },
-            ]
+            ],
         },
     ],
 });
@@ -47,7 +51,7 @@ const router = new VueRouter({
 const messages = {
   en: English,
   ca: Catalan,
-  es: Spanish
+  es: Spanish,
 }
 
 const i18n = new VueI18n({
@@ -59,5 +63,5 @@ const app = new Vue({
     el: '#booth',
     router,
     i18n,
-    template: '<transition name="fade" mode="out-in"><router-view /></transition>'
+    template: '<transition name="fade" mode="out-in"><router-view /></transition>',
 });

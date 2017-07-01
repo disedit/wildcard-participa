@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <span class="icon">
         <i v-if="loading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
         <i v-else :class="'fa fa-' + icon" aria-hidden="true"></i>
     </span>
@@ -15,3 +15,9 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .fa {
+        margin-right: 5px;
+    }
+</style>

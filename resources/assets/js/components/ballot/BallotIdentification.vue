@@ -4,6 +4,7 @@
         <p class="subheading" v-html="$t('booth_identification.subheading', { min_age, municipality })"></p>
         <text-input
             name="identification"
+            ref="identificationInput"
             :label="$t('booth_identification.label')"
             :tooltip="$t('booth_identification.tooltip')"
             :required="true"
@@ -50,6 +51,10 @@
             this.municipality = window.BoothConfig.name;
             this.min_age = window.BoothConfig.min_age;
         },
+
+        mounted() {
+            Bus.$on('doneSelecting', () => this.$refs.identificationInput.$refs.identification.focus());
+        }
 
         computed: {
             disabled: function() {

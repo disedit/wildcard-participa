@@ -24,7 +24,7 @@
 
             <transition name="slide" mode="out-in">
                 <button v-show="!smsRequested" :class="'btn btn-primary btn-block btn-lg' + disabled" type="submit">
-                    <spinner icon="bullhorn" :loading="isLoading" />
+                    <spinner icon="paper-plane" :loading="isLoading" />
                     {{ $t('verify_phone.request_sms_button') }}
                 </button>
             </transition>

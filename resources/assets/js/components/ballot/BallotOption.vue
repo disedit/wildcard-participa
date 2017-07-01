@@ -13,7 +13,7 @@
 
         <span class="custom-control-description">
             <span class="option-name">{{ option.option }}</span>
-            <span v-if="display_cost && option.cost > 0" class="option-cost">{{ option.cost }}</span>
+            <span v-if="display_cost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
             <i v-if="selected" class="fa fa-check" aria-hidden="true"></i>
             <a href="#" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
         </span>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+    import format from 'format-number';
+
     export default {
         name: 'ballot-option',
 
@@ -32,13 +34,19 @@
             display_cost: Boolean
         },
 
+        filters: {
+            formatCurrency: function(value) {
+                return format({ suffix: '€', integerSeparator: '.', round: 0 })(value);
+            }
+        },
+
         methods: {
             selectOption(option, type) {
                 Bus.$emit('optionSelected', option, type);
             },
 
             displayInfo() {
-                console.log(this.option);
+                Bus.$emit('openOptionModal', this.option, this.type, true, this.selected);
             }
         }
     }

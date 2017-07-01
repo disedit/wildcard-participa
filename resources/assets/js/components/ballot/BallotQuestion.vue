@@ -1,6 +1,5 @@
 <template>
     <div :class="'question template-' + question.template">
-        <hr />
         <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> {{ question.question }}</h2>
         <p class="description">{{ question.description }}</p>
         <div class="list-group">
@@ -18,6 +17,7 @@
                     :display-cost="question.display_cost" />
             </label>
         </div>
+        <hr />
     </div>
 </template>
 

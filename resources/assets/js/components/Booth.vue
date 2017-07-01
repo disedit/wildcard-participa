@@ -17,17 +17,20 @@
         </transition>
 
         <error-modal :errors="errors" />
+        <option-modal />
     </div>
 </template>
 
 <script>
     import ErrorModal from './helpers/ErrorModal';
+    import OptionModal from './helpers/OptionModal';
 
     export default {
         name: 'booth',
 
         components: {
-            ErrorModal
+            ErrorModal,
+            OptionModal
         },
 
         data() {
@@ -48,12 +51,17 @@
         beforeRouteUpdate (to, from, next) {
             let transitionName = 'slide-left';
 
-            if(from.path == '/booth/verify' && to.path == '/'
-            || from.path == '/booth/receipt' && to.path == '/') transitionName = 'slide-right';
+            if(from.path == '/booth/verify' && to.path == '/') transitionName = 'slide-right';
 
             if(from.path == '/booth/receipt' && to.path == '/booth/verify'){
                 // Should not be allowed. Redirect to first step
+                this.clearBooth();
                 this.$router.push({ path: '/' });
+            }
+
+            if(from.path == '/booth/receipt' && to.path == '/'){
+                // If going from receipt to first step, clear the form
+                this.clearBooth();
             }
 
             this.transitionName = transitionName;
@@ -68,6 +76,12 @@
             Bus.$on('requestSMS', () => this.requestSMS());
             Bus.$on('castBallot', () => this.castBallot());
             Bus.$on('goToStep', (path) => this.$router.push({ path }));
+        },
+
+        watch: {
+            selected: function(){
+                this.doneSelecting();
+            }
         },
 
         methods: {
@@ -128,6 +142,19 @@
                 this.$set(this.selected, questionIndex, selected[questionIndex]);
             },
 
+            /* Scroll to ID field, if all questions have been fully answered */
+            doneSelecting() {
+                let completed = [];
+
+                this.selected.forEach((question) => completed.push(question.max_options == question.options.length));
+
+                const shouldScroll = completed.every((value) => value === true);
+
+                if(shouldScroll) {
+                    Bus.$emit('doneSelecting');
+                }
+            },
+
             /* Precheck before step 2. Checks if ID exists or has been used */
             submitBallotForVerification() {
                 Bus.$emit('BoothBallotLoading', true);
@@ -144,7 +171,7 @@
 
             /* Request SMS code to verify ballot */
             requestSMS() {
-                
+
                 Bus.$emit('VerifyPhoneLoading', true);
 
                 Participa.requestSMS({
@@ -179,11 +206,18 @@
                 }).catch(errors => {
                     this.errors = errors
                 }).then(() => Bus.$emit('VerifyPhoneLoading', false));
+            },
+
+            clearBooth() {
+                this.initialSelected();
+
+                this.receipt = {};
+                this.ID = '';
+                this.phone = '';
+                this.countryCode = 34;
+                this.smsCode = '';
+                this.smsRequested = false;
             }
         }
     }
 </script>
-
-<style scoped lang="scss">
-
-</style>
