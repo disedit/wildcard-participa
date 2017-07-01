@@ -12,17 +12,21 @@
             ref="phoneField"
             type="text"
             :id="name"
+            :ref="name"
             :name="name"
             :value="value"
             @input="$emit('update', $event.target.value)"
             @focus="focused = true"
             @blur="focused = value ? true : false"
             :required="required"
+            :disabled="disabled"
             class="form-control form-control-lg" />
 
         <transition name="fade">
-            <country-codes v-show="focused" :value="countryCode" @focus="focused = true" @update="updateCountryCode" />
+            <country-codes v-show="focused" :value="countryCode" :disabled="disabled" @focus="focused = true" @update="updateCountryCode" />
         </transition>
+
+        <slot></slot>
     </div>
 </template>
 
@@ -77,7 +81,7 @@
             z-index: 10;
             position: absolute;
             font-size: 1.2rem;
-            top: 1.5rem;
+            top: 1.4rem;
             left: 1.5rem;
             cursor: text;
             transition: 0.5s;
@@ -90,16 +94,20 @@
             position: absolute;
             padding-top: 2rem;
             padding-left: 6rem;
+            padding-bottom: 0.5rem;
             border-width: 0.20rem;
         }
 
         select {
             position: absolute;
             left: 1.2rem;
-            top: 2.3rem;
+            top: 2.2rem;
             width: 4rem;
             z-index: 10;
             background: $gray-lightest;
+            border: 0;
+            padding: 1px 3px;
+            border: 1px #C9CBCB solid;
         }
     }
 

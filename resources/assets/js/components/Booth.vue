@@ -83,6 +83,7 @@
 
             /* Load an emtpy ballot onto 'selected' */
             initialSelected() {
+                /* Hack: Prevent original ballot value from updating */
                 let ballot = JSON.parse( JSON.stringify( this.ballot.questions ) );
 
                 ballot.forEach(function(question, index) {
@@ -143,6 +144,7 @@
 
             /* Request SMS code to verify ballot */
             requestSMS() {
+                
                 Bus.$emit('VerifyPhoneLoading', true);
 
                 Participa.requestSMS({

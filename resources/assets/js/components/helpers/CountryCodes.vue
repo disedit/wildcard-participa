@@ -1,6 +1,6 @@
 <template>
     <select :value="value" @change="$emit('update', $event.target.value)" @focus="$emit('focus')" :disabled="disabled">
-        <option v-for="code in countryCodes" :value="code.dialCode">+{{ code.dialCode }}</option>
+        <option v-for="code in countryCodes" :value="code.dialCode">+{{ code.dialCode }} - {{ code.name }}</option>
     </select>
 </template>
 

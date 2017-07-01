@@ -1,47 +1,57 @@
 <template>
     <div class="verify-phone">
-        <transition name="fade">
-            <form v-if="!smsRequested" @submit.prevent="requestSMS">
-                <button v-show="canBeModified" @click="modifyPhone" class="btn btn-secondary btn-sm" type="button">Modifica</button>
-                <h3>
-                    <i class="fa fa-mobile" aria-hidden="true"></i> {{ $t('verify_phone.heading') }}
-                </h3>
+        <form @submit.prevent="requestSMS">
+            <h3>
+                <i class="fa fa-mobile" aria-hidden="true"></i> {{ $t('verify_phone.heading') }}
+            </h3>
 
-                <phone-input
-                    name="phone"
-                    :label="$t('verify_phone.label')"
-                    :tooltip="$t('verify_phone.tooltip')"
-                    :required="true"
-                    :value="phone"
-                    :country-code="countryCode"
-                    :disabled="smsRequested"
-                    @update="updatePhone"
-                    @updateCountryCode="updateCountryCode" />
+            <p class="subheading">{{ $t('verify_phone.phone_subheading') }}</p>
 
+            <phone-input
+                name="phone"
+                ref="phone"
+                :label="$t('verify_phone.phone_label')"
+                :required="true"
+                :value="phone"
+                :country-code="countryCode"
+                :disabled="smsRequested"
+                @update="updatePhone"
+                @updateCountryCode="updateCountryCode">
+                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-edit btn-secondary btn-sm" type="button">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </button>
+            </phone-input>
+
+            <transition name="slide" mode="out-in">
                 <button v-show="!smsRequested" :class="'btn btn-primary btn-block btn-lg' + disabled" type="submit">
                     <spinner icon="bullhorn" :loading="isLoading" />
-                    Send SMS
+                    {{ $t('verify_phone.request_sms_button') }}
                 </button>
-            </form>
-        </transition>
+            </transition>
+        </form>
 
-        <transition name="fade">
+
+        <transition name="slide" mode="out-in">
             <form v-if="smsRequested" @submit.prevent="castBallot">
-                <input
-                    type="text"
-                    class="form-control input-lg"
+                <hr />
+
+                <p class="subheading">{{ $t('verify_phone.code_subheading') }}</p>
+
+                <text-input
                     name="sms_code"
+                    ref="sms_code"
+                    :label="$t('verify_phone.code_label')"
+                    :tooltip="$t('verify_phone.code_tooltip')"
+                    :required="true"
                     :value="smsCode"
-                    @input="updateSMSCode($event.target.value)"
-                    v-focus="smsCodeFocused"
-                    @focus="smsCodeFocused = true"
-                    @blur="smsCodeFocused = false" />
+                    :autofocus="true"
+                    @update="updateSMSCode" />
 
                 <verify-flags :flag="flag" />
 
-                <button :class="'btn btn-primary btn-lg' + disabled" type="submit">
-                    <spinner icon="bullhorn" :loading="isLoading" />
-                    Verify SMS
+                <button :class="'btn btn-success btn-block btn-lg' + disabled" type="submit">
+                    <spinner icon="check" :loading="isLoading" />
+                    {{ $t('verify_phone.cast_ballot_button') }}
                 </button>
             </form>
         </transition>
@@ -51,8 +61,8 @@
 <script>
     import Spinner from '../helpers/Spinner';
     import VerifyFlags from './VerifyFlags';
-    import CountryCodes from '../helpers/CountryCodes';
     import PhoneInput from '../helpers/PhoneInput';
+    import TextInput from '../helpers/TextInput';
 
     export default {
         name: 'verify-phone',
@@ -60,8 +70,8 @@
         components: {
             Spinner,
             VerifyFlags,
-            CountryCodes,
             PhoneInput,
+            TextInput
         },
 
         props: {
@@ -97,6 +107,10 @@
             Bus.$on('setFlag', (flag) => this.flag = flag);
         },
 
+        mounted() {
+            this.$refs.phone.$refs.phone.focus();
+        },
+
         methods: {
             updatePhone(value) {
                 Bus.$emit('fieldUpdated', 'phone', value);
@@ -108,17 +122,18 @@
 
             updateCountryCode(value) {
                 Bus.$emit('fieldUpdated', 'countryCode', Number(value));
+                this.$refs.phone.$refs.phone.focus();
             },
 
             modifyPhone(){
                 Bus.$emit('fieldUpdated', 'smsRequested', false);
                 Bus.$emit('fieldUpdated', 'smsCode', '');
                 this.flag = false;
+                this.$refs.phone.$refs.phone.focus();
             },
 
             requestSMS() {
                 Bus.$emit('requestSMS');
-                this.smsCodeFocused = true;
             },
 
             castBallot() {
@@ -130,13 +145,10 @@
 </script>
 
 <style scoped lang="scss">
-    .verify-phone {
-        position: relative;
-        height: 200px;
-
-        form {
-            position: absolute;
-            width: 100%;
-        }
+    .btn-edit {
+        position: absolute;
+        z-index: 150;
+        right: 1rem;
+        top: 1.3rem;
     }
 </style>

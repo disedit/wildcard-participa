@@ -1,10 +1,10 @@
 <template>
     <div class="flag">
-        <div v-if="flag.name == 'SMS_already_sent'">
+        <div v-if="flag.name == 'SMS_already_sent'" class="alert alert-info">
             SMS_already_sent
         </div>
 
-        <div v-if="flag.name == 'SMS_exceeded'">
+        <div v-if="flag.name == 'SMS_exceeded'" class="alert alert-warning">
             SMS_exceeded
         </div>
     </div>

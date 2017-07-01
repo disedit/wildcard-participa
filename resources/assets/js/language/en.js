@@ -15,7 +15,12 @@ export default {
     },
     verify_phone: {
         heading: 'Verify your ballot',
-        label: 'Mobile',
-        tooltip: 'Tooltip'
+        phone_label: 'Mobile',
+        code_label: 'SMS Code',
+        code_tooltip: 'Codi numeric',
+        phone_subheading: 'Lorem ipsum',
+        code_subheading: 'Lorem ipsum',
+        request_sms_button: 'Text me the code',
+        cast_ballot_button: 'Cast my ballot',
     }
 };

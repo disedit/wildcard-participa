@@ -11,6 +11,7 @@
         type="text"
         :id="name"
         :name="name"
+        :ref="name"
         :value="value"
         @input="$emit('update', $event.target.value)"
         @focus="focused = true"
@@ -31,7 +32,8 @@
             icon: String,
             value: String,
             tooltip: String,
-            required: Boolean
+            required: Boolean,
+            autofocus: Boolean
         },
 
         data() {
@@ -42,6 +44,7 @@
 
         mounted() {
             this.focused = this.value ? true : false;
+            if(this.autofocus) this.$refs[this.name].focus();
         }
     }
 </script>
@@ -57,7 +60,7 @@
             z-index: 10;
             position: absolute;
             font-size: 1.2rem;
-            top: 1.5rem;
+            top: 1.4rem;
             left: 1.5rem;
             cursor: text;
             transition: 0.5s;
@@ -70,6 +73,7 @@
             position: absolute;
             padding-top: 2rem;
             padding-left: 1rem;
+            padding-bottom: 0.5rem;
             border-width: 0.20rem;
         }
     }
