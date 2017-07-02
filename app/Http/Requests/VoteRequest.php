@@ -29,9 +29,12 @@ class VoteRequest extends FormRequest
     public function all() {
         $attributes = parent::all();
 
-        if(isset($attributes['SID'])) $attributes['SID'] = $this->cleanSID($attributes['SID']);
-        if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($attributes['phone']);
+        $countryCode = (isset($attributes['countryCode'])) ? $attributes['countryCode'] : null;
 
+        if(isset($attributes['SID'])) $attributes['SID'] = $this->cleanSID($attributes['SID']);
+        if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($countryCode, $attributes['phone']);
+        debug($attributes);
+        $this->replace($attributes);
         return $attributes;
     }
 
@@ -62,7 +65,11 @@ class VoteRequest extends FormRequest
         ];
 
         // if SMS code is required!!
-        if($is_requestSMS || $is_castBallot) $rules['phone'] = $phone_required;
+        if($is_requestSMS || $is_castBallot){
+            $rules['phone'] = $phone_required;
+            $rules['countryCode'] = 'required|numeric';
+        }
+
         if($is_castBallot) $rules['SMS_code'] = $sms_required;
 
         return $rules;
@@ -73,21 +80,20 @@ class VoteRequest extends FormRequest
      *
      * @return array
      */
-    public function cleanPhone($value){
+    public function cleanPhone($countryCode, $phone){
 
-        $value = filter_var($value, FILTER_SANITIZE_STRING);
-        $value = str_replace(" ","",$value);
-        $value = str_replace(".","",$value);
-        $value = str_replace("-","",$value);
-        $value = str_replace("+","00",$value);
+        $countryCode = filter_var($countryCode, FILTER_SANITIZE_STRING);
+        $phone = filter_var($phone, FILTER_SANITIZE_STRING);
 
-        if(substr($value,0,2) == '00'){
-           $value = substr($value,2);
-        } elseif(substr($value,0,2) != '34'){
-           $value = "34" . $value;
-        }
+        // Improve this with regex
+        $phone = str_replace(" ", "", $phone);
+        $phone = str_replace(".", "", $phone);
+        $phone = str_replace("-", "", $phone);
 
-        return $value;
+        $countryCode = ($countryCode) ? $countryCode : '34';
+        $phone = $countryCode . '.' . $phone;
+        
+        return $phone;
     }
 
     /**
@@ -98,9 +104,12 @@ class VoteRequest extends FormRequest
     public static function cleanSID($value){
 
         $value = filter_var($value, FILTER_SANITIZE_STRING);
+
+        // Improve this with regex
         $value = str_replace(" ","",$value);
         $value = str_replace("-","",$value);
         $value = str_replace(".","",$value);
+
         $value = strtoupper($value);
 
         return $value;

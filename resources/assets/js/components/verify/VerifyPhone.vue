@@ -15,15 +15,19 @@
                 :value="phone"
                 :country-code="countryCode"
                 :disabled="smsRequested"
+                :autofocus="phoneFocused"
+                :warning="smsRequested && !canBeModified"
                 @update="updatePhone"
-                @updateCountryCode="updateCountryCode">
+                @updateCountryCode="updateCountryCode"
+                @focus="phoneFocused = true"
+                @blur="phoneFocused = false">
                     <button v-show="canBeModified" @click="modifyPhone" class="btn btn-edit btn-secondary btn-sm" type="button">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
             </phone-input>
 
             <transition name="slide" mode="out-in">
-                <button v-show="!smsRequested" :class="'btn btn-primary btn-block btn-lg' + disabled" type="submit">
+                <button v-show="!smsRequested" :class="'btn btn-primary btn-request btn-block btn-lg' + disabled" type="submit">
                     <spinner icon="paper-plane" :loading="isLoading" />
                     {{ $t('verify_phone.request_sms_button') }}
                 </button>
@@ -44,12 +48,14 @@
                     :tooltip="$t('verify_phone.code_tooltip')"
                     :required="true"
                     :value="smsCode"
-                    :autofocus="true"
-                    @update="updateSMSCode" />
+                    :autofocus="smsCodeFocused"
+                    @update="updateSMSCode"
+                    @focus="smsCodeFocused = true"
+                    @blur="smsCodeFocused = false" />
 
                 <verify-flags :flag="flag" />
 
-                <button :class="'btn btn-success btn-block btn-lg' + disabled" type="submit">
+                <button :class="'btn btn-success btn-cast btn-block btn-lg' + disabled" type="submit">
                     <spinner icon="check" :loading="isLoading" />
                     {{ $t('verify_phone.cast_ballot_button') }}
                 </button>
@@ -84,6 +90,7 @@
         data() {
             return {
                 isLoading: false,
+                phoneFocused: false,
                 smsCodeFocused: false,
                 flag: false
             }
@@ -108,7 +115,7 @@
         },
 
         mounted() {
-            this.$refs.phone.$refs.phone.focus();
+            this.phoneFocused = true;
         },
 
         methods: {
@@ -122,18 +129,19 @@
 
             updateCountryCode(value) {
                 Bus.$emit('fieldUpdated', 'countryCode', Number(value));
-                this.$refs.phone.$refs.phone.focus();
+                this.phoneFocused = true;
             },
 
             modifyPhone(){
                 Bus.$emit('fieldUpdated', 'smsRequested', false);
                 Bus.$emit('fieldUpdated', 'smsCode', '');
                 this.flag = false;
-                this.$refs.phone.$refs.phone.focus();
+                this.phoneFocused = true;
             },
 
             requestSMS() {
                 Bus.$emit('requestSMS');
+                this.smsCodeFocused = true;
             },
 
             castBallot() {
@@ -150,5 +158,9 @@
         z-index: 150;
         right: 1rem;
         top: 1.3rem;
+    }
+
+    .btn-cast, .btn-request {
+        margin-top: 1rem;
     }
 </style>

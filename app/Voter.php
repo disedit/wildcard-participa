@@ -48,7 +48,8 @@ class Voter extends Model
     public function SMS_exceeded()
     {
         if($this->SMS_attempts >= config('participa.sms_max_attempts')){
-            return array('last_number' => $this->SMS_phone, 'time' => $this->SMS_time);
+            $last_number = explode(".", $this->SMS_phone);
+            return array('last_country_code' => $last_number[0], 'last_number' => $last_number[1], 'time' => $this->SMS_time);
         }
 
         return FALSE;

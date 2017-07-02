@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'input': true, 'focused': focused }">
+    <div :class="{ 'input': true, 'focused': focused, 'has-warning': warning }">
         <label :for="name">
             <i v-if="icon" :class="'fa fa-' + icon" aria-hidden="true"></i>
             {{label}}
@@ -15,15 +15,16 @@
             :ref="name"
             :name="name"
             :value="value"
+            v-focus="autofocus"
             @input="$emit('update', $event.target.value)"
-            @focus="focused = true"
-            @blur="focused = value ? true : false"
+            @focus="focused = true; $emit('focus');"
+            @blur="focused = value ? true : false; $emit('blur');"
             :required="required"
             :disabled="disabled"
-            class="form-control form-control-lg" />
+            :class="{ 'form-control form-control-lg': true, 'form-control-warning': warning }" />
 
         <transition name="fade">
-            <country-codes v-show="focused" :value="countryCode" :disabled="disabled" @focus="focused = true" @update="updateCountryCode" />
+            <country-codes v-show="focused" :value="countryCode" :disabled="disabled" @focus="focused = true"  @update="updateCountryCode" />
         </transition>
 
         <slot></slot>
@@ -32,9 +33,12 @@
 
 <script>
     import CountryCodes from './CountryCodes';
+    import { focus } from 'vue-focus';
 
     export default {
         name: 'phone-input',
+
+        directives: { focus },
 
         components: {
             CountryCodes
@@ -48,7 +52,9 @@
             countryCode: Number,
             tooltip: String,
             required: Boolean,
-            disabled: Boolean
+            disabled: Boolean,
+            autofocus: Boolean,
+            warning: Boolean
         },
 
         data() {
@@ -58,7 +64,7 @@
         },
 
         mounted() {
-            this.focused = this.value ? true : false;
+            this.focused = this.value || this.autofocus ? true : false;
         },
 
         methods: {
@@ -75,7 +81,7 @@
 
     .input {
         position: relative;
-        height: 80px;
+        height: 71px;
 
         label {
             z-index: 10;

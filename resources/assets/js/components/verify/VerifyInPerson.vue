@@ -1,9 +1,9 @@
 <template>
     <div>
         <form @submit.prevent="castBallot">
-            <button :class="'btn btn-primary btn-lg' + disabled" type="submit">
-                <spinner icon="bullhorn" :loading="isLoading" />
-                Confirmar
+            <button :class="'btn btn-success btn-block btn-lg' + disabled" type="submit">
+                <spinner icon="check" :loading="isLoading" />
+                {{ $t('verify_in_person.button') }}
             </button>
         </form>
     </div>
@@ -44,7 +44,3 @@
 
     }
 </script>
-
-<style scoped lang="scss">
-
-</style>

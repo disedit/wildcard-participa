@@ -53,7 +53,7 @@ class BoothController extends Controller
         $flag       = false;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
-
+        debug($phone);
         $voter      = Voter::find_by_SID($SID, $edition->id);
 
         if(!$booth_mode)

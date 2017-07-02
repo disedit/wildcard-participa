@@ -15,7 +15,7 @@
 
 .main-container {
     background: #FFF;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 input,
@@ -29,5 +29,11 @@ button {
 
     h3 {
         font-weight: bold;
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .main-container {
+        padding: 1rem;
     }
 }

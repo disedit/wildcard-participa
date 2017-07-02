@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ 'input': true, 'focused': focused }">
+    <div :class="{ 'input': true, 'focused': focused, 'has-warning': warning }">
     <label :for="name">
         {{label}}
         <b-tooltip v-if="tooltip" :content="tooltip" class="input-tooltip">
@@ -13,18 +13,23 @@
         :name="name"
         :ref="name"
         :value="value"
+        v-focus="autofocus"
         @input="$emit('update', $event.target.value)"
-        @focus="focused = true"
-        @blur="focused = value ? true : false"
+        @focus="focused = true; $emit('focus');"
+        @blur="focused = value ? true : false; $emit('blur');"
         :required="required"
-        class="form-control form-control-lg" />
+        :class="{ 'form-control form-control-lg': true, 'form-control-warning': warning }" />
 
     </div>
 </template>
 
 <script>
+    import { focus } from 'vue-focus';
+
     export default {
         name: 'text-input',
+
+        directives: { focus },
 
         props: {
             name: String,
@@ -33,7 +38,8 @@
             value: String,
             tooltip: String,
             required: Boolean,
-            autofocus: Boolean
+            autofocus: Boolean,
+            warning: Boolean
         },
 
         data() {
@@ -43,8 +49,7 @@
         },
 
         mounted() {
-            this.focused = this.value ? true : false;
-            if(this.autofocus) this.$refs[this.name].focus();
+            this.focused = this.value || this.autofocus ? true : false;
         }
     }
 </script>
@@ -54,7 +59,7 @@
 
     .input {
         position: relative;
-        height: 80px;
+        height: 71px;
 
         label {
             z-index: 10;

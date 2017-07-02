@@ -9,7 +9,10 @@
             :tooltip="$t('booth_identification.tooltip')"
             :required="true"
             :value="identifier"
-            @update="updateID" />
+            :autofocus="autofocus"
+            @update="updateID"
+            @focus="autofocus = true"
+            @blur="autofocus = false" />
 
         <hr />
 
@@ -42,7 +45,8 @@
             return {
                 municipality: '',
                 min_age: '16',
-                anonymous_voting: false
+                anonymous_voting: false,
+                autofocus: false
             }
         },
 
@@ -53,8 +57,8 @@
         },
 
         mounted() {
-            Bus.$on('doneSelecting', () => this.$refs.identificationInput.$refs.identification.focus());
-        }
+            Bus.$on('doneSelecting', this.focusID);
+        },
 
         computed: {
             disabled: function() {
@@ -65,6 +69,9 @@
         methods: {
             updateID(value) {
                 Bus.$emit('fieldUpdated', 'ID', value);
+            },
+            focusID() {
+                this.autofocus = true;
             }
         }
 

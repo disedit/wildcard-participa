@@ -30,6 +30,13 @@ export default {
         request_sms_button: 'Text me the code',
         cast_ballot_button: 'Cast my ballot',
     },
+    verify_in_person: {
+        button: 'Cast your ballot'
+    },
+    verify_flags: {
+        SMS_already_sent: 'The valid verification code for this mobile phone was sent on <strong>{time}</strong>',
+        SMS_exceeded: 'You have exceeded the limit of <strong>{sms_max_attempts} SMSs per voter</strong>. Enter the code that you received on <strong>{last_number}</strong> on <strong>{time}</strong>'
+    },
     booth_receipt: {
         heading: 'Thanks for your participation',
         success: 'Your ballot has been cast successfully',
