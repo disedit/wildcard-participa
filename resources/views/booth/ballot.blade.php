@@ -15,6 +15,7 @@
     window.BoothMode = {{ $booth_mode }};
     window.BoothConfig = {
         name: '{{ config('participa.municipality', 'Any City') }}',
+        contact_email: '{{ config('participa.contact_email', 'participa@disedit.com') }}',
         url: '{{ config('app.url', '') }}',
         council_url: '{{ config('participa.council_url', '') }}',
         anonymous_voting: {{ var_export(config('participa.anonymous_voting', true),true) }},

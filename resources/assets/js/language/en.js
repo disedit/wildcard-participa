@@ -6,6 +6,11 @@ export default {
         cost: 'Cost',
         motivation: 'Motivation'
     },
+    error: {
+        heading: 'Error',
+        challenge: 'If you think this is a mistake, you can contact tech support at',
+        back: 'Go back'
+    },
     booth_identification: {
         heading: 'Identification',
         subheading: 'You can vote if you are over <strong>{min_age} years</strong> of age and currently reside in <strong>{municipality}</strong>',
@@ -46,7 +51,7 @@ export default {
     },
     option_modal: {
         select_button: 'Select this option',
-        diselect_button: 'Diselect this option',
+        deselect_button: 'Deselect this option',
         dismiss_button: 'Close'
     }
 };

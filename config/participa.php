@@ -2,6 +2,7 @@
 
 return [
     'municipality' => 'Any City',
+    'contact_email' => 'participa@disedit.com',
     'max_per_ip' => 3,
     'sms_max_attempts' => 3,
     'anonymous_voting' => false,

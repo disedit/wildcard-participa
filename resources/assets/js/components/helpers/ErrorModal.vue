@@ -4,7 +4,7 @@
         <div class="error">
             <div class="header">
                 <i class="fa fa-hand-o-down" aria-hidden="true"></i>
-                <h2>Error</h2>
+                <h2>{{ $t('error.heading') }}</h2>
             </div>
 
             <div v-for="errorField in errors">
@@ -14,12 +14,14 @@
             </div>
 
             <div class="message message--contest">
-                Si penses que es tracta d'un error o necessites ajuda, posa't en contacte amb tavernes@disedit.com
+                {{ $t('error.challenge') }} <a :href="'mailto:' + contact_email + '?subject=Error+votació'">{{ contact_email }}</a>
             </div>
         </div>
 
         <div slot="modal-footer" class="footer">
-            <button class="btn btn-primary" @click="$refs.errorsModal.hide();">Torna a la votació</button>
+            <button class="btn btn-primary" @click="$refs.errorsModal.hide();">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> {{ $t('error.back') }}
+            </button>
         </div>
 
     </b-modal>
@@ -31,6 +33,12 @@
 
         props: {
             errors: Object
+        },
+
+        data() {
+            return {
+                contact_email: window.BoothConfig.contact_email
+            }
         },
 
         computed: {

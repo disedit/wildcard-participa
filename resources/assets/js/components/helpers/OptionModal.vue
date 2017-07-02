@@ -17,7 +17,7 @@
         <div slot="modal-footer">
             <button @click="close" class="btn btn-secondary">{{ $t('option_modal.dismiss_button') }}</button>
             <button v-if="showSelect && selected" @click="toggleOption" class="btn btn-danger">
-                <i class="fa fa-window-close" aria-hidden="true"></i> {{ $t('option_modal.diselect_button') }}
+                <i class="fa fa-window-close" aria-hidden="true"></i> {{ $t('option_modal.deselect_button') }}
             </button>
             <button v-if="showSelect && !selected" @click="toggleOption" class="btn btn-primary">
                 <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ $t('option_modal.select_button') }}
