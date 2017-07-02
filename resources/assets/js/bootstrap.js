@@ -28,12 +28,18 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * a simple convenience so we don't have to attach every token manually.
  */
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+let csrf_token = document.head.querySelector('meta[name="csrf-token"]');
 
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+if (csrf_token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = csrf_token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF or JWT token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+let jwt_token = document.head.querySelector('meta[name="jwt-token"]');
+
+if (jwt_token) {
+    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + jwt_token.content;
 }
 
 /**

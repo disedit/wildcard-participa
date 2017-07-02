@@ -1,7 +1,7 @@
 export default class Participa {
   constructor () {
     this.apiURL = '/api/';
-    this.token = document.head.querySelector('meta[name="jwt-token"]').content;
+    //this.token = document.head.querySelector('meta[name="jwt-token"]').content;
   }
 
   getBallot () {
@@ -21,9 +21,8 @@ export default class Participa {
   }
 
   _call(type, url, data) {
-    console.log(this.token);
     return new Promise((resolve, reject) => {
-        axios[type](this.apiURL + url + '?token=' + this.token, data)
+        axios[type](this.apiURL + url, data)
           .then(response => {
             resolve(response.data);
           })

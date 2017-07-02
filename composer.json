@@ -9,6 +9,7 @@
         "laravel-notification-channels/messagebird": "^1.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
+        "simplesoftwareio/simple-qrcode": "^1.5",
         "tymon/jwt-auth": "0.5.*"
     },
     "require-dev": {

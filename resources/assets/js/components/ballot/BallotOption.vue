@@ -55,7 +55,13 @@
 <style scoped lang="scss">
     @import '../../../sass/_variables';
 
-    .disabled-option {
-        color: $gray-lighter;
+    .disabled {
+        .option-name {
+            color: lighten($gray-light, 20%);
+        }
+        
+        a {
+            color: $gray-light;
+        }
     }
 </style>

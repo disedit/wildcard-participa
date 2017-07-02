@@ -86,4 +86,25 @@
         background: lighten($brand-primary, 50%);
         border-right: 4px $brand-primary solid;
     }
+
+    .template-2column {
+
+        .list-group {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        label {
+            width: 50%;
+            height: 100px;
+            align-items: flex-start;
+            padding-left: 1.25rem;
+
+            .custom-control-indicator {
+                position: absolute;
+                top: 0.75rem;
+                left: 1.25rem;
+            }
+        }
+    }
 </style>

@@ -12,6 +12,7 @@ use App\Ballot;
 use App\Question;
 use App\Option;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BoothController extends Controller
 {
@@ -26,6 +27,21 @@ class BoothController extends Controller
         $edition = new Edition;
         $edition = $edition->current('ballot');
         return response()->json($edition);
+    }
+
+    /**
+     * JSON object with edition information, including ballot questions
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ballot_qr($ref)
+    {
+        \Debugbar::disable();
+        
+        $qr = QrCode::size(200)->generate($ref);
+
+        return response($qr)
+            ->header('Content-Type', 'image/svg+xml');
     }
 
     /**
@@ -53,7 +69,7 @@ class BoothController extends Controller
         $flag       = false;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
-        debug($phone);
+
         $voter      = Voter::find_by_SID($SID, $edition->id);
 
         if(!$booth_mode)

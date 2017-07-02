@@ -10,9 +10,9 @@
                     {{ $t('booth_receipt.success') }}
                 </div>
                 <div class="ballot">
-                    <a href="#" target="_blank">
-                        <img src="https://www.qrstuff.com/images/default_qrcode.png" alt="QR code" />
-                        <h3>nCV0Tji6As</h3>
+                    <a :href="'/ballots/' + receipt.ref" target="_blank">
+                        <img :src="'/api/ballot/qr/' + receipt.ref" alt="QR code" />
+                        <h3>{{ receipt.ref }}</h3>
                         <i class="fa fa-arrow-circle-right" aria-hidden="true" alt="Go to ballot"></i>
                     </a>
                 </div>
@@ -57,7 +57,12 @@
         name: 'booth-receipt',
 
         props: {
-            receipt: Object
+            receipt: {
+                type: Object,
+                default: {
+                    ref: '111'
+                }
+            }
         },
 
         data() {
@@ -114,7 +119,7 @@
         border: 3px $brand-success solid;
         border-top: 0;
         border-radius: 0 0 0.5rem 0.5rem;
-        padding: 1rem;
+        padding: 0 1rem;
         text-align: center;
 
         h3 {

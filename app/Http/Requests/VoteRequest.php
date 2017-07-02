@@ -34,7 +34,7 @@ class VoteRequest extends FormRequest
         if(isset($attributes['SID'])) $attributes['SID'] = $this->cleanSID($attributes['SID']);
         if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($countryCode, $attributes['phone']);
         debug($attributes);
-        $this->replace($attributes);
+
         return $attributes;
     }
 
@@ -56,6 +56,7 @@ class VoteRequest extends FormRequest
 
         $ip_limit = (!$booth_mode) ? '|ip_limit' : '';
         $phone_required = (!$booth_mode) ? 'required|check_phone_format|check_phone_duplicity' : '';
+        $country_required = (!$booth_mode) ? 'required|numeric' : '';
         $sms_required = (!$booth_mode) ? 'required|check_sms_code' : '';
 
         // Rules
@@ -67,7 +68,7 @@ class VoteRequest extends FormRequest
         // if SMS code is required!!
         if($is_requestSMS || $is_castBallot){
             $rules['phone'] = $phone_required;
-            $rules['countryCode'] = 'required|numeric';
+            $rules['countryCode'] = $country_required;
         }
 
         if($is_castBallot) $rules['SMS_code'] = $sms_required;
@@ -92,7 +93,7 @@ class VoteRequest extends FormRequest
 
         $countryCode = ($countryCode) ? $countryCode : '34';
         $phone = $countryCode . '.' . $phone;
-        
+
         return $phone;
     }
 

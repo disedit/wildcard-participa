@@ -169,6 +169,7 @@ return [
         NotificationChannels\Messagebird\MessagebirdServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -230,7 +231,8 @@ return [
         'Messagebird' => Bjrnblm\Messagebird\Facades\Messagebird::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 
