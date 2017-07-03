@@ -109,8 +109,9 @@
             bottom: 0;
             left: 0;
             right: 0;
+            /* Workaround Safari bug for transparent gradients */
             background: #FFF;
-            background: linear-gradient(transparent, #FFF);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.001), #FFF);
             padding: 1rem;
 
             &:hover, &:active, &:focus {

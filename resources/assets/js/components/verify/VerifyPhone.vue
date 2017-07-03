@@ -44,6 +44,7 @@
                 <text-input
                     name="sms_code"
                     ref="sms_code"
+                    pattern="\d*"
                     :label="$t('verify_phone.code_label')"
                     :tooltip="$t('verify_phone.code_tooltip')"
                     :required="true"

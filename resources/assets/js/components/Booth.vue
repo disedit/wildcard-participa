@@ -22,6 +22,7 @@
 </template>
 
 <script>
+    import jump from 'jump.js';
     import ErrorModal from './helpers/ErrorModal';
     import OptionModal from './helpers/OptionModal';
 
@@ -160,7 +161,10 @@
                 const shouldScroll = completed.every((value) => value === true);
 
                 if(shouldScroll) {
-                    Bus.$emit('doneSelecting');
+                    jump('.ballot-identification', {
+                        offset: -50,
+                        callback: () => Bus.$emit('doneSelecting')
+                    });
                 }
             },
 
@@ -189,6 +193,7 @@
                     phone: this.phone,
                     countryCode: this.countryCode
                 }).then(response => {
+                    jump('.ballot-phone', { offset: -50 });
                     this.smsRequested = true;
                     if(response.flag){
                         Bus.$emit('setFlag', response.flag);

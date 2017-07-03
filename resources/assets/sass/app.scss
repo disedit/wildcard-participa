@@ -36,4 +36,18 @@ button {
     .main-container {
         padding: 2rem;
     }
+
+    .template-2column {
+        .list-group {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        label {
+            width: 50%;
+            height: 100px;
+            align-items: flex-start;
+        }
+    }
+
 }

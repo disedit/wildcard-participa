@@ -57,9 +57,12 @@
 <style scoped lang="scss">
     @import '../../../sass/_variables';
 
+    .option-name {
+        margin-right: 1rem;
+    }
+    
     .option-cost {
         color: lighten($gray-light, 10%);
-        margin-left: 1rem;
     }
 
     .option-info {

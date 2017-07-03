@@ -9,6 +9,7 @@
 
     <input
         type="text"
+        :pattern="pattern"
         :id="name"
         :name="name"
         :ref="name"
@@ -34,6 +35,7 @@
         props: {
             name: String,
             label: String,
+            pattern: String,
             icon: String,
             value: String,
             tooltip: String,
@@ -64,13 +66,16 @@
         label {
             z-index: 10;
             position: absolute;
+            margin-bottom: 0;
+            color: lighten($gray-light, 25%);
             font-size: 1.2rem;
             top: 1.4rem;
             left: 1.5rem;
             cursor: text;
-            transition: 0.5s;
-            margin-bottom: 0;
-            color: lighten($gray-light, 25%);
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-font-smoothing: antialiased;
+            transition: 0.25s;
         }
 
         input {
