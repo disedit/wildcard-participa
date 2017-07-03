@@ -33,7 +33,8 @@ class VoteRequest extends FormRequest
 
         if(isset($attributes['SID'])) $attributes['SID'] = $this->cleanSID($attributes['SID']);
         if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($countryCode, $attributes['phone']);
-        debug($attributes);
+
+        $this->replace($attributes);
 
         return $attributes;
     }
@@ -86,13 +87,12 @@ class VoteRequest extends FormRequest
         $countryCode = filter_var($countryCode, FILTER_SANITIZE_STRING);
         $phone = filter_var($phone, FILTER_SANITIZE_STRING);
 
-        // Improve this with regex
-        $phone = str_replace(" ", "", $phone);
-        $phone = str_replace(".", "", $phone);
-        $phone = str_replace("-", "", $phone);
-
         $countryCode = ($countryCode) ? $countryCode : '34';
         $phone = $countryCode . '.' . $phone;
+
+        // Improve this with regex
+        $phone = str_replace(" ", "", $phone);
+        $phone = str_replace("-", "", $phone);
 
         return $phone;
     }

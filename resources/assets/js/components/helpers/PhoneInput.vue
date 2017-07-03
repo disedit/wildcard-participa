@@ -17,6 +17,7 @@
                 <input
                     ref="phoneField"
                     type="text"
+                    pattern="\d*"
                     :id="name"
                     :ref="name"
                     :name="name"

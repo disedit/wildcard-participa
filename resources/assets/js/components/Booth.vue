@@ -9,7 +9,8 @@
                 :phone="phone"
                 :country-code="countryCode"
                 :sms-code="smsCode"
-                :sms-requested="smsRequested" />
+                :sms-requested="smsRequested"
+                :receipt="receipt" />
         </transition>
         <hr />
         <router-link to="/">Step 1</router-link>
@@ -200,7 +201,7 @@
                         Bus.$emit('setFlag', response.flag);
                         if(response.flag.name == 'SMS_exceeded'){
                             this.phone = response.flag.info.last_number;
-                            this.countryCode = response.flag.info.last_country_code;
+                            this.countryCode = parseInt(response.flag.info.last_country_code);
                         }
                     }
                 }).catch(errors => {
