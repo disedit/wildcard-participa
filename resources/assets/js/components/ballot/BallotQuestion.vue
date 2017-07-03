@@ -14,7 +14,7 @@
                     :option="option"
                     :selected="isSelected(option)"
                     :disabled="isDisabled(option)"
-                    :display-cost="question.display_cost" />
+                    :display-cost="displayCost" />
             </label>
         </div>
         <hr />
@@ -39,6 +39,9 @@
         computed: {
             questionType: function() {
                 return this.question.max_options == 1 ? 'radio' : 'checkbox';
+            },
+            displayCost: function() {
+                return this.question.display_cost == 1;
             }
         },
 

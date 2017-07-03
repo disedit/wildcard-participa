@@ -71,6 +71,7 @@
         created() {
             this.loadBallot();
             Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
+            Bus.$on('clearQuestion', (option) => this.clearQuestion(option));
             Bus.$on('fieldUpdated', (field, value) => this[field] = value);
             Bus.$on('submitBallotForVerification', () => this.submitBallotForVerification());
             Bus.$on('requestSMS', () => this.requestSMS());
@@ -140,6 +141,14 @@
                 }
 
                 this.$set(this.selected, questionIndex, selected[questionIndex]);
+            },
+
+            /* Provides a method to clear a radio question */
+            clearQuestion(option) {
+                const questionIndex = this.selected.findIndex((q) => q.id == option.question_id);
+                let questions = this.selected[questionIndex];
+                questions.options = [];
+                this.$set(this.selected, questionIndex, questions);
             },
 
             /* Scroll to ID field, if all questions have been fully answered */

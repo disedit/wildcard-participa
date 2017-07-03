@@ -64,7 +64,11 @@
                 this.active = false;
             },
             toggleOption() {
-                Bus.$emit('optionSelected', this.option, this.type);
+                if(this.type == 'radio' && this.selected) {
+                    Bus.$emit('clearQuestion', this.option);
+                } else {
+                    Bus.$emit('optionSelected', this.option, this.type);
+                }
                 this.close();
             }
         }

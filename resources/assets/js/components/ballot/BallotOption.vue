@@ -1,22 +1,24 @@
 <template>
-    <div :class="{ 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
-        <input
-            :name="'ballot[' + option.question_id + ']'"
-            :value="option.id"
-            :type="type"
-            :disabled="disabled"
-            :checked="selected"
-            @change="selectOption(option, type)"
-            class="custom-control-input" />
+    <div class="option-wrapper">
+        <div :class="{ 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
+            <input
+                :name="'ballot[' + option.question_id + ']'"
+                :value="option.id"
+                :type="type"
+                :disabled="disabled"
+                :checked="selected"
+                @change="selectOption(option, type)"
+                class="custom-control-input" />
 
-        <span class="custom-control-indicator"></span>
+            <span class="custom-control-indicator"></span>
 
-        <span class="custom-control-description">
-            <span class="option-name">{{ option.option }}</span>
-            <span v-if="display_cost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
-            <i v-if="selected" class="fa fa-check" aria-hidden="true"></i>
-            <a href="#" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
-        </span>
+            <span class="custom-control-description">
+                <span class="option-name">{{ option.option }}</span>
+                <span v-if="displayCost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
+                <i v-if="selected" class="fa fa-check" aria-hidden="true"></i>
+            </span>
+        </div>
+        <a href="#" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
     </div>
 </template>
 
@@ -31,7 +33,7 @@
             type: String,
             selected: Boolean,
             disabled: Boolean,
-            display_cost: Boolean
+            displayCost: Boolean
         },
 
         filters: {
@@ -55,11 +57,22 @@
 <style scoped lang="scss">
     @import '../../../sass/_variables';
 
+    .option-cost {
+        color: lighten($gray-light, 10%);
+        margin-left: 1rem;
+    }
+
+    .option-info {
+        position: absolute;
+        right: 1rem;
+        bottom: 0.75rem;
+    }
+
     .disabled {
-        .option-name {
+        .option-name, .option-cost {
             color: lighten($gray-light, 20%);
         }
-        
+
         a {
             color: $gray-light;
         }
