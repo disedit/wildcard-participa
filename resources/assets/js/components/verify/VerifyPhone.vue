@@ -26,7 +26,7 @@
                     </button>
             </phone-input>
 
-            <transition name="slide" mode="out-in">
+            <transition name="slide">
                 <button v-show="!smsRequested" :class="'btn btn-primary btn-request btn-block btn-lg' + disabled" type="submit">
                     <spinner icon="paper-plane" :loading="isLoading" />
                     {{ $t('verify_phone.request_sms_button') }}
@@ -35,7 +35,7 @@
         </form>
 
 
-        <transition name="slide" mode="out-in">
+        <transition name="slide">
             <form v-if="smsRequested" @submit.prevent="castBallot">
                 <hr />
 

@@ -1,33 +1,37 @@
 <template>
-    <div :class="{ 'input': true, 'focused': focused, 'has-warning': warning }">
-        <label :for="name">
-            <i v-if="icon" :class="'fa fa-' + icon" aria-hidden="true"></i>
-            {{label}}
-            <b-tooltip v-if="tooltip" :content="tooltip" class="input-tooltip">
-                <i class="fa fa-question-circle" aria-hidden="true"></i>
-            </b-tooltip>
-        </label>
+    <div class="phone-input">
+        <div class="country-codes">
+            <country-codes :value="countryCode" :disabled="disabled" @update="updateCountryCode" />
+        </div>
 
-        <input
-            ref="phoneField"
-            type="text"
-            :id="name"
-            :ref="name"
-            :name="name"
-            :value="value"
-            v-focus="autofocus"
-            @input="$emit('update', $event.target.value)"
-            @focus="focused = true; $emit('focus');"
-            @blur="focused = value ? true : false; $emit('blur');"
-            :required="required"
-            :disabled="disabled"
-            :class="{ 'form-control form-control-lg': true, 'form-control-warning': warning }" />
+        <div class="phone">
+            <div :class="{ 'input': true, 'focused': focused, 'has-warning': warning }">
+                <label :for="name">
+                    <i v-if="icon" :class="'fa fa-' + icon" aria-hidden="true"></i>
+                    {{label}}
+                    <b-tooltip v-if="tooltip" :content="tooltip" class="input-tooltip">
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                    </b-tooltip>
+                </label>
 
-        <transition name="fade">
-            <country-codes v-show="focused" :value="countryCode" :disabled="disabled" @focus="focused = true"  @update="updateCountryCode" />
-        </transition>
+                <input
+                    ref="phoneField"
+                    type="text"
+                    :id="name"
+                    :ref="name"
+                    :name="name"
+                    :value="value"
+                    v-focus="autofocus"
+                    @input="$emit('update', $event.target.value)"
+                    @focus="focused = true; $emit('focus');"
+                    @blur="focused = value ? true : false; $emit('blur');"
+                    :required="required"
+                    :disabled="disabled"
+                    :class="{ 'form-control form-control-lg': true, 'form-control-warning': warning }" />
 
-        <slot></slot>
+                <slot></slot>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -70,7 +74,6 @@
         methods: {
             updateCountryCode(value) {
                 this.$emit('updateCountryCode', value);
-                this.$refs.phoneField.focus();
             }
         }
     }
@@ -78,6 +81,16 @@
 
 <style scoped lang="scss">
     @import '../../../sass/_variables';
+
+    .phone-input {
+        display: flex;
+        align-content: stretch;
+        align-items: stretch;
+
+        .phone {
+            width: 100%;
+        }
+    }
 
     .input {
         position: relative;
@@ -102,7 +115,7 @@
             z-index: 1;
             position: absolute;
             padding-top: 2rem;
-            padding-left: 6rem;
+            padding-left: 1rem;
             padding-bottom: 0.5rem;
             border-width: 0.20rem;
         }

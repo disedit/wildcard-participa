@@ -1,9 +1,5 @@
 <template>
     <div class="booth">
-        <router-link to="/">Step 1</router-link>
-        <router-link to="/booth/verify">Step 2</router-link>
-        <router-link to="/booth/receipt">Step 3</router-link>
-
         <transition :name="transitionName" mode="out-in">
             <router-view
                 class="child-view"
@@ -15,6 +11,10 @@
                 :sms-code="smsCode"
                 :sms-requested="smsRequested" />
         </transition>
+        <hr />
+        <router-link to="/">Step 1</router-link>
+        <router-link to="/booth/verify">Step 2</router-link>
+        <router-link to="/booth/receipt">Step 3</router-link>
 
         <error-modal :errors="errors" />
         <option-modal />
@@ -163,6 +163,7 @@
                 if(shouldScroll) {
                     jump('.ballot-identification', {
                         offset: -50,
+                        duration: 500,
                         callback: () => Bus.$emit('doneSelecting')
                     });
                 }
@@ -193,7 +194,7 @@
                     phone: this.phone,
                     countryCode: this.countryCode
                 }).then(response => {
-                    jump('.ballot-phone', { offset: -50 });
+                    jump('.ballot-phone', { offset: -50, duration: 500 });
                     this.smsRequested = true;
                     if(response.flag){
                         Bus.$emit('setFlag', response.flag);
@@ -214,7 +215,8 @@
                 Participa.castBallot({
                     ballot: this.selected,
                     SID: this.ID,
-                    phone: '00' + this.countryCode + this.phone,
+                    phone: this.phone,
+                    countryCode: this.countryCode,
                     SMS_code: this.smsCode
                 }).then(response => {
                     this.receipt = response.ballot;

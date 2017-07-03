@@ -12,6 +12,7 @@
                     <li v-for="option in question.options">
                         <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ option.option }}
                     </li>
+                    <li v-if="question.options.length == 0"><em>{{ $t('verify_summary.blank') }}</em></li>
                 </ul>
             </div>
 

@@ -23,17 +23,19 @@ export default {
         more_info: 'More info',
     },
     verify_summary: {
-        edit: 'Edit ballot'
+        edit: 'Edit ballot',
+        blank: 'Blank vote'
     },
     verify_phone: {
         heading: 'Verify your ballot',
         phone_label: 'Mobile',
         code_label: 'SMS Code',
-        code_tooltip: 'Codi numeric',
+        code_tooltip: 'Numeric code',
         phone_subheading: 'Lorem ipsum',
         code_subheading: 'Lorem ipsum',
         request_sms_button: 'Text me the code',
         cast_ballot_button: 'Cast my ballot',
+        country_code: 'Country dial code',
     },
     verify_in_person: {
         button: 'Cast your ballot'

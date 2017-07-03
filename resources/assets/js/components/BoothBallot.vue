@@ -10,7 +10,7 @@
             </form>
         </div>
         <div class="col-sm-4">
-            Sidebarf
+            <sidebar :edition="ballot" />
         </div>
     </div>
 </template>
@@ -18,13 +18,15 @@
 <script>
     import BallotQuestion from './ballot/BallotQuestion';
     import BallotIdentification from './ballot/BallotIdentification';
+    import Sidebar from './Sidebar';
 
     export default {
         name: 'booth-ballot',
 
         components: {
             BallotQuestion,
-            BallotIdentification
+            BallotIdentification,
+            Sidebar
         },
 
         data() {
