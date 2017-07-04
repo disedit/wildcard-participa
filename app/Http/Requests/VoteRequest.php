@@ -47,32 +47,32 @@ class VoteRequest extends FormRequest
     public function rules()
     {
 
-        $is_requestSMS = $this->is('api/request_sms');
-        $is_castBallot = $this->is('api/cast_ballot');
+        $isRequestSMS = $this->is('api/request_sms');
+        $isCastBallot = $this->is('api/cast_ballot');
 
         //If in booth mode ignore some rules;
         $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
 
-        $booth_mode = (isset($payload['booth_mode'])) ? $payload['booth_mode'] : false;
+        $boothMode = (isset($payload['booth_mode'])) ? $payload['booth_mode'] : false;
 
-        $ip_limit = (!$booth_mode) ? '|ip_limit' : '';
-        $phone_required = (!$booth_mode) ? 'required|check_phone_format|check_phone_duplicity' : '';
-        $country_required = (!$booth_mode) ? 'required|numeric' : '';
-        $sms_required = (!$booth_mode) ? 'required|check_sms_code' : '';
+        $ipLimit = (!$boothMode) ? '|ip_limit' : '';
+        $phoneRequired = (!$boothMode) ? 'required|check_phone_format|check_phone_duplicity' : '';
+        $countryRequired = (!$boothMode) ? 'required|numeric' : '';
+        $smsRequired = (!$boothMode) ? 'required|check_sms_code' : '';
 
         // Rules
         $rules = [
-            'SID' => 'required|on_census|has_not_voted' . $ip_limit,
+            'SID' => 'required|on_census|has_not_voted' . $ipLimit,
             'ballot' => 'ballot_validity',
         ];
 
         // if SMS code is required!!
-        if($is_requestSMS || $is_castBallot){
-            $rules['phone'] = $phone_required;
-            $rules['countryCode'] = $country_required;
+        if($isRequestSMS || $isCastBallot) {
+            $rules['phone'] = $phoneRequired;
+            $rules['country_code'] = $countryRequired;
         }
 
-        if($is_castBallot) $rules['SMS_code'] = $sms_required;
+        if($isCastBallot) $rules['SMS_code'] = $smsRequired;
 
         return $rules;
     }
@@ -82,15 +82,15 @@ class VoteRequest extends FormRequest
      *
      * @return array
      */
-    public function cleanPhone($countryCode, $phone){
-
+    public function cleanPhone($countryCode, $phone)
+    {
         $countryCode = filter_var($countryCode, FILTER_SANITIZE_STRING);
         $phone = filter_var($phone, FILTER_SANITIZE_STRING);
 
         $countryCode = ($countryCode) ? $countryCode : '34';
         $phone = $countryCode . '.' . $phone;
 
-        // Improve this with regex
+        // Improve this with regex?
         $phone = str_replace(" ", "", $phone);
         $phone = str_replace("-", "", $phone);
 
@@ -102,11 +102,11 @@ class VoteRequest extends FormRequest
      *
      * @return array
      */
-    public static function cleanSID($value){
-
+    public static function cleanSID($value)
+    {
         $value = filter_var($value, FILTER_SANITIZE_STRING);
 
-        // Improve this with regex
+        // Improve this with regex?
         $value = str_replace(" ","",$value);
         $value = str_replace("-","",$value);
         $value = str_replace(".","",$value);
@@ -114,7 +114,6 @@ class VoteRequest extends FormRequest
         $value = strtoupper($value);
 
         return $value;
-
     }
 
 }

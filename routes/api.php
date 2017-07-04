@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/ballot', 'BoothController@ballot_json');
-Route::get('/ballot/qr/{ref}', 'BoothController@ballot_qr');
+Route::get('/ballot', 'BoothController@ballotJSON');
+Route::get('/ballot/qr/{ref}', 'BoothController@ballotQR');
 Route::post('/precheck', 'BoothController@precheck');
-Route::post('/request_sms', 'BoothController@request_sms');
-Route::post('/cast_ballot', 'BoothController@cast_ballot');
+Route::post('/request_sms', 'BoothController@requestSms');
+Route::post('/cast_ballot', 'BoothController@castBallot');

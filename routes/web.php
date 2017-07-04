@@ -12,9 +12,8 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('/booth/ballot', 'HomeController@index');
-Route::get('/booth/verify', 'HomeController@index');
-Route::get('/booth/receipt', 'HomeController@index');
+Route::get('/booth/{route}', 'HomeController@index');
+Route::get('/ballots/{ballot}', 'BoothController@ballots');
 
 Auth::routes();
 

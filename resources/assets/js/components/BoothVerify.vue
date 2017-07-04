@@ -28,7 +28,7 @@
 
         props: {
             phone: String,
-            countryCode: String,
+            countryCode: Number,
             selected: Array,
             smsCode: String,
             smsRequested: Boolean

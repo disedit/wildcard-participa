@@ -40,10 +40,10 @@ class HomeController extends Controller
         if(strtotime($edition->start_date) <= $now
         && strtotime($edition->end_date) > $now){
             $user = $request->user();
-            $user_id = ($user) ? $user->id : 0;
-            $token = $this->create_booth_token($user_id);
-            $booth_mode = ($user_id) ? true : false;
-            return view('booth.ballot', compact('edition', 'token', 'booth_mode'));
+            $userId = ($user) ? $user->id : 0;
+            $token = $this->createBoothToken($userId);
+            $boothMode = ($userId) ? true : false;
+            return view('booth', compact('edition', 'token', 'boothMode'));
         }
 
         // If in limbo (after end_date and before publish_results), show placeholder
@@ -68,10 +68,10 @@ class HomeController extends Controller
      *
      * @return String
      */
-    private function create_booth_token($user_id)
+    private function createBoothToken($userId)
     {
-        $booth_mode = ($user_id) ? true : false;
-        $claims = ['booth_mode' => $booth_mode, 'user_id' => $user_id];
+        $boothMode = ($userId) ? true : false;
+        $claims = ['booth_mode' => $boothMode, 'user_id' => $userId];
         $payload = JWTFactory::make($claims);
 
         try {

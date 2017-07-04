@@ -22,7 +22,17 @@ class BoothController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function ballot_json()
+    public function ballots(Ballot $ballot)
+    {
+        return view('ballot', compact('ballot'));
+    }
+
+    /**
+     * JSON object with edition information, including ballot questions
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ballotJSON()
     {
         $edition = new Edition;
         $edition = $edition->current('ballot');
@@ -34,14 +44,13 @@ class BoothController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function ballot_qr($ref)
+    public function ballotQR($ref)
     {
         \Debugbar::disable();
-        
+
         $qr = QrCode::size(200)->generate($ref);
 
-        return response($qr)
-            ->header('Content-Type', 'image/svg+xml');
+        return response($qr)->header('Content-Type', 'image/svg+xml');
     }
 
     /**
@@ -51,8 +60,7 @@ class BoothController extends Controller
      */
     public function precheck(VoteRequest $request)
     {
-        return response()
-            ->json(['success' => true]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -60,34 +68,26 @@ class BoothController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function request_sms(VoteRequest $request)
+    public function requestSms(VoteRequest $request)
     {
-        $edition = new Edition;
-        $edition = $edition->current();
-
-        $booth_mode = $this->booth_mode();
+        $edition    = new Edition;
+        $edition    = $edition->current();
+        $boothMode  = $this->boothMode();
         $flag       = false;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
+        $voter      = Voter::findBySID($SID, $edition->id);
 
-        $voter      = Voter::find_by_SID($SID, $edition->id);
-
-        if(!$booth_mode)
-        {
+        if(!$boothMode) {
             // Check if SMS code has already been sent for phone number
-            if($SMS_already_sent = $voter->SMS_already_sent($phone))
-            {
+            if($smsAlreadySent = $voter->smsAlreadySent($phone)) {
                 // if sent: redirect & attach warning
-                $flag = ['name' => 'SMS_already_sent', 'info' => $SMS_already_sent];
-            }
-            elseif($SMS_exceeded = $voter->SMS_exceeded())
-            {
+                $flag = ['name' => 'SMS_already_sent', 'info' => $smsAlreadySent];
+            } elseif($smsExceeded = $voter->smsExceeded()) {
                 // if exceeded: redirect & attach warning
-                $flag = ['name' => 'SMS_exceeded', 'info' => $SMS_exceeded];
-            }
-            else
-            {
-                $submitted = $voter->SMS_submit($phone);
+                $flag = ['name' => 'SMS_exceeded', 'info' => $smsExceeded];
+            } else {
+                $submitted = $voter->smsSubmit($phone);
 
                 if(!$submitted) return response()->json([
                     'success' => false,
@@ -107,38 +107,32 @@ class BoothController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function cast_ballot(VoteRequest $request)
+    public function castBallot(VoteRequest $request)
     {
-        $edition = new Edition;
-        $edition = $edition->current();
-
-        $booth_mode = $this->booth_mode();
-        $sms_code   = $request->input('sms_code');
+        $edition    = new Edition;
+        $edition    = $edition->current();
+        $boothMode  = $this->boothMode();
+        $sms_code   = $request->input('SMS_code');
         $SID        = $request->input('SID');
-
-        $voter = Voter::find_by_SID($SID, $edition->id);
+        $voter      = Voter::findBySID($SID, $edition->id);
 
         // Mark voter
-        $marked = $voter->mark($request, $booth_mode);
+        $marked = $voter->mark($request, $boothMode);
 
         // Submit ballot
-        if($marked)
-        {
+        if($marked){
 
             $ballot = new Ballot;
-            $cast = $ballot->cast($request, $voter, $edition->id, $booth_mode);
+            $cast = $ballot->cast($request, $voter, $edition->id, $boothMode);
 
-            if(!$cast)
-            {
+            if(!$cast){
                 // If an error occurred during the casting process,
                 // Unmark voter and display error
                 $voter->rollback();
                 return response()->json(['success' => false, 'error' => 'Error sistema']);
             }
 
-        }
-        else
-        {
+        } else {
             return response()->json(['success' => false, 'error' => 'Error sistema']);
         }
 
@@ -150,11 +144,10 @@ class BoothController extends Controller
      *
      * @return int
      */
-    private function booth_mode()
+    private function boothMode()
     {
         $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
         if(!isset($payload['booth_mode']) || !isset($payload['user_id'])) return false;
-
         return ($payload['booth_mode']) ? $payload['user_id'] : 0;
     }
 }

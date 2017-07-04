@@ -51,31 +51,34 @@ class VoteServiceProvider extends ServiceProvider
         });
 
         Validator::extend('check_phone_duplicity', function($attribute, $value) {
-            $phone_registered = Voter::where('SMS_phone', '=', $value)->where('SMS_verified', '=', 1)->where('edition_id', '=', $this->edition_id)->count();
-            return ($phone_registered == 0) ? TRUE : FALSE;
+            $phoneRegistered = Voter::where('SMS_phone', '=', $value)
+                                    ->where('SMS_verified', '=', 1)
+                                    ->where('edition_id', '=', $this->edition_id)->count();
+
+            return ($phoneRegistered == 0) ? TRUE : FALSE;
         });
 
         Validator::extend('ballot_validity', function($attribute, $questions) {
-            foreach($questions as $question_key => $question){
-                $check_question = Question::where('id', '=', $question['id'])->first();
-                if(!$check_question) return FALSE;
+            foreach($questions as $questionKey => $question) {
+                $checkQuestion = Question::where('id', '=', $question['id'])->first();
+                if(!$checkQuestion) return FALSE;
 
-                if(count($question['options']) > $check_question->max_options
-                || count($question['options']) < $check_question->min_options) return FALSE;
+                if(count($question['options']) > $checkQuestion->max_options
+                || count($question['options']) < $checkQuestion->min_options) return FALSE;
 
-                foreach($question['options'] as $option_key => $option){
-                    $check_option = Option::where('id', '=', $option['id'])->where('question_id', '=', $question['id'])->first();
-                    if(!$check_option) return FALSE;
+                foreach($question['options'] as $optionKey => $option) {
+                    $checkOption = Option::where('id', '=', $option['id'])->where('question_id', '=', $question['id'])->first();
+                    if(!$checkOption) return FALSE;
                 }
             }
             return TRUE;
         });
 
         Validator::extend('check_sms_code', function($attribute, $value) {
-            $voter_token = $this->voter->SMS_token;
+            $voterToken = $this->voter->SMS_token;
             // $provided_token = hash('sha512', $value . $this->voter->SID);
-            $provided_token = $value;
-            return ($voter_token == $provided_token);
+            $providedToken = $value;
+            return ($voterToken == $providedToken);
         });
 
     }
@@ -87,7 +90,7 @@ class VoteServiceProvider extends ServiceProvider
      */
     private function setVoter($SID)
     {
-        return $this->voter = Voter::find_by_SID($SID, $this->edition_id);
+        return $this->voter = Voter::findBySID($SID, $this->edition_id);
     }
 
     /**

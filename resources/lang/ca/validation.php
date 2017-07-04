@@ -129,6 +129,7 @@ return [
         'SID' => 'Identificador',
         'ballot' => 'Papereta',
         'phone' => 'Mòbil',
+        'country_code' => 'Prefixe internacional',
         'SMS_code' => 'Codi SMS'
     ],
 

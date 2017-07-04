@@ -193,7 +193,7 @@
                     ballot: this.selected,
                     SID: this.ID,
                     phone: this.phone,
-                    countryCode: this.countryCode
+                    country_code: this.countryCode
                 }).then(response => {
                     jump('.ballot-phone', { offset: -50, duration: 500 });
                     this.smsRequested = true;
@@ -217,7 +217,7 @@
                     ballot: this.selected,
                     SID: this.ID,
                     phone: this.phone,
-                    countryCode: this.countryCode,
+                    country_code: this.countryCode,
                     SMS_code: this.smsCode
                 }).then(response => {
                     this.receipt = response.ballot;

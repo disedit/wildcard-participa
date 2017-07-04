@@ -31,17 +31,25 @@ class Ballot extends Model
     }
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'ref';
+    }
+
+    /**
      * Get the option that the ballot belongs to.
      */
-    public function create_ballot($ballot)
+    public function createBallot($ballot)
     {
         $ballot_to_encode = array();
 
-        foreach($ballot as $question)
-        {
+        foreach($ballot as $question) {
             $options = array();
-            foreach($question['options'] as $option)
-            {
+            foreach($question['options'] as $option) {
                 $options[] = $option['id'];
             }
             $ballot_to_encode[$question['id']] = $options;
@@ -53,18 +61,18 @@ class Ballot extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function create_ref()
+    public function createRef()
     {
         $new_ref = str_random(10);
-        /*$exists = Self::where('ref', '=', $new_ref)->get();
-        if($exists) return $this->create_ref();*/
+        $exists = Self::where('ref', '=', $new_ref)->count();
+        if($exists) return $this->createRef();
         return $new_ref;
     }
 
     /**
      * Get the option that the ballot belongs to.
      */
-    public function create_signature()
+    public function createSignature()
     {
         $signature = $this->ref . $this->options . $this->cast_at . config('app.key');
         return hash('sha256', $signature);
@@ -73,16 +81,16 @@ class Ballot extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function cast($request, $voter, $edition_id, $user_id = 0)
+    public function cast($request, $voter, $editionId, $userId = 0)
     {
-        $this->edition_id = $edition_id;
-        $this->ballot = $this->create_ballot($request->input('ballot'));
-        $this->ref = $this->create_ref();
+        $this->edition_id = $editionId;
+        $this->ballot = $this->createBallot($request->input('ballot'));
+        $this->ref = $this->createRef();
         $this->cast_at = date("Y-m-d H:i:s");
-        $this->signature = $this->create_signature();
-        $this->by_user = $user_id;
+        $this->signature = $this->createSignature();
+        $this->by_user = $userId;
 
-        if(config('participa.anonymous_voting') === false){
+        if(config('participa.anonymous_voting') === false) {
             $this->voter_id = $voter->id;
             $this->ip_address = $request->ip();
             $this->user_agent = $request->header('User-Agent');

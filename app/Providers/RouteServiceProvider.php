@@ -26,6 +26,10 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::bind('ballot', function ($value) {
+            return \App\Ballot::where('ref', $value)->with('edition')->first();
+        });
     }
 
     /**

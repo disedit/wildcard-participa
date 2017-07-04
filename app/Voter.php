@@ -29,7 +29,7 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public static function find_by_SID($SID, $edition_id)
+    public static function findBySID($SID, $edition_id)
     {
         return Self::where('SID', '=', $SID)->where('edition_id', '=', $edition_id)->first();
     }
@@ -37,7 +37,7 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function SMS_already_sent($phone)
+    public function smsAlreadySent($phone)
     {
         return ($this->SMS_phone == $phone) ? array('time' => $this->SMS_time) : FALSE;
     }
@@ -45,9 +45,9 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function SMS_exceeded()
+    public function smsExceeded()
     {
-        if($this->SMS_attempts >= config('participa.sms_max_attempts')){
+        if($this->SMS_attempts >= config('participa.sms_max_attempts')) {
             $last_number = explode(".", $this->SMS_phone);
             return array('last_country_code' => $last_number[0], 'last_number' => $last_number[1], 'time' => $this->SMS_time);
         }
@@ -58,7 +58,7 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function SMS_new_token()
+    public function smsNewToken()
     {
         $code = random_int(111111,999999);
         return $code;
@@ -67,9 +67,9 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function SMS_submit($phone)
+    public function smsSubmit($phone)
     {
-        $token = $this->SMS_new_token();
+        $token = $this->smsNewToken();
 
         //$this->SMS_token = hash('sha256', $token . $this->SID);
         $this->SMS_token = $token;
@@ -83,7 +83,7 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function create_signature()
+    public function createSignature()
     {
         $signature = $this->stamp . $this->SID . $this->ip_address . $this->ballot_time . config('app.key');
         return hash('sha256', $signature);
@@ -98,7 +98,7 @@ class Voter extends Model
         $this->ballot_time = date("Y-m-d H:i:s");
         $this->ip_address = $request->ip();
         $this->user_agent = $request->header('User-Agent');
-        $this->signature = $this->create_signature();
+        $this->signature = $this->createSignature();
         $this->in_person = ($user_id) ? 1 : 0;
         $this->by_user = $user_id;
 

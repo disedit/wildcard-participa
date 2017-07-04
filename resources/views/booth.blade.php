@@ -10,7 +10,7 @@
 
 @section('scripts')
 <!-- Scripts -->
-<?php $booth_mode = (isset($booth_mode)) ? var_export($booth_mode, true) : 'false'; ?>
+<?php $booth_mode = (isset($boothMode)) ? var_export($boothMode, true) : 'false'; ?>
 <script>
     window.BoothMode = {{ $booth_mode }};
     window.BoothConfig = {

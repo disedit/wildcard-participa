@@ -19,7 +19,7 @@ class LimitsLog extends Model
      *
      * @return boolean
      */
-    public function log_action($action)
+    public function logAction($action)
     {
         $this->ip = $this->app->request->ip();
         $this->action = $action;
@@ -33,7 +33,7 @@ class LimitsLog extends Model
      *
      * @return boolean
      */
-    public function limit_exceeded($action, $limit)
+    public function limitExceeded($action, $limit)
     {
         $count = Self::where('ip', '=', $this->app->request->ip())->where('action', '=', $action)->count();
 
