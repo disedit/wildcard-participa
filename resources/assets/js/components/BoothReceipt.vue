@@ -60,7 +60,7 @@
             receipt: {
                 type: Object,
                 default: {
-                    ref: '111'
+                    ref: '000000'
                 }
             }
         },

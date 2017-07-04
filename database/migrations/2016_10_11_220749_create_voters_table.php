@@ -20,10 +20,9 @@ class CreateVotersTable extends Migration
             $table->string('SMS_phone');
             $table->boolean('SMS_verified');
             $table->dateTime('SMS_time');
-            $table->string('hash');
-            $table->string('stamp');
             $table->integer('ballots_cast');
             $table->dateTime('ballot_time');
+            $table->string('signature', 64);
             $table->boolean('in_person');
             $table->integer('by_user');
             $table->ipAddress('ip_address');

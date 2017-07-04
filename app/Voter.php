@@ -89,7 +89,7 @@ class Voter extends Model
      */
     public function createSignature()
     {
-        $signature = $this->stamp . $this->SID . $this->ip_address . $this->ballot_time . config('app.key');
+        $signature = $this->SID . $this->ip_address . $this->ballot_time . $this->in_person . config('app.key');
         return hash('sha256', $signature);
     }
 

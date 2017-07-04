@@ -76,11 +76,9 @@ class VoteServiceProvider extends ServiceProvider
 
         Validator::extend('check_sms_code', function($attribute, $value) {
             $voterToken = $this->voter->SMS_token;
-            // $provided_token = hash('sha512', $value . $this->voter->SID);
             $providedToken = $value;
             return ($voterToken == $providedToken);
         });
-
     }
 
     /**

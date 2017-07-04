@@ -18,7 +18,19 @@
 </head>
 <body>
 
+    <div class="container">
+        <header>
+            Header
+        </header>
+    </div>
+
     @yield('content')
+
+    <div class="container">
+        <footer>
+            Footer
+        </footer>
+    </div>
 
     @yield('scripts')
 

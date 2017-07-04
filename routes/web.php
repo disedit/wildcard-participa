@@ -12,8 +12,10 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/about', 'HomeController@about');
 Route::get('/booth/{route}', 'HomeController@index');
 Route::get('/ballots/{ballot}', 'BoothController@ballots');
+Route::get('/my_ip', 'HomeController@myIpAddress');
 
 Auth::routes();
 

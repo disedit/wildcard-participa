@@ -46,27 +46,26 @@ class VoteRequest extends FormRequest
      */
     public function rules()
     {
-
         $isRequestSMS = $this->is('api/request_sms');
         $isCastBallot = $this->is('api/cast_ballot');
 
         //If in booth mode ignore some rules;
         $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
-
         $boothMode = (isset($payload['booth_mode'])) ? $payload['booth_mode'] : false;
 
+        // Conditional rules. if Booth Mode is set, ignore these extra checks
         $ipLimit = (!$boothMode) ? '|ip_limit' : '';
         $phoneRequired = (!$boothMode) ? 'required|check_phone_format|check_phone_duplicity' : '';
         $countryRequired = (!$boothMode) ? 'required|numeric' : '';
         $smsRequired = (!$boothMode) ? 'required|check_sms_code' : '';
 
-        // Rules
+        // General rules
         $rules = [
             'SID' => 'required|on_census|has_not_voted' . $ipLimit,
             'ballot' => 'ballot_validity',
         ];
 
-        // if SMS code is required!!
+        // SMS verification rules
         if($isRequestSMS || $isCastBallot) {
             $rules['phone'] = $phoneRequired;
             $rules['country_code'] = $countryRequired;

@@ -45,17 +45,17 @@ class Ballot extends Model
      */
     public function createBallot($ballot)
     {
-        $ballot_to_encode = array();
+        $ballotToEncode = [];
 
         foreach($ballot as $question) {
-            $options = array();
+            $options = [];
             foreach($question['options'] as $option) {
                 $options[] = $option['id'];
             }
-            $ballot_to_encode[$question['id']] = $options;
+            $ballotToEncode[$question['id']] = $options;
         }
 
-        return base64_encode(serialize($ballot_to_encode));
+        return encrypt($ballotToEncode);
     }
 
     /**
@@ -63,10 +63,10 @@ class Ballot extends Model
      */
     public function createRef()
     {
-        $new_ref = str_random(10);
-        $exists = Self::where('ref', '=', $new_ref)->count();
+        $newRef = str_random(10);
+        $exists = Self::where('ref', '=', $newRef)->count();
         if($exists) return $this->createRef();
-        return $new_ref;
+        return $newRef;
     }
 
     /**
@@ -74,7 +74,7 @@ class Ballot extends Model
      */
     public function createSignature()
     {
-        $signature = $this->ref . $this->options . $this->cast_at . config('app.key');
+        $signature = $this->ref . $this->ballot . $this->cast_at . config('app.key');
         return hash('sha256', $signature);
     }
 
@@ -84,8 +84,8 @@ class Ballot extends Model
     public function cast($request, $voter, $editionId, $userId = 0)
     {
         $this->edition_id = $editionId;
-        $this->ballot = $this->createBallot($request->input('ballot'));
         $this->ref = $this->createRef();
+        $this->ballot = $this->createBallot($request->input('ballot'));
         $this->cast_at = date("Y-m-d H:i:s");
         $this->signature = $this->createSignature();
         $this->by_user = $userId;

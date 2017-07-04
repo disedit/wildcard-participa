@@ -63,6 +63,21 @@ class HomeController extends Controller
 
     }
 
+    public function about()
+    {
+        $now = time();
+        $edition = $this->edition;
+
+        return view('home', compact('edition'));
+    }
+
+    public function myIpAddress(Request $request)
+    {
+        $ip = $request->ip();
+
+        return view('ip_address', compact('ip'));
+    }
+
     /**
      * Generates a JWT to validate booth_mode
      *

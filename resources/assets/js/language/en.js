@@ -58,7 +58,8 @@ export default {
     },
     sidebar: {
         current_poll: 'Current poll',
-        dates: 'Del {start_date} al {end_date}',
+        dates: 'From {start_date} to {end_date}',
+        more_info: 'Information',
         voting_places: 'Assisted voting',
         voting_help: 'If you need further assitance voting, you may go to one of the following in-person assisted voting points.',
         contact: 'Contact',

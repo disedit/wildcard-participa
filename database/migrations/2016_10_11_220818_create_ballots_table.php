@@ -17,10 +17,9 @@ class CreateBallotsTable extends Migration
             $table->increments('id');
             $table->integer('edition_id');
             $table->integer('voter_id');
+            $table->string('ref', 10);
             $table->text('ballot');
-            $table->string('ref');
-            $table->string('stamp');
-            $table->string('signature');
+            $table->string('signature', 64);
             $table->dateTime('cast_at');
             $table->integer('by_user');
             $table->ipAddress('ip_address');
