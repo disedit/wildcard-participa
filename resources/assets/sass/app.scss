@@ -8,7 +8,7 @@
 // Animations
 @import "animations";
 
-
+// Global
 .booth {
     position: relative;
 }
@@ -29,6 +29,23 @@ button {
 
     h3 {
         font-weight: bold;
+    }
+}
+
+// Sidebar
+.sidebar {
+    &__box {
+        background: $gray-lighter;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+
+        h3 {
+
+        }
+
+        h4 {
+
+        }
     }
 }
 

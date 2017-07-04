@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifySMS;
 
 class Voter extends Model
 {
+    use Notifiable;
+
     /**
      * Get the edition that the user belongs to.
      */
@@ -71,13 +75,13 @@ class Voter extends Model
     {
         $token = $this->smsNewToken();
 
-        //$this->SMS_token = hash('sha256', $token . $this->SID);
         $this->SMS_token = $token;
         $this->SMS_phone = $phone;
         $this->SMS_attempts++;
         $this->SMS_time = date('Y-m-d H:i:s');
+        $this->save();
 
-        return $this->save();
+        return $this->notify(new VerifySMS());
     }
 
     /**

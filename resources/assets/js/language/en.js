@@ -55,5 +55,12 @@ export default {
         select_button: 'Select this option',
         deselect_button: 'Deselect this option',
         dismiss_button: 'Close'
+    },
+    sidebar: {
+        current_poll: 'Current poll',
+        dates: 'Del {start_date} al {end_date}',
+        voting_places: 'Assisted voting',
+        contact: 'Contact',
+        contact_text: 'Contact us at <a href="mailto:{contact_email}">{contact_email}</a>'
     }
 };
