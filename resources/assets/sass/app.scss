@@ -18,6 +18,10 @@
     padding: 1rem;
 }
 
+hr {
+    margin: 2rem 0;
+}
+
 input,
 button {
     font-family: $font-family-base;
@@ -37,14 +41,53 @@ button {
     &__box {
         background: $gray-lighter;
         padding: 1.5rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
 
         h3 {
-
+            font-size: 1.55rem;
+            font-weight: bold;
         }
 
         h4 {
+            font-size: 1.15rem;
+            color: $gray-light;
+        }
 
+        hr {
+            margin: 1rem 0;
+        }
+    }
+
+    &__secondary {
+        color: lighten($gray-light, 15%);
+        font-size: 1rem;
+    }
+
+    &__list {
+        padding-left: 0;
+        margin-bottom: 0;
+
+        li {
+            list-style: none;
+            margin-bottom: 0.5rem;
+        }
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__list--links {
+        a {
+            position: relative;
+            display: block;
+            padding-left: 1.6rem;
+        }
+
+        .fa {
+            position: absolute;
+            left: 0;
+            top: 4px;
         }
     }
 }
@@ -64,6 +107,12 @@ button {
             width: 50%;
             height: 100px;
             align-items: flex-start;
+        }
+    }
+
+    .booth-mode .template-2column {
+        .list-group label {
+            width: 33.3%;
         }
     }
 

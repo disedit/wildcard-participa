@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-sm-8">
+        <div :class="{'col-sm-8': !boothMode, 'col-sm-12': boothMode}">
             <form @submit.prevent="submitBallot">
                 <div v-for="question in ballot.questions">
                     <ballot-question :question="question" :selected="selected" />
@@ -9,7 +9,7 @@
                 <ballot-identification :identifier="identifier" :loading="isLoading" />
             </form>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4" v-if="!boothMode">
             <sidebar :edition="ballot" />
         </div>
     </div>
@@ -31,7 +31,8 @@
 
         data() {
             return {
-                isLoading: false
+                isLoading: false,
+                boothMode: false,
             }
         },
 
@@ -42,6 +43,7 @@
         },
 
         created() {
+            this.boothMode = window.BoothMode;
             Bus.$on('BoothBallotLoading', (isLoading) => this.isLoading = isLoading);
         },
 

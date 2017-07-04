@@ -60,6 +60,7 @@ export default {
         current_poll: 'Current poll',
         dates: 'Del {start_date} al {end_date}',
         voting_places: 'Assisted voting',
+        voting_help: 'If you need further assitance voting, you may go to one of the following in-person assisted voting points.',
         contact: 'Contact',
         contact_text: 'Contact us at <a href="mailto:{contact_email}">{contact_email}</a>'
     }

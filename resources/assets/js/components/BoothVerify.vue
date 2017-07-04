@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-12">
             <div class="ballot-box ballot-phone">
-                <verify-in-person v-if="booth_mode" />
+                <verify-in-person v-if="boothMode" />
                 <verify-phone v-else :phone="phone" :country-code="countryCode" :sms-code="smsCode" :sms-requested="smsRequested" />
             </div>
         </div>
@@ -36,12 +36,12 @@
 
         data() {
             return {
-                booth_mode: false
+                boothMode: false
             }
         },
 
         created() {
-            this.booth_mode = window.BoothMode;
+            this.boothMode = window.BoothMode;
         }
     }
 </script>

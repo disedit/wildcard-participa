@@ -3,19 +3,22 @@
         <div class="sidebar__box">
             <h4>{{ $t('sidebar.current_poll') }}</h4>
             <h3>{{ edition.name }}</h3>
-            <p class="sidebar__dates">{{ $t('sidebar.dates', { start_date: edition.start_date, end_date: edition.end_date }) }}</p>
-            <ul v-if="docs.length > 0">
+            <p class="sidebar__secondary">{{ $t('sidebar.dates', { start_date: edition.start_date, end_date: edition.end_date }) }}</p>
+            <hr />
+            <ul class="sidebar__list sidebbar__list--links" v-if="docs">
                 <li v-for="doc in docs">
-                    <a :href="doc[1]">{{ doc[0] }}</a>
+                    <a :href="doc[1]" target="_blank"><i class="fa fa-file-text-o"></i> {{ doc[0] }}</a>
                 </li>
             </ul>
         </div>
-        <div class="sidebar__box" v-if="voting_places.length > 0">
+        <div class="sidebar__box" v-if="voting_places">
             <h4>{{ $t('sidebar.voting_places') }}</h4>
-            <ul>
+            <p>{{ $t('sidebar.voting_help') }}</p>
+            <hr />
+            <ul class="sidebar__list">
                 <li v-for="place in voting_places">
                     {{ place[0] }}
-                    {{ place[1] }}
+                    <span class="sidebar__secondary">{{ place[1] }}</span>
                 </li>
             </ul>
         </div>

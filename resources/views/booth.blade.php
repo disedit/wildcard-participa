@@ -1,18 +1,18 @@
+<?php $boothMode = (isset($boothMode)) ? $boothMode : false; ?>
 @extends('layouts.public')
 
 @section('content')
 <div class="container main-container">
-    <h1>{{ $edition->name }}</h1>
-
-    <div id="booth"></div>
+    <div class="{{ $boothMode ? 'booth-mode' : '' }}">
+        <div id="booth"></div>
+    </div>
 </div>
 @endsection
 
 @section('scripts')
 <!-- Scripts -->
-<?php $booth_mode = (isset($boothMode)) ? var_export($boothMode, true) : 'false'; ?>
 <script>
-    window.BoothMode = {{ $booth_mode }};
+    window.BoothMode = {{ var_export($boothMode, true) }};
     window.BoothConfig = {
         name: '{{ config('participa.municipality', 'Any City') }}',
         contact_email: '{{ config('participa.contact_email', 'participa@disedit.com') }}',
