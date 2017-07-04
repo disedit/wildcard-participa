@@ -79,6 +79,14 @@ class Ballot extends Model
     }
 
     /**
+     * Check ballot integrity
+     */
+    public function check()
+    {
+        return $this->signature === $this->createSignature();
+    }
+
+    /**
      * Get the option that the ballot belongs to.
      */
     public function cast($request, $voter, $editionId, $userId = 0)

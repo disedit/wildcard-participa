@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Edition;
+use App\Ballot;
 
 class ValidateResults extends Command
 {
@@ -21,22 +23,45 @@ class ValidateResults extends Command
     protected $description = 'Validate ballot integrity';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
-        //
+
+        $edition = $this->option('edition');
+
+        if($edition) {
+            $edition = Edition::where($edition)->get();
+        } else {
+            $edition = new Edition;
+            $edition = $edition->current();
+        }
+
+        $ballots = Ballot::where('edition_id', $edition->id)->get();
+
+        $bar = $this->output->createProgressBar(count($ballots));
+        $errors = [];
+
+        foreach($ballots as $ballot) {
+            if(!$ballot->check()) {
+                $errors[] = [$ballot->cast_at, $ballot->ref];
+            }
+            sleep(1);
+            $bar->advance();
+        }
+
+        $bar->finish();
+        $this->line('');
+        $this->line('');
+
+        if(!$errors) {
+            $this->line('Ballot check finished without errors.');
+        } else {
+            $this->error('Ballot check finisheded with errors. The following ballots are invalid!');
+
+            $this->table(['Cast at', 'Ballot ref.'], $errors);
+        }
     }
 }
