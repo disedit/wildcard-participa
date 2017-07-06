@@ -12,7 +12,7 @@ class CreateAdmins extends Command
      *
      * @var string
      */
-    protected $signature = 'participa:admins {users*} {--superadmin}';
+    protected $signature = 'admins:create {users*} {--superadmin}';
 
     /**
      * The console command description.
