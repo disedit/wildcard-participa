@@ -4,19 +4,21 @@
             <h4>{{ $t('sidebar.current_poll') }}</h4>
             <h3>{{ edition.name }}</h3>
             <p class="sidebar__secondary">{{ $t('sidebar.dates', { start_date: edition.start_date, end_date: edition.end_date }) }}</p>
-            <hr />
-            <ul class="sidebar__list sidebar__list--links" v-if="docs">
-                <li>
-                    <a href="/about"><i class="fa fa-info-circle"></i> {{ $t('sidebar.more_info') }}</a>
-                </li>
-                <li v-for="doc in docs">
-                    <a :href="doc[1]" target="_blank">
-                        <i v-if="!doc[2]" class="fa fa-file-text-o"></i>
-                        <i v-else :class="'fa fa-' + doc[2]"></i>
-                        {{ doc[0] }}
-                    </a>
-                </li>
-            </ul>
+            <div v-if="docs">
+                <hr />
+                <ul class="sidebar__list sidebar__list--links">
+                    <li>
+                        <a href="/about"><i class="fa fa-info-circle"></i> {{ $t('sidebar.more_info') }}</a>
+                    </li>
+                    <li v-for="doc in docs">
+                        <a :href="doc[1]" target="_blank">
+                            <i v-if="!doc[2]" class="fa fa-file-text-o"></i>
+                            <i v-else :class="'fa fa-' + doc[2]"></i>
+                            {{ doc[0] }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="sidebar__box" v-if="voting_places">
             <h4>{{ $t('sidebar.voting_places') }}</h4>
@@ -68,6 +70,8 @@
             parseList(list) {
                 let lines = list.split('\n');
                 let arrayList = [];
+
+                if(list.length == 0) return;
 
                 lines.forEach((line) => {
                     arrayList.push(line.split(','));
