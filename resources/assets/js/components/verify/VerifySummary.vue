@@ -99,6 +99,7 @@
         max-height: 200px;
         position: relative;
         transition: 0.25s;
+        overflow: hidden;
 
         .expand {
             display: flex;

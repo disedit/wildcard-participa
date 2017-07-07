@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class EditionsTableSeeder extends Seeder
+class EditionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,8 @@ class EditionsTableSeeder extends Seeder
             $questions = $edition->questions()->saveMany(factory(App\Question::class, 4)->make());
 
             foreach($questions as $question){
-                $question->options()->saveMany(factory(App\Option::class, 10)->make());
+                $randomOptions = rand(3,10);
+                $question->options()->saveMany(factory(App\Option::class, $randomOptions)->make());
             }
         });
     }
