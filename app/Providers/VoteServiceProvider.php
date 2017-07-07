@@ -26,7 +26,8 @@ class VoteServiceProvider extends ServiceProvider
     public function boot()
     {
         $edition = new Edition;
-        $this->edition_id = $edition->current()->id;
+        $edition = $edition->current();
+        $this->edition_id = ($edition) ? $edition->id : null;
 
         Validator::extend('on_census', function($attribute, $value) {
             $this->voter = $this->setVoter($value);
