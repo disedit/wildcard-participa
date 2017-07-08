@@ -20,5 +20,6 @@ $factory->define(App\Question::class, function (Faker\Generator $faker) {
         'min_options' => $faker->numberBetween(0,1),
         'max_options' => $faker->numberBetween(1,3),
         'display_cost' => $faker->boolean(),
+        'random_order' => $faker->boolean()
     ];
 });

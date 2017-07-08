@@ -36,6 +36,13 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        'booth' => [
+            \App\Http\Middleware\VoteOpen::class,
+            \App\Http\Middleware\InPerson::class,
+            \App\Http\Middleware\IpLimit::class
+        ],
+
     ];
 
     /**

@@ -18,6 +18,8 @@ class CreateVotersTable extends Migration
             $table->integer('edition_id');
             $table->string('SID', 20);
             $table->string('SMS_phone');
+            $table->string('SMS_token');
+            $table->integer('SMS_attempts');
             $table->boolean('SMS_verified');
             $table->dateTime('SMS_time')->nullable();
             $table->boolean('ballot_cast');

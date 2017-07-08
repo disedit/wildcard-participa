@@ -89,9 +89,11 @@ class Ballot extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function cast($request, $voter, $editionId, $userId = 0)
+    public function cast($request, $voter)
     {
-        $this->edition_id = $editionId;
+        $userId = ($request->get('in_person')) ? $request->get('in_person') : 0;
+
+        $this->edition_id = $request->get('edition_id');
         $this->ref = $this->createRef();
         $this->ballot = $this->createBallot($request->input('ballot'));
         $this->cast_at = date("Y-m-d H:i:s");

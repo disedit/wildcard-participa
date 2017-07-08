@@ -16,6 +16,8 @@ $factory->define(App\Voter::class, function (Faker\Generator $faker) {
     return [
         'SID' => $faker->unique()->dni,
         'SMS_phone' => '',
+        'SMS_token' => '',
+        'SMS_attempts' => 0,
         'SMS_verified' => 0,
         'SMS_time' => null,
         'ballot_cast' => 0,

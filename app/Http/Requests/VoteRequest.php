@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Edition;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class VoteRequest extends FormRequest
 {
@@ -16,9 +15,7 @@ class VoteRequest extends FormRequest
      */
     public function authorize()
     {
-        $edition = new Edition;
-        $now = time();
-        return (strtotime($edition->current()->end_date) > $now);
+        return true;
     }
 
     /**
@@ -46,24 +43,30 @@ class VoteRequest extends FormRequest
      */
     public function rules()
     {
+        $edition_id = $this->get('edition_id');
+        $SID = $this->get('SID');
         $isRequestSMS = $this->is('api/request_sms');
         $isCastBallot = $this->is('api/cast_ballot');
 
-        //If in booth mode ignore some rules;
-        $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
-        $boothMode = (isset($payload['booth_mode'])) ? $payload['booth_mode'] : false;
+        // General rules
+        $rules['SID'] = [
+            'required',
+            'on_census:' . $edition_id,
+            'has_not_voted:' . $edition_id
+        ];
+
+        $rules['ballot'] = 'ballot_validity:' . $edition_id;
 
         // Conditional rules. if Booth Mode is set, ignore these extra checks
-        $ipLimit = (!$boothMode) ? '|ip_limit' : '';
-        $phoneRequired = (!$boothMode) ? 'required|check_phone_format|check_phone_duplicity' : '';
-        $countryRequired = (!$boothMode) ? 'required|numeric' : '';
-        $smsRequired = (!$boothMode) ? 'required|check_sms_code' : '';
+        $inPerson = $this->has('in_person');
+        $phoneRequired = (!$inPerson) ? 'required|numeric|phone_not_used:' . $edition_id : '';
+        $countryRequired = (!$inPerson) ? 'required|numeric' : '';
 
-        // General rules
-        $rules = [
-            'SID' => 'required|on_census|has_not_voted' . $ipLimit,
-            'ballot' => 'ballot_validity',
+        $smsRequiredRules = [
+            'required',
+            'sms_code:' . $SID . ',' . $edition_id
         ];
+        $smsRequired = (!$inPerson) ? $smsRequiredRules : '';
 
         // SMS verification rules
         if($isRequestSMS || $isCastBallot) {
@@ -72,7 +75,7 @@ class VoteRequest extends FormRequest
         }
 
         if($isCastBallot) $rules['SMS_code'] = $smsRequired;
-
+        
         return $rules;
     }
 

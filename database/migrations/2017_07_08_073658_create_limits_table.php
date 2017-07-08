@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLimitsLogTable extends Migration
+class CreateLimitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLimitsLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('limits_log', function (Blueprint $table) {
+        Schema::create('limits', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ip', 50);
             $table->string('action', 50);
@@ -29,6 +29,6 @@ class CreateLimitsLogTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('limits_log');
+        Schema::dropIfExists('limits');
     }
 }

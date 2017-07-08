@@ -42,23 +42,32 @@ class Edition extends Model
     /**
      * Get the current edition
      */
-    public function current($withBallot = FALSE, $random = TRUE, $published = 1)
+    public static function current($withBallot = false, $random = true, $published = 1)
     {
-
-        $this->random = $random;
-
         $edition = Self::where('published', '=', $published);
 
         if($withBallot)
         {
             $edition->with(['questions' => function($questionsQuery) {
                 $questionsQuery->with(['options' => function($optionsQuery) {
-                    if($this->random) $optionsQuery->orderByRaw('rand()');
+                    $optionsQuery->orderByRaw('rand()'); // Fix this later
                 }])->orderBy('id', 'asc');
             }]);
         }
 
         return $edition->orderBy('id', 'desc')->first();
+    }
+
+    /**
+     * Determine if current edition is open for voting or not
+     */
+    public function isOpen() {
+
+        $startTime = strtotime($this->start_date);
+        $endTime = strtotime($this->end_date);
+        $now = time();
+        
+        return ($startTime < $now && $endTime > $now);
     }
 
     /**

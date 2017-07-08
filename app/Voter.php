@@ -35,7 +35,7 @@ class Voter extends Model
      */
     public static function findBySID($SID, $edition_id)
     {
-        return Self::where('SID', '=', $SID)->where('edition_id', '=', $edition_id)->first();
+        return Self::where('SID', $SID)->where('edition_id', $edition_id)->first();
     }
 
     /**
@@ -96,15 +96,17 @@ class Voter extends Model
     /**
      * Get the option that the ballot belongs to.
      */
-    public function mark($request, $user_id = 0)
+    public function mark($request)
     {
+        $userId = ($request->get('in_person')) ? $request->get('in_person') : 0;
+
         $this->ballot_cast = 1;
         $this->ballot_time = date("Y-m-d H:i:s");
         $this->ip_address = $request->ip();
         $this->user_agent = $request->header('User-Agent');
         $this->signature = $this->createSignature();
-        $this->in_person = ($user_id) ? 1 : 0;
-        $this->by_user = $user_id;
+        $this->in_person = ($userId) ? 1 : 0;
+        $this->by_user = $userId;
 
         return $this->save();
     }

@@ -22,6 +22,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('min_options');
             $table->integer('max_options');
             $table->boolean('display_cost');
+            $table->boolean('random_order');
             $table->timestamps();
         });
     }
