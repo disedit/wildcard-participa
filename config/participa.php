@@ -4,6 +4,7 @@ return [
     'municipality' => 'Any City',
     'contact_email' => 'participa@disedit.com',
     'max_per_ip' => 3,
+    'max_failed_lookups' => 100,
     'sms_max_attempts' => 3,
     'anonymous_voting' => false,
     'min_age' => 16,

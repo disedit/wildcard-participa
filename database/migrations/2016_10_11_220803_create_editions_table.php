@@ -20,9 +20,9 @@ class CreateEditionsTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->dateTime('publish_results');
-            $table->text('docs');
-            $table->text('voting_places');
-            $table->text('sidebar');
+            $table->text('docs')->default('');
+            $table->text('voting_places')->default('');
+            $table->text('sidebar')->default('');
             $table->boolean('published');
             $table->timestamps();
         });

@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
+use App\Edition;
+use App\Voter;
 
 class ImportCensus extends Command
 {
@@ -11,14 +14,14 @@ class ImportCensus extends Command
      *
      * @var string
      */
-    protected $signature = 'participa:census';
+    protected $signature = 'census:import {file=import.csv} {--edition=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Load census onto database';
+    protected $description = 'Load census from file onto database';
 
     /**
      * Create a new command instance.
@@ -37,6 +40,45 @@ class ImportCensus extends Command
      */
     public function handle()
     {
-        //
+        $editionId = $this->option('edition');
+        $edition = ($editionId) ? Edition::where($editionId)->get() : Edition::current();
+
+        if(!$edition) {
+            $this->error('You must first create an edition.');
+
+            $proceed = $this->choice('Create new one?', ['Yes', 'No'], 0);
+
+            if($proceed == 'Yes') {
+                $this->call('edition:new');
+                $this->handle();
+            } else {
+                return;
+            }
+        }
+
+        $filename = $this->argument('file');
+        $contents = Storage::get('census/' . $filename);
+
+        $lines = explode("\n", $contents);
+
+        foreach($lines as $SID) {
+            if(empty($SID)) continue;
+            $voter = new Voter;
+            $voter->SID = $this->cleanSID($SID);
+            $voter->edition_id = $edition->id;
+            $voter->save();
+        }
+
+        $this->line('Census imported successfully.');
+    }
+
+    private function cleanSID($SID)
+    {
+        $SID = trim($SID);
+        $SID = str_replace(" ", "", $SID);
+        $SID = str_replace(".", "", $SID);
+        $SID = str_replace("-", "", $SID);
+
+        return $SID;
     }
 }

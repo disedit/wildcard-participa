@@ -13,9 +13,12 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\NewEdition::class,
+        Commands\PublishEdition::class,
+        Commands\ImportCensus::class,
         Commands\CreateAdmins::class,
         Commands\ResetAdminsPasswords::class,
-        Commands\ValidateResults::class
+        Commands\CacheResults::class
     ];
 
     /**

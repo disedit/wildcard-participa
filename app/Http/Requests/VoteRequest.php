@@ -48,7 +48,7 @@ class VoteRequest extends FormRequest
         $isRequestSMS = $this->is('api/request_sms');
         $isCastBallot = $this->is('api/cast_ballot');
 
-        // General rules
+        // General rules. Applies to all voters
         $rules['SID'] = [
             'required',
             'on_census:' . $edition_id,
@@ -57,9 +57,9 @@ class VoteRequest extends FormRequest
 
         $rules['ballot'] = 'ballot_validity:' . $edition_id;
 
-        // Conditional rules. if Booth Mode is set, ignore these extra checks
+        // Conditional rules. Only applies to online voters
         $inPerson = $this->has('in_person');
-        $phoneRequired = (!$inPerson) ? 'required|numeric|phone_not_used:' . $edition_id : '';
+        $phoneRequired = (!$inPerson) ? 'required|phone_format|phone_not_used:' . $edition_id : '';
         $countryRequired = (!$inPerson) ? 'required|numeric' : '';
 
         $smsRequiredRules = [
@@ -68,21 +68,22 @@ class VoteRequest extends FormRequest
         ];
         $smsRequired = (!$inPerson) ? $smsRequiredRules : '';
 
-        // SMS verification rules
+        // SMS verification rules.
         if($isRequestSMS || $isCastBallot) {
             $rules['phone'] = $phoneRequired;
             $rules['country_code'] = $countryRequired;
         }
 
         if($isCastBallot) $rules['SMS_code'] = $smsRequired;
-        
+
         return $rules;
     }
 
     /**
-     * Get the validation rules that apply to the request. !!!!!
+     * Prepend international dial code to phone for further processing
+     * and clean the phone input to prevent any silly errors like spaces or dashes
      *
-     * @return array
+     * @return string
      */
     public function cleanPhone($countryCode, $phone)
     {
@@ -100,9 +101,10 @@ class VoteRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Clean the ID field to prevent silly not found errors
+     * when users add unnecessary spaces, dashes or dots
      *
-     * @return array
+     * @return string
      */
     public static function cleanSID($value)
     {

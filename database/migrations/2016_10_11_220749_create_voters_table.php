@@ -17,18 +17,18 @@ class CreateVotersTable extends Migration
             $table->increments('id');
             $table->integer('edition_id');
             $table->string('SID', 20);
-            $table->string('SMS_phone');
-            $table->string('SMS_token');
-            $table->integer('SMS_attempts');
-            $table->boolean('SMS_verified');
+            $table->string('SMS_phone')->default('');
+            $table->string('SMS_token')->default('');
+            $table->integer('SMS_attempts')->default(0);
+            $table->boolean('SMS_verified')->default(0);
             $table->dateTime('SMS_time')->nullable();
-            $table->boolean('ballot_cast');
+            $table->boolean('ballot_cast')->default(0);
             $table->dateTime('ballot_time')->nullable();
-            $table->string('signature', 64);
+            $table->string('signature', 64)->default('');
             $table->boolean('in_person')->nullable();
             $table->integer('by_user')->nullable();
-            $table->ipAddress('ip_address');
-            $table->string('user_agent');
+            $table->ipAddress('ip_address')->default('');
+            $table->string('user_agent')->default('');
             $table->timestamps();
         });
     }

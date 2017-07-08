@@ -16,10 +16,17 @@ class IpLimit
      */
     public function handle($request, Closure $next)
     {
-        $max = config('participa.max_per_ip');
+        $maxVotes = config('participa.max_per_ip');
+        $maxFailedLookUps = config('participa.max_failed_lookups');
         $inPerson = $request->has('in_person');
 
-        if(!$inPerson && Limit::exceeded($request, 'vote', $max)) {
+        if(Limit::exceeded($request, 'IDFailedLookUp', $maxFailedLookUps)) {
+            return response()->json([
+                'IpLimit' => ['Too many failed lookups']
+            ], 422);
+        }
+
+        if(!$inPerson && Limit::exceeded($request, 'Vote', $maxVotes)) {
             return response()->json([
                 'IpLimit' => ['Exceeded']
             ], 422);

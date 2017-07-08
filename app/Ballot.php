@@ -45,17 +45,25 @@ class Ballot extends Model
      */
     public function createBallot($ballot)
     {
-        $ballotToEncode = [];
+        $ballotToEncrypt = [];
 
         foreach($ballot as $question) {
             $options = [];
             foreach($question['options'] as $option) {
                 $options[] = $option['id'];
             }
-            $ballotToEncode[$question['id']] = $options;
+            $ballotToEncrypt[$question['id']] = $options;
         }
 
-        return encrypt($ballotToEncode);
+        return encrypt($ballotToEncrypt);
+    }
+
+    /**
+     * Decode an encrypted ballot
+     */
+    public function decrypt()
+    {
+        return decrypt($this->ballot);
     }
 
     /**

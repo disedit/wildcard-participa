@@ -40,6 +40,14 @@ class Edition extends Model
     }
 
     /**
+     * Get all the ballots for the edition
+     */
+    public function results()
+    {
+        return $this->hasMany('App\Result');
+    }
+
+    /**
      * Get the current edition
      */
     public static function current($withBallot = false, $random = true, $published = 1)
@@ -66,15 +74,8 @@ class Edition extends Model
         $startTime = strtotime($this->start_date);
         $endTime = strtotime($this->end_date);
         $now = time();
-        
+
         return ($startTime < $now && $endTime > $now);
-    }
-
-    /**
-     * Get the results for the edition
-     */
-    public function results(){
-
     }
 
 }
