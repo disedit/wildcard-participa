@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Edition;
+use App\Ballot;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BallotController extends Controller
@@ -26,8 +27,7 @@ class BallotController extends Controller
      */
     public function ballotJSON()
     {
-        $edition = new Edition;
-        $edition = $edition->current('ballot');
+        $edition = Edition::current('ballot');
         return response()->json($edition);
     }
 

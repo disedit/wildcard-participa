@@ -21,8 +21,8 @@ class IpLimit
 
         if(!$inPerson && Limit::exceeded($request, 'vote', $max)) {
             return response()->json([
-                'Ip_Limit' => 'Exceeded'
-            ]);
+                'IpLimit' => ['Exceeded']
+            ], 422);
         }
 
         return $next($request);

@@ -6,7 +6,6 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\Messagebird\MessagebirdChannel;
 use NotificationChannels\Messagebird\MessagebirdMessage;
 
-
 class VerifySMS extends Notification
 {
 

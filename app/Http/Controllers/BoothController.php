@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use NotificationChannels\Messagebird\Exceptions\CouldNotSendNotification;
 
 use App\Http\Requests;
 use App\Http\Requests\VoteRequest;
-use App\Edition;
 use App\Voter;
 use App\Ballot;
-use App\Question;
-use App\Option;
+use App\Limit;
 
 class BoothController extends Controller
 {
@@ -43,7 +42,7 @@ class BoothController extends Controller
     {
         $editionId  = $request->get('edition_id');
         $inPerson   = $request->has('in_person');
-        $flag       = false;
+        $flag       = null;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
         $voter      = Voter::findBySID($SID, $editionId);
@@ -57,12 +56,16 @@ class BoothController extends Controller
                 // if exceeded: redirect & attach warning
                 $flag = ['name' => 'SMS_exceeded', 'info' => $smsExceeded];
             } else {
-                $submitted = $voter->smsSubmit($phone);
 
-                if(!$submitted) return response()->json([
-                    'success' => false,
-                    'flag' => 'SMS_error'
-                ]);
+                try {
+                    $voter->smsSubmit($phone);
+                } catch(CouldNotSendNotification $e) {
+                    $voter->smsRollback();
+
+                    return response()->json([
+                        'SMS' => ['Error SMS']
+                    ], 422);
+                }
             }
         }
 
@@ -98,6 +101,8 @@ class BoothController extends Controller
                 // Unmark voter and display error
                 $voter->rollback();
                 return response()->json(['success' => false, 'error' => 'Error sistema']);
+            } else {
+                Limit::logAction($request, 'vote');
             }
 
         } else {

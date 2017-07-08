@@ -85,6 +85,17 @@ class Voter extends Model
     }
 
     /**
+     * Rollback voter's SMS status if SMS failed to send.
+     */
+    public function smsRollback()
+    {
+        $this->SMS_token = '';
+        $this->SMS_attempts--;
+        $this->SMS_time = null;
+        $this->save();
+    }
+
+    /**
      * Get the option that the ballot belongs to.
      */
     public function createSignature()
@@ -100,6 +111,7 @@ class Voter extends Model
     {
         $userId = ($request->get('in_person')) ? $request->get('in_person') : 0;
 
+        if(!$userId) $this->SMS_verified = 1;
         $this->ballot_cast = 1;
         $this->ballot_time = date("Y-m-d H:i:s");
         $this->ip_address = $request->ip();

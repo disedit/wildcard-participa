@@ -14,11 +14,13 @@ class Limit extends Model
      */
     public static function logAction($request, $action)
     {
-        $this->ip = $request->ip();
-        $this->action = $action;
-        $this->user_agent = $request->header('User-Agent');
+        $limit = new Self;
 
-        return $this->save();
+        $limit->ip = $request->ip();
+        $limit->action = $action;
+        $limit->user_agent = $request->header('User-Agent');
+
+        return $limit->save();
     }
 
     /**
@@ -30,6 +32,6 @@ class Limit extends Model
     {
         $count = Self::where('ip', '=', $request->ip())->where('action', '=', $action)->count();
 
-        return $count > $limit;
+        return $count >= $limit;
     }
 }
