@@ -85,8 +85,8 @@ class HomeController extends Controller
      */
     private function createBoothToken($userId)
     {
-        $boothMode = ($userId) ? true : false;
-        $claims = ['booth_mode' => $boothMode, 'user_id' => $userId];
+        $inPerson = ($userId) ? true : false;
+        $claims = ['in_person' => $inPerson, 'user_id' => $userId];
         $payload = JWTFactory::make($claims);
 
         try {
