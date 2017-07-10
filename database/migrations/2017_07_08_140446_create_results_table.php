@@ -15,11 +15,13 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('edition_id');
-            $table->integer('question_id');
-            $table->integer('option_id');
+            $table->integer('edition_id')->unsigned();
+            $table->integer('question_id')->unsigned();
+            $table->integer('option_id')->unsigned();
             $table->integer('result');
             $table->timestamps();
+
+            $table->index(['edition_id', 'question_id', 'option_id']);
         });
     }
 

@@ -22,8 +22,7 @@ class BallotSeeder extends Seeder
             $voter->ballot_cast = 1;
             $voter->ballot_time = date('Y-m-d H:i:s');
             $voter->signature = $voter->createSignature();
-            $voter->in_person = 1;
-            $voter->by_user = 1;
+            $voter->by_user_id = 1;
             $voter->save();
 
             $ballot = new Ballot();
@@ -32,7 +31,7 @@ class BallotSeeder extends Seeder
             $ballot->ballot = $this->generateRandomBallot($voter->edition_id);
             $ballot->cast_at = date("Y-m-d H:i:s");
             $ballot->signature = $ballot->createSignature();
-            $ballot->by_user = 1;
+            $ballot->by_user_id = 1;
 
             if(config('participa.anonymous_voting') === false) {
                 $ballot->voter_id = $voter->id;

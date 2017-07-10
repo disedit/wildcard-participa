@@ -109,7 +109,7 @@ class Voter extends Model
      */
     public function mark($request)
     {
-        $userId = ($request->get('in_person')) ? $request->get('in_person') : 0;
+        $userId = ($request->get('in_person')) ? $request->get('in_person') : null;
 
         if(!$userId) $this->SMS_verified = 1;
         $this->ballot_cast = 1;
@@ -117,8 +117,7 @@ class Voter extends Model
         $this->ip_address = $request->ip();
         $this->user_agent = $request->header('User-Agent');
         $this->signature = $this->createSignature();
-        $this->in_person = ($userId) ? 1 : 0;
-        $this->by_user = $userId;
+        $this->by_user_id = $userId;
 
         return $this->save();
     }

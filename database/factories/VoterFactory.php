@@ -23,8 +23,7 @@ $factory->define(App\Voter::class, function (Faker\Generator $faker) {
         'ballot_cast' => 0,
         'ballot_time' => null,
         'signature' => '',
-        'in_person' => null,
-        'by_user' => null,
+        'by_user_id' => null,
         'ip_address' => '',
         'user_agent' => ''
     ];

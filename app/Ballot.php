@@ -99,14 +99,14 @@ class Ballot extends Model
      */
     public function cast($request, $voter)
     {
-        $userId = ($request->get('in_person')) ? $request->get('in_person') : 0;
+        $userId = ($request->get('in_person')) ? $request->get('in_person') : null;
 
         $this->edition_id = $request->get('edition_id');
         $this->ref = $this->createRef();
         $this->ballot = $this->createBallot($request->input('ballot'));
         $this->cast_at = date("Y-m-d H:i:s");
         $this->signature = $this->createSignature();
-        $this->by_user = $userId;
+        $this->by_user_id = $userId;
 
         if(config('participa.anonymous_voting') === false) {
             $this->voter_id = $voter->id;
