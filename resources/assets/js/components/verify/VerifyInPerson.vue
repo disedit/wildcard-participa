@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="verify-in-person">
         <form @submit.prevent="castBallot">
-            <button :class="'btn btn-success btn-block btn-lg' + disabled" type="submit">
+            <button :class="'btn btn-cast btn-success btn-block btn-lg' + disabled" type="submit">
                 <spinner icon="check" :loading="isLoading" />
                 {{ $t('verify_in_person.button') }}
             </button>

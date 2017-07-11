@@ -18,7 +18,7 @@ class IpLimit
     {
         $maxVotes = config('participa.max_per_ip');
         $maxFailedLookUps = config('participa.max_failed_lookups');
-        $inPerson = $request->has('in_person');
+        $inPerson = $request->get('in_person');
 
         if(Limit::exceeded($request, 'IDFailedLookUp', $maxFailedLookUps)) {
             return response()->json([

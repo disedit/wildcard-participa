@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Request;
 use App\Requests\VoteRequest;
 use App\Voter;
+use App\Limit;
 use App\Edition;
 use App\Ballot;
 use App\Question;

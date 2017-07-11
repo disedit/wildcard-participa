@@ -12,14 +12,13 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Question::class, function (Faker\Generator $faker) {
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    static $password;
     return [
-        'question' => $faker->sentence(12),
-        'description' => $faker->paragraph(2),
-        'template' => $faker->randomElement(['simple','2column']),
-        'min_options' => 0, // $faker->numberBetween(0,1)
-        'max_options' => $faker->numberBetween(1,3),
-        'display_cost' => $faker->boolean(),
-        'random_order' => $faker->boolean()
+        'name' => $faker->name,
+        'username' => $faker->unique()->userName,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'is_superadmin' => 1,
+        'remember_token' => str_random(10),
     ];
 });
