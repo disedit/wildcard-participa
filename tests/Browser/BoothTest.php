@@ -20,6 +20,8 @@ class BoothTest extends DuskTestCase
      */
     public function test_a_voter_can_cast_a_ballot_online()
     {
+        $this->artisan('migrate:refresh', ['--seed' => true]);
+        
         // Get a voter that hasn't voted yet
         $voter = Voter::where('ballot_cast', 0)->first();
 
@@ -57,15 +59,16 @@ class BoothTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($voter, $admin) {
             $browser->loginAs($admin)
-                    ->visit('/')
+                    ->visit(new Booth)
                     ->waitFor('.booth')
-                    ->click('.custom-checkbox')
+                    ->fillOutBallot()
                     ->type('identification', $voter->SID) // Voter SID
                     ->press('@vote')
                     ->waitFor('.verify-in-person')
                     ->click('@cast')
                     ->waitFor('.ballot-confirmation')
-                    ->assertVisible('.receipt');
+                    ->assertVisible('.receipt')
+                    ->logout();
         });
     }
 
@@ -76,7 +79,17 @@ class BoothTest extends DuskTestCase
      */
     public function test_an_invalid_ID_displays_an_error()
     {
+        $faker = \Faker\Factory::create();
 
+        $this->browse(function (Browser $browser) use ($faker) {
+            $browser->visit(new Booth)
+                    ->waitFor('.booth')
+                    ->fillOutBallot()
+                    ->type('identification', $faker->numberBetween(10000000,99999999) . $faker->randomLetter)
+                    ->press('@vote')
+                    ->waitFor('#errorsModal')
+                    ->assertVisible('#errorsModal');
+        });
     }
 
     /**
@@ -86,7 +99,18 @@ class BoothTest extends DuskTestCase
      */
     public function test_a_single_ID_cannot_vote_more_than_once()
     {
+        // Get a voter that has voted
+        $voter = Voter::where('ballot_cast', 1)->first();
 
+        $this->browse(function (Browser $browser) use ($voter) {
+            $browser->visit(new Booth)
+                    ->waitFor('.booth')
+                    ->fillOutBallot()
+                    ->type('identification', $voter->SID) // Voter SID
+                    ->press('@vote')
+                    ->waitFor('#errorsModal')
+                    ->assertVisible('#errorsModal');
+        });
     }
 
     /**
@@ -104,18 +128,35 @@ class BoothTest extends DuskTestCase
      *
      * @return void
      */
-    public function test_an_invalid_phone_displays_an_error()
-    {
-
-    }
-
-    /**
-     * A Dusk test example.
-     *
-     * @return void
-     */
     public function test_a_single_phone_cannot_vote_more_than_once()
     {
+        $voter = Voter::where('SMS_verified', 1)->first();
+        $anotherVoter = Voter::where('ballot_cast', 0)->first();
+
+        $this->browse(function (Browser $browser) use ($voter, $anotherVoter) {
+            $phone = explode('.', $voter->SMS_phone);
+            $phone = $phone[1];
+
+            $browser->visit(new Booth)
+                    ->waitFor('.booth')
+                    ->fillOutBallot()
+                    ->type('identification', $anotherVoter->SID) // Voter SID
+                    ->press('@vote')
+                    ->waitFor('.ballot-verify')
+                    ->type('phone', $phone)
+                    ->press('@smsRequest')
+                    ->waitFor('#errorsModal')
+                    ->assertVisible('#errorsModal');
+        });
+    }
+
+    /**
+     * A Dusk test example.
+     *
+     * @return void
+     */
+    public function test_a_phone_can_be_reused_if_it_has_not_cast_a_ballot()
+    {
 
     }
 
@@ -124,7 +165,7 @@ class BoothTest extends DuskTestCase
      *
      * @return void
      */
-    public function test_a_voter_cannot_bypass_sms_safeguards_online()
+    public function test_a_voter_cannot_vote_without_a_valid_sms_code_online()
     {
 
     }
@@ -139,23 +180,4 @@ class BoothTest extends DuskTestCase
 
     }
 
-    /**
-     * A Dusk test example.
-     *
-     * @return void
-     */
-    public function test_booth_is_hidden_after_voting_closes()
-    {
-
-    }
-
-    /**
-     * A Dusk test example.
-     *
-     * @return void
-     */
-    public function test_booth_is_hidden_before_voting_opens()
-    {
-
-    }
 }
