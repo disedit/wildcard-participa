@@ -40,10 +40,9 @@ class HomeController extends Controller
         if(strtotime($edition->start_date) <= $now
         && strtotime($edition->end_date) > $now){
             $user = $request->user();
-            $userId = ($user) ? $user->id : 0;
-            $token = $this->createBoothToken($userId);
-            $boothMode = ($userId) ? true : false;
-            return view('booth', compact('edition', 'token', 'boothMode'));
+            $inPerson = ($user) ? true : false;
+            $token = ($inPerson) ? JWTAuth::fromUser($user) : null;
+            return view('booth', compact('edition', 'token', 'inPerson'));
         }
 
         // If in limbo (after end_date and before publish_results), show placeholder
@@ -76,23 +75,5 @@ class HomeController extends Controller
         $ip = $request->ip();
 
         return view('ip_address', compact('ip'));
-    }
-
-    /**
-     * Generates a JWT to validate booth_mode
-     *
-     * @return String
-     */
-    private function createBoothToken($userId)
-    {
-        $inPerson = ($userId) ? true : false;
-        $claims = ['in_person' => $inPerson, 'user_id' => $userId];
-        $payload = JWTFactory::make($claims);
-
-        try {
-            return JWTAuth::encode($payload);
-        } catch (JWTException $e) {
-            return redirect('error')->with('error', 'Error al crear token de seguretat');
-        }
     }
 }

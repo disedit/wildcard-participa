@@ -109,8 +109,8 @@ class Voter extends Model
      */
     public function mark($request)
     {
-        $userId = ($request->get('in_person')) ? $request->get('in_person') : null;
-
+        $userId = ($request->user()) ? $request->user()->id : null;
+        
         if(!$userId) $this->SMS_verified = 1;
         $this->ballot_cast = 1;
         $this->ballot_time = date("Y-m-d H:i:s");

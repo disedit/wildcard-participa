@@ -72,7 +72,7 @@ class Ballot extends Model
     public function createRef()
     {
         $newRef = str_random(10);
-        $exists = Self::where('ref', '=', $newRef)->count();
+        $exists = Self::where('ref', $newRef)->count();
         if($exists) return $this->createRef();
         return $newRef;
     }
@@ -99,7 +99,7 @@ class Ballot extends Model
      */
     public function cast($request, $voter)
     {
-        $userId = ($request->get('in_person')) ? $request->get('in_person') : null;
+        $userId = ($request->user()) ? $request->user()->id : null;
 
         $this->edition_id = $request->get('edition_id');
         $this->ref = $this->createRef();

@@ -16,11 +16,9 @@ class InPerson
      */
     public function handle($request, Closure $next)
     {
-        $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
-        $inPerson = (isset($payload['in_person'])) ? $payload['in_person'] : false;
-
-        if($inPerson) $request->attributes->add(['in_person' => $payload['user_id']]);
-
+        if(JWTAuth::getToken()){
+            JWTAuth::parseToken()->authenticate();
+        }
         return $next($request);
     }
 }

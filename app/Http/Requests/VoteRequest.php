@@ -27,7 +27,7 @@ class VoteRequest extends FormRequest
         $attributes = parent::all();
 
         $countryCode = (isset($attributes['country_code'])) ? $attributes['country_code'] : null;
-        
+
         if(isset($attributes['SID'])) $attributes['SID'] = $this->cleanSID($attributes['SID']);
         if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($countryCode, $attributes['phone']);
 
@@ -58,7 +58,7 @@ class VoteRequest extends FormRequest
         $rules['ballot'] = 'ballot_validity:' . $edition_id;
 
         // Conditional rules. Only applies to online voters
-        $inPerson = $this->get('in_person');
+        $inPerson = ($this->user()) ? true : false;
         $phoneRequired = (!$inPerson) ? 'required|phone_format|phone_not_used:' . $edition_id : '';
         $countryRequired = (!$inPerson) ? 'required|numeric' : '';
 

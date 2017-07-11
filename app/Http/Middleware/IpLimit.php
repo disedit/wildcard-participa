@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 use App\Limit;
 
 class IpLimit
@@ -18,7 +19,7 @@ class IpLimit
     {
         $maxVotes = config('participa.max_per_ip');
         $maxFailedLookUps = config('participa.max_failed_lookups');
-        $inPerson = $request->get('in_person');
+        $inPerson = Auth::user();
 
         if(Limit::exceeded($request, 'IDFailedLookUp', $maxFailedLookUps)) {
             return response()->json([

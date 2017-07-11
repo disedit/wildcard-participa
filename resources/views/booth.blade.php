@@ -1,9 +1,9 @@
-<?php $boothMode = (isset($boothMode)) ? $boothMode : false; ?>
+<?php $inPerson = (isset($inPerson)) ? $inPerson : false; ?>
 @extends('layouts.public')
 
 @section('content')
 <div class="container main-container">
-    <div class="{{ $boothMode ? 'booth-mode' : '' }}">
+    <div class="{{ $inPerson ? 'booth-mode' : '' }}">
         <div id="booth"></div>
     </div>
 </div>
@@ -12,7 +12,7 @@
 @section('scripts')
 <!-- Scripts -->
 <script>
-    window.BoothMode = {{ var_export($boothMode, true) }};
+    window.BoothMode = {{ var_export($inPerson, true) }};
     window.BoothConfig = {
         name: '{{ config('participa.municipality', 'Any City') }}',
         contact_email: '{{ config('participa.contact_email', 'participa@disedit.com') }}',
