@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Edition extends Model
 {
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 
     /**
      * Get the questions associated with the edition
@@ -16,7 +24,7 @@ class Edition extends Model
     }
 
     /**
-     * Get all of the options for a question
+     * Get all of the options for a question in an edition
      */
     public function options()
     {
@@ -40,7 +48,7 @@ class Edition extends Model
     }
 
     /**
-     * Get all the ballots for the edition
+     * Get all the cached results for an edition
      */
     public function results()
     {
@@ -48,14 +56,15 @@ class Edition extends Model
     }
 
     /**
-     * Get the current edition
+     * Get the current edition, along with the ballot
+     *
+     * @return object
      */
     public static function current($withBallot = false, $random = true, $published = 1)
     {
         $edition = Self::where('published', '=', $published);
 
-        if($withBallot)
-        {
+        if($withBallot) {
             $edition->with(['questions' => function($questionsQuery) {
                 $questionsQuery->with(['options' => function($optionsQuery) {
                     $optionsQuery->orderByRaw('rand()'); // Fix this later
@@ -68,14 +77,46 @@ class Edition extends Model
 
     /**
      * Determine if current edition is open for voting or not
+     *
+     * @return boolean
      */
-    public function isOpen() {
+    public function isOpen()
+    {
 
         $startTime = strtotime($this->start_date);
         $endTime = strtotime($this->end_date);
         $now = time();
 
         return ($startTime < $now && $endTime > $now);
+    }
+
+    /**
+     * Determine if current edition's voting had ended but results
+     * have not been made public yet.
+     *
+     * @return boolean
+     */
+    public function isAwaitingResults()
+    {
+        $endTime = strtotime($this->end_date);
+        $now = time();
+
+        return ($endTime > $now && !$this->resultsPublished());
+    }
+
+    /**
+     * Determine if results should be made public
+     *
+     * @return boolean
+     */
+    public function resultsPublished()
+    {
+
+        $publishTime = strtotime($this->publish_results);
+        $endTime = strtotime($this->end_date);
+        $now = time();
+
+        return ($publishTime > $now && $endTime > $now);
     }
 
 }

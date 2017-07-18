@@ -8,7 +8,7 @@ class Limit extends Model
 {
 
     /**
-     * Log action
+     * Log an action taken by an IP
      *
      * @return boolean
      */

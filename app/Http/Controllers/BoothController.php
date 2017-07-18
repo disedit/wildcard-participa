@@ -24,7 +24,7 @@ class BoothController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Validate that a user can proceed to Step 2 (SMS Validation or Review)
      *
      * @return \Illuminate\Http\Response
      */
@@ -91,12 +91,12 @@ class BoothController extends Controller
         $marked = $voter->mark($request);
 
         // Submit ballot
-        if($marked){
+        if($marked) {
 
             $ballot = new Ballot;
             $cast = $ballot->cast($request, $voter);
 
-            if(!$cast){
+            if(!$cast) {
                 // If an error occurred during the casting process,
                 // Unmark voter and display error
                 $voter->rollback();
@@ -104,7 +104,6 @@ class BoothController extends Controller
             } else {
                 if(!$request->user()) Limit::logAction($request, 'vote');
             }
-
         } else {
             return response()->json(['success' => false, 'error' => 'Error sistema']);
         }

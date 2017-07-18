@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
+
+    /**
      * Get the edition that the question belongs to.
      */
     public function edition()
@@ -15,7 +24,7 @@ class Question extends Model
     }
 
     /**
-     * Get the edition that the question belongs to.
+     * Get the options in the question.
      */
     public function options()
     {

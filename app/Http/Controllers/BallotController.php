@@ -11,9 +11,9 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class BallotController extends Controller
 {
     /**
-     * JSON object with edition information, including ballot questions
+     * Page to look up a ballot on the system
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function ballots(Ballot $ballot)
     {
@@ -32,7 +32,7 @@ class BallotController extends Controller
     }
 
     /**
-     * JSON object with edition information, including ballot questions
+     * QR image that links to a stored ballot on the system
      *
      * @return \Illuminate\Http\Response
      */

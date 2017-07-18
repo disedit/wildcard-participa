@@ -22,7 +22,7 @@ class ArchiveController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function home()
     {
@@ -33,7 +33,7 @@ class ArchiveController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edition(Edition $edition)
     {

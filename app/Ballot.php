@@ -16,18 +16,15 @@ class Ballot extends Model
 
     /**
      * Get the voter that the ballot belongs to.
+     * Provided anonymous voting is not turned off.
      */
     public function voter()
     {
-        return $this->belongsTo('App\Voter');
-    }
+        if(config('participa.anonymous_voting') === false) {
+            return $this->belongsTo('App\Voter');
+        }
 
-    /**
-     * Get the option that the ballot belongs to.
-     */
-    public function option()
-    {
-        return $this->belongsTo('App\Option');
+        return $this;
     }
 
     /**
@@ -41,7 +38,8 @@ class Ballot extends Model
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Compose a valid ballot from the input provided by the front-end
+     * Input should have been previously validated.
      */
     public function createBallot($ballot)
     {
@@ -50,9 +48,8 @@ class Ballot extends Model
         foreach($ballot as $question) {
             $options = [];
             foreach($question['options'] as $option) {
-                $options[] = $option['id'];
+                $ballotToEncrypt[$question['id']][$option['id']] = 1.000;
             }
-            $ballotToEncrypt[$question['id']] = $options;
         }
 
         return encrypt($ballotToEncrypt);
@@ -67,7 +64,7 @@ class Ballot extends Model
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Generate a random ref for a new ballot
      */
     public function createRef()
     {
@@ -78,7 +75,7 @@ class Ballot extends Model
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Sign a cast ballot using a SHA-256 hash
      */
     public function createSignature()
     {
@@ -95,7 +92,7 @@ class Ballot extends Model
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Cast a ballot
      */
     public function cast($request, $voter)
     {
@@ -104,11 +101,12 @@ class Ballot extends Model
         $this->edition_id = $request->get('edition_id');
         $this->ref = $this->createRef();
         $this->ballot = $this->createBallot($request->input('ballot'));
-        $this->cast_at = date("Y-m-d H:i:s");
         $this->signature = $this->createSignature();
         $this->by_user_id = $userId;
 
+        /* Prevent identifiable information about voter from being saved */
         if(config('participa.anonymous_voting') === false) {
+            $this->cast_at = date("Y-m-d H:i:s");
             $this->voter_id = $voter->id;
             $this->ip_address = $request->ip();
             $this->user_agent = $request->header('User-Agent');

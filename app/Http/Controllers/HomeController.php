@@ -12,7 +12,12 @@ use Tymon\JWTAuth\Facades\JWTFactory;
 class HomeController extends Controller
 {
 
-    private $edition = null;
+    /**
+     * The active edition.
+     *
+     * @var object
+     */
+    protected $edition;
 
     /**
      * Create a new controller instance.
@@ -21,14 +26,13 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $edition = new Edition;
-        $this->edition = $edition->current(false);
+        $this->edition = Edition::current();
     }
 
     /**
-     * Show the homepage.
+     * Determine what page to show on the frontpage.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -37,8 +41,7 @@ class HomeController extends Controller
         $edition = $this->edition;
 
         // If within voting window dates, show voting booth
-        if(strtotime($edition->start_date) <= $now
-        && strtotime($edition->end_date) > $now){
+        if($edition->isOpen()){
             $user = $request->user();
             $inPerson = ($user) ? true : false;
             $token = ($inPerson) ? JWTAuth::fromUser($user) : null;
@@ -46,30 +49,41 @@ class HomeController extends Controller
         }
 
         // If in limbo (after end_date and before publish_results), show placeholder
-        if(strtotime($edition->end_date) <= $now
-        && strtotime($edition->publish_results) > $now){
+        if($edition->isAwaitingResults()){
             return view('placeholder', compact('edition'));
         }
 
         // If after end_date AND publish_results, show results
-        if(strtotime($edition->end_date) <= $now
-        && strtotime($edition->publish_results) <= $now){
+        if($edition->resultsPublished()){
             $results = $edition->results();
             return view('results', compact('edition', 'results'));
         }
 
-        return view('home', compact('edition'));
+        // If none of the previous conditions are met
+        // display the About page as a placeholder before the vote.
+        $this->about();
 
     }
 
+    /**
+     * Placeholder page with instructions.
+     *
+     * @return \Illuminate\View\View
+     */
     public function about()
     {
         $now = time();
         $edition = $this->edition;
 
-        return view('home', compact('edition'));
+        return view('about', compact('edition'));
     }
 
+    /**
+     * Show a user's IP address to assist Support
+     * in troubleshooting problems with IP limits.
+     *
+     * @return \Illuminate\View\View
+     */
     public function myIpAddress(Request $request)
     {
         $ip = $request->ip();
