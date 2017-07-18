@@ -8,9 +8,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'header' => '',
-    'subheader' => '',
+    'heading' => 'Tu decideixes en què inverteix l\'Ajuntament!',
+    'subheading' => 'El Govern de La Font de la Figuera t\'obri la possibilitat de participar activament en les decisions que més t\'afecten.',
     'tweet' => '',
+    'calendar_heading' => 'Votació',
+    'help' => 'Incidències i ajuda',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,33 +24,6 @@ return [
     'more_info' => 'Més informació',
     'voting_places' => 'Punts de votació',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Booth
-    |--------------------------------------------------------------------------
-    */
-
-    'random_order' => 'ordenades aleatòriament',
-    'SID_heading' => 'DNI/NIE o Passaport',
-    'phone_heading' => 'Mòbil',
-    'vote_button' => 'Vota',
-    'anonymous_note' => '',
-    'mobile_note' => '',
-    'SID_note' => '',
-    'passport_note' => '',
-    'intphone_note' => '',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Summary
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | Thanks
-    |--------------------------------------------------------------------------
-    */
 
     /*
     |--------------------------------------------------------------------------

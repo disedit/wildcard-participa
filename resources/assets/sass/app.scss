@@ -5,14 +5,7 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap-vue/dist/bootstrap-vue";
 
-// Animations
-@import "animations";
-
 // Global
-.booth {
-    position: relative;
-}
-
 .main-container {
     background: #FFF;
     padding: 1rem;
@@ -27,95 +20,15 @@ button {
     font-family: $font-family-base;
 }
 
-.ballot-box {
-    background: $gray-lighter;
-    padding: 1.5rem;
-
-    h3 {
-        font-weight: bold;
-    }
-
-    hr {
-        margin: 1rem 0;
-    }
-}
-
-// Sidebar
-.sidebar {
-    &__box {
-        background: $gray-lighter;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-
-        h3 {
-            font-size: 1.55rem;
-            font-weight: bold;
-        }
-
-        h4 {
-            font-size: 1.15rem;
-            color: $gray-light;
-        }
-
-        hr {
-            margin: 1rem 0;
-        }
-    }
-
-    &__secondary {
-        color: lighten($gray-light, 15%);
-        font-size: 1rem;
-    }
-
-    &__list {
-        padding-left: 0;
-        margin-bottom: 0;
-
-        li {
-            list-style: none;
-            margin-bottom: 0.5rem;
-        }
-
-        li:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    &__list--links {
-        a {
-        	display: block;
-        	text-indent: -1rem;
-            margin-left: 2rem;
-        }
-
-        .fa {
-            margin-right: 0.5rem;
-        }
-    }
-}
-
 @include media-breakpoint-up(sm) {
     .main-container {
         padding: 2rem;
     }
-
-    .template-2column {
-        .list-group {
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        label {
-            width: 50%;
-            height: 100px;
-            align-items: flex-start;
-        }
-    }
-
-    .booth-mode .template-2column {
-        .list-group label {
-            width: 33.3%;
-        }
-    }
-
 }
+
+// Modules
+@import "header";
+@import "sidebar";
+@import "booth";
+@import "footer";
+@import "animations";

@@ -1,16 +1,16 @@
-<?php $inPerson = (isset($inPerson)) ? $inPerson : false; ?>
+@php
+    $inPerson = (isset($inPerson)) ? $inPerson : false;
+@endphp
+
 @extends('layouts.public')
 
 @section('content')
-<div class="container main-container">
-    <div class="{{ $inPerson ? 'booth-mode' : '' }}">
-        <div id="booth"></div>
-    </div>
+<div class="{{ $inPerson ? 'booth-mode' : '' }}">
+    <div id="booth"></div>
 </div>
 @endsection
 
-@section('scripts')
-<!-- Scripts -->
+@push('scripts')
 <script>
     window.BoothMode = {{ var_export($inPerson, true) }};
     window.BoothConfig = {
@@ -25,4 +25,4 @@
     }
 </script>
 <script src="{{ mix('js/app.js') }}"></script>
-@endsection
+@endpush

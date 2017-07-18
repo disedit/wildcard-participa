@@ -12,11 +12,7 @@
                 :sms-requested="smsRequested"
                 :receipt="receipt" />
         </transition>
-        <hr />
-        <router-link to="/">Step 1</router-link>
-        <router-link to="/booth/verify">Step 2</router-link>
-        <router-link to="/booth/receipt">Step 3</router-link>
-
+        
         <error-modal :errors="errors" />
         <option-modal />
     </div>
