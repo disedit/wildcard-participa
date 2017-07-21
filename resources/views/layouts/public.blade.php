@@ -24,13 +24,13 @@
                     <h1><img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
                 </div>
                 <div class="col-sm-6">
-                    @include('../components/social')
-                    @include('../components/languages')
+                    @include('components/social')
+                    @include('components/languages')
                 </div>
             </header>
             <div class="row">
                 <div class="col">
-                    @include('../components/voteinfo')
+                    @include('components/voteinfo')
                 </div>
             </div>
         @show

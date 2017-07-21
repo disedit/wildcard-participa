@@ -75,7 +75,7 @@ class HomeController extends Controller
         $now = time();
         $edition = $this->edition;
 
-        return view('about', compact('edition'));
+        return view('about')->withEdition($edition);
     }
 
     /**
@@ -88,6 +88,6 @@ class HomeController extends Controller
     {
         $ip = $request->ip();
 
-        return view('ip_address', compact('ip'));
+        return view('ip_address')->withIp($ip);
     }
 }

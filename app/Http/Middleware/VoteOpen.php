@@ -19,7 +19,7 @@ class VoteOpen
         $edition = Edition::current();
 
         if(!$edition->count()) {
-            return 'You must first create an edition';
+            return abort(503, 'You must first create an edition');
         }
 
         if(!$edition->isOpen()) {
