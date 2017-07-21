@@ -21,10 +21,11 @@
         @section('header')
             <header class="header row">
                 <div class="col-sm-6">
-                    <h1><img src="{{ public_path('images/logo.png') }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
+                    <h1><img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
                 </div>
                 <div class="col-sm-6">
                     @include('../components/social')
+                    @include('../components/languages')
                 </div>
             </header>
             <div class="row">
