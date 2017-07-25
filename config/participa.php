@@ -25,5 +25,6 @@ return [
     'max_failed_lookups' => 100,
     'sms_max_attempts' => 3,
     'anonymous_voting' => false,
+    'enable_ID_lookup' => true,
     'min_age' => 16,
 ];

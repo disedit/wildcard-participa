@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @isset($token)
+        <meta name="jwt-token" content="{{ $token }}">
+    @endisset
 
     <title>Admin</title>
 
@@ -15,6 +18,9 @@
 
 </head>
 <body>
-        @yield('content')
+    @yield('content')
+
+    @stack('scripts')
+    <script src="{{ mix('js/admin.js') }}"></script>
 </body>
 </html>

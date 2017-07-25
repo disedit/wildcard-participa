@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Edition;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 
 class HomeController extends Controller
 {

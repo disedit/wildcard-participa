@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AdminController extends Controller
 {
@@ -25,7 +26,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        debug(Auth::check());
-        return view('admin.dashboard');
+        $user = Auth::user();
+        $token = JWTAuth::fromUser($user);
+        return view('admin.dashboard')->withUser($user)->withToken($token);
     }
 }

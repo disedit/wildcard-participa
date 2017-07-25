@@ -1,11 +1,15 @@
 @extends('layouts.admin')
 
 @section('content')
-
-<h1>Admin</h1>
-
-<form method="POST" action="/logout">
-    {{ csrf_field() }}
-    <button type="submit">Logout</button>
-</form>
+    <div id="admin"></div>
 @endsection
+
+@push('scripts')
+<script>
+    window.app = {
+        name: '{{ config('app.name', 'Wildcard Participa') }}',
+        config: {!! json_encode(config('participa')) !!},
+        user: {!! $user !!}
+    }
+</script>
+@endpush
