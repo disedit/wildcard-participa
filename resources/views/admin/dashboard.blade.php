@@ -9,7 +9,8 @@
     window.app = {
         name: '{{ config('app.name', 'Wildcard Participa') }}',
         config: {!! json_encode(config('participa')) !!},
-        user: {!! $user !!}
+        user: {!! $user !!},
+        edition_is_open: {!! $editionIsOpen !!}
     }
 </script>
 @endpush
