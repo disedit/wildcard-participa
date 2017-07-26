@@ -10,7 +10,8 @@
         name: '{{ config('app.name', 'Wildcard Participa') }}',
         config: {!! json_encode(config('participa')) !!},
         user: {!! $user !!},
-        edition_is_open: {!! $editionIsOpen !!}
+        edition_is_open: {!! $editionIsOpen !!},
+        ip: '{{ request()->ip() }}'
     }
 </script>
 @endpush

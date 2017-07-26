@@ -11,13 +11,18 @@ use App\Edition;
 class AdminController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Show the application dashboard.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function __construct()
+    public function index()
     {
         $this->middleware('auth');
+
+        $user = Auth::user();
+        $token = JWTAuth::fromUser($user);
+        $editionIsOpen = Edition::current()->isOpen();
+        return view('admin.dashboard', compact('user', 'token', 'editionIsOpen'));
     }
 
     /**
@@ -25,11 +30,16 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function anullBallot(Request $request)
     {
-        $user = Auth::user();
-        $token = JWTAuth::fromUser($user);
-        $editionIsOpen = Edition::current()->isOpen();
-        return view('admin.dashboard', compact('user', 'token', 'editionIsOpen'));
+        $this->middleware('auth.api');
+        $user = JWTAuth::parseToken()->authenticate();
+
+        $this->validate($request, [
+            'ID' => 'required',
+            'reason' => 'required',
+        ]);
+
+        return response()->json($user);
     }
 }
