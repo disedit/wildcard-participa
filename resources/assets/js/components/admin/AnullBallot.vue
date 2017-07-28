@@ -1,5 +1,5 @@
 <template>
-    <b-modal id="anullBallot" ref="anullBallot" @shown="focusID" @hidden="clear">
+    <b-modal id="anullBallot" ref="anullBallot" @shown="focus('ID')" @hidden="clear">
         <div slot="modal-title">
             <span class="title">Anul·la una papereta</span>
         </div>
@@ -9,22 +9,22 @@
         </div>
 
         <form @submit.prevent="ballotLookup">
-            <div :class="{ 'form-group': true, 'has-warning': (errors.ID) }">
+            <div :class="{ 'form-group': true, 'has-warning': errors.hasOwnProperty('ID') }">
                 <label for="ID">Identificador</label>
-                <input v-if="step == 1" type="text" v-model="ID" class="form-control form-control-warning" ref="ID" id="ID" placeholder="DNI, NIF o Passaport" />
+                <input v-if="step == 1" type="text" v-model="ID" v-focus="focused == 'ID'" class="form-control form-control-warning" ref="ID" id="ID" placeholder="DNI, NIF o Passaport" />
                 <p v-if="step == 2">
                     <strong>{{ ID }}</strong>
                     <a href="#" @click.prevent="back"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </p>
-                <div v-if="errors.ID" v-for="error in errors.ID" class="form-control-feedback">{{ error }}</div>
+                <div v-if="errors.hasOwnProperty('ID')" v-for="error in errors.ID" class="form-control-feedback">{{ error }}</div>
             </div>
 
             <div v-if="step == 2">
-                <div :class="{ 'form-group': true, 'has-warning': (errors.reason) }">
+                <div :class="{ 'form-group': true, 'has-warning': errors.hasOwnProperty('reason') }">
                     <label for="reason" class="mb-0">Justificació</label>
                     <small class="form-text text-muted mt-0 mb-1">Breu descripció de l'incident pel qual s'anul·la aquesta papereta.</small>
-                    <textarea ref="reason" id="reason" v-model="reason" class="form-control form-control-warning"></textarea>
-                    <div v-if="errors.reason" v-for="error in errors.reason" class="form-control-feedback">{{ error }}</div>
+                    <textarea ref="reason" id="reason" v-model="reason" v-focus="focused == 'reason'" class="form-control form-control-warning"></textarea>
+                    <div v-if="errors.hasOwnProperty('reason')" v-for="error in errors.reason" class="form-control-feedback">{{ error }}</div>
                 </div>
 
                 <div class="form-group mb-0">
@@ -37,7 +37,7 @@
         </form>
 
         <div slot="modal-footer">
-            <button class="btn btn-secondary" @click="hideModal">Tanca</button>
+            <button ref="close" class="btn btn-secondary" @click="hideModal">Tanca</button>
             <button v-if="step == 1" class="btn btn-danger" @click.prevent="ballotLookup"><i class="fa fa-search" aria-hidden="true"></i> Troba la papereta</button>
             <button v-if="step == 2" class="btn btn-danger" @click.prevent="anullBallot"><i class="fa fa-ban" aria-hidden="true"></i> Anul·la la papereta</button>
         </div>
@@ -45,8 +45,12 @@
 </template>
 
 <script>
+    import { focus } from 'vue-focus';
+
     export default {
         name: 'anull-ballot',
+
+        directives: { focus },
 
         data() {
             return {
@@ -56,10 +60,8 @@
                 user: { name: '' },
                 ip: '',
                 success: false,
-                errors: {
-                    ID: null,
-                    reason: null
-                }
+                errors: {},
+                focused: 'ID'
             }
         },
 
@@ -69,25 +71,18 @@
         },
 
         watch: {
-            ID: function(value) {
-                if(value.length != 0) {
-                    this.$set(this.errors, 'ID', null);
-                }
+            ID: function() {
+                this.errors = {};
             },
 
-            step: function(step) {
-                if(step == 2) {
-                    this.$refs.reason.focus();
-                } else if(step == 1) {
-                    this.$refs.ID.focus();
-                }
+            reason: function() {
+                this.errors = {};
             }
         },
 
         methods: {
-            focusID() {
-                this.$refs.ID.focus();
-                console.log(this.$refs.ID);
+            focus(field) {
+                this.focused = field;
             },
 
             ballotLookup() {
@@ -95,9 +90,11 @@
                     ID: this.ID
                 }).then(response => {
                     this.step = 2;
+                    this.errors = {};
+                    this.focus('reason');
                 }).catch(errors => {
                     this.errors = errors;
-                    this.$refs.ID.focus();
+                    this.focus('ID');
                 });
             },
 
@@ -109,9 +106,10 @@
                 }).then(response => {
                     this.clear();
                     this.success = true;
+                    this.$refs.close.focus();
                 }).catch(errors => {
                     this.errors = errors;
-                    this.$refs.reason.focus();
+                    this.focus('reason');
                 });
             },
 
@@ -123,11 +121,13 @@
                 this.ID = '';
                 this.reason = '';
                 this.step = 1;
+                this.errors = {};
                 this.success = false;
             },
 
             back() {
                 this.step = 1;
+                this.focus('ID');
             },
         }
     }
