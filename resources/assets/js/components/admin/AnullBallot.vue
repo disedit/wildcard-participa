@@ -1,5 +1,5 @@
 <template>
-    <b-modal id="anullBallot" ref="anullBallot" @shown="focus('ID')" @hidden="clear">
+    <b-modal id="anullBallot" ref="anullBallot" @shown="focus('ID')" @hidden="clear" :hide-footer="!ID">
         <div slot="modal-title">
             <span class="title">Anul·la una papereta</span>
         </div>
