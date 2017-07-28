@@ -24,6 +24,10 @@ export default class Participa {
       return this._call('post', 'anull_ballot', data);
   }
 
+  lookUp(data) {
+      return this._call('post', 'id_lookup', data);
+  }
+
   _call(type, url, data) {
     return new Promise((resolve, reject) => {
         axios[type](this.apiURL + url, data)

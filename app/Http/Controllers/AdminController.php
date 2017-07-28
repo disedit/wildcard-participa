@@ -85,4 +85,27 @@ class AdminController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    /**
+     * Look up an ID
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function lookUp(Request $request)
+    {
+        $edition = Edition::current();
+
+        $this->validate($request, [
+            'ID' => 'required|min:2'
+        ]);
+
+        $results = Voter::select('SID')
+                    ->where('SID', 'like', '%' . $request->input('ID') . '%')
+                    ->where('edition_id', $edition->id)
+                    ->orderBy('SID', 'ASC')
+                    ->take(10)
+                    ->get();
+
+        return response()->json($results);
+    }
 }
