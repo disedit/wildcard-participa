@@ -25,4 +25,4 @@ Route::get('/archive', 'ArchiveController@home');
 Route::get('/archive/{edition}', 'ArchiveController@edition');
 
 /* Admin */
-Route::get('/admin', 'AdminController@index');
+Route::get('/admin', 'AdminController@index')->middleware('auth');

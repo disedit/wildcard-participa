@@ -18,4 +18,4 @@ Route::get('/ballot/qr/{ref}', 'BallotController@ballotQR');
 Route::post('/precheck', 'BoothController@precheck');
 Route::post('/request_sms', 'BoothController@requestSms');
 Route::post('/cast_ballot', 'BoothController@castBallot');
-Route::post('/anull_ballot', 'AdminController@anullBallot');
+Route::post('/anull_ballot', 'AdminController@anullBallot')->middleware('auth.api');

@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+     * Get the reports submitted by the user.
+     */
+    public function reports()
+    {
+        return $this->hasMany('App\Report');
+    }
 }

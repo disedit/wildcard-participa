@@ -114,5 +114,4 @@ class Ballot extends Model
 
         return $this->save();
     }
-
 }

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\VerifySMS;
+use App\Edition;
 
 class Voter extends Model
 {
@@ -19,13 +20,13 @@ class Voter extends Model
     }
 
     /**
-     * Get all the ballots that the voter cast.
-     * If anonymous_voting is disabled
+     * Get the ballot cast by the voter.
+     * Only if anonymous_voting is disabled
      */
-    public function ballots()
+    public function ballot()
     {
         if(config('participa.anonymous_voting') === false) {
-            return $this->hasMany('App\Ballot');
+            return $this->hasOne('App\Ballot');
         }
 
         return $this;
@@ -34,9 +35,10 @@ class Voter extends Model
     /**
      * Find a voter by its ID
      */
-    public static function findBySID($SID, $edition_id)
+    public static function findBySID($SID, $editionId)
     {
-        return Self::where('SID', $SID)->where('edition_id', $edition_id)->first();
+        if(!$editionId) $editionId = Edition::current()->id;
+        return Self::where('SID', $SID)->where('edition_id', $editionId)->first();
     }
 
     /**

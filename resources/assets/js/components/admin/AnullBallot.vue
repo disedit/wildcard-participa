@@ -4,22 +4,27 @@
             <span class="title">Anul·la una papereta</span>
         </div>
 
+        <div class="alert alert-success" v-if="success">
+            <i class="fa fa-check" aria-hidden="true"></i> Papereta anul·lada correctament.
+        </div>
+
         <form @submit.prevent="ballotLookup">
             <div :class="{ 'form-group': true, 'has-warning': (errors.ID) }">
                 <label for="ID">Identificador</label>
                 <input v-if="step == 1" type="text" v-model="ID" class="form-control form-control-warning" ref="ID" id="ID" placeholder="DNI, NIF o Passaport" />
-                <div v-if="errors.ID" class="form-control-feedback">{{ errors.ID }}</div>
                 <p v-if="step == 2">
                     <strong>{{ ID }}</strong>
                     <a href="#" @click.prevent="back"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </p>
+                <div v-if="errors.ID" v-for="error in errors.ID" class="form-control-feedback">{{ error }}</div>
             </div>
 
             <div v-if="step == 2">
-                <div class="form-group">
+                <div :class="{ 'form-group': true, 'has-warning': (errors.reason) }">
                     <label for="reason" class="mb-0">Justificació</label>
                     <small class="form-text text-muted mt-0 mb-1">Breu descripció de l'incident pel qual s'anul·la aquesta papereta.</small>
-                    <textarea ref="reason" id="reason" class="form-control"></textarea>
+                    <textarea ref="reason" id="reason" v-model="reason" class="form-control form-control-warning"></textarea>
+                    <div v-if="errors.reason" v-for="error in errors.reason" class="form-control-feedback">{{ error }}</div>
                 </div>
 
                 <div class="form-group mb-0">
@@ -50,6 +55,7 @@
                 reason: '',
                 user: { name: '' },
                 ip: '',
+                success: false,
                 errors: {
                     ID: null,
                     reason: null
@@ -85,21 +91,28 @@
             },
 
             ballotLookup() {
-                if(this.ID.length == 0) {
-                    this.$set(this.errors, 'ID', 'El camp Identificador és obligatòri.');
-                    this.$refs.ID.focus();
-                    return;
-                }
-
-                Participa.anullBallot({ ID }).then(response => {
+                Participa.anullBallot({
+                    ID: this.ID
+                }).then(response => {
                     this.step = 2;
                 }).catch(errors => {
-                    this.$set(this.errors, 'ID', 'Error with ballot');
+                    this.errors = errors;
+                    this.$refs.ID.focus();
                 });
             },
 
             anullBallot() {
-
+                Participa.anullBallot({
+                    ID: this.ID,
+                    reason: this.reason,
+                    confirm: true
+                }).then(response => {
+                    this.clear();
+                    this.success = true;
+                }).catch(errors => {
+                    this.errors = errors;
+                    this.$refs.reason.focus();
+                });
             },
 
             hideModal() {
@@ -110,6 +123,7 @@
                 this.ID = '';
                 this.reason = '';
                 this.step = 1;
+                this.success = false;
             },
 
             back() {

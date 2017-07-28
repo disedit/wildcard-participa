@@ -56,6 +56,14 @@ class Edition extends Model
     }
 
     /**
+     * Get the reports belonging to the edition.
+     */
+    public function reports()
+    {
+        return $this->hasMany('App\Report');
+    }
+
+    /**
      * Get the current edition, along with the ballot
      *
      * @return object
