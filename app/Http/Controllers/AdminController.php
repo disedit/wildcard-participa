@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -99,12 +100,29 @@ class AdminController extends Controller
             'ID' => 'required|min:2'
         ]);
 
-        $results = Voter::select('SID')
+        $foundIDs = Voter::select('SID')
                     ->where('SID', 'like', '%' . $request->input('ID') . '%')
                     ->where('edition_id', $edition->id)
                     ->orderBy('SID', 'ASC')
                     ->take(10)
                     ->get();
+
+        return response()->json($foundIDs);
+    }
+
+    /**
+     * Display results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function results()
+    {
+        $edition = Edition::current();
+
+        /* Cache results */
+        Artisan::call('results:cache');
+
+        $results = $edition->results();
 
         return response()->json($results);
     }

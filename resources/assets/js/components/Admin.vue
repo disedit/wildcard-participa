@@ -3,7 +3,7 @@
         <navbar />
         <div class="container">
             <edition :edition="edition" />
-            <results />
+            <results v-if="display_results" :results="results" />
         </div>
     </div>
 </template>
@@ -24,12 +24,18 @@
 
         data() {
             return {
-                edition: {}
+                edition: {},
+                results: {},
+                display_results: false
             }
         },
 
         created() {
             this.loadEdition();
+            if(window.app.user.is_superadmin) {
+                this.loadResults();
+                this.display_results = true;
+            }
         },
 
         methods: {
@@ -38,6 +44,14 @@
                 Participa.getBallot()
                     .then(response => {
                         this.edition = response;
+                    });
+            },
+
+            /* Fetch results from server */
+            loadResults() {
+                Participa.getResults()
+                    .then(response => {
+                        this.results = response;
                     });
             }
         }
