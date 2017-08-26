@@ -1,3 +1,6 @@
+@php
+    $inPerson = (isset($inPerson)) ? $inPerson : false;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,11 +31,13 @@
                     @include('components/languages')
                 </div>
             </header>
-            <div class="row">
-                <div class="col">
-                    @include('components/voteinfo')
+            @if(!$inPerson)
+                <div class="row">
+                    <div class="col">
+                        @include('components/voteinfo')
+                    </div>
                 </div>
-            </div>
+            @endif
         @show
 
         @yield('content')
