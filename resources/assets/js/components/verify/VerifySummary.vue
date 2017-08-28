@@ -1,6 +1,6 @@
 <template>
     <div class="ballot-summary">
-        <button @click="goBack()" class="btn btn-secondary btn-sm">
+        <button @click="goBack()" class="btn btn-light btn-sm">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             {{ $t('verify_summary.edit') }}
         </button>

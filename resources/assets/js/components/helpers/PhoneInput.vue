@@ -28,7 +28,7 @@
                     @blur="focused = value ? true : false; $emit('blur');"
                     :required="required"
                     :disabled="disabled"
-                    :class="{ 'form-control form-control-lg': true, 'form-control-warning': warning }" />
+                    :class="{ 'form-control form-control-lg': true, 'is-invalid': warning }" />
 
                 <slot></slot>
             </div>

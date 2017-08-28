@@ -32,7 +32,7 @@
         border-width: 0;
         border-radius: 0;
         width: 80px;
-        height: 71px;
+        height: 76px;
     }
 
     select:disabled {

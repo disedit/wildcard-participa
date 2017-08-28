@@ -21,7 +21,7 @@
                 @updateCountryCode="updateCountryCode"
                 @focus="phoneFocused = true"
                 @blur="phoneFocused = false">
-                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-edit btn-secondary btn-sm" type="button">
+                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-edit btn-light btn-sm" type="button">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
             </phone-input>
