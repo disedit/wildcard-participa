@@ -41,7 +41,7 @@
                         <tbody>
                             <tr v-for="option in result.options">
                                 <td>{{ option.option }}</td>
-                                <td valign="center">
+                                <td style="vertical-align: middle">
                                     <div class="progress">
                                         <div class="progress-bar"
                                              role="progressbar"

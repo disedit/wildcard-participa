@@ -1,11 +1,15 @@
 <template>
-    <b-navbar toggleable type="dark" variant="primary">
+    <b-navbar toggleable type="dark" variant="primary" :sticky="true">
         <b-nav-toggle target="user_actions"></b-nav-toggle>
 
-        <a class="navbar-brand" href="#">{{ appName }}</a>
+        <a class="navbar-brand" href="#">
+            {{ appName }}
+            <span class="location">
+                <i class="fa fa-map-marker" aria-hidden="true"></i> {{ user.name }}
+            </span>
+        </a>
 
         <b-collapse is-nav id="user_actions">
-
             <b-nav is-nav-bar class="ml-auto">
                 <b-nav-item-dropdown :text="user.name" right>
                     <form method="post" action="/logout">
@@ -37,3 +41,10 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .location {
+        margin-left: 1rem;
+        opacity: 0.6;
+    }
+</style>

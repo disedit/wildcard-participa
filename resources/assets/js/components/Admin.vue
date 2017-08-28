@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard">
         <navbar />
-        <div class="container">
+        <div class="container mb-5">
             <edition />
             <results v-if="display_results" />
         </div>
