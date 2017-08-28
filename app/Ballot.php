@@ -79,7 +79,7 @@ class Ballot extends Model
      */
     public function createSignature()
     {
-        $signature = $this->ref . $this->ballot . $this->cast_at . config('app.key');
+        $signature = $this->ref . $this->ballot . $this->voter_id . $this->by_user_id . config('app.key');
         return hash('sha256', $signature);
     }
 
