@@ -39,4 +39,8 @@
     &__month {
         font-size: 1.15rem;
     }
+
+    &__date-columns .col:first-child {
+        border-right: 1px rgba(0, 0, 0, 0.15) dashed;
+    }
 }
