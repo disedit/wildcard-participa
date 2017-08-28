@@ -18,7 +18,7 @@
                 <hr class="mt-3" />
                 <div class="row">
                     <div class="col-sm-6">
-                        <a href="#" :class="{ 'btn btn-lg btn-block': true, 'btn-success': editionIsOpen, 'btn-warning': !editionIsOpen, 'disabled': !editionIsOpen }">
+                        <a href="/" target="_blank" :class="{ 'btn btn-lg btn-block': true, 'btn-success': editionIsOpen, 'btn-warning': !editionIsOpen, 'disabled': !editionIsOpen }">
                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Emet vots
                         </a>
                     </div>
