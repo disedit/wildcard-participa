@@ -23,9 +23,9 @@
                 <table class="table table-bordered">
                     <tr>
                         <th width="25%" class="text-right">Cens</th>
-                        <td width="25%">{{ census }}</td>
+                        <td width="25%">{{ census | formatNumber }}</td>
                         <th width="25%" class="text-right">Participació</th>
-                        <td width="25%">{{ turnout }}</td>
+                        <td width="25%">{{ turnout | formatNumber }} ({{ percentage }})</td>
                     </tr>
                 </table>
 
@@ -48,7 +48,7 @@
                                 </td>
                                 <td class="text-right">
                                     <span v-if="option.result">
-                                        {{ option.result.points }}
+                                        {{ option.result.points | formatNumber }}
                                     </span>
                                     <span v-else>
                                         0
@@ -70,6 +70,8 @@
 </template>
 
 <script>
+    import format from 'format-number';
+
     export default {
         name: 'results',
 
@@ -85,6 +87,19 @@
 
         mounted() {
             this.loadResults();
+        },
+
+        computed: {
+            percentage: function() {
+                const percentage = (this.turnout * 100) / this.census;
+                return format({decimal: ',', suffix: '%'})(percentage);
+            }
+        },
+
+        filters: {
+            formatNumber(number) {
+                return format({integerSeparator: '.', round: 0})(number);
+            }
         },
 
         methods: {
