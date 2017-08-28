@@ -11,7 +11,7 @@ class Result extends Model
      *
      * @var array
      */
-    protected $fillable = ['edition_id', 'question_id', 'option_id', 'result'];
+    protected $fillable = ['edition_id', 'question_id', 'option_id', 'points'];
 
     /**
      * A result belongs to a question

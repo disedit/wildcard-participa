@@ -2,8 +2,8 @@
     <div class="dashboard">
         <navbar />
         <div class="container">
-            <edition :edition="edition" />
-            <results v-if="display_results" :results="results" />
+            <edition />
+            <results v-if="display_results" />
         </div>
     </div>
 </template>
@@ -24,36 +24,13 @@
 
         data() {
             return {
-                edition: {},
-                results: {},
                 display_results: false
             }
         },
 
         created() {
-            this.loadEdition();
-            if(window.app.user.is_superadmin) {
-                this.loadResults();
+            if(window.app.user.is_superadmin)
                 this.display_results = true;
-            }
-        },
-
-        methods: {
-            /* Fetch ballot from server */
-            loadEdition() {
-                Participa.getBallot()
-                    .then(response => {
-                        this.edition = response;
-                    });
-            },
-
-            /* Fetch results from server */
-            loadResults() {
-                Participa.getResults()
-                    .then(response => {
-                        this.results = response;
-                    });
-            }
         }
     }
 </script>

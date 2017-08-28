@@ -84,7 +84,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the results, ordered by points and with option values
+     * Get the results with option names
      *
      * @return object
      */
@@ -95,6 +95,16 @@ class Edition extends Model
         }])->get();
 
         return $results;
+    }
+
+    /**
+     * Get the turnout for the edition
+     *
+     * @return object
+     */
+    public function turnout()
+    {
+        return $this->voters()->where('ballot_cast', 1);
     }
 
     /**

@@ -4,14 +4,66 @@
             <div class="d-flex align-items-center">
                 <h3>Resultats</h3>
                 <div class="ml-auto results__refresh">
-                    <a href="">
+                    <a href="#" @click.prevent="loadResults">
                         <i class="fa fa-refresh" aria-hidden="true"></i> Refresca
                     </a>
                 </div>
             </div>
+
             <hr class="mt-2 mb-3" />
-            <div class="alert alert-info">
-                <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat
+
+            <div v-if="!loading" class="results-wrapper">
+                <div v-if="integrity" class="alert alert-info">
+                    <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat
+                </div>
+                <div v-else class="alert alert-danger">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i> Test d'integritat FAILED
+                </div>
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="25%" class="text-right">Cens</th>
+                        <td width="25%">{{ census }}</td>
+                        <th width="25%" class="text-right">Participació</th>
+                        <td width="25%">{{ turnout }}</td>
+                    </tr>
+                </table>
+
+                <div v-for="question in results">
+                    <h4>{{ question.question }}</h4>
+                    <table class="table table-sm">
+                        <colgroup>
+                            <col width="50%" />
+                            <col width="40%" />
+                            <col width="10%" />
+                        </colgroup>
+
+                        <tbody>
+                            <tr v-for="option in question.options">
+                                <td>{{ option.option }}</td>
+                                <td valign="center">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <span v-if="option.result">
+                                        {{ option.result.points }}
+                                    </span>
+                                    <span v-else>
+                                        0
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div v-else class="text-center">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                <h4 class="mt-2">Carregant resultats...</h4>
+                <p>Aquest procés pot tardar uns minuts mentres es comprova la validesa de cada papereta</p>
             </div>
         </div>
     </div>
@@ -20,6 +72,36 @@
 <script>
     export default {
         name: 'results',
+
+        data() {
+            return {
+                results: {},
+                census: 0,
+                turnout: 0,
+                integrity: true,
+                loading: true
+            }
+        },
+
+        mounted() {
+            this.loadResults();
+        },
+
+        methods: {
+            /* Fetch results from server */
+            loadResults() {
+                this.loading = true;
+
+                Participa.getResults()
+                    .then(response => {
+                        this.results = response.results;
+                        this.census = response.census;
+                        this.turnout = response.turnout;
+                        this.integrity = response.integrity;
+                        this.loading = false;
+                    });
+            }
+        }
     }
 </script>
 

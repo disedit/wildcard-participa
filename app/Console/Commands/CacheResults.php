@@ -108,6 +108,7 @@ class CacheResults extends Command
                     $this->tab[$question][$option] = (isset($this->tab[$question][$option])) ? $this->tab[$question][$option] + $points : $points;
                 }
             }
+
             $validBallots++;
             $bar->advance();
         }
@@ -142,7 +143,7 @@ class CacheResults extends Command
             foreach($options as $option => $votes) {
                 Result::updateOrCreate(
                     ['edition_id' => $this->edition->id, 'question_id' => $question, 'option_id' => $option],
-                    ['result' => $votes]
+                    ['points' => number_format($votes, 3)]
                 );
             }
         }

@@ -53,12 +53,9 @@
             LookUp
         },
 
-        props: {
-            edition: Object
-        },
-
         data() {
             return {
+                edition: {},
                 anonymousVoting: false,
                 enableIDLookUp: false,
                 editionIsOpen: false,
@@ -66,9 +63,20 @@
         },
 
         mounted() {
+            this.loadEdition();
             this.anonymousVoting = window.app.config.anonymous_voting;
             this.enableIDLookUp = window.app.config.enable_ID_lookup;
             this.editionIsOpen = window.app.edition_is_open;
+        },
+
+        methods: {
+            /* Fetch ballot from server */
+            loadEdition() {
+                Participa.getBallot()
+                    .then(response => {
+                        this.edition = response;
+                    });
+            }
         }
     }
 </script>

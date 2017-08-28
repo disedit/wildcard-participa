@@ -18,7 +18,7 @@ class CreateResultsTable extends Migration
             $table->integer('edition_id')->unsigned();
             $table->integer('question_id')->unsigned();
             $table->integer('option_id')->unsigned();
-            $table->decimal('result', 10, 3);
+            $table->decimal('points', 10, 3);
             $table->timestamps();
 
             $table->index(['edition_id', 'question_id', 'option_id']);

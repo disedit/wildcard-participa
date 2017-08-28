@@ -117,12 +117,33 @@ class AdminController extends Controller
      */
     public function results()
     {
+        $edition = Edition::current();
+
         /* Update and cache the results */
         Artisan::call('results:cache');
+        $output = Artisan::output();
+        $integrity = stripos($output, 'Result integrity check failed');
+        $integrity = ($integrity !== false) ? false : true;
 
         /* Retreive the results */
-        $results = Edition::current()->fullResults();
+        $results = $this->processResults($edition->fullResults());
 
-        return response()->json($results);
+        /* Retreive the turnout */
+        $turnout = $edition->turnout()->count();
+        $census = $edition->voters()->count();
+
+        $response = [
+            'census' => $census,
+            'turnout' => $turnout,
+            'results' => $results,
+            'integrity' => $integrity
+        ];
+
+        return response()->json($response);
+    }
+
+    private function processResults($results)
+    {
+        return $results;
     }
 }
