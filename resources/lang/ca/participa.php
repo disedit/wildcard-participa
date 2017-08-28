@@ -7,6 +7,7 @@ return [
     | Global
     |--------------------------------------------------------------------------
     */
+    'locale' => 'ca',
     'twitter_locale' => 'es',
     'facebook_locale' => 'ca_ES',
     'heading' => 'Tu decideixes en què inverteix l\'Ajuntament!',

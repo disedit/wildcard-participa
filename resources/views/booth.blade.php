@@ -14,6 +14,7 @@
 <script>
     window.BoothMode = {{ var_export($inPerson, true) }};
     window.BoothConfig = {
+        locale: '@lang('participa.locale')',
         name: '{{ config('participa.municipality', 'Any City') }}',
         contact_email: '{{ config('participa.contact_email', 'participa@disedit.com') }}',
         url: '{{ config('app.url', '') }}',

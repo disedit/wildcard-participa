@@ -3,7 +3,7 @@
         <div class="sidebar__box">
             <h4>{{ $t('sidebar.current_poll') }}</h4>
             <h3>{{ edition.name }}</h3>
-            <p class="sidebar__secondary">{{ $t('sidebar.dates', { start_date: edition.start_date, end_date: edition.end_date }) }}</p>
+            <p class="sidebar__secondary">{{ $t('sidebar.dates', { start_date, end_date }) }}</p>
             <div v-if="docs">
                 <hr />
                 <ul class="sidebar__list sidebar__list--links">
@@ -41,6 +41,9 @@
 </template>
 
 <script>
+    import moment from 'moment';
+    moment.locale(window.BoothConfig.locale);
+
     export default {
         name: 'sidebar',
 
@@ -63,6 +66,14 @@
             docs: function() {
                 if(this.edition.hasOwnProperty('docs'))
                     return this.parseList(this.edition.docs);
+            },
+
+            start_date: function() {
+                return moment(this.edition.start_date).format('LL');
+            },
+
+            end_date: function() {
+                return moment(this.edition.end_date).format('LL');
             }
         },
 
