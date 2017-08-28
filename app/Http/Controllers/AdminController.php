@@ -58,6 +58,10 @@ class AdminController extends Controller
         /* Retreive ballot submitted by the voter */
         $ballot = $voter->ballot()->first();
 
+        if(!$ballot) {
+            return response()->json(['ID' => ['Voter did not cast ballot']], 422);
+        }
+
         if($ballot->by_user_id) {
             return response()->json(['ID' => ['Ballot cannot be anulled']], 422);
         }

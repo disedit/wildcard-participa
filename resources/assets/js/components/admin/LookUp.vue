@@ -1,10 +1,10 @@
 <template>
     <b-modal id="lookUp" title="Troba un identificador" :hide-footer="true" @hidden="clear">
         <form @submit.prevent="Lookup">
-            <div :class="{ 'form-group': true, 'has-warning': errors.hasOwnProperty('ID') }">
+            <div class="form-group">
                 <label for="ID">El DNI, NIE o Passaport conté els caràcters...</label>
-                <input type="text" v-model="ID" v-focus="focused" class="form-control form-control-warning" ref="ID" id="ID" autocomplete="off" />
-                <div v-if="errors.hasOwnProperty('ID')" v-for="error in errors.ID" class="form-control-feedback">{{ error }}</div>
+                <input type="text" v-model="ID" v-focus="focused" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('ID') }" ref="ID" id="ID" autocomplete="off" />
+                <div v-if="errors.hasOwnProperty('ID')" v-for="error in errors.ID" class="invalid-feedback">{{ error }}</div>
             </div>
         </form>
 

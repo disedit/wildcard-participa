@@ -1,30 +1,39 @@
 <template>
-    <b-modal id="anullBallot" ref="anullBallot" @shown="focus('ID')" @hidden="clear" :hide-footer="!ID">
+    <b-modal id="anullBallot" ref="anullBallot" @shown="focus('ID')" @hidden="clear">
         <div slot="modal-title">
             <span class="title">Anul·la una papereta</span>
         </div>
 
-        <div class="alert alert-success" v-if="success">
-            <i class="fa fa-check" aria-hidden="true"></i> Papereta anul·lada correctament.
+        <div v-if="success">
+            <div class="alert alert-success">
+                <i class="fa fa-check" aria-hidden="true"></i> Papereta anul·lada correctament.
+            </div>
+
+            <div>
+                <button ref="close" class="btn btn-danger" @click="hideModal">Tanca</button>
+                <button class="btn btn-secondary" @click="success = false">
+                    <i class="fa fa-ban" aria-hidden="true"></i> Anul·la una altra papereta
+                </button>
+            </div>
         </div>
 
-        <form @submit.prevent="ballotLookup">
-            <div :class="{ 'form-group': true, 'has-warning': errors.hasOwnProperty('ID') }">
+        <form @submit.prevent="ballotLookup" v-if="!success">
+            <div class="form-group">
                 <label for="ID">Identificador</label>
-                <input v-if="step == 1" type="text" v-model="ID" v-focus="focused == 'ID'" class="form-control form-control-warning" ref="ID" id="ID" placeholder="DNI, NIF o Passaport" />
+                <input v-if="step == 1" type="text" v-model="ID" v-focus="focused == 'ID'" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('ID') }" ref="ID" id="ID" placeholder="DNI, NIF o Passaport" />
                 <p v-if="step == 2">
                     <strong>{{ ID }}</strong>
                     <a href="#" @click.prevent="back"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </p>
-                <div v-if="errors.hasOwnProperty('ID')" v-for="error in errors.ID" class="form-control-feedback">{{ error }}</div>
+                <div v-if="errors.hasOwnProperty('ID')" v-for="error in errors.ID" class="invalid-feedback">{{ error }}</div>
             </div>
 
             <div v-if="step == 2">
-                <div :class="{ 'form-group': true, 'has-warning': errors.hasOwnProperty('reason') }">
+                <div class="form-group">
                     <label for="reason" class="mb-0">Justificació</label>
                     <small class="form-text text-muted mt-0 mb-1">Breu descripció de l'incident pel qual s'anul·la aquesta papereta.</small>
-                    <textarea ref="reason" id="reason" v-model="reason" v-focus="focused == 'reason'" class="form-control form-control-warning"></textarea>
-                    <div v-if="errors.hasOwnProperty('reason')" v-for="error in errors.reason" class="form-control-feedback">{{ error }}</div>
+                    <textarea ref="reason" id="reason" v-model="reason" v-focus="focused == 'reason'" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('reason') }"></textarea>
+                    <div v-if="errors.hasOwnProperty('reason')" v-for="error in errors.reason" class="invalid-feedback">{{ error }}</div>
                 </div>
 
                 <div class="form-group mb-0">
