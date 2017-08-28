@@ -102,7 +102,7 @@ class CacheResults extends Command
                 $this->errors[] = [$ballot->cast_at, $ballot->ref];
                 continue;
             }
-
+            
             foreach($decodedBallot as $question => $options) {
                 foreach($options as $option => $points) {
                     $this->tab[$question][$option] = (isset($this->tab[$question][$option])) ? $this->tab[$question][$option] + $points : $points;

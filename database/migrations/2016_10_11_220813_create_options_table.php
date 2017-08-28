@@ -20,7 +20,7 @@ class CreateOptionsTable extends Migration
             $table->text('description');
             $table->text('motivation');
             $table->text('attachments');
-            $table->double('cost');
+            $table->double('cost', 10, 2)->nullable();
             $table->string('salt');
             $table->timestamps();
 

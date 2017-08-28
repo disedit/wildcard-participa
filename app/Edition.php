@@ -94,7 +94,7 @@ class Edition extends Model
             $optionsQuery->with('result');
         }])->get();
 
-        return $results;
+        return $this->processResults($results);
     }
 
     /**
@@ -149,6 +149,41 @@ class Edition extends Model
         $now = time();
 
         return ($publishTime > $now && $endTime > $now);
+    }
+
+    /**
+     * Process the results to add totals, percentages etc.
+     *
+     * @return array
+     */
+    private function processResults($results)
+    {
+        $tab = [];
+
+        foreach($results as $question) {
+            $options = $question->options->sortByDesc('result.points');
+            $optionsWithResults = [];
+            $questionResults = $question->results()->get();
+            $total = $questionResults->sum('points');
+            $max = $questionResults->max('points');
+
+            foreach($options->values()->all() as $option) {
+                $points = ($option->result) ? $option->result->points : 0;
+                $optionsWithResults[] = [
+                    'option' => $option->option,
+                    'points' => $points,
+                    'percentage' => ($points * 100) / $total,
+                    'relative' => ($points * 100) / $max
+                ];
+            }
+
+            $tab[$question->id] = [
+                'question' => $question->question,
+                'options' => $optionsWithResults
+            ];
+        }
+
+        return $tab;
     }
 
 }

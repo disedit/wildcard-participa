@@ -25,12 +25,12 @@
                         <th width="25%" class="text-right">Cens</th>
                         <td width="25%">{{ census | formatNumber }}</td>
                         <th width="25%" class="text-right">Participació</th>
-                        <td width="25%">{{ turnout | formatNumber }} ({{ percentage }})</td>
+                        <td width="25%">{{ turnout | formatNumber }} ({{ turnoutPercentage }})</td>
                     </tr>
                 </table>
 
-                <div v-for="question in results">
-                    <h4>{{ question.question }}</h4>
+                <div v-for="result in results">
+                    <h4>{{ result.question }}</h4>
                     <table class="table table-sm">
                         <colgroup>
                             <col width="50%" />
@@ -39,19 +39,25 @@
                         </colgroup>
 
                         <tbody>
-                            <tr v-for="option in question.options">
+                            <tr v-for="option in result.options">
                                 <td>{{ option.option }}</td>
                                 <td valign="center">
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                        <div class="progress-bar"
+                                             role="progressbar"
+                                             :style="'width: ' + option.relative + '%'"
+                                             :aria-valuenow="option.relative"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                            <span v-if="option.percentage > 0">
+                                                {{ option.percentage | formatNumber }}%
+                                            </span>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="text-right">
-                                    <span v-if="option.result">
-                                        {{ option.result.points | formatNumber }}
-                                    </span>
-                                    <span v-else>
-                                        0
+                                    <span>
+                                        {{ option.points | formatNumber }}
                                     </span>
                                 </td>
                             </tr>
@@ -90,7 +96,7 @@
         },
 
         computed: {
-            percentage: function() {
+            turnoutPercentage: function() {
                 const percentage = (this.turnout * 100) / this.census;
                 return format({decimal: ',', suffix: '%'})(percentage);
             }

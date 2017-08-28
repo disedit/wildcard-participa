@@ -126,7 +126,7 @@ class AdminController extends Controller
         $integrity = ($integrity !== false) ? false : true;
 
         /* Retreive the results */
-        $results = $this->processResults($edition->fullResults());
+        $results = $edition->fullResults();
 
         /* Retreive the turnout */
         $turnout = $edition->turnout()->count();
@@ -142,8 +142,4 @@ class AdminController extends Controller
         return response()->json($response);
     }
 
-    private function processResults($results)
-    {
-        return $results;
-    }
 }
