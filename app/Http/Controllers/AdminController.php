@@ -117,12 +117,11 @@ class AdminController extends Controller
      */
     public function results()
     {
-        $edition = Edition::current();
-
-        /* Cache results */
+        /* Update and cache the results */
         Artisan::call('results:cache');
 
-        $results = $edition->results();
+        /* Retreive the results */
+        $results = Edition::current()->fullResults();
 
         return response()->json($results);
     }

@@ -84,6 +84,20 @@ class Edition extends Model
     }
 
     /**
+     * Get the results, ordered by points and with option values
+     *
+     * @return object
+     */
+    public function fullResults()
+    {
+        $results = $this->questions()->with(['options' => function($optionsQuery) {
+            $optionsQuery->with('result');
+        }])->get();
+
+        return $results;
+    }
+
+    /**
      * Determine if current edition is open for voting or not
      *
      * @return boolean

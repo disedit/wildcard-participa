@@ -22,4 +22,12 @@ class Option extends Model
     {
         return $this->belongsTo('App\Question');
     }
+
+    /**
+     * Get the result for the option.
+     */
+    public function result()
+    {
+        return $this->hasOne('App\Result');
+    }
 }

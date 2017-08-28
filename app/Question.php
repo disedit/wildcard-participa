@@ -30,4 +30,12 @@ class Question extends Model
     {
         return $this->hasMany('App\Option');
     }
+
+    /**
+     * Get the results for the options beloging to the question.
+     */
+    public function results()
+    {
+        return $this->hasMany('App\Result');
+    }
 }

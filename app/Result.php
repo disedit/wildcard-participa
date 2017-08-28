@@ -12,4 +12,21 @@ class Result extends Model
      * @var array
      */
     protected $fillable = ['edition_id', 'question_id', 'option_id', 'result'];
+
+    /**
+     * A result belongs to a question
+     */
+    public function question()
+    {
+        return $this->belongsTo('App\Question');
+    }
+
+    /**
+     * A result belongs to an option
+     */
+    public function option()
+    {
+        return $this->belongsTo('App\Option');
+    }
+
 }

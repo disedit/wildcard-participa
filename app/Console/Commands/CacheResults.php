@@ -24,23 +24,23 @@ class CacheResults extends Command
     protected $description = 'Validate and cache results';
 
     /**
-     * The console command description.
+     * The edition
      *
-     * @var string
+     * @var object
      */
     protected $edition;
 
     /**
-     * The console command description.
+     * Errors
      *
-     * @var string
+     * @var array
      */
     protected $errors = [];
 
     /**
-     * The console command description.
+     * Result tabulation
      *
-     * @var string
+     * @var array
      */
     protected $tab = [];
 
@@ -89,7 +89,7 @@ class CacheResults extends Command
     }
 
     /**
-     * Execute the console command.
+     * Validate ballots
      *
      * @return mixed
      */
@@ -104,8 +104,8 @@ class CacheResults extends Command
             }
 
             foreach($decodedBallot as $question => $options) {
-                foreach($options as $option) {
-                    $this->tab[$question][$option] = (isset($this->tab[$question][$option])) ? $this->tab[$question][$option] + 1 : 1;
+                foreach($options as $option => $points) {
+                    $this->tab[$question][$option] = (isset($this->tab[$question][$option])) ? $this->tab[$question][$option] + $points : $points;
                 }
             }
             $validBallots++;
@@ -132,7 +132,7 @@ class CacheResults extends Command
     }
 
     /**
-     * Execute the console command.
+     * Save results to database
      *
      * @return mixed
      */
