@@ -1,10 +1,8 @@
 <template>
-    <b-navbar toggleable type="inverse" variant="primary">
+    <b-navbar toggleable type="dark" variant="primary">
         <b-nav-toggle target="user_actions"></b-nav-toggle>
 
-        <b-link class="navbar-brand" to="#">
-          <span>{{ appName }}</span>
-        </b-link>
+        <a class="navbar-brand" href="#">{{ appName }}</a>
 
         <b-collapse is-nav id="user_actions">
 
