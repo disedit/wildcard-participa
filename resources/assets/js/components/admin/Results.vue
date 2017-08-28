@@ -1,6 +1,6 @@
 <template>
     <div class="card mt-4">
-        <div class="card-block">
+        <div class="card-body">
             <div class="d-flex align-items-center">
                 <h3>Resultats</h3>
                 <div class="ml-auto results__refresh">

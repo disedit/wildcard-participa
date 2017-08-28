@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card mt-4">
-            <div class="card-block">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-sm">
                         <h1>{{ edition.name }}</h1>
@@ -28,7 +28,7 @@
                         </b-btn>
                     </div>
                     <div class="col-sm">
-                        <b-btn v-if="enableIDLookUp" v-b-modal.lookUp class="btn btn-secondary btn-lg btn-block">
+                        <b-btn v-if="enableIDLookUp" v-b-modal.lookUp class="btn btn-default btn-lg btn-block">
                             <i class="fa fa-search" aria-hidden="true"></i> Troba per DNI
                         </b-btn>
                     </div>
