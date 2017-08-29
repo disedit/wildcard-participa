@@ -32,7 +32,7 @@
                     height="37">
                  </iframe>
                  <iframe
-                    :src="'https://platform.twitter.com/widgets/tweet_button.html?size=l&url=' + encodeURI(shareable_url) + '&via=compromis&related=compromis&text=' + encodeURI($t('global.tweet')) + '&lang=es'"
+                    :src="'https://platform.twitter.com/widgets/tweet_button.html?size=l&url=' + encodeURI(shareable_url) + '&via=' + twitter + '&related=' + twitter + '&text=' + encodeURI($t('global.tweet')) + '&lang=es'"
                     class="twitter"
                     width="140"
                     height="37"
@@ -70,6 +70,7 @@
                 municipality: '',
                 council_url: '',
                 shareable_url: '',
+                twitter: ''
             }
         },
 
@@ -77,6 +78,7 @@
             this.municipality = window.BoothConfig.name;
             this.council_url = window.BoothConfig.council_url;
             this.shareable_url = window.BoothConfig.url;
+            this.twitter = window.BoothConfig.twitter;
         }
     }
 </script>
