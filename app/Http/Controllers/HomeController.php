@@ -79,6 +79,19 @@ class HomeController extends Controller
     }
 
     /**
+     * Returns the stand-alone sidebar to inject via AJAX
+     *
+     * @return \Illuminate\View\View
+     */
+    public function sidebar()
+    {
+        $edition = $this->edition;
+        $pastEditions = Edition::pastEditions();
+
+        return view('components.sidebar', compact('edition', 'pastEditions'));
+    }
+
+    /**
      * Show a user's IP address to assist Support
      * in troubleshooting problems with IP limits.
      *
