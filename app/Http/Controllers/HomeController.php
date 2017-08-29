@@ -37,29 +37,30 @@ class HomeController extends Controller
 
         $now = time();
         $edition = $this->edition;
+        $pastEditions = Edition::pastEditions();
 
         // If within voting window dates, show voting booth
         if($edition->isOpen()){
             $user = $request->user();
             $inPerson = ($user) ? true : false;
             $token = ($inPerson) ? JWTAuth::fromUser($user) : null;
-            return view('booth', compact('edition', 'token', 'inPerson'));
+            return view('booth', compact('edition', 'token', 'inPerson', 'pastEditions'));
         }
 
         // If in limbo (after end_date and before publish_results), show placeholder
         if($edition->isAwaitingResults()){
-            return view('placeholder', compact('edition'));
+            return view('placeholder', compact('edition', 'pastEditions'));
         }
 
         // If after end_date AND publish_results, show results
         if($edition->resultsPublished()){
-            $results = $edition->results();
-            return view('results', compact('edition', 'results'));
+            $results = $edition->fullResults();
+            return view('results', compact('edition', 'results', 'pastEditions'));
         }
 
         // If none of the previous conditions are met
         // display the About page as a placeholder before the vote.
-        $this->about();
+        return view('about', compact('edition', 'pastEditions'));
 
     }
 
@@ -70,10 +71,10 @@ class HomeController extends Controller
      */
     public function about()
     {
-        $now = time();
         $edition = $this->edition;
+        $pastEditions = Edition::pastEditions();
 
-        return view('about')->withEdition($edition);
+        return view('about', compact('edition', 'pastEditions'));
     }
 
     /**

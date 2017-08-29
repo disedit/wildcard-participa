@@ -84,6 +84,20 @@ class Edition extends Model
     }
 
     /**
+     * Get the past editions
+     *
+     * @return object
+     */
+    public static function pastEditions()
+    {
+        $editions = Self::where('published', 1)->orderBy('id', 'desc')->get();
+
+        $editions->shift();
+
+        return $editions->all();
+    }
+
+    /**
      * Get the results with option names
      *
      * @return object
@@ -148,7 +162,7 @@ class Edition extends Model
         $endTime = strtotime($this->end_date);
         $now = time();
 
-        return ($publishTime > $now && $endTime > $now);
+        return ($publishTime < $now && $endTime < $now);
     }
 
     /**
