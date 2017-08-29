@@ -133,7 +133,7 @@ class Edition extends Model
         $endTime = strtotime($this->end_date);
         $now = time();
 
-        return ($endTime > $now && !$this->resultsPublished());
+        return ($endTime < $now && !$this->resultsPublished());
     }
 
     /**
