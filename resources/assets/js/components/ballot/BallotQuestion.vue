@@ -73,10 +73,6 @@
 <style scoped lang="scss">
     @import '../../../sass/_variables';
 
-    .question {
-
-    }
-
     h2 {
         font-size: 1.65rem;
     }

@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div :class="{'col-sm-8': !boothMode, 'col-sm-12': boothMode}">
+        <div :class="{'col-md-8': !boothMode, 'col-md-12': boothMode}">
             <form @submit.prevent="submitBallot">
                 <div v-for="question in ballot.questions">
                     <ballot-question :question="question" :selected="selected" />
@@ -9,7 +9,7 @@
                 <ballot-identification :identifier="identifier" :loading="isLoading" />
             </form>
         </div>
-        <div class="col-sm-4" v-if="!boothMode">
+        <div class="col-md-4" v-if="!boothMode">
             <sidebar :edition="ballot" />
         </div>
     </div>
