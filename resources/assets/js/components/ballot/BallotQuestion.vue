@@ -83,6 +83,6 @@
 
     .selected {
         background: lighten($brand-primary, 50%);
-        border-right: 4px $brand-primary solid;
-    }    
+        box-shadow: inset -4px 0px 0px 0px $brand-primary;
+    }
 </style>

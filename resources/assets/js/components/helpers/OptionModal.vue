@@ -5,11 +5,11 @@
         <div class="error">
             <div v-html="option.description"></div>
 
-            <h4 v-if="option.motivation">{{ $t('option.motivation') }}</h4>
+            <h4 v-if="option.motivation" class="mt-3">{{ $t('option.motivation') }}</h4>
             <div v-html="option.motivation"></div>
 
             <div v-if="option.cost > 0">
-                <hr />
+                <hr class="my-3" />
                 <strong>{{ $t('option.cost') }}</strong>: {{ option.cost | formatCurrency }}
             </div>
         </div>
@@ -80,5 +80,10 @@
 
     .title {
         color: $brand-primary;
+    }
+
+    h4 {
+        color: $gray;
+        font-size: 1.40rem;
     }
 </style>

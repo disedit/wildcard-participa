@@ -15,7 +15,6 @@
             <span class="custom-control-description">
                 <span class="option-name">{{ option.option }}</span>
                 <span v-if="displayCost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
-                <i v-if="selected" class="fa fa-check" aria-hidden="true"></i>
             </span>
         </div>
         <a href="#" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
