@@ -13,19 +13,27 @@
             <hr class="mt-2 mb-3" />
 
             <div v-if="!loading" class="results-wrapper">
-                <div v-if="integrity" class="alert alert-info">
-                    <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat
-                </div>
-                <div v-else class="alert alert-danger">
-                    <i class="fa fa-minus-circle" aria-hidden="true"></i> Test d'integritat FAILED
+                <div v-if="turnout > 0">
+                    <div v-if="integrity" class="alert alert-info">
+                        <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat
+                    </div>
+                    <div v-else class="alert alert-danger">
+                        <i class="fa fa-minus-circle" aria-hidden="true"></i> Test d'integritat FAILED
+                    </div>
                 </div>
 
-                <table class="table table-bordered">
+                <div v-else class="text-center">
+                    <i class="fa fa-envelope-o fa-3x fa-fw mt-3"></i>
+                    <h4 class="mt-2">Cap vot encara</h4>
+                    <p>Encara no s'ha emés cap papereta a aquesta votació</p>
+                </div>
+
+                <table v-if="turnout > 0" class="table table-bordered">
                     <tr>
                         <th width="25%" class="text-right">Cens</th>
                         <td width="25%">{{ census | formatNumber }}</td>
                         <th width="25%" class="text-right">Participació</th>
-                        <td width="25%">{{ turnout | formatNumber }} ({{ turnoutPercentage }})</td>
+                        <td width="25%">{{ turnout | formatNumber }} <span v-if="turnout > 0">({{ turnoutPercentage }})</span></td>
                     </tr>
                 </table>
 
@@ -67,7 +75,7 @@
                 </div>
             </div>
             <div v-else class="text-center">
-                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw mt-3"></i>
                 <h4 class="mt-2">Carregant resultats...</h4>
                 <p>Aquest procés pot tardar uns minuts mentres es comprova la validesa de cada papereta</p>
             </div>

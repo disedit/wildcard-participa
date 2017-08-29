@@ -2,7 +2,7 @@
     <b-navbar toggleable type="dark" variant="primary" :sticky="true">
         <b-nav-toggle target="user_actions"></b-nav-toggle>
 
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             {{ appName }}
             <span class="location">
                 <i class="fa fa-map-marker" aria-hidden="true"></i> {{ user.name }}
