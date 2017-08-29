@@ -11,6 +11,10 @@ export default class Participa {
         return this._call('get', 'results');
     }
 
+    getSidebar() {
+        return this._call('get', 'sidebar');
+    }
+
     precheck(data) {
         return this._call('post', 'precheck', data);
     }
