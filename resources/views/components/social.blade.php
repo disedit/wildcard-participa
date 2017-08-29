@@ -11,7 +11,7 @@
         @if(config('participa.twitter'))
             <li>
                 <a href="https://twitter.com/{{ config('participa.twitter') }}" target="_blank" rel="noopener">
-                    <i class="fa fa-twitter-square" aria-hidden="true"></i> {{ '@' . config('participa.twitter') }}
+                    <i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="d-none d-sm-inline d-md-none d-lg-inline">{{ '@' . config('participa.twitter') }}</span>
                 </a>
             </li>
         @endif
@@ -23,7 +23,7 @@
             @endphp
             <li>
                 <a href="{{ config('participa.council_url') }}" target="_blank" rel="noopener">
-                    <i class="fa fa-home" aria-hidden="true"></i> {{ $simpleUrl }}
+                    <i class="fa fa-home" aria-hidden="true"></i> <span class="d-none d-sm-inline d-md-none d-lg-inline">{{ $simpleUrl }}</span>
                 </a>
             </li>
         @endif

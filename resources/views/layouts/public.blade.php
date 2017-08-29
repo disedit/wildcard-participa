@@ -23,10 +23,10 @@
     <div class="container main-container">
         @section('header')
             <header class="header row">
-                <div class="col-sm-6 logo">
+                <div class="col-md-5 logo">
                     <h1><img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
                 </div>
-                <div class="col-sm-6 links d-flex flex-row">
+                <div class="col-md-7 links d-flex flex-row">
                     @include('components/social')
                     @include('components/languages')
                 </div>
