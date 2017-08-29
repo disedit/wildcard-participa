@@ -1,5 +1,9 @@
 .council-details {
-    p {
+    p:last-child {
         margin-bottom: 0;
+    }
+
+    span {
+        margin-right: 0.5rem;
     }
 }

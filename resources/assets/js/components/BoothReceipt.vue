@@ -42,11 +42,10 @@
                  </iframe>
             </div>
             <hr />
-            <div class="links">
+            <div class="further-actions">
                 <a :href="council_url">{{ $t('booth_receipt.back_to_council') }}</a> ·
                 <router-link to="/">{{ $t('booth_receipt.back_to_booth') }}</router-link>
             </div>
-            <hr />
         </div>
     </div>
 </template>
@@ -173,7 +172,7 @@
         }
     }
 
-    .links {
+    .further-actions {
         text-align: center;
         font-size: 1.25rem;
     }

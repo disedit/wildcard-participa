@@ -24,7 +24,9 @@
         @section('header')
             <header class="header row">
                 <div class="col-md-5 logo">
-                    <h1><img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
+                    <a href="/">
+                        <h1><img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
+                    </a>
                 </div>
                 <div class="col-md-7 links d-flex flex-row">
                     @include('components/social')
@@ -45,23 +47,7 @@
         @section('footer')
             <hr />
 
-            <footer class="footer">
-                <div class="row">
-                    <div class="col-2 council-logo">
-                        <img src="{{ public_path('images/council.png') }}" alt="{{ config('participa.council_name', 'Any Council') }}" />
-                    </div>
-                    <div class="col council-details">
-                        <address>
-                            <h5>{{ config('participa.council_name', 'Any Council') }}</h5>
-                            <p>
-                                <i class="fa fa-map-marker" aria-hidden="true"></i> {{ config('participa.contact_address') }}
-                                <i class="fa fa-phone" aria-hidden="true"></i> {{ config('participa.contact_phone') }}
-                            </p>
-                            <p>@lang('participa.help'): <a href="mailto:{{ config('participa.contact_email', 'participa@disedit.com') }}">{{ config('participa.contact_email', 'participa@disedit.com') }}</a></p>
-                        </address>
-                    </div>
-                </div>
-            </footer>
+            @include('components/footer')
         @show
     </div>
 
