@@ -43,6 +43,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'months_short' => ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Oct', 'Nov', 'Dec'],
-    'months_long' => ['Gener', 'Febrer', 'Març', 'Abril', 'Maig', 'Juny', 'Juliol', 'Agost', 'Octubre', 'Novembre', 'Decembre'],
+    'months_long' => ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'octubre', 'novembre', 'decembre'],
 
 ];

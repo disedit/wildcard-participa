@@ -1,12 +1,19 @@
 @php
     $docs = (!empty($edition->docs)) ? explode("\n", $edition->docs) : null;
     $places = (!empty($edition->voting_places)) ? explode("\n", $edition->voting_places) : null;
-    $startDate = '';
-    $endDate = '';
+
+    $startTime  = strtotime($edition->start_date);
+    $endTime    = strtotime($edition->end_date);
+    $startDay   = date('j', $startTime);
+    $endDay     = date('j', $endTime);
+    $startMonth = date('n', $startTime) - 1;
+    $endMonth   = date('n', $endTime) - 1;
+    $startDate  = $startDay . ' ' . __('participa.months_long.' . $startMonth);
+    $endDate    = $endDay . ' ' . __('participa.months_long.' . $endMonth);
 @endphp
 
 <div class="sidebar">
-    <div class="sidebar__box">
+    <div class="sidebar__box sidebar__box--main">
         <h4>@lang('sidebar.current_poll')</h4>
         <h3>{{ $edition->name }}</h3>
         <p class="sidebar__secondary">@lang('sidebar.dates', ['start_date' => $startDate, 'end_date' => $endDate])</p>
@@ -41,7 +48,7 @@
     @if(count($places) > 0)
         <div class="sidebar__box" v-if="voting_places">
             <h4>@lang('sidebar.voting_places')</h4>
-            <p>@lang('sidebar.voting_help')</p>
+            <p class="sidebar__secondary">@lang('sidebar.voting_text')</p>
             <hr />
             <ul class="sidebar__list">
                 @foreach($places as $place)
