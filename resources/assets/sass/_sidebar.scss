@@ -41,7 +41,8 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
 
     &__secondary {
         color: $sidebar-text-secondary;
-        font-size: 1rem;
+        font-size: 0.75rem;
+        display: block;
     }
 
     &__list {
@@ -56,13 +57,9 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         li:last-child {
             margin-bottom: 0;
         }
-    }
 
-    &__list--links {
-        a {
-        	display: block;
-        	text-indent: -1rem;
-            margin-left: 2rem;
+        &__item {
+        	display: flex;
         }
 
         .fa {
