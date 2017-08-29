@@ -39,6 +39,8 @@
                         @include('components/voteinfo')
                     </div>
                 </div>
+            @else
+                <hr />
             @endif
         @show
 

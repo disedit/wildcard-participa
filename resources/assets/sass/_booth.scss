@@ -10,3 +10,26 @@
         margin: 1rem 0;
     }
 }
+
+
+    @include media-breakpoint-up(sm) {
+        .template-2column {
+            .list-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            label {
+                width: 50%;
+                height: 100px;
+                align-items: flex-start;
+                overflow: hidden;
+            }
+        }
+
+        .booth-mode .template-2column {
+            .list-group label {
+                width: 33.3%;
+            }
+        }
+    }

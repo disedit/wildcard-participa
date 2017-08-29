@@ -1,11 +1,9 @@
-<footer class="footer">
-    <div class="row">
-        <div class="col-2 council-logo">
-            <img src="{{ public_path('images/council.png') }}" alt="{{ config('participa.council_name', 'Any Council') }}" />
-        </div>
-        <div class="col council-details">
+<footer class="footer media">
+        <img src="{{ public_path('images/council.png') }}" alt="{{ config('participa.council_name', 'Any Council') }}" class="d-flex align-self-start mr-3" />
+
+        <div class="media-body council-details">
             <address>
-                <h5>{{ config('participa.council_name', 'Any Council') }}</h5>
+                <h5 class="mt-0">{{ config('participa.council_name', 'Any Council') }}</h5>
                 <p>
                     @if(config('participa.contact_address'))
                         <span><i class="fa fa-map-marker" aria-hidden="true"></i> {{ config('participa.contact_address') }}</span>
