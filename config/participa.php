@@ -27,6 +27,7 @@ return [
     'anonymous_voting' => false,
     'enable_ID_lookup' => true,
     'min_age' => 16,
+    'display_census_number' => true,
 
     /*
     |--------------------------------------------------------------------------

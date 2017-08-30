@@ -23,6 +23,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('max_options');
             $table->boolean('display_cost');
             $table->boolean('random_order');
+            $table->integer('results_to_highlight')->default(3);
             $table->timestamps();
 
             $table->foreign('edition_id')->references('id')->on('editions');
