@@ -15,6 +15,7 @@ return [
     'tweet' => '',
     'calendar_heading' => 'Votació',
     'help' => 'Incidències i ajuda',
+    'is_archive' => 'Arxiu... <a href="/">actual</a>',
 
     /*
     |--------------------------------------------------------------------------

@@ -21,8 +21,8 @@ Route::get('/lang/{language}', 'LanguageController@switchLanguage');
 Auth::routes();
 
 /* Archive */
-Route::get('/archive', 'ArchiveController@home');
-Route::get('/archive/{edition}', 'ArchiveController@edition');
+Route::get('/archive/{edition}', 'ArchiveController@results');
+Route::get('/archive/{edition}/about', 'ArchiveController@about');
 
 /* Admin */
 Route::get('/admin', 'AdminController@index')->middleware('auth');

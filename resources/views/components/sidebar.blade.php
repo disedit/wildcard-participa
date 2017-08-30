@@ -12,7 +12,7 @@
             <hr />
             <ul class="sidebar__list">
                 <li class="sidebar__list__item">
-                    <a href="/about"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('sidebar.more_info')</a>
+                    <a href="{{ url('archive/' . $edition->id . '/about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('sidebar.more_info')</a>
                 </li>
                 @if(count($docs) > 0)
                     @forelse($docs as $doc)
@@ -78,7 +78,7 @@
                 <ul class="sidebar__list">
                 @foreach($pastEditions as $edition)
                     <li class="sidebar__list__item">
-                        <a href="{{ url('hello') }}">
+                        <a href="{{ url('archive/' . $edition->id) }}">
                             <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ human_month($edition->start_date) }}
                         </a>
                     </li>

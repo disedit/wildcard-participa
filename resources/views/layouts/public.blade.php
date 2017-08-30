@@ -33,6 +33,7 @@
                     @include('components/languages')
                 </div>
             </header>
+
             @if(!$inPerson)
                 <div class="row">
                     <div class="col">
@@ -43,6 +44,10 @@
                 <hr />
             @endif
         @show
+
+        @isset($isArchive)
+            <div class="alert alert-info mb-4"><i class="fa fa-archive" aria-hidden="true"></i> @lang('participa.is_archive')</div>
+        @endisset
 
         @yield('content')
 
