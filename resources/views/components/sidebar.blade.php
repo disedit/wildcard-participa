@@ -12,7 +12,13 @@
             <hr />
             <ul class="sidebar__list">
                 <li class="sidebar__list__item">
-                    <a href="{{ url('archive/' . $edition->id . '/about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('sidebar.more_info')</a>
+                    @if(Request::segment(1) == 'about')
+                        <a href="{{ url() }}"><i class="fa fa-bullhorn" aria-hidden="true"></i>@lang('sidebar.vote')</a>
+                    @elseif(Request::segment(3) == 'about')
+                        <a href="{{ url('archive/' . $edition->id) }}"><i class="fa fa-bar-chart" aria-hidden="true"></i>@lang('participa.results')</a>
+                    @else
+                        <a href="{{ (!isset($isArchive)) ? url('about') : url('archive/' . $edition->id . '/about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('sidebar.more_info')</a>
+                    @endif
                 </li>
                 @if(count($docs) > 0)
                     @forelse($docs as $doc)
