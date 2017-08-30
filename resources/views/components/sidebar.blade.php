@@ -1,22 +1,13 @@
 @php
     $docs = (!empty($edition->docs)) ? explode("\n", $edition->docs) : null;
     $places = (!empty($edition->voting_places)) ? explode("\n", $edition->voting_places) : null;
-
-    $startTime  = strtotime($edition->start_date);
-    $endTime    = strtotime($edition->end_date);
-    $startDay   = date('j', $startTime);
-    $endDay     = date('j', $endTime);
-    $startMonth = date('n', $startTime) - 1;
-    $endMonth   = date('n', $endTime) - 1;
-    $startDate  = $startDay . ' ' . __('participa.months_long.' . $startMonth);
-    $endDate    = $endDay . ' ' . __('participa.months_long.' . $endMonth);
 @endphp
 
 <div class="sidebar">
     <div class="sidebar__box sidebar__box--main">
         <h4>@lang('sidebar.current_poll')</h4>
         <h3>{{ $edition->name }}</h3>
-        <p class="sidebar__secondary">@lang('sidebar.dates', ['start_date' => $startDate, 'end_date' => $endDate])</p>
+        <p class="sidebar__secondary">@lang('sidebar.dates', ['start_date' => human_date($edition->start_date), 'end_date' => human_date($edition->end_date)])</p>
         <div v-if="docs">
             <hr />
             <ul class="sidebar__list">
@@ -88,7 +79,7 @@
                 @foreach($pastEditions as $edition)
                     <li class="sidebar__list__item">
                         <a href="{{ url('hello') }}">
-                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ $edition->start_date }}
+                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ human_month($edition->start_date) }}
                         </a>
                     </li>
                 @endforeach

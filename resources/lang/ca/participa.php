@@ -21,10 +21,17 @@ return [
     | Sidebar
     |--------------------------------------------------------------------------
     */
-
     'current_edition' => 'Votació actual',
     'more_info' => 'Més informació',
     'voting_places' => 'Punts de votació',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Placeholder
+    |--------------------------------------------------------------------------
+    */
+    'voting_closed' => 'Votació tancada',
+    'awaiting_results' => 'Els resultats es faran públics el :publish_date a les :publish_time',
 
 
     /*
@@ -32,7 +39,6 @@ return [
     | Results
     |--------------------------------------------------------------------------
     */
-
     'results' => 'Resultats',
     'census' => 'Cens',
     'turnout' => 'Participació',
