@@ -56,7 +56,7 @@ class BallotController extends Controller
     {
         \Debugbar::disable();
 
-        $qr = QrCode::size(200)->generate($ref);
+        $qr = QrCode::size(200)->generate(url('ballot/' . $ref));
 
         return response($qr)->header('Content-Type', 'image/svg+xml');
     }

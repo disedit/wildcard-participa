@@ -5,12 +5,12 @@
                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                 <h2>{{ $t('booth_receipt.heading') }}</h2>
             </div>
-            <div class="receipt">
+            <div class="receipt" v-if="receipt.ref">
                 <div class="success">
                     {{ $t('booth_receipt.success') }}
                 </div>
                 <div class="ballot">
-                    <a :href="'/ballots/' + receipt.ref" target="_blank">
+                    <a :href="'/ballot/' + receipt.ref" target="_blank">
                         <img :src="'/api/ballot/qr/' + receipt.ref" alt="QR code" />
                         <h3>{{ receipt.ref }}</h3>
                         <i class="fa fa-arrow-circle-right" aria-hidden="true" alt="Go to ballot"></i>

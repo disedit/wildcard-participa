@@ -9,7 +9,7 @@
                     <a href="javascript:window.print()" class="pull-right btn-sm btn btn-success d-print-none"><i class="fa fa-print" aria-hidden="true"></i> @lang('participa.print')</a>
                 </h3>
                 <h2 class="ballot__ref">
-                    <img src="{{ url('api/ballot/qr/' . $ballot->ref) }}" alt="QR code" />
+                    <img src="{{ url('api/ballot/qr/' . $ballot->ref) }}" alt="QR code" width="75" />
                     {{ $ballot->ref }}
                 </h2>
 
@@ -19,8 +19,9 @@
                         <table class="table table-sm table-striped mt-3">
                             @foreach($content['options'] as $option)
                                 <tr>
+                                    <td width="20"><i aria-hidden="true" class="fa fa-check-square-o"></i></td>
                                     <td>{{ $option->option }}</td>
-                                    <td class="text-right">+{{ $content['points'][$option->id] }}</td>
+                                    <td class="ballot__points">+{{ $content['points'][$option->id] }}</td>
                                 </tr>
                             @endforeach
                         </table>
@@ -44,7 +45,7 @@
         </div>
     @endif
 
-    <div class="ballot-lookup-wrapper">
+    <div class="ballot-lookup-wrapper d-print-none">
         @component('components.ballot_lookup', ['in_sidebar' => false])
 
         @endcomponent

@@ -50,13 +50,11 @@
         &__ref {
             text-align: center;
             font-family: $font-family-monospace;
-            padding-bottom: 1rem;
             margin-bottom: 1rem;
             border-bottom: 1px $gray-lighter solid;
 
             img {
-                width: 55px;
-                margin: -30px 0 -30px -30px;
+                vertical-align: middle;
             }
         }
 
@@ -75,6 +73,12 @@
             padding-top: 1rem;
             margin-top: 1rem;
             border-top: 1px $gray-lighter solid;
+        }
+
+        &__points {
+            text-align: right;
+            color: $gray-600;
+            font-style: italic;
         }
     }
 }
