@@ -63,7 +63,7 @@ class CacheResults extends Command
     {
         $editionId = $this->option('edition');
         $dontSave = $this->option('no-save');
-        $this->edition = ($editionId) ? Edition::where($editionId)->get() : Edition::current();
+        $this->edition = ($editionId) ? Edition::where('id', $editionId)->first() : Edition::current();
 
         if(!$this->edition) {
             $this->error('No active edition was found');
@@ -102,7 +102,7 @@ class CacheResults extends Command
                 $this->errors[] = [$ballot->cast_at, $ballot->ref];
                 continue;
             }
-            
+
             foreach($decodedBallot as $question => $options) {
                 foreach($options as $option => $points) {
                     $this->tab[$question][$option] = (isset($this->tab[$question][$option])) ? $this->tab[$question][$option] + $points : $points;

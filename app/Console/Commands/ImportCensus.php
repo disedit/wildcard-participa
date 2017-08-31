@@ -41,7 +41,7 @@ class ImportCensus extends Command
     public function handle()
     {
         $editionId = $this->option('edition');
-        $edition = ($editionId) ? Edition::where($editionId)->get() : Edition::current();
+        $edition = ($editionId) ? Edition::where('id', $editionId)->first() : Edition::current();
 
         if(!$edition) {
             $this->error('You must first create an edition.');
@@ -55,6 +55,8 @@ class ImportCensus extends Command
                 return;
             }
         }
+
+        $this->info('Importing census onto edition ' . $edition->name . ' ...');
 
         $filename = $this->argument('file');
         $contents = Storage::get('census/' . $filename);

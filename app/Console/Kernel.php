@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\NewEdition::class,
         Commands\PublishEdition::class,
         Commands\ImportCensus::class,
+        Commands\ResetCensus::class,
         Commands\CreateAdmins::class,
         Commands\ResetAdminsPasswords::class,
         Commands\CacheResults::class
