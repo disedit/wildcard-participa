@@ -20,6 +20,7 @@ Route::post('/precheck', 'BoothController@precheck');
 Route::post('/request_sms', 'BoothController@requestSms');
 Route::post('/cast_ballot', 'BoothController@castBallot');
 Route::get('/sidebar', 'HomeController@sidebar');
+Route::get('/option/{option}', 'HomeController@option');
 
 /* Admin area */
 Route::post('/anull_ballot', 'AdminController@anullBallot')->middleware('auth.api');

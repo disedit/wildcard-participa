@@ -79,9 +79,45 @@
     }
 }
 
+.ballot-lookup {
+    &__input:focus {
+        box-shadow: 0 0 0 3px rgba($brand-primary, .25);
+    }
+}
+
 .ballot-lookup-wrapper .ballot-lookup {
     max-width: 600px;
     margin: 2rem auto 0 auto;
+}
+
+.option-modal {
+    .modal-title {
+        color: $brand-primary;
+    }
+
+    h4 {
+        color: $gray;
+        font-size: 1.25rem;
+        margin-top: 1rem;
+    }
+
+    .option-cost {
+        font-size: 2rem;
+    }
+
+    .option-attachments {
+        margin: 0;
+        padding: 0;
+
+        li {
+            list-style: none;
+        }
+    }
+
+    .option-picture {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
 }
 
 @include media-breakpoint-up(sm) {

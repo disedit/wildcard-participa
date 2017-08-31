@@ -194,6 +194,7 @@ class Edition extends Model
             foreach($options->values()->all() as $option) {
                 $points = ($option->result) ? $option->result->points : 0;
                 $optionsWithResults[] = [
+                    'id' => $option->id,
                     'option' => $option->option,
                     'points' => $points,
                     'percentage' => ($points * 100) / $total,

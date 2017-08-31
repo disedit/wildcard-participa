@@ -19,6 +19,7 @@ return [
     'error' => 'Error',
     'vote' => 'Vota',
     'print' => 'Imprimeix',
+    'close' => 'Tanca',
 
     /*
     |--------------------------------------------------------------------------
@@ -49,6 +50,15 @@ return [
     'votes' => 'vot|vots',
     'top_results' => '[1] Projecte més votat|[2] Dos projectes més votats|[3] Tres projectes més votats|[4] Quatre projectes més votats|[5,*] :num projectes més votats',
     'other_results' => 'Resta',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Option information
+    |--------------------------------------------------------------------------
+    */
+    'option_motivation' => 'Motivació',
+    'option_cost' => 'Cost',
+    'option_attachments' => 'Documentació adjunta',
 
     /*
     |--------------------------------------------------------------------------

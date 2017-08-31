@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Edition;
+use App\Option;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -92,6 +93,19 @@ class HomeController extends Controller
         $pastEditions = Edition::pastEditions();
 
         return view('components.sidebar', compact('edition', 'pastEditions'));
+    }
+
+    /**
+     * Display option information
+     *
+     * @return \Illuminate\View\View
+     */
+    public function option(Option $option)
+    {
+        if($option->attachments) $option->attachments = explode("\n", $option->attachments);
+        if($option->pictures) $option->pictures = explode("\n", $option->pictures);
+
+        return view('components.option', compact('option'));
     }
 
     /**

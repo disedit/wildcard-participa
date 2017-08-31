@@ -62,7 +62,7 @@
                             @endphp
 
                             <div class="d-flex justify-content-center {{ $class = ($resultsToHighlight <= 4) ? $classes[$resultsToHighlight] : 'col-sm-4' }}">
-                                <a href="" class="results__card">
+                                <a href="#" class="results__card" data-toggle="modal" data-target="#optionModal" data-option-id="{{ $option['id'] }}" data-option-title="{{ $option['option'] }}">
                                     <span class="results__pos">{{ $pos }}</span>
                                     <h5>{{ $option['option'] }}</h5>
 
@@ -101,7 +101,11 @@
 
                                 <tr>
                                     <td class="text-right align-middle">{{ $pos }}.</td>
-                                    <td><a href="">{{ $option['option'] }}</a></td>
+                                    <td>
+                                        <a href="#" data-toggle="modal" data-target="#optionModal" data-option-id="{{ $option['id'] }}" data-option-title="{{ $option['option'] }}">
+                                            {{ $option['option'] }}
+                                        </a>
+                                    </td>
                                     <td class="align-middle">
                                         <div class="progress">
                                             <div class="d-flex" style="width: {{ $option['percentage'] . '%' }}" aria-valuenow="{{ $option['percentage'] }}" aria-valuemin="0" aria-valuemax="100" role="progressbar">
@@ -122,4 +126,42 @@
         @include('components/sidebar')
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal option-modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="optionModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body"></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('participa.close')</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
+
+@push('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#optionModal').on('show.bs.modal', function (e) {
+                var option_id = e.relatedTarget.dataset.optionId,
+                    option_title = e.relatedTarget.dataset.optionTitle;
+
+                $(".modal-title", this).text(option_title);
+                $(".modal-body").load('/api/option/' + option_id);
+            });
+        });
+    </script>
+@endpush
