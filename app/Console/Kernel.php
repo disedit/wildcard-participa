@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Edition;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -30,8 +31,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        /* Calculate and cache the current edition's results when it closes */
+        $edition = Edition::current();
+
+        if($edition){
+            $endDate = strtotime($edition->end_date);
+            $minute = ltrim(date('i', $endDate), '0');
+            $hour   = date('G', $endDate);
+            $day = date('j', $endDate);
+            $month = date('n', $endDate);
+            $when = "$minute $hour $day $month *";
+
+            $schedule->command('results:cache')->cron($when);
+        }
     }
 
     /**
