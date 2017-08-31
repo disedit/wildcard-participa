@@ -11,24 +11,40 @@
     }
 }
 
+.ballot-block {
+    max-width: 600px;
+    margin: 1rem auto;
+    border: 4px $brand-success solid;
+    padding: 2rem;
+
+    h3 {
+        margin: -2rem;
+        margin-bottom: 2rem;
+        padding: 0.5rem 2rem;
+        background: $brand-success;
+        color: #FFF;
+        font-size: 1.25rem;
+    }
+
+    &--error {
+        border: 4px $brand-danger solid;
+
+        h3 {
+            background: $brand-danger;
+        }
+
+        .fa {
+            font-size: 4rem;
+            animation: thumbs-down 1s;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
 .ballot-receipt {
     .ballot {
-        max-width: 600px;
-        margin: 1rem auto;
-        border: 4px $brand-success solid;
-        padding: 2rem;
-
-        &__edition {
-            margin: -2rem;
-            margin-bottom: 2rem;
-            padding: 0.5rem 2rem;
-            background: $brand-success;
-            color: #FFF;
-            font-size: 1.25rem;
-
-            .btn {
-                margin-top: -0.4rem;
-            }
+        &__edition .btn {
+            margin-top: -0.4rem;
         }
 
         &__ref {
@@ -61,6 +77,11 @@
             border-top: 1px $gray-lighter solid;
         }
     }
+}
+
+.ballot-lookup {
+    max-width: 600px;
+    margin: 2rem auto 0 auto;
 }
 
 @include media-breakpoint-up(sm) {

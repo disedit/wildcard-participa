@@ -73,6 +73,8 @@
         </div>
     @endif
 
+    @include('ballot_lookup')
+
     <div class="sidebar__box">
         <h4>@lang('sidebar.contact')</h4>
         <p>@lang('sidebar.contact_text', ['contact_email' => config('participa.contact_email')])</p>

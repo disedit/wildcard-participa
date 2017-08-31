@@ -14,7 +14,6 @@
 Route::get('/', 'HomeController@index');
 Route::get('/about', 'HomeController@about');
 Route::get('/booth/{route}', 'HomeController@index');
-Route::get('/ballots/{ballot}', 'BallotController@ballots');
 Route::get('/my_ip', 'HomeController@myIpAddress');
 Route::get('/lang/{language}', 'LanguageController@switchLanguage');
 
@@ -23,6 +22,10 @@ Auth::routes();
 /* Archive */
 Route::get('/archive/{edition}', 'ArchiveController@results');
 Route::get('/archive/{edition}/about', 'ArchiveController@about');
+
+/* Ballot lookup */
+Route::get('/ballot/lookup', 'BallotController@ballotLookUp');
+Route::get('/ballot/{ballotRef}', 'BallotController@ballot');
 
 /* Admin */
 Route::get('/admin', 'AdminController@index')->middleware('auth');
