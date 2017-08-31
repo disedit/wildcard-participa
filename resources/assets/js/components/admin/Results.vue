@@ -106,7 +106,7 @@
         computed: {
             turnoutPercentage: function() {
                 const percentage = (this.turnout * 100) / this.census;
-                return format({decimal: ',', suffix: '%'})(percentage);
+                return format({decimal: ',', suffix: '%', round: 2})(percentage);
             }
         },
 
