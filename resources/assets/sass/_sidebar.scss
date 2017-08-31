@@ -71,3 +71,10 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         margin-bottom: 0;
     }
 }
+
+
+@include media-breakpoint-down(sm) {
+    .sidebar__box--main:before {
+        display: none;
+    }
+}
