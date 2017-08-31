@@ -4,7 +4,8 @@ export default {
     },
     option: {
         cost: 'Cost',
-        motivation: 'Motivation'
+        motivation: 'Motivation',
+        attachments: 'Attached documents'
     },
     error: {
         heading: 'Error',

@@ -10,7 +10,7 @@
 @endif
 
 @if($option->cost > 0)
-    <h4>@lang('participa.option_cost')</h4>
+    <h4 class="mb-0">@lang('participa.option_cost')</h4>
     <span class="option-cost">{{ number($option->cost, 0) . '€' }}</span>
 @endif
 
@@ -29,11 +29,13 @@
 @endif
 
 @if(!empty($option->pictures))
-    @foreach($option->pictures as $pic)
-        @php
-            $part = explode(",", $pic);
-        @endphp
+    <div class="option-pictures">
+        @foreach($option->pictures as $pic)
+            @php
+                $part = explode(",", $pic);
+            @endphp
 
-        <img src="{{ $part[0] }}" alt="{{ $part[1] or 'Imatge' }}" class="option-picture" />
-    @endforeach
+            <img src="{{ $part[0] }}" alt="{{ $part[1] or 'Imatge' }}" />
+        @endforeach
+    </div>
 @endif

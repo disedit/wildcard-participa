@@ -114,9 +114,13 @@
         }
     }
 
-    .option-picture {
-        width: 100%;
-        margin: 0.25rem 0;
+    .option-pictures {
+        margin-top: 1rem;
+
+        img {
+            width: 100%;
+            margin: 0.25rem 0;
+        }
     }
 }
 
