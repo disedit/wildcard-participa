@@ -1,6 +1,6 @@
 <div class="sidebar__box ballot-lookup">
     <h4>@lang('participa.ballot_lookup')</h4>
-    <p>@lang('participa.ballot_lookup_help')</p>
+    <p class="{{ ($in_sidebar) ? 'sidebar__secondary' : '' }}">@lang('participa.ballot_lookup_help')</p>
 
     <form method="get" action="{{ url('ballot/lookup') }}">
         <label class="sr-only">@lang('participa.ballot_ref')</label>
@@ -10,5 +10,5 @@
                 <button class="btn btn-secondary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
             </span>
         </div>
-    </div>
+    </form>
 </div>

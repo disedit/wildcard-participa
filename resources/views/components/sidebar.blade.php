@@ -73,7 +73,10 @@
         </div>
     @endif
 
-    @include('ballot_lookup')
+    @if(!$edition->isPending())
+        @component('components.ballot_lookup', ['in_sidebar' => true])
+        @endcomponent
+    @endif
 
     <div class="sidebar__box">
         <h4>@lang('sidebar.contact')</h4>

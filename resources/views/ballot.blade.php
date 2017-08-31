@@ -44,6 +44,10 @@
         </div>
     @endif
 
-    @include('components.ballot_lookup')
+    <div class="ballot-lookup-wrapper">
+        @component('components.ballot_lookup', ['in_sidebar' => false])
+
+        @endcomponent
+    </div>
 
 @endsection

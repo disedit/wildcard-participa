@@ -166,6 +166,16 @@ class Edition extends Model
     }
 
     /**
+     * Determine if current edition has not opened yet for voting
+     *
+     * @return boolean
+     */
+    public function isPending()
+    {
+        return (!$this->isOpen() && !$this->isAwaitingResults() && !$this->resultsPublished());
+    }
+
+    /**
      * Process the results to add totals, percentages etc.
      *
      * @return array
