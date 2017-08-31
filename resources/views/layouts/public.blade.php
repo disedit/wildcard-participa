@@ -28,7 +28,7 @@
                         <h1><img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
                     </a>
                 </div>
-                <div class="col-md-7 links d-flex flex-row">
+                <div class="col-md-7 links d-flex flex-row d-print-none">
                     @include('components/social')
                     @include('components/languages')
                 </div>

@@ -11,25 +11,76 @@
     }
 }
 
+.ballot-receipt {
+    .ballot {
+        max-width: 600px;
+        margin: 1rem auto;
+        border: 4px $brand-success solid;
+        padding: 2rem;
 
-    @include media-breakpoint-up(sm) {
-        .template-2column {
-            .list-group {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
+        &__edition {
+            margin: -2rem;
+            margin-bottom: 2rem;
+            padding: 0.5rem 2rem;
+            background: $brand-success;
+            color: #FFF;
+            font-size: 1.25rem;
 
-            label {
-                width: 50%;
-                height: 100px;
-                align-items: flex-start;
-                overflow: hidden;
+            .btn {
+                margin-top: -0.4rem;
             }
         }
 
-        .booth-mode .template-2column {
-            .list-group label {
-                width: 33.3%;
+        &__ref {
+            text-align: center;
+            font-family: $font-family-monospace;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px $gray-lighter solid;
+
+            img {
+                width: 55px;
+                margin: -30px 0 -30px -30px;
             }
+        }
+
+        &__contents {
+            h4 {
+                color: $gray;
+                font-size: 1.25rem;
+            }
+        }
+
+        &__signature {
+            font-family: $font-family-monospace;
+            font-size: 0.75rem;
+            color: $gray-600;
+            word-break: break-all;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px $gray-lighter solid;
         }
     }
+}
+
+@include media-breakpoint-up(sm) {
+    .template-2column {
+        .list-group {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        label {
+            width: 50%;
+            height: 100px;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+    }
+
+    .booth-mode .template-2column {
+        .list-group label {
+            width: 33.3%;
+        }
+    }
+}

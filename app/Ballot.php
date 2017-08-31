@@ -64,6 +64,26 @@ class Ballot extends Model
     }
 
     /**
+     * Decode an encrypted ballot and attach option values
+     */
+    public function decryptWithOptions()
+    {
+        $ballot = $this->decrypt();
+        $withOptions = [];
+
+        foreach($ballot as $questionId => $options) {
+            $option_keys = array_keys($options);
+            $withOptions[$questionId] = [
+                    'question' => \App\Question::where('id', $questionId)->first(),
+                    'options' => \App\Option::whereIn('id', $option_keys)->get(),
+                    'points' => $options
+                ];
+        }
+
+        return $withOptions;
+    }
+
+    /**
      * Generate a random ref for a new ballot
      */
     public function createRef()
