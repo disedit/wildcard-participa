@@ -1,5 +1,7 @@
 <footer class="footer media">
-        <img src="{{ public_path('images/council.png') }}" alt="{{ config('participa.council_name', 'Any Council') }}" class="d-flex align-self-start mr-3" />
+        <a href="{{ config('participa.council_url') }}" target="_blank" rel="noopener">
+            <img src="{{ asset('images/' . config('participa.council_logo')) }}" alt="{{ config('participa.council_name', 'Any Council') }}" class="d-flex align-self-start mr-3" />
+        </a>
 
         <div class="media-body council-details">
             <address>
