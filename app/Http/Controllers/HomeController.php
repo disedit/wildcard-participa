@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->edition = Edition::current();
+        $this->edition = Edition::current('ballot');
     }
 
     /**
@@ -65,7 +65,9 @@ class HomeController extends Controller
 
         // If none of the previous conditions are met
         // display the About page as a placeholder before the vote.
-        return view('about', compact('edition', 'pastEditions'));
+        $options = view('components.options', compact('edition'));
+
+        return view('about', compact('edition', 'pastEditions', 'options'));
 
     }
 
@@ -78,8 +80,9 @@ class HomeController extends Controller
     {
         $edition = $this->edition;
         $pastEditions = Edition::pastEditions();
+        $options = view('components.options', compact('edition'));
 
-        return view('about', compact('edition', 'pastEditions'));
+        return view('about', compact('edition', 'pastEditions', 'options'));
     }
 
     /**

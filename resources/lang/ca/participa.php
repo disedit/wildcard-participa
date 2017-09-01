@@ -28,6 +28,7 @@ return [
     'vote' => 'Vota',
     'print' => 'Imprimeix',
     'close' => 'Tanca',
+    'ordered_randomly' => 'Ordenades alteatòriament',
 
     /*
     |--------------------------------------------------------------------------
