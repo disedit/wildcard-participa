@@ -11,8 +11,8 @@ export default class Participa {
         return this._call('get', 'results');
     }
 
-    getSidebar() {
-        return this._call('get', 'sidebar');
+    getSidebar(lang) {
+        return this._call('get', 'sidebar', { lang });
     }
 
     precheck(data) {

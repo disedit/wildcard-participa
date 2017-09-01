@@ -16,7 +16,7 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-        $currentLanguage = $request->cookie('language');
+        $currentLanguage = (!$request->get('lang')) ? $request->cookie('language') : $request->get('lang');
         App::setLocale($currentLanguage);
 
         return $next($request);
