@@ -33,8 +33,9 @@ class ArchiveController extends Controller
     public function about(Edition $edition)
     {
         $pastEditions = Edition::pastEditions();
+        $options = view('components.options', compact('edition'));
         $isArchive = true;
 
-        return view('about', compact('edition', 'pastEditions', 'isArchive'));
+        return view('about', compact('edition', 'pastEditions', 'options', 'isArchive'));
     }
 }
