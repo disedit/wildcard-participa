@@ -5,9 +5,14 @@
 
 <div class="sidebar">
     <div class="sidebar__box sidebar__box--main">
-        <h4>@lang('sidebar.current_poll')</h4>
+        @isset($isArchive)
+            <h4>@lang('participa.poll')</h4>
+        @else
+            <h4>@lang('participa.current_poll')</h4>
+        @endif
+
         <h3>{{ $edition->name }}</h3>
-        <p class="sidebar__secondary">@lang('sidebar.dates', ['start_date' => human_date($edition->start_date), 'end_date' => human_date($edition->end_date)])</p>
+        <p class="sidebar__secondary">@lang('participa.sidebar_dates', ['start_date' => human_date($edition->start_date), 'end_date' => human_date($edition->end_date)])</p>
 
         <div class="sidebar__social-plugins">
             @component('components.share_buttons', ['share' => 'false'])
@@ -24,9 +29,9 @@
                     @elseif(Request::segment(3) == 'about')
                         <a href="{{ url('archive/' . $edition->id) }}"><i class="fa fa-bar-chart" aria-hidden="true"></i>@lang('participa.results')</a>
                     @elseif($edition->isOpen())
-                        <a href="{{ url('about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('sidebar.more_info')</a>
+                        <a href="{{ url('about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
                     @elseif(isset($isArchive))
-                        <a href="{{ url('archive/' . $edition->id . '/about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('sidebar.more_info')</a>
+                        <a href="{{ url('archive/' . $edition->id . '/about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
                     @endif
                 </li>
                 @if(count($docs) > 0)
@@ -53,8 +58,8 @@
 
     @if(count($places) > 0)
         <div class="sidebar__box" v-if="voting_places">
-            <h4>@lang('sidebar.voting_places')</h4>
-            <p class="sidebar__secondary">@lang('sidebar.voting_text')</p>
+            <h4>@lang('participa.voting_places')</h4>
+            <p class="sidebar__secondary">@lang('participa.voting_text')</p>
             <hr />
             <ul class="sidebar__list">
                 @foreach($places as $place)
@@ -86,14 +91,14 @@
     @endif
 
     <div class="sidebar__box">
-        <h4>@lang('sidebar.contact')</h4>
-        <p>@lang('sidebar.contact_text', ['contact_email' => config('participa.contact_email')])</p>
+        <h4>@lang('participa.contact')</h4>
+        <p>@lang('participa.contact_text', ['contact_email' => config('participa.contact_email')])</p>
     </div>
 
     @isset($pastEditions)
         @if(count($pastEditions) > 0)
             <div class="sidebar__box">
-                <h4>@lang('sidebar.past_editions')</h4>
+                <h4>@lang('participa.past_editions')</h4>
 
                 <ul class="sidebar__list">
                 @foreach($pastEditions as $edition)
