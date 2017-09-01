@@ -8,6 +8,13 @@
         <h4>@lang('sidebar.current_poll')</h4>
         <h3>{{ $edition->name }}</h3>
         <p class="sidebar__secondary">@lang('sidebar.dates', ['start_date' => human_date($edition->start_date), 'end_date' => human_date($edition->end_date)])</p>
+
+        <div class="sidebar__social-plugins">
+            @component('components.share_buttons', ['share' => 'false'])
+                @lang('participa.tweet')
+            @endcomponent
+        </div>
+
         <div v-if="docs">
             <hr />
             <ul class="sidebar__list">
