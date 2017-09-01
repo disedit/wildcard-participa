@@ -110,6 +110,7 @@
             transform: translateZ(0);
             -webkit-font-smoothing: antialiased;
             transition: 0.25s;
+            user-select: none;
         }
 
         input {
@@ -136,7 +137,7 @@
 
     .input.focused {
         label {
-            top: 0.5rem;
+            top: 0.8rem;
             left: 1.2rem;
             font-size: 1rem;
             color: $gray-light;
