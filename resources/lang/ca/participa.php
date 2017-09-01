@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Global
+    | Site name, locales and metatags
     |--------------------------------------------------------------------------
     */
     'locale' => 'ca',
@@ -13,6 +13,14 @@ return [
     'heading' => 'Tu decideixes en què inverteix l\'Ajuntament!',
     'subheading' => 'El Govern de La Font de la Figuera t\'obri la possibilitat de participar activament en les decisions que més t\'afecten.',
     'tweet' => '',
+    'description' => '',
+    'keywords' => '',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global
+    |--------------------------------------------------------------------------
+    */
     'calendar_heading' => 'Votació',
     'help' => 'Incidències i ajuda',
     'is_archive' => 'Arxiu... <a href="/">actual</a>',

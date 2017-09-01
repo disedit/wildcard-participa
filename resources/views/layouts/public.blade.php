@@ -12,12 +12,13 @@
         <meta name="jwt-token" content="{{ $token }}">
     @endisset
 
-    <title>{{ config('app.name', 'Participa') }}</title>
+    <title>@yield('title'){{ config('app.name', 'Participa') }}</title>
 
     <link href="https://rsms.me/interface/interface.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
+    @include('components.metatags')
 </head>
 <body>
     <div class="container main-container">
@@ -25,7 +26,7 @@
             <header class="header row">
                 <div class="col-md-5 logo">
                     <a href="/">
-                        <h1><img src="{{ asset('images/' . config('participa.logo')) }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
+                        <h1><img src="{{ asset('images/' . config('participa.logo', 'logo.png')) }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
                     </a>
                 </div>
                 <div class="col-md-7 links d-flex flex-row d-print-none">
