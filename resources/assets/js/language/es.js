@@ -32,8 +32,9 @@ export default {
         phone_label: 'Mobile',
         code_label: 'SMS Code',
         code_tooltip: 'Numeric code',
-        phone_subheading: 'Lorem ipsum',
-        code_subheading: 'Lorem ipsum',
+        phone_subheading: 'Enter your mobil number. You will receive an SMS code to authenticate your vote.',
+        code_subheading: 'Type in the code you have received on your mobile.',
+        code_smalltext: 'The SMS may take some minutes to arrive. Ensure your phone is on and has signal.',
         request_sms_button: 'Text me the code',
         cast_ballot_button: 'Cast my ballot',
         country_code: 'Country dial code',
@@ -56,14 +57,5 @@ export default {
         select_button: 'Select this option',
         deselect_button: 'Deselect this option',
         dismiss_button: 'Close'
-    },
-    sidebar: {
-        current_poll: 'Current poll',
-        dates: 'From {start_date} to {end_date}',
-        more_info: 'Information',
-        voting_places: 'Assisted voting',
-        voting_help: 'If you need further assitance voting, you may go to one of the following in-person assisted voting points.',
-        contact: 'Contact',
-        contact_text: 'Contact us at <a href="mailto:{contact_email}">{contact_email}</a>'
     }
 };

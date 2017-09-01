@@ -92,7 +92,7 @@ return [
     | Months
     |--------------------------------------------------------------------------
     */
-    'months_short' => ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Oct', 'Nov', 'Dec'],
-    'months_long' => ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'octubre', 'novembre', 'decembre'],
+    'months_short' => ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Oct', 'Nov', 'Des'],
+    'months_long' => ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'octubre', 'novembre', 'desembre'],
 
 ];

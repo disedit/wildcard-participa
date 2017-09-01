@@ -56,6 +56,8 @@
 
                 <verify-flags :flag="flag" />
 
+                <p class="smalltext">{{ $t('verify_phone.code_smalltext') }}</p>
+
                 <button :class="'btn btn-success btn-cast btn-block btn-lg' + disabled" type="submit">
                     <spinner icon="check" :loading="isLoading" />
                     {{ $t('verify_phone.cast_ballot_button') }}
@@ -162,6 +164,12 @@
     }
 
     .btn-cast, .btn-request {
+        margin-top: 1rem;
+    }
+
+    .smalltext {
+        font-size: 0.75rem;
+        opacity: 0.5;
         margin-top: 1rem;
     }
 </style>

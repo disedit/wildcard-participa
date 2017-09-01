@@ -55,7 +55,7 @@ const messages = {
 }
 
 const i18n = new VueI18n({
-    locale: 'en',
+    locale: window.BoothConfig.locale,
     messages,
 });
 
