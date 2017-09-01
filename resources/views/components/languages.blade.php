@@ -1,6 +1,6 @@
 @php
     $languages = config('participa.languages');
-    $current_language = config('app.locale');
+    $current_language = config('app.locale', 'ca');
 @endphp
 
 <ul class="languages">
