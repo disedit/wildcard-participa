@@ -13,14 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
-/* Public */
-Route::get('/ballot', 'BallotController@ballotJSON');
-Route::get('/ballot/qr/{ref}', 'BallotController@ballotQR');
+/* Booth funcitonality */
 Route::post('/precheck', 'BoothController@precheck');
 Route::post('/request_sms', 'BoothController@requestSms');
 Route::post('/cast_ballot', 'BoothController@castBallot');
+
+/* Front page blocks */
 Route::get('/sidebar', 'HomeController@sidebar');
 Route::get('/option/{option}', 'HomeController@option');
+
+/* Ballot helpers */
+Route::get('/ballot', 'BallotController@ballotJSON');
+Route::get('/ballot/qr/{ref}', 'BallotController@ballotQR');
 
 /* Admin area */
 Route::post('/anull_ballot', 'AdminController@anullBallot')->middleware('auth.api');
