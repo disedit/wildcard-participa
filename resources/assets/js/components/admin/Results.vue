@@ -13,7 +13,7 @@
             <hr class="mt-2 mb-3" />
 
             <div v-if="!loading" class="results-wrapper">
-                <div v-if="turnout > 0">
+                <div v-if="turnout > 0 || !integrity">
                     <div v-if="integrity" class="alert alert-info">
                         <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat
                     </div>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div v-else class="text-center">
+                <div v-if="turnout == 0" class="text-center">
                     <i class="fa fa-envelope-o fa-3x fa-fw mt-3"></i>
                     <h4 class="mt-2">Cap vot encara</h4>
                     <p>Encara no s'ha emés cap papereta a aquesta votació</p>
@@ -37,7 +37,7 @@
                     </tr>
                 </table>
 
-                <div v-for="result in results">
+                <div v-for="result in results" v-if="turnout > 0">
                     <h4>{{ result.question }}</h4>
                     <table class="table table-sm">
                         <colgroup>
