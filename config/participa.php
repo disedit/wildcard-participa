@@ -49,7 +49,7 @@ return [
     'primary_color' => '#2980b9',
 
     /* Maximum votes a single IP may cast */
-    'max_per_ip' => 3,
+    'max_per_ip' => 20,
 
     /* Maxiumum times a single IP can fail an ID attempt */
     'max_failed_lookups' => 100,
