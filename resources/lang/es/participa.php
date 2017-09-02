@@ -39,6 +39,7 @@ return [
     'current_poll' => 'Votació actual',
     'sidebar_dates' => 'Des del :start_date fins a :end_date',
     'more_info' => 'Més informació',
+    'propose_cta' => 'Envia la teua proposta',
     'voting_places' => 'Punts de votació',
     'voting_text' => 'Si necessites ajuda amb la votació, pots dirigir-te a un dels següents punts de votació en persona.',
     'contact' => 'Dubes o incidències?',

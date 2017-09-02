@@ -39,6 +39,7 @@ return [
     'current_poll' => 'Current poll',
     'sidebar_dates' => 'From :start_date to :end_date',
     'more_info' => 'More information',
+    'propose_cta' => 'Submit your proposal',
     'voting_places' => 'Polling stations',
     'voting_text' => 'If you need assistance voting, you can go to one of the available assisted polling stations to vote in person.',
     'contact' => 'Need help?',

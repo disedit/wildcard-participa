@@ -24,6 +24,8 @@ class CreateEditionsTable extends Migration
             $table->text('voting_places')->nullable();
             $table->text('about')->nullable();
             $table->text('sidebar')->nullable();
+            $table->string('proposal_form')->default('');
+            $table->dateTime('proposal_deadline');
             $table->boolean('published');
             $table->timestamps();
         });

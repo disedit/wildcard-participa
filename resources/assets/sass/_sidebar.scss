@@ -39,6 +39,10 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         }
     }
 
+    &__propose {
+        margin: 1rem -1.5rem -1.5rem -1.5rem;
+    }
+
     &__secondary {
         color: $sidebar-text-secondary;
         font-size: 0.80rem;

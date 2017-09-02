@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('/about', 'HomeController@about');
+Route::get('/propose', 'HomeController@propose');
 Route::get('/booth/{route}', 'HomeController@index');
 Route::get('/my_ip', 'HomeController@myIpAddress');
 Route::get('/lang/{language}', 'LanguageController@switchLanguage');

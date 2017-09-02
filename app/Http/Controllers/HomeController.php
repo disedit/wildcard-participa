@@ -35,7 +35,6 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
         $now = time();
         $edition = $this->edition;
         $pastEditions = Edition::pastEditions();
@@ -83,6 +82,19 @@ class HomeController extends Controller
         $options = view('components.options', compact('edition'));
 
         return view('about', compact('edition', 'pastEditions', 'options'));
+    }
+
+    /**
+     * Placeholder page with instructions.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function propose()
+    {
+        $edition = $this->edition;
+        $pastEditions = Edition::pastEditions();
+
+        return view('propose', compact('edition', 'pastEditions'));
     }
 
     /**

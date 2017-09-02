@@ -177,6 +177,19 @@ class Edition extends Model
     }
 
     /**
+     * Determine if proposals for the current edition are being accepted
+     *
+     * @return boolean
+     */
+    public function inProposalPhase()
+    {
+        $proposalDeadline = strtotime($this->proposal_deadline);
+        $now = time();
+
+        return (!empty($this->proposal_form) && $now < $proposalDeadline);
+    }
+
+    /**
      * Process the results to add totals, percentages etc.
      *
      * @return array
