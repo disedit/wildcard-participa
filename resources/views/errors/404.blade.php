@@ -1,47 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Be right back.</title>
+@extends('layouts.public')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('content')
+    <div class="ballot-block ballot-block--error ballot-not-found text-center">
+        <h3>@lang('participa.error')</h3>
 
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                color: #B0BEC5;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato', sans-serif;
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 72px;
-                margin-bottom: 40px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Be right back.</div>
-            </div>
-        </div>
-    </body>
-</html>
+        <i aria-hidden="true" class="fa fa-hand-o-down"></i>
+        <h2>@lang('participa.error_404')</h2>
+        <p class="mt-4 mb-0">@lang('participa.error_404_text')</p>
+        <hr class="my-3" />
+        <p class="mb-0">@lang('participa.ballot_not_found_help', ['email' => config('participa.contact_email')])</p>
+    </div>
+@endsection
