@@ -40,7 +40,7 @@ class AdminController extends Controller
         $edition = Edition::current();
         $confirm = $request->get('confirm');
 
-        $rules['ID'] = 'required|min:5';
+        $rules['SID'] = 'required|min:5';
 
         if($confirm) {
             $rules['reason'] = 'required';
@@ -49,21 +49,21 @@ class AdminController extends Controller
         $this->validate($request, $rules);
 
         /* Find the voter */
-        $voter = Voter::findBySID($request->input('ID'), $edition->id);
+        $voter = Voter::findBySID($request->input('SID'), $edition->id);
 
         if(!$voter) {
-            return response()->json(['ID' => ['ID does not exist']], 422);
+            return response()->json(['SID' => ['L\'identificador no s\'ha trobat al cens']], 422);
         }
 
         /* Retreive ballot submitted by the voter */
         $ballot = $voter->ballot()->first();
 
         if(!$ballot) {
-            return response()->json(['ID' => ['Voter did not cast ballot']], 422);
+            return response()->json(['SID' => ['L\'identificador no ha emés cap vot.']], 422);
         }
 
         if($ballot->by_user_id) {
-            return response()->json(['ID' => ['Ballot cannot be anulled']], 422);
+            return response()->json(['SID' => ['Aquesta papereta no es pot anul·lar perquè s\'ha emés de manera presencial.']], 422);
         }
 
         /* Do not submit report and delete ballot if not double confirmed */
@@ -92,7 +92,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Look up an ID
+     * Look up an SID
      *
      * @return \Illuminate\Http\Response
      */
@@ -101,17 +101,17 @@ class AdminController extends Controller
         $edition = Edition::current();
 
         $this->validate($request, [
-            'ID' => 'required|min:2'
+            'SID' => 'required|min:2'
         ]);
 
-        $foundIDs = Voter::select('SID')
-                    ->where('SID', 'like', '%' . $request->input('ID') . '%')
+        $foundSIDs = Voter::select('SID')
+                    ->where('SID', 'like', '%' . $request->input('SID') . '%')
                     ->where('edition_id', $edition->id)
                     ->orderBy('SID', 'ASC')
                     ->take(10)
                     ->get();
 
-        return response()->json($foundIDs);
+        return response()->json($foundSIDs);
     }
 
     /**

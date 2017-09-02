@@ -2,9 +2,9 @@
     <b-modal id="lookUp" title="Troba un identificador" :hide-footer="true" @hidden="clear">
         <form @submit.prevent="Lookup">
             <div class="form-group">
-                <label for="ID">El DNI, NIE o Passaport conté els caràcters...</label>
-                <input type="text" v-model="ID" v-focus="focused" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('ID') }" ref="ID" id="ID" autocomplete="off" />
-                <div v-if="errors.hasOwnProperty('ID')" v-for="error in errors.ID" class="invalid-feedback">{{ error }}</div>
+                <label for="SID">El DNI, NIE o Passaport conté els caràcters...</label>
+                <input type="text" v-model="SID" v-focus="focused" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('SID') }" ref="SID" id="SID" autocomplete="off" />
+                <div v-if="errors.hasOwnProperty('SID')" v-for="error in errors.SID" class="invalid-feedback">{{ error }}</div>
             </div>
         </form>
 
@@ -15,7 +15,7 @@
                 <table class="table table-striped table-sm table-bordered">
                     <tbody>
                         <tr v-for="result in results">
-                            <td v-html="$options.filters.highlight(result.SID, ID)"></td>
+                            <td v-html="$options.filters.highlight(result.SID, SID)"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -42,7 +42,7 @@
         data() {
             return {
                 results: null,
-                ID: '',
+                SID: '',
                 focused: true,
                 errors: {},
                 loading: false
@@ -50,7 +50,7 @@
         },
 
         watch: {
-            ID: function(value) {
+            SID: function(value) {
                 if(value.length > 0) this.lookUp(value);
                 this.errors = {};
             }
@@ -68,7 +68,7 @@
                 this.loading = true;
 
                 Participa.lookUp({
-                    ID: this.ID
+                    SID: this.SID
                 }).then(response => {
                     this.results = response;
                     this.loading = false;
@@ -83,7 +83,7 @@
             clear() {
                 this.errors = {};
                 this.results = null;
-                this.ID = '';
+                this.SID = '';
                 this.loading = false;
             }
         }

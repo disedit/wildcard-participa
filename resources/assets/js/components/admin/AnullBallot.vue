@@ -1,5 +1,5 @@
 <template>
-    <b-modal id="anullBallot" ref="anullBallot" @shown="focus('ID')" @hidden="clear">
+    <b-modal id="anullBallot" ref="anullBallot" @shown="focus('SID')" @hidden="clear">
         <div slot="modal-title">
             <span class="title">Anul·la una papereta</span>
         </div>
@@ -8,24 +8,17 @@
             <div class="alert alert-success">
                 <i class="fa fa-check" aria-hidden="true"></i> Papereta anul·lada correctament.
             </div>
-
-            <div>
-                <button ref="close" class="btn btn-danger" @click="hideModal">Tanca</button>
-                <button class="btn btn-secondary" @click="success = false">
-                    <i class="fa fa-ban" aria-hidden="true"></i> Anul·la una altra papereta
-                </button>
-            </div>
         </div>
 
         <form @submit.prevent="ballotLookup" v-if="!success">
             <div class="form-group">
-                <label for="ID">Identificador</label>
-                <input v-if="step == 1" type="text" v-model="ID" v-focus="focused == 'ID'" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('ID') }" ref="ID" id="ID" placeholder="DNI, NIF o Passaport" />
+                <label for="SID">Identificador</label>
+                <input v-if="step == 1" type="text" v-model="SID" v-focus="focused == 'SID'" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('SID') }" ref="SID" id="SID" placeholder="DNI, NIF o Passaport" />
                 <p v-if="step == 2">
-                    <strong>{{ ID }}</strong>
+                    <strong>{{ SID }}</strong>
                     <a href="#" @click.prevent="back"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </p>
-                <div v-if="errors.hasOwnProperty('ID')" v-for="error in errors.ID" class="invalid-feedback">{{ error }}</div>
+                <div v-if="errors.hasOwnProperty('SID')" v-for="error in errors.SID" class="invalid-feedback">{{ error }}</div>
             </div>
 
             <div v-if="step == 2">
@@ -47,8 +40,15 @@
 
         <div slot="modal-footer">
             <button ref="close" class="btn btn-secondary" @click="hideModal">Tanca</button>
-            <button v-if="step == 1" class="btn btn-danger" @click.prevent="ballotLookup"><i class="fa fa-search" aria-hidden="true"></i> Troba la papereta</button>
-            <button v-if="step == 2" class="btn btn-danger" @click.prevent="anullBallot"><i class="fa fa-ban" aria-hidden="true"></i> Anul·la la papereta</button>
+            <button v-if="step == 1 && !success" class="btn btn-danger" @click.prevent="ballotLookup">
+                <i class="fa fa-search" aria-hidden="true"></i> Troba la papereta
+            </button>
+            <button v-if="step == 2" class="btn btn-danger" @click.prevent="anullBallot">
+                <i class="fa fa-ban" aria-hidden="true"></i> Anul·la la papereta
+            </button>
+            <button v-if="success" class="btn btn-danger" @click="success = false">
+                <i class="fa fa-ban" aria-hidden="true"></i> Anul·la una altra papereta
+            </button>
         </div>
     </b-modal>
 </template>
@@ -64,13 +64,13 @@
         data() {
             return {
                 step: 1,
-                ID: '',
+                SID: '',
                 reason: '',
                 user: { name: '' },
                 ip: '',
                 success: false,
                 errors: {},
-                focused: 'ID'
+                focused: 'SID'
             }
         },
 
@@ -80,7 +80,7 @@
         },
 
         watch: {
-            ID: function() {
+            SID: function() {
                 this.errors = {};
             },
 
@@ -96,20 +96,20 @@
 
             ballotLookup() {
                 Participa.anullBallot({
-                    ID: this.ID
+                    SID: this.SID
                 }).then(response => {
                     this.step = 2;
                     this.errors = {};
                     this.focus('reason');
                 }).catch(errors => {
                     this.errors = errors;
-                    this.focus('ID');
+                    this.focus('SID');
                 });
             },
 
             anullBallot() {
                 Participa.anullBallot({
-                    ID: this.ID,
+                    SID: this.SID,
                     reason: this.reason,
                     confirm: true
                 }).then(response => {
@@ -127,7 +127,7 @@
             },
 
             clear() {
-                this.ID = '';
+                this.SID = '';
                 this.reason = '';
                 this.step = 1;
                 this.errors = {};
@@ -136,7 +136,7 @@
 
             back() {
                 this.step = 1;
-                this.focus('ID');
+                this.focus('SID');
             },
         }
     }
