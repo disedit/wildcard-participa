@@ -17,10 +17,10 @@ class CreateOptionsTable extends Migration
             $table->increments('id');
             $table->integer('question_id')->unsigned();
             $table->string('option');
-            $table->text('description');
-            $table->text('motivation');
-            $table->text('attachments');
-            $table->text('pictures');
+            $table->text('description')->nullable();
+            $table->text('motivation')->nullable();
+            $table->text('attachments')->nullable();
+            $table->text('pictures')->nullable();
             $table->double('cost', 10, 2)->nullable();
             $table->string('salt');
             $table->timestamps();
