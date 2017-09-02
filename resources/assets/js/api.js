@@ -7,8 +7,9 @@ export default class Participa {
         return this._call('get', 'ballot');
     }
 
-    getResults() {
-        return this._call('get', 'results');
+    getResults(force) {
+        console.log(force);
+        return this._call('get', 'results', { params: { force } });
     }
 
     getSidebar() {

@@ -161,8 +161,9 @@ class Edition extends Model
         $publishTime = strtotime($this->publish_results);
         $endTime = strtotime($this->end_date);
         $now = time();
+        $finalTallyFinished = cache('final_tally_finished_' . $this->id);
 
-        return ($publishTime < $now && $endTime < $now);
+        return ($publishTime < $now && $endTime < $now && $finalTallyFinished);
     }
 
     /**
