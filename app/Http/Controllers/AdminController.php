@@ -119,15 +119,20 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function results()
+    public function results(Request $request)
     {
         $edition = Edition::current();
 
         /* Update and cache the results */
-        Artisan::call('results:cache');
-        $output = Artisan::output();
-        $integrity = stripos($output, 'Result integrity check failed');
-        $integrity = ($integrity !== false) ? false : true;
+        $lastTally = cache('last_tally_finished_' . $edition->id);
+        $nextTally = $lastTally + (60 * 30); // 30 minutes
+
+        if(time() > $nextTally || $request->get('force')) {
+            Artisan::call('results:cache');
+            $output = Artisan::output();
+            $integrity = stripos($output, 'Result integrity check failed');
+            $integrity = ($integrity !== false) ? false : true;
+        }
 
         /* Retreive the results */
         $results = $edition->fullResults();
@@ -140,7 +145,8 @@ class AdminController extends Controller
             'census' => $census,
             'turnout' => $turnout,
             'results' => $results,
-            'integrity' => $integrity
+            'integrity' => cache('last_tally_integrity_' . $edition->id),
+            'time' => date('d-m-Y H:i', cache('last_tally_finished_' . $edition->id))
         ];
 
         return response()->json($response);

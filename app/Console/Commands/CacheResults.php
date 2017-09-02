@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use App\Edition;
 use App\Voter;
 use App\Result;
@@ -36,6 +37,13 @@ class CacheResults extends Command
      * @var array
      */
     protected $errors = [];
+
+    /**
+     * Integrity
+     *
+     * @var boolean
+     */
+    protected $integrity = true;
 
     /**
      * Result tabulation
@@ -86,6 +94,16 @@ class CacheResults extends Command
 
             $this->table(['Cast at', 'Ballot ref.'], $this->errors);
         }
+
+        if(!$dontSave){
+            Cache::forever('last_tally_finished' . $this->edition->id, time());
+            Cache::forever('last_tally_integrity' . $this->edition->id, $this->integrity);
+
+            $publishDate = strtotime($this->edition->publish_results);
+            if(time() > $publishDate) {
+                Cache::forever('final_tally_finished_' . $this->edition->id, 'true');
+            }
+        }
     }
 
     /**
@@ -126,6 +144,7 @@ class CacheResults extends Command
         $this->info('----------------------------');
 
         if($validBallots != $voters) {
+            $this->integrity = false;
             $this->error('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
             $this->error('@@         Result integrity check failed        @@');
             $this->error('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');

@@ -4,7 +4,7 @@
             <div class="d-flex align-items-center">
                 <h3>Resultats</h3>
                 <div class="ml-auto results__refresh">
-                    <a href="#" @click.prevent="loadResults">
+                    <a href="#" @click.prevent="loadResults(true)">
                         <i class="fa fa-refresh" aria-hidden="true"></i> Refresca
                     </a>
                 </div>
@@ -15,10 +15,10 @@
             <div v-if="!loading" class="results-wrapper">
                 <div v-if="turnout > 0 || !integrity">
                     <div v-if="integrity" class="alert alert-info">
-                        <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat
+                        <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat passat correctament. Resultats generats el <strong>{{ time }}</strong>
                     </div>
                     <div v-else class="alert alert-danger">
-                        <i class="fa fa-minus-circle" aria-hidden="true"></i> Test d'integritat FAILED
+                        <i class="fa fa-minus-circle" aria-hidden="true"></i> <strong>Error:</strong> El test d'integritat ha fallat. Resultats generats el <strong>{{ time }}</strong>
                     </div>
                 </div>
 
@@ -95,6 +95,7 @@
                 census: 0,
                 turnout: 0,
                 integrity: true,
+                time: '',
                 loading: true
             }
         },
@@ -118,15 +119,16 @@
 
         methods: {
             /* Fetch results from server */
-            loadResults() {
+            loadResults(force) {
                 this.loading = true;
 
-                Participa.getResults()
+                Participa.getResults(force)
                     .then(response => {
                         this.results = response.results;
                         this.census = response.census;
                         this.turnout = response.turnout;
                         this.integrity = response.integrity;
+                        this.time = response.time;
                         this.loading = false;
                     });
             }
