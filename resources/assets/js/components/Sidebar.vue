@@ -10,19 +10,17 @@
 
         data() {
             return {
-                sidebar: '',
-                lang: 'en'
+                sidebar: ''
             }
         },
 
         mounted() {
             this.loadSidebar();
-            this.lang = window.BoothConfig.locale;
         },
 
         methods: {
             loadSidebar() {
-                Participa.getSidebar(this.lang)
+                Participa.getSidebar()
                     .then(response => {
                         this.sidebar = response;
                     });
