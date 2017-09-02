@@ -43,7 +43,7 @@ export default {
         button: 'Cast your ballot'
     },
     verify_flags: {
-        SMS_already_sent: 'The valid verification code for this mobile phone was sent on <strong>{time}</strong>',
+        SMS_already_sent: 'Use the code that was sent to this mobile phone on <strong>{time}</strong>',
         SMS_exceeded: 'You have exceeded the limit of <strong>{sms_max_attempts} SMSs per voter</strong>. Enter the code that you received on <strong>{last_number}</strong> on <strong>{time}</strong>'
     },
     booth_receipt: {

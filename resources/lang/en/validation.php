@@ -96,9 +96,21 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'SID' => [
+            'on_census' => 'No hem trobat al cens l\'identificador introduit',
+            'has_not_voted'=> 'L\'identificador introduit ja ha emès un vot.',
+            'ip_limit' => 'Has sobrepassat el número de vots que una mateixa IP pot emetre',
         ],
+        'ballot' => [
+            'ballot_validity' => 'La papereta no és vàlida. Segueix les instruccions que es mostren a cada pregunta.'
+        ],
+        'phone' => [
+            'phone_format' => 'El format del mòbil introduit no és correcte',
+            'phone_not_used' => 'El mòbil introduit ja ha emès un vot.'
+        ],
+        'SMS_code' => [
+            'sms_code' => 'El codi SMS introduit no és correcte.'
+        ]
     ],
 
     /*
@@ -112,6 +124,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'SID' => 'L\'identificador',
+        'ballot' => 'La papereta',
+        'phone' => 'El teu número de mòbil',
+        'country_code' => 'Prefixe internacional',
+        'SMS_code' => 'El codi SMS'
+    ],
 
 ];

@@ -43,7 +43,7 @@ export default {
         button: 'Confirma'
     },
     verify_flags: {
-        SMS_already_sent: 'Introdueix el codi SMS associat a aquest mòbil que ja es va enviar amb anterioritat el <strong>{time}</strong>',
+        SMS_already_sent: 'Introdueix el codi SMS ja es va enviar al mòbil introduit el <strong>{time}</strong>',
         SMS_exceeded: 'Has sobrepassat el límit de <strong>{sms_max_attempts} intents SMSs per votant</strong>. Introdueix el codi que vares rebre al número <strong>{last_number}</strong> el <strong>{time}</strong>'
     },
     booth_receipt: {
