@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->integer('edition_id')->unsigned();
             $table->string('question');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->enum('template', ['simple', '2column']);
             $table->integer('min_options');
             $table->integer('max_options');

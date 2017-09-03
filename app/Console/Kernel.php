@@ -15,6 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\AddQuestions::class,
+        Commands\AddOptions::class,
         Commands\NewEdition::class,
         Commands\PublishEdition::class,
         Commands\ImportCensus::class,
