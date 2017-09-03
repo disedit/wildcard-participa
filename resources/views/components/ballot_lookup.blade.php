@@ -5,9 +5,9 @@
     <form method="get" action="{{ url('ballot/lookup') }}">
         <label class="sr-only">@lang('participa.ballot_ref')</label>
         <div class="input-group">
-            <input type="search" name="ref" class="form-control ballot-lookup__input" placeholder="@lang('participa.ballot_ref')" aria-label="@lang('participa.ballot_ref')">
+            <input type="search" name="ref" class="form-control ballot-lookup__input" placeholder="@lang('participa.ballot_ref')" aria-label="@lang('participa.ballot_ref')" required="required">
             <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <button class="btn btn-secondary" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
             </span>
         </div>
     </form>
