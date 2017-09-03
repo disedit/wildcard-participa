@@ -1,5 +1,5 @@
 <template>
-    <div class="booth">
+    <div class="booth" id="boothView">
         <transition :name="transitionName" mode="out-in">
             <router-view
                 class="child-view"
@@ -12,7 +12,7 @@
                 :sms-requested="smsRequested"
                 :receipt="receipt" />
         </transition>
-        
+
         <error-modal :errors="errors" />
         <option-modal />
     </div>
@@ -236,3 +236,10 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .booth {
+        padding-top: 2rem;
+        margin-top: -2rem;
+    }
+</style>
