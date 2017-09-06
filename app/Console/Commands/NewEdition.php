@@ -71,7 +71,7 @@ class NewEdition extends Command
 
         $addQuestions = $this->choice('Add questions and options?', ['Yes', 'No'], 0);
 
-        if($addQuestions == 'yes') {
+        if($addQuestions == 'Yes') {
             $this->call('edition:questions', ['--edition' => $edition->id]);
         }
     }
