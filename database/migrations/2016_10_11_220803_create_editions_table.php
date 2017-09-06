@@ -25,7 +25,7 @@ class CreateEditionsTable extends Migration
             $table->text('about')->nullable();
             $table->text('sidebar')->nullable();
             $table->string('proposal_form')->default('');
-            $table->dateTime('proposal_deadline');
+            $table->dateTime('proposal_deadline')->nullable();
             $table->boolean('published');
             $table->timestamps();
         });
