@@ -68,5 +68,11 @@ class NewEdition extends Command
 
         $edition->save();
         $this->line('Edition created successfully.');
+
+        $addQuestions = $this->choice('Add questions and options?', ['Yes', 'No'], 0);
+
+        if($addQuestions == 'yes') {
+            $this->call('edition:questions', ['--edition' => $edition->id]);
+        }
     }
 }
