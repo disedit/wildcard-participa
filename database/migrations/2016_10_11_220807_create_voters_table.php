@@ -27,7 +27,7 @@ class CreateVotersTable extends Migration
             $table->string('signature', 64)->default('');
             $table->integer('by_user_id')->nullable()->unsigned();
             $table->ipAddress('ip_address')->default('');
-            $table->string('user_agent')->default('');
+            $table->text('user_agent')->nullable();
             $table->timestamps();
 
             $table->foreign('edition_id')->references('id')->on('editions');
