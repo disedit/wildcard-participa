@@ -69,6 +69,9 @@ return [
     /* Whether to display total census number on public result pages */
     'display_census_number' => true,
 
+    /* Should SMS verification be required for online voting? */
+    'disable_SMS_verification' => false,
+
     /* Set up Google Analytics tracking */
     'google_analytics_ID' => 'UA-106217417-1',
 
