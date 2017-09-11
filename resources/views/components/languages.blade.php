@@ -13,7 +13,7 @@
         <ul class="languages__menu">
             @foreach($languages as $code => $language)
                 @unless($current_language == $code)
-                    <li><a href="{{ url('lang/' . $code) }}">{{ $language }}</a></li>
+                    <li><a href="{{ secure_url('lang/' . $code) }}">{{ $language }}</a></li>
                 @endunless
             @endforeach
         </ul>

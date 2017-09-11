@@ -2,18 +2,18 @@
 <meta name="robots" content="index, follow" />
 <meta name="keywords" content="@lang('participa.keywords')" />
 <meta name="description" content="@lang('participa.description')" />
-<link rel="manifest" href="{{ url('manifest.json') }}">
-<link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
-<link rel="icon" type="image/png" href="{{ asset('images/favicon.big.png') }}" sizes="192x192">
-<link rel="apple-touch-icon" href="{{ asset('images/favicon.big.png') }}">
+<link rel="manifest" href="{{ secure_url('manifest.json') }}">
+<link rel="shortcut icon" href="{{ secure_asset('images/favicon.png') }}">
+<link rel="icon" type="image/png" href="{{ secure_asset('images/favicon.big.png') }}" sizes="192x192">
+<link rel="apple-touch-icon" href="{{ secure_asset('images/favicon.big.png') }}">
 <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Participa') }}">
 <meta name="msapplication-TileColor" content="{{ config('participa.primary_color', '#2980b9') }}">
-<meta name="msapplication-TileImage" content="{{ asset('images/favicon.big.png') }}">
+<meta name="msapplication-TileImage" content="{{ secure_asset('images/favicon.big.png') }}">
 <meta name="application-name" content="{{ config('app.name', 'Participa') }}">
 <meta name="theme-color" content="{{ config('participa.primary_color', '#2980b9') }}">
 <meta property="fb:app_id" content="{{ config('participa.facebook_app_id', '180444172483336') }}" />
 <meta property="og:title" content="@yield('title'){{ config('app.name', 'Participa') }}" />
-<meta property="og:image" content="{{ asset('images/thumbnail.png') }}"/>
+<meta property="og:image" content="{{ secure_asset('images/thumbnail.png') }}"/>
 <meta property="og:site_name" content="{{ config('app.name', 'Participa') }}"/>
 <meta property="og:locale" content="@lang('participa.facebook_locale')"/>
 <meta property="og:type" content="website"/>

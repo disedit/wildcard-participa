@@ -26,22 +26,22 @@
                 <li class="sidebar__list__item">
                     @if(isset($isArchive) && Request::segment(3) == 'about')
                         {{-- This is the archive and we are in the about page --}}
-                        <a href="{{ url('archive/' . $edition->id) }}"><i class="fa fa-bar-chart" aria-hidden="true"></i>@lang('participa.results')</a>
+                        <a href="{{ secure_url('archive/' . $edition->id) }}"><i class="fa fa-bar-chart" aria-hidden="true"></i>@lang('participa.results')</a>
                     @elseif(isset($isArchive) && Request::segment(3) != 'about')
                         {{-- This is the archive and we are in the main (results) page --}}
-                        <a href="{{ url('archive/' . $edition->id . '/about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
+                        <a href="{{ secure_url('archive/' . $edition->id . '/about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
                     @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen() )
                         {{-- This is not the archive, edition is open but we are not in the main vote page --}}
-                        <a href="{{ url('') }}"><i class="fa fa-bullhorn" aria-hidden="true"></i>@lang('participa.vote')</a>
+                        <a href="{{ secure_url('') }}"><i class="fa fa-bullhorn" aria-hidden="true"></i>@lang('participa.vote')</a>
                     @elseif(!isset($isArchive) && Request::segment(1) != 'about' && !$edition->isPending())
                         {{-- This is not the archive, we are in the main page and it does not contain the about page  --}}
-                        <a href="{{ url('about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
+                        <a href="{{ secure_url('about') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
                     @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->resultsPublished())
                         {{-- This is not the archive, we are in the about page and results are published  --}}
-                        <a href="{{ url('') }}"><i class="fa fa-bar-chart" aria-hidden="true"></i>@lang('participa.results')</a>
+                        <a href="{{ secure_url('') }}"><i class="fa fa-bar-chart" aria-hidden="true"></i>@lang('participa.results')</a>
                     @elseif(Request::segment(1) == 'propose')
                         {{-- This is not the archive page and we are in the popose page --}}
-                        <a href="{{ url('') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
+                        <a href="{{ secure_url('') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
                     @endif
                 </li>
 
@@ -67,7 +67,7 @@
 
             @if(!isset($isArchive) && $edition->inProposalPhase() && Request::segment(1) != 'propose')
                 <div class="sidebar__propose">
-                    <a href="{{ url('propose') }}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> @lang('participa.propose_cta')</a>
+                    <a href="{{ secure_url('propose') }}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> @lang('participa.propose_cta')</a>
                 </div>
             @endif
         </div>
@@ -120,7 +120,7 @@
                 <ul class="sidebar__list">
                 @foreach($pastEditions as $edition)
                     <li class="sidebar__list__item">
-                        <a href="{{ url('archive/' . $edition->id) }}">
+                        <a href="{{ secure_url('archive/' . $edition->id) }}">
                             <i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ human_month($edition->start_date) }}
                         </a>
                     </li>
