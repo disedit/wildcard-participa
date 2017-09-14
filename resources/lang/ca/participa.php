@@ -98,6 +98,7 @@ return [
     'error_SMS' => 'Error enviant l\'SMS',
     'error_ip_limit_exceeded' => 'Has sobrepassat el límit de vots que una mateixa IP pot emetre',
     'error_lookup_limit_exceeded' => 'Has introduit un Identificador erroni massa vegades',
+    'error_token_expired' => 'El token de seguretat ha caducat. Refresca la pàgina i torna a intentar-ho.',
 
     /*
     |--------------------------------------------------------------------------
