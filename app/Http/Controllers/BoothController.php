@@ -63,7 +63,7 @@ class BoothController extends Controller
                     $voter->smsRollback();
 
                     return response()->json([
-                        'SMS' => ['Error SMS']
+                        'SMS' => [__('participa.error_SMS')]
                     ], 422);
                 }
             }
