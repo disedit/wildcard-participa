@@ -3,7 +3,7 @@
     <label :for="name">
         {{label}}
         <b-tooltip v-if="tooltip" :content="tooltip" class="input-tooltip">
-            <i class="fa fa-question-circle" aria-hidden="true"></i>
+            <i class="far fa-question-circle" aria-hidden="true"></i>
         </b-tooltip>
     </label>
 

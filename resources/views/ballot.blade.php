@@ -6,7 +6,7 @@
             <div class="ballot ballot-block">
                 <h3 class="ballot__edition">
                     {{ $ballot->edition->name }}
-                    <a href="javascript:window.print()" class="pull-right btn-sm btn btn-success d-print-none"><i class="fa fa-print" aria-hidden="true"></i> @lang('participa.print')</a>
+                    <a href="javascript:window.print()" class="pull-right btn-sm btn btn-success d-print-none"><i class="far fa-print" aria-hidden="true"></i> @lang('participa.print')</a>
                 </h3>
                 <h2 class="ballot__ref">
                     <img src="{{ secure_url('api/ballot/qr/' . $ballot->ref) }}" alt="QR code" width="75" />
@@ -19,7 +19,7 @@
                         <table class="table table-sm table-striped mt-3">
                             @foreach($content['options'] as $option)
                                 <tr>
-                                    <td width="20"><i aria-hidden="true" class="fa fa-check-square-o"></i></td>
+                                    <td width="20"><i aria-hidden="true" class="far fa-check-square"></i></td>
                                     <td>{{ $option->option }}</td>
                                     <td class="ballot__points">+{{ $content['points'][$option->id] }}</td>
                                 </tr>
@@ -37,7 +37,7 @@
         <div class="ballot-block ballot-block--error ballot-not-found text-center">
             <h3>@lang('participa.error')</h3>
 
-            <i aria-hidden="true" class="fa fa-hand-o-down"></i>
+            <i aria-hidden="true" class="far fa-hand-point-down"></i>
             <h2>@lang('participa.ballot_not_found')</h2>
             <p class="mt-4 mb-0">@lang('participa.ballot_not_found_text', ['ref' => $ballotRef])</p>
             <hr class="my-3" />

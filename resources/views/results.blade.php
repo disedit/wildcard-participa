@@ -3,7 +3,7 @@
 @section('content')
 <div class="row results-page">
     <div class="col-md-8">
-        <h2><i class="fa fa-bar-chart" aria-hidden="true"></i> @lang('participa.results')</h2>
+        <h2><i class="far fa-chart-bar" aria-hidden="true"></i> @lang('participa.results')</h2>
 
         <table class="census table table-bordered">
             @if(config('participa.display_census_number'))

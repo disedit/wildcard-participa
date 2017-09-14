@@ -7,7 +7,7 @@
         <div class="input-group">
             <input type="search" name="ref" class="form-control ballot-lookup__input" placeholder="@lang('participa.ballot_ref')" aria-label="@lang('participa.ballot_ref')" required="required">
             <span class="input-group-btn">
-                <button class="btn btn-secondary" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <button class="btn btn-secondary" type="submit"><i class="far fa-search" aria-hidden="true"></i></button>
             </span>
         </div>
     </form>

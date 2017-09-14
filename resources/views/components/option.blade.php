@@ -23,7 +23,7 @@
                 $part = explode(",", $doc);
             @endphp
 
-            <li><a href="{{ $part[1] or '' }}" target="_blank" rel="noopener"><i class="fa fa-file-text-o" aria-hidden="true" /> {{ $part[0] }}</li></a>
+            <li><a href="{{ $part[1] or '' }}" target="_blank" rel="noopener"><i class="far fa-file-alt" aria-hidden="true" /> {{ $part[0] }}</li></a>
         @endforeach
     </ul>
 @endif

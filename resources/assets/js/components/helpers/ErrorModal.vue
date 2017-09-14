@@ -3,7 +3,7 @@
 
         <div class="error">
             <div class="header">
-                <i class="fa fa-hand-o-down" aria-hidden="true"></i>
+                <i class="far fa-hand-point-down" aria-hidden="true"></i>
                 <h2>{{ $t('error.heading') }}</h2>
             </div>
 
@@ -20,7 +20,7 @@
 
         <div slot="modal-footer" class="footer">
             <button class="btn btn-primary" @click="$refs.errorsModal.hide();">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> {{ $t('error.back') }}
+                <i class="far fa-arrow-circle-left" aria-hidden="true"></i> {{ $t('error.back') }}
             </button>
         </div>
 

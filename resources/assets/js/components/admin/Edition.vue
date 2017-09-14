@@ -8,10 +8,10 @@
                     </div>
                     <div class="col-sm text-right">
                         <div v-if="editionIsOpen" class="vote-status vote-status--open">
-                            <i class="fa fa-unlock" aria-hidden="true"></i> Votació oberta
+                            <i class="far fa-unlock" aria-hidden="true"></i> Votació oberta
                         </div>
                         <div v-else class="vote-status vote-status--closed">
-                            <i class="fa fa-lock" aria-hidden="true"></i> Votació tancada
+                            <i class="far fa-lock" aria-hidden="true"></i> Votació tancada
                         </div>
                     </div>
                 </div>
@@ -19,17 +19,17 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <a href="/" target="_blank" :class="{ 'btn btn-lg btn-block': true, 'btn-success': editionIsOpen, 'btn-warning': !editionIsOpen, 'disabled': !editionIsOpen }">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Emet vots
+                            <i class="far fa-check-square" aria-hidden="true"></i> Emet vots
                         </a>
                     </div>
                     <div class="col-sm">
                         <b-btn v-if="!anonymousVoting" v-b-modal.anullBallot :class="{ 'btn btn-danger btn-lg btn-block': true, 'disabled': !editionIsOpen }">
-                            <i class="fa fa-ban" aria-hidden="true"></i> Anul·la vot
+                            <i class="far fa-ban" aria-hidden="true"></i> Anul·la vot
                         </b-btn>
                     </div>
                     <div class="col-sm">
                         <b-btn v-if="enableIDLookUp" v-b-modal.lookUp class="btn btn-default btn-lg btn-block">
-                            <i class="fa fa-search" aria-hidden="true"></i> Troba per DNI
+                            <i class="far fa-search" aria-hidden="true"></i> Troba per DNI
                         </b-btn>
                     </div>
                 </div>

@@ -5,7 +5,7 @@
         <a class="navbar-brand" href="/">
             {{ appName }}
             <span class="location">
-                <i class="fa fa-map-marker" aria-hidden="true"></i> {{ user.name }}
+                <i class="far fa-map-marker-alt" aria-hidden="true"></i> {{ user.name }}
             </span>
         </a>
 
@@ -14,7 +14,7 @@
                 <b-nav-item-dropdown :text="user.name" right>
                     <form method="post" action="/logout">
                         <input type="hidden" name="_token" :value="csrfToken" />
-                        <button type="submit" class="dropdown-item"><i class="fa fa-sign-out" aria-hidden="true"></i> Tanca sessió</button>
+                        <button type="submit" class="dropdown-item"><i class="far fa-sign-out-alt" aria-hidden="true"></i> Tanca sessió</button>
                     </form>
                 </b-nav-item-dropdown>
             </b-nav>

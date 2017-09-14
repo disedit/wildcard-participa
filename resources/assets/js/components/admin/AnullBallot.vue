@@ -6,7 +6,7 @@
 
         <div v-if="success">
             <div class="alert alert-success">
-                <i class="fa fa-check" aria-hidden="true"></i> Papereta anul·lada correctament.
+                <i class="far fa-check" aria-hidden="true"></i> Papereta anul·lada correctament.
             </div>
         </div>
 
@@ -16,7 +16,7 @@
                 <input v-if="step == 1" type="text" v-model="SID" v-focus="focused == 'SID'" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('SID') }" ref="SID" id="SID" placeholder="DNI, NIF o Passaport" />
                 <p v-if="step == 2">
                     <strong>{{ SID }}</strong>
-                    <a href="#" @click.prevent="back"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="#" @click.prevent="back"><i class="far fa-pencil-alt" aria-hidden="true"></i></a>
                 </p>
                 <div v-if="errors.hasOwnProperty('SID')" v-for="error in errors.SID" class="invalid-feedback">{{ error }}</div>
             </div>
@@ -41,13 +41,13 @@
         <div slot="modal-footer">
             <button ref="close" class="btn btn-secondary" @click="hideModal">Tanca</button>
             <button v-if="step == 1 && !success" class="btn btn-danger" @click.prevent="ballotLookup">
-                <i class="fa fa-search" aria-hidden="true"></i> Troba la papereta
+                <i class="far fa-search" aria-hidden="true"></i> Troba la papereta
             </button>
             <button v-if="step == 2" class="btn btn-danger" @click.prevent="anullBallot">
-                <i class="fa fa-ban" aria-hidden="true"></i> Anul·la la papereta
+                <i class="far fa-ban" aria-hidden="true"></i> Anul·la la papereta
             </button>
             <button v-if="success" class="btn btn-danger" @click="success = false">
-                <i class="fa fa-ban" aria-hidden="true"></i> Anul·la una altra papereta
+                <i class="far fa-ban" aria-hidden="true"></i> Anul·la una altra papereta
             </button>
         </div>
     </b-modal>

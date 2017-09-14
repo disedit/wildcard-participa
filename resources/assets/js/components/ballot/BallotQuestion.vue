@@ -1,6 +1,6 @@
 <template>
     <div :class="'question template-' + question.template">
-        <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> {{ question.question }}</h2>
+        <h2><i class="far fa-check-square" aria-hidden="true"></i> {{ question.question }}</h2>
         <p class="description">{{ question.description }}</p>
         <div class="list-group">
             <label v-for="option in question.options"

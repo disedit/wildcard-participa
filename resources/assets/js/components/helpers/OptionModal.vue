@@ -19,7 +19,7 @@
                 <ul class="option-attachments">
                     <li v-for="attachment in attachments">
                         <a :href="attachment[1]" target="_blank" rel="noopener">
-                            <i class="fa fa-file-text-o" aria-hidden="true" /> {{ attachment[0] }}
+                            <i class="far fa-file-alt" aria-hidden="true" /> {{ attachment[0] }}
                         </a>
                     </li>
                 </ul>
@@ -35,10 +35,10 @@
         <div slot="modal-footer">
             <button @click="close" class="btn btn-secondary">{{ $t('option_modal.dismiss_button') }}</button>
             <button v-if="showSelect && selected" @click="toggleOption" class="btn btn-danger">
-                <i class="fa fa-window-close" aria-hidden="true"></i> {{ $t('option_modal.deselect_button') }}
+                <i class="far fa-window-close" aria-hidden="true"></i> {{ $t('option_modal.deselect_button') }}
             </button>
             <button v-if="showSelect && !selected" @click="toggleOption" class="btn btn-primary">
-                <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ $t('option_modal.select_button') }}
+                <i class="far fa-check-square" aria-hidden="true"></i> {{ $t('option_modal.select_button') }}
             </button>
         </div>
     </b-modal>

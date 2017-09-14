@@ -8,7 +8,7 @@
             </div>
         </form>
 
-        <div v-if="loading" class="alert alert-info"><i class="fa fa-spinner fa-pulse"></i> Carregant...</div>
+        <div v-if="loading" class="alert alert-info"><i class="far fa-spinner-third fa-spin"></i> Carregant...</div>
 
         <div v-if="results">
             <div v-if="results.length > 0">
@@ -24,7 +24,7 @@
                 </small>
             </div>
             <div v-else>
-                <div class="alert alert-danger"><i class="fa fa-times" aria-hidden="true"></i> No s'ha trobat cap identificador</div>
+                <div class="alert alert-danger"><i class="far fa-times" aria-hidden="true"></i> No s'ha trobat cap identificador</div>
             </div>
         </div>
     </b-modal>

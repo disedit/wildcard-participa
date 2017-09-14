@@ -2,7 +2,7 @@
     <div class="row ballot-confirmation">
         <div class="col-md-12">
             <div class="header">
-                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                <i class="far fa-thumbs-up" aria-hidden="true"></i>
                 <h2>{{ $t('booth_receipt.heading') }}</h2>
             </div>
             <div class="receipt" v-if="receipt.ref">
@@ -13,7 +13,7 @@
                     <a :href="'/ballot/' + receipt.ref" target="_blank">
                         <img :src="'/api/ballot/qr/' + receipt.ref" alt="QR code" />
                         <h3>{{ receipt.ref }}</h3>
-                        <i class="fa fa-arrow-circle-right" aria-hidden="true" alt="Go to ballot"></i>
+                        <i class="far fa-arrow-circle-right" aria-hidden="true" alt="Go to ballot"></i>
                     </a>
                 </div>
             </div>

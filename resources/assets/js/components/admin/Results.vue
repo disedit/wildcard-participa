@@ -5,7 +5,7 @@
                 <h3>Resultats</h3>
                 <div class="ml-auto results__refresh">
                     <a href="#" @click.prevent="loadResults(true)">
-                        <i class="fa fa-refresh" aria-hidden="true"></i> Refresca
+                        <i class="far fa-redo" aria-hidden="true"></i> Refresca
                     </a>
                 </div>
             </div>
@@ -15,15 +15,15 @@
             <div v-if="!loading" class="results-wrapper">
                 <div v-if="turnout > 0 || !integrity">
                     <div v-if="integrity" class="alert alert-info">
-                        <i class="fa fa-check" aria-hidden="true"></i> Test d'integritat passat correctament. Resultats generats el <strong>{{ time }}</strong>
+                        <i class="far fa-check" aria-hidden="true"></i> Test d'integritat passat correctament. Resultats generats el <strong>{{ time }}</strong>
                     </div>
                     <div v-else class="alert alert-danger">
-                        <i class="fa fa-minus-circle" aria-hidden="true"></i> <strong>Error:</strong> El test d'integritat ha fallat. Resultats generats el <strong>{{ time }}</strong>
+                        <i class="far fa-minus-circle" aria-hidden="true"></i> <strong>Error:</strong> El test d'integritat ha fallat. Resultats generats el <strong>{{ time }}</strong>
                     </div>
                 </div>
 
                 <div v-if="turnout == 0" class="text-center">
-                    <i class="fa fa-envelope-o fa-3x fa-fw mt-3"></i>
+                    <i class="far fa-envelope-open fa-3x fa-fw mt-3"></i>
                     <h4 class="mt-2">Cap vot encara</h4>
                     <p>Encara no s'ha emés cap papereta a aquesta votació</p>
                 </div>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div v-else class="text-center">
-                <i class="fa fa-spinner fa-pulse fa-3x fa-fw mt-3"></i>
+                <i class="far fa-spinner-third fa-spin fa-3x fa-fw mt-3"></i>
                 <h4 class="mt-2">Carregant resultats...</h4>
                 <p>Aquest procés pot tardar uns minuts mentres es comprova la validesa de cada papereta</p>
             </div>

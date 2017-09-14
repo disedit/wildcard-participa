@@ -8,11 +8,11 @@
                 <h5 class="mt-0">{{ config('participa.council_name', 'Any Council') }}</h5>
                 <p>
                     @if(config('participa.contact_address'))
-                        <span><i class="fa fa-map-marker" aria-hidden="true"></i> {{ config('participa.contact_address') }}</span>
+                        <span><i class="far fa-map-marker-alt" aria-hidden="true"></i> {{ config('participa.contact_address') }}</span>
                     @endif
 
                     @if(config('participa.contact_phone'))
-                        <span><i class="fa fa-phone" aria-hidden="true"></i> {{ config('participa.contact_phone') }}</span>
+                        <span><i class="far fa-phone" aria-hidden="true"></i> {{ config('participa.contact_phone') }}</span>
                     @endif
 
                     @if(config('participa.council_url'))
@@ -22,7 +22,7 @@
                         @endphp
                         <span>
                             <a href="{{ config('participa.council_url') }}" target="_blank" rel="noopener">
-                                <i class="fa fa-globe" aria-hidden="true"></i> {{ $simpleUrl }}
+                                <i class="far fa-globe" aria-hidden="true"></i> {{ $simpleUrl }}
                             </a>
                         </span>
                     @endif

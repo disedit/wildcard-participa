@@ -3,7 +3,7 @@
         @if(config('participa.facebook'))
             <li>
                 <a href="{{ config('participa.facebook') }}" target="_blank" rel="noopener">
-                    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
         @endif
@@ -11,7 +11,7 @@
         @if(config('participa.twitter'))
             <li>
                 <a href="https://twitter.com/{{ config('participa.twitter') }}" target="_blank" rel="noopener">
-                    <i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="d-none d-sm-inline d-md-none d-lg-inline">{{ '@' . config('participa.twitter') }}</span>
+                    <i class="fab fa-twitter-square" aria-hidden="true"></i> <span class="d-none d-sm-inline d-md-none d-lg-inline">{{ '@' . config('participa.twitter') }}</span>
                 </a>
             </li>
         @endif

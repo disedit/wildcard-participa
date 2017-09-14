@@ -15,8 +15,8 @@
     <title>@yield('title'){{ config('app.name', 'Participa') }}</title>
 
     <link href="https://rsms.me/interface/interface.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="/fonts/fontawesome/css/combined.css" rel="stylesheet">
 
     @include('components.metatags')
 </head>
@@ -57,7 +57,7 @@
         @show
 
         @isset($isArchive)
-            <div class="alert alert-info mb-4"><i class="fa fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
+            <div class="alert alert-info mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
         @endisset
 
         @yield('content')
