@@ -19,9 +19,11 @@
         </div>
 
         <div slot="modal-footer" class="footer">
-            <button class="btn btn-primary" @click="$refs.errorsModal.hide();">
-                <i class="far fa-arrow-circle-left" aria-hidden="true"></i> {{ $t('error.back') }}
-            </button>
+            <div class="btn-wrapper">
+                <button class="btn btn-light btn-block btn-lg" @click="$refs.errorsModal.hide();">
+                    <i class="far fa-arrow-circle-left" aria-hidden="true"></i> {{ $t('error.back') }}
+                </button>
+            </div>
         </div>
 
     </b-modal>
@@ -95,5 +97,14 @@
         width: 100%;
         display: block;
         text-align: center;
+
+        .btn-wrapper {
+            margin: -15px;
+        }
+
+        .btn-light {
+            color: $brand-primary;
+            padding: 1rem;
+        }
     }
 </style>
