@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Rules;
+
+use Illuminate\Contracts\Validation\Rule;
+use App\Question;
+
+class BallotValidity implements Rule
+{
+    /* The edition ID */
+    protected $edition_id;
+
+    /* The error message to display */
+    protected $errorMessage;
+
+    /**
+     * Create a new rule instance.
+     *
+     * @return void
+     */
+    public function __construct($edition_id)
+    {
+        $this->edition_id = $edition_id;
+        $this->errorMessage = __('validation.errors.ballot.ballot_validity');
+    }
+
+    /**
+     * Checks that the ballot submitted by the user does not contain
+     * any illegal values, such responses to non-existing questions
+     * or selecting more options than allowed by the rules
+     *
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @return bool
+     */
+    public function passes($attribute, $ballotQuestions)
+    {
+        /* The value given must be an array */
+        if(!is_array($ballotQuestions)) {
+            return false;
+        }
+
+        /* Fetch the edition's questions to ensure */
+        $validQuestions = Question::where('edition_id', $this->edition_id)->with('options')->get();
+
+        foreach($ballotQuestions as $ballotQuestion) {
+            /* Find the user's input question on the edition questions */
+            $question = $validQuestions->filter(function ($validQuestion, $key) use ($ballotQuestion) {
+                return $validQuestion->id === $ballotQuestion['id'];
+            })->first();
+
+            /* If a question is not found, the ballot is invalid */
+            if(count($question) === 0) {
+                return false;
+            }
+
+            /* If a question has more or fewer answers than allowed,
+               inform the user via a more specific error message */
+            if(count($ballotQuestion['options']) > $question->max_options
+            || count($ballotQuestion['options']) < $question->min_options) {
+                $this->errorMessage = __('validation.errors.ballot.ballot_max');
+                return false;
+            }
+
+            foreach($ballotQuestion['options'] as $ballotOption) {
+                /* Find the selected options among the question's valid answers */
+                $option = $question->options->filter(function ($validOption, $key) use ($ballotOption) {
+                    return $validOption->id === $ballotOption['id'];
+                });
+
+                /* If a selected option is not found, the ballot is invalid */
+                if(!$option) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function message()
+    {
+        return $this->errorMessage;
+    }
+}

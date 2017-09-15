@@ -3,7 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Edition;
+use App\Voter;
+use App\Rules\BallotValidity;
+use App\Rules\HasNotVoted;
+use App\Rules\OnCensus;
+use App\Rules\PhoneFormat;
+use App\Rules\PhoneNotUsed;
+use App\Rules\SMSVerify;
 
 class VoteRequest extends FormRequest
 {
@@ -23,8 +29,9 @@ class VoteRequest extends FormRequest
      *
      * @return array
      */
-    public function all($keys = null) {
-        $attributes = parent::all();
+    public function all($keys = null)
+    {
+        $attributes = parent::all($keys);
 
         $countryCode = (isset($attributes['country_code'])) ? $attributes['country_code'] : null;
 
@@ -45,37 +52,47 @@ class VoteRequest extends FormRequest
     {
         $edition_id = $this->get('edition_id');
         $SID = $this->get('SID');
+        $voter = Voter::findBySID($SID, $edition_id);
+
         $isRequestSMS = $this->is('api/request_sms');
         $isCastBallot = $this->is('api/cast_ballot');
 
         // General rules. Applies to all voters
         $rules['SID'] = [
             'required',
-            'on_census:' . $edition_id,
-            'has_not_voted:' . $edition_id
+            new OnCensus($voter),
+            new HasNotVoted($voter)
         ];
 
-        $rules['ballot'] = 'ballot_validity:' . $edition_id;
+        $rules['ballot'] = [
+            new BallotValidity($edition_id)
+        ];
 
         // Conditional rules. Only applies to online voters
-        $smsDisabled = config('participa.disable_SMS_verification', false);
-        $inPerson = ($this->user()) ? true : false;
-        $phoneRequired = (!$inPerson && !$smsDisabled) ? 'required|phone_format|phone_not_used:' . $edition_id : '';
-        $countryRequired = (!$inPerson && !$smsDisabled) ? 'required|numeric' : '';
+        $smsIsDisabled = config('participa.disable_SMS_verification', false);
+        $votingInPerson = ($this->user()) ? true : false;
+        $verificationRequired = (!$votingInPerson && !$smsIsDisabled);
 
-        $smsRequiredRules = [
+        $phoneRules = [
             'required',
-            'sms_code:' . $SID . ',' . $edition_id
+            new PhoneFormat(),
+            new PhoneNotUsed($edition_id)
         ];
-        $smsRequired = (!$inPerson && !$smsDisabled) ? $smsRequiredRules : '';
+
+        $smsRules = [
+            'required',
+            new SMSVerify($voter)
+        ];
 
         // SMS verification rules.
         if($isRequestSMS || $isCastBallot) {
-            $rules['phone'] = $phoneRequired;
-            $rules['country_code'] = $countryRequired;
+            $rules['phone'] = $verificationRequired ? $phoneRules : null;
+            $rules['country_code'] = $verificationRequired ? 'required|numeric' : null;
         }
 
-        if($isCastBallot) $rules['SMS_code'] = $smsRequired;
+        if($isCastBallot) {
+            $rules['SMS_code'] = $verificationRequired ? $smsRules : null;
+        }
 
         return $rules;
     }
