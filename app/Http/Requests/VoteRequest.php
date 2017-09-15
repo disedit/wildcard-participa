@@ -86,12 +86,12 @@ class VoteRequest extends FormRequest
 
         // SMS verification rules.
         if($isRequestSMS || $isCastBallot) {
-            $rules['phone'] = $verificationRequired ? $phoneRules : null;
-            $rules['country_code'] = $verificationRequired ? 'required|numeric' : null;
+            $rules['phone'] = $verificationRequired ? $phoneRules : '';
+            $rules['country_code'] = $verificationRequired ? 'required|numeric' : '';
         }
 
         if($isCastBallot) {
-            $rules['SMS_code'] = $verificationRequired ? $smsRules : null;
+            $rules['SMS_code'] = $verificationRequired ? $smsRules : '';
         }
 
         return $rules;
