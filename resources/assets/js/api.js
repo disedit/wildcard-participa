@@ -45,12 +45,10 @@ export default class Participa {
                     reject({
                         'error': ['Error del sistema. És possible que aquest error siga temporal. Refresca la pàgina i torna a intentar-ho o posa\'t en contacte.']
                     });
+                } else if(error.response.data.hasOwnProperty('errors')){
+                    reject(error.response.data.errors);
                 } else {
-                    if(error.response.data.errors){
-                      reject(error.response.data.errors);
-                    } else {
-                      reject(error.response.data);
-                    }
+                    reject(error.response.data);
                 }
             });
         });
