@@ -23,7 +23,7 @@ class VoteRequest extends FormRequest
      *
      * @return array
      */
-    public function all() {
+    public function all($keys = null) {
         $attributes = parent::all();
 
         $countryCode = (isset($attributes['country_code'])) ? $attributes['country_code'] : null;
