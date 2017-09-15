@@ -79,7 +79,7 @@
 
         watch: {
             selected: function(){
-                this.doneSelecting();
+                if(window.requestAnimationFrame) this.doneSelecting();
             }
         },
 
