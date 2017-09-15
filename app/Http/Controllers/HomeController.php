@@ -131,7 +131,7 @@ class HomeController extends Controller
      */
     public function myIpAddress(Request $request)
     {
-        $ip = $request->ip();
+        $ip = \App\Limit::ip();
 
         return view('ip_address')->withIp($ip);
     }

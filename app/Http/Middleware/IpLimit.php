@@ -21,13 +21,13 @@ class IpLimit
         $maxFailedLookUps = config('participa.max_failed_lookups');
         $inPerson = Auth::user();
 
-        if(Limit::exceeded($request, 'IDFailedLookUp', $maxFailedLookUps)) {
+        if(Limit::exceeded('IDFailedLookUp', $maxFailedLookUps)) {
             return response()->json([
                 'IpLimit' => [__('participa.error_lookup_limit_exceeded')]
             ], 422);
         }
 
-        if(!$inPerson && Limit::exceeded($request, 'Vote', $maxVotes)) {
+        if(!$inPerson && Limit::exceeded('Vote', $maxVotes)) {
             return response()->json([
                 'IpLimit' => [__('participa.error_ip_limit_exceeded')]
             ], 422);

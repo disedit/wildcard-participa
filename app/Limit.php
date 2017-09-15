@@ -12,13 +12,13 @@ class Limit extends Model
      *
      * @return boolean
      */
-    public static function logAction($request, $action)
+    public static function logAction($action)
     {
         $limit = new Self;
 
-        $limit->ip = $request->ip();
+        $limit->ip = Self::ip();
         $limit->action = $action;
-        $limit->user_agent = $request->header('User-Agent');
+        $limit->user_agent = Self::userAgent();
 
         return $limit->save();
     }
@@ -28,10 +28,29 @@ class Limit extends Model
      *
      * @return boolean
      */
-    public static function exceeded($request, $action, $limit)
+    public static function exceeded($action, $limit)
     {
-        $count = Self::where('ip', '=', $request->ip())->where('action', '=', $action)->count();
+        $count = Self::where('ip', '=', Self::ip())->where('action', '=', $action)->count();
 
         return $count >= $limit;
+    }
+
+    /**
+     * Returns the user IP, accounting for Cloudflare
+     *
+     * @return string
+     */
+    public static function ip()
+    {
+        return (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : \Request::ip();
+    }
+
+    /**
+     * Returns the User Agent
+     *
+     * @return string
+     */
+    public static function userAgent() {
+        return \Request::header('User-Agent');
     }
 }
