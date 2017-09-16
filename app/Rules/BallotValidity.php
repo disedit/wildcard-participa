@@ -21,7 +21,7 @@ class BallotValidity implements Rule
     public function __construct($edition_id)
     {
         $this->edition_id = $edition_id;
-        $this->errorMessage = __('validation.errors.ballot.ballot_validity');
+        $this->errorMessage = __('validation.custom.ballot.ballot_validity');
     }
 
     /**
@@ -50,15 +50,19 @@ class BallotValidity implements Rule
             })->first();
 
             /* If a question is not found, the ballot is invalid */
-            if(count($question) === 0) {
+            if(count($question) == 0) {
                 return false;
             }
 
             /* If a question has more or fewer answers than allowed,
                inform the user via a more specific error message */
-            if(count($ballotQuestion['options']) > $question->max_options
-            || count($ballotQuestion['options']) < $question->min_options) {
-                $this->errorMessage = __('validation.errors.ballot.ballot_max');
+            if(count($ballotQuestion['options']) > $question->max_options) {
+                $this->errorMessage = __('validation.custom.ballot.ballot_max');
+                return false;
+            }
+
+            if(count($ballotQuestion['options']) < $question->min_options) {
+                $this->errorMessage = trans_choice('validation.custom.ballot.ballot_min', $question->min_options, ['min_options' => $question->min_options , 'question' => $question->question]);
                 return false;
             }
 
@@ -66,10 +70,10 @@ class BallotValidity implements Rule
                 /* Find the selected options among the question's valid answers */
                 $option = $question->options->filter(function ($validOption, $key) use ($ballotOption) {
                     return $validOption->id === $ballotOption['id'];
-                });
+                })->first();
 
                 /* If a selected option is not found, the ballot is invalid */
-                if(!$option) {
+                if(count($option) == 0) {
                     return false;
                 }
             }
