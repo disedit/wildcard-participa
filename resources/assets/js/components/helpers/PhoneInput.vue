@@ -103,7 +103,7 @@
             margin-bottom: 0;
             color: lighten($gray-light, 25%);
             font-size: 1.2rem;
-            top: 1.4rem;
+            top: 1.5rem;
             left: 1.5rem;
             cursor: text;
             will-change: transform;
