@@ -21,6 +21,5 @@
     @yield('content')
 
     @stack('scripts')
-    <script src="{{ mix('js/admin.js') }}"></script>
 </body>
 </html>
