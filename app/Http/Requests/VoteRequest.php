@@ -57,7 +57,11 @@ class VoteRequest extends FormRequest
         $isRequestSMS = $this->is('api/request_sms');
         $isCastBallot = $this->is('api/cast_ballot');
 
-        // General rules. Applies to all voters
+        $smsIsDisabled = config('participa.disable_SMS_verification', false);
+        $votingInPerson = ($this->user()) ? true : false;
+        $verificationRequired = (!$votingInPerson && !$smsIsDisabled);
+
+        // Rules
         $rules['SID'] = [
             'required',
             new OnCensus($voter),
@@ -67,11 +71,6 @@ class VoteRequest extends FormRequest
         $rules['ballot'] = [
             new BallotValidity($edition_id)
         ];
-
-        // Conditional rules. Only applies to online voters
-        $smsIsDisabled = config('participa.disable_SMS_verification', false);
-        $votingInPerson = ($this->user()) ? true : false;
-        $verificationRequired = (!$votingInPerson && !$smsIsDisabled);
 
         $phoneRules = [
             'required',
@@ -84,7 +83,7 @@ class VoteRequest extends FormRequest
             new SMSVerify($voter)
         ];
 
-        // SMS verification rules.
+        // SMS verification rules. Only when applicable.
         if($isRequestSMS || $isCastBallot) {
             $rules['phone'] = $verificationRequired ? $phoneRules : '';
             $rules['country_code'] = $verificationRequired ? 'required|numeric' : '';
