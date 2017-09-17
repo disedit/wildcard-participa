@@ -1,7 +1,6 @@
 <template>
     <div class="fake-ballot question template-2column">
         <div class="heading">
-            <i class="far fa-check-square"></i>
             <span class="filler"></span>
         </div>
         <div class="subheading">

@@ -1,7 +1,10 @@
 <template>
     <div :class="'question template-' + question.template">
-        <h2><i class="far fa-check-square" aria-hidden="true"></i> {{ question.question }}</h2>
-        <p class="description">{{ question.description }}</p>
+        <div :class="{ 'heading': true, 'has-number': displayNumber }">
+            <span v-if="displayNumber" class="number">{{ number }}</span>
+            <h2>{{ question.question }}</h2>
+            <p class="description">{{ question.description }}</p>
+        </div>
         <div class="list-group">
             <label v-for="option in question.options"
                 :class="{
@@ -33,7 +36,9 @@
 
         props: {
             question: Object,
-            selected: Array
+            selected: Array,
+            number: Number,
+            displayNumber: Boolean
         },
 
         computed: {
@@ -84,5 +89,18 @@
     .selected {
         background: lighten($brand-primary, 50%);
         box-shadow: inset -4px 0px 0px 0px $brand-primary;
+    }
+
+    .heading.has-number {
+        position: relative;
+        padding-left: 2.75rem;
+
+        .number {
+            color: $gray-light;
+            font-size: 2rem;
+            position: absolute;
+            left: 0;
+            top: -7px;
+        }
     }
 </style>
