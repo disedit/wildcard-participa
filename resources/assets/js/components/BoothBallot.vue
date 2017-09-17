@@ -2,8 +2,13 @@
     <div class="row">
         <div :class="{'col-md-8': !boothMode, 'col-md-12': boothMode}">
             <form @submit.prevent="submitBallot">
-                <div v-for="question in ballot.questions">
-                    <ballot-question :question="question" :selected="selected" />
+                <div v-if="Object.keys(ballot).length > 0">
+                    <div v-for="question in ballot.questions">
+                        <ballot-question :question="question" :selected="selected" />
+                    </div>
+                </div>
+                <div v-else>
+                    <ballot-loading />
                 </div>
 
                 <ballot-identification :identifier="identifier" :loading="isLoading" />
@@ -18,6 +23,7 @@
 <script>
     import BallotQuestion from './ballot/BallotQuestion';
     import BallotIdentification from './ballot/BallotIdentification';
+    import BallotLoading from './ballot/BallotLoading';
     import Sidebar from './Sidebar';
 
     export default {
@@ -26,6 +32,7 @@
         components: {
             BallotQuestion,
             BallotIdentification,
+            BallotLoading,
             Sidebar
         },
 
