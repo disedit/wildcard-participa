@@ -10,7 +10,7 @@ services:
   - mysql:latest
 
 variables:
-  MYSQL_DATABASE: wildcard_participa
+  MYSQL_DATABASE: wildcard_participa_tests
   MYSQL_ROOT_PASSWORD: secret
 
 # This folder is cached between builds
