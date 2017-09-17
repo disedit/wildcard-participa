@@ -50,9 +50,9 @@ class VoteRequest extends FormRequest
      */
     public function rules()
     {
-        $edition_id = $this->get('edition_id');
-        $SID = $this->get('SID');
-        $voter = Voter::findBySID($SID, $edition_id);
+        $editionId = $this->get('edition_id');
+        $SID = $this->input('SID');
+        $voter = Voter::findBySID($SID, $editionId);
 
         $isRequestSMS = $this->is('api/request_sms');
         $isCastBallot = $this->is('api/cast_ballot');
@@ -69,13 +69,13 @@ class VoteRequest extends FormRequest
         ];
 
         $rules['ballot'] = [
-            new BallotValidity($edition_id)
+            new BallotValidity($editionId)
         ];
 
         $phoneRules = [
             'required',
             new PhoneFormat(),
-            new PhoneNotUsed($edition_id)
+            new PhoneNotUsed($editionId, $this->input('phone'))
         ];
 
         $smsRules = [

@@ -8,7 +8,7 @@ use App\Question;
 class BallotValidity implements Rule
 {
     /* The edition ID */
-    protected $edition_id;
+    protected $editionId;
 
     /* The error message to display */
     protected $errorMessage;
@@ -18,9 +18,9 @@ class BallotValidity implements Rule
      *
      * @return void
      */
-    public function __construct($edition_id)
+    public function __construct($editionId)
     {
-        $this->edition_id = $edition_id;
+        $this->editionId = $editionId;
         $this->errorMessage = __('validation.custom.ballot.ballot_validity');
     }
 
@@ -41,7 +41,7 @@ class BallotValidity implements Rule
         }
 
         /* Fetch the edition's questions to ensure */
-        $validQuestions = Question::where('edition_id', $this->edition_id)->with('options')->get();
+        $validQuestions = Question::where('edition_id', $this->editionId)->with('options')->get();
 
         foreach($ballotQuestions as $ballotQuestion) {
             /* Find the user's input question on the edition questions */

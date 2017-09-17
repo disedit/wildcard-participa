@@ -8,16 +8,20 @@ use App\Voter;
 class PhoneNotUsed implements Rule
 {
     /* The edition ID */
-    protected $edition_id;
+    protected $editionId;
+
+    /* The properly formatted phone */
+    protected $phone;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($edition_id)
+    public function __construct($editionId, $phone)
     {
-        $this->edition_id = $edition_id;
+        $this->editionId = $editionId;
+        $this->phone = $phone;
     }
 
     /**
@@ -30,9 +34,9 @@ class PhoneNotUsed implements Rule
      */
     public function passes($attribute, $value)
     {
-        $used = Voter::where('SMS_phone', $value)
+        $used = Voter::where('SMS_phone', $this->phone)
                      ->where('SMS_verified', 1)
-                     ->where('edition_id', $this->edition_id)->count();
+                     ->where('edition_id', $this->editionId)->count();
 
         return !$used;
     }

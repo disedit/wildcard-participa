@@ -10,9 +10,6 @@ class OnCensus implements Rule
     /* The voter instance */
     protected $voter;
 
-    /* The request, to */
-    protected $request;
-
     /**
      * Create a new rule instance.
      *

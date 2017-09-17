@@ -41,7 +41,7 @@ class BoothController extends Controller
     public function requestSms(VoteRequest $request)
     {
         $editionId  = $request->get('edition_id');
-        $inPerson   = $request->has('in_person');
+        $inPerson   = $request->user();
         $flag       = null;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
@@ -83,7 +83,6 @@ class BoothController extends Controller
     public function castBallot(VoteRequest $request)
     {
         $editionId  = $request->get('edition_id');
-        $sms_code   = $request->input('SMS_code');
         $SID        = $request->input('SID');
         $voter      = Voter::findBySID($SID, $editionId);
 
