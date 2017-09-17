@@ -69,6 +69,14 @@
         methods: {
             updateID(value) {
                 Bus.$emit('fieldUpdated', 'ID', value);
+
+                // Reset phone, country code and SMS request
+                // in case user came from a previous step
+                // and has changed their ID for whetever reason
+                Bus.$emit('fieldUpdated', 'phone', '');
+                Bus.$emit('fieldUpdated', 'countryCode', 34);
+                Bus.$emit('fieldUpdated', 'smsRequested', false);
+                Bus.$emit('fieldUpdated', 'smsCode', '');
             },
             focusID() {
                 this.autofocus = true;
