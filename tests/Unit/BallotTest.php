@@ -17,23 +17,8 @@ class BallotTest extends TestCase
      */
     public function test_it_can_encrypt_and_decrypt_a_ballot()
     {
-        $fakeBallot =  [
-            [
-                'id' => 1,
-                'options' => [
-                    ['id' => 3]
-                ]
-            ],
-            [
-                'id' => 2,
-                'options' => [
-                    ['id' => 4]
-                ]
-            ]
-        ];
-
         $ballot = new Ballot();
-        $encryptedBallot = $ballot->createBallot($fakeBallot);
+        $encryptedBallot = $ballot->createBallot($this->fakeBallot());
         $ballot->ballot = $encryptedBallot;
         $decryptedBallot = $ballot->decrypt();
 
@@ -53,10 +38,30 @@ class BallotTest extends TestCase
     public function test_it_can_sign_and_check_a_ballot()
     {
         $ballot = new Ballot();
+        $ballot->ref = $ballot->createRef();
+        $ballot->ballot = $ballot->createBallot($this->fakeBallot());
+        $ballot->signature = $ballot->createSignature();
+
+        $check = $ballot->check();
+
+        $this->assertTrue($check);
     }
 
-    public function test_it_can_cast_a_ballot()
+    private function fakeBallot()
     {
-
+        return [
+                    [
+                        'id' => 1,
+                        'options' => [
+                            ['id' => 3]
+                        ]
+                    ],
+                    [
+                        'id' => 2,
+                        'options' => [
+                            ['id' => 4]
+                        ]
+                    ]
+                ];
     }
 }
