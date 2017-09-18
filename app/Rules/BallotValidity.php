@@ -45,7 +45,7 @@ class BallotValidity implements Rule
 
         foreach($ballotQuestions as $ballotQuestion) {
             /* The question must contain an ID and options key */
-            if(!isset($ballotQuestion['id']) || !isset($ballotQuestion['options']){
+            if(!isset($ballotQuestion['id']) || !isset($ballotQuestion['options'])){
                 return false;
             }
 
