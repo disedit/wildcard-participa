@@ -44,6 +44,11 @@ class BallotValidity implements Rule
         $validQuestions = Question::where('edition_id', $this->editionId)->with('options')->get();
 
         foreach($ballotQuestions as $ballotQuestion) {
+            /* The question must contain an ID and options key */
+            if(!isset($ballotQuestion['id']) || !isset($ballotQuestion['options']){
+                return false;
+            }
+
             /* Find the user's input question on the edition questions */
             $question = $validQuestions->filter(function ($validQuestion, $key) use ($ballotQuestion) {
                 return $validQuestion->id === $ballotQuestion['id'];
