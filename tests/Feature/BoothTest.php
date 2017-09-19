@@ -20,11 +20,6 @@ class BoothTest extends TestCase
         $this->artisan('db:seed');
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_online_voters_dont_get_booth_mode()
     {
         $response = $this->get('/');

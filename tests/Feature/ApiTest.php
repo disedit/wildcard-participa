@@ -21,11 +21,6 @@ class ApiTest extends TestCase
         $this->artisan('db:seed');
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_fetches_the_ballot()
     {
         $response = $this->json('GET', '/api/ballot');
@@ -38,11 +33,6 @@ class ApiTest extends TestCase
                  ]);
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_verifies_voter_information()
     {
         $response = $this->json('POST', '/api/precheck', [
@@ -61,11 +51,6 @@ class ApiTest extends TestCase
                  ]);
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_requests_an_sms_code()
     {
         $voter = Voter::first();
@@ -81,11 +66,6 @@ class ApiTest extends TestCase
                  ]);
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_casts_a_ballot_as_online_voter()
     {
         $voter = Voter::first();
@@ -110,11 +90,6 @@ class ApiTest extends TestCase
                  ]);
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_casts_a_ballot_as_offline_voter()
     {
         $admin = User::first();
@@ -172,6 +147,11 @@ class ApiTest extends TestCase
         $response->assertStatus(422);
     }
 
+    /**
+     * Generates a fake ballot that should pass the tests
+     *
+     * @return array
+     */
     private function fakeValidBallot()
     {
         $ballot = Edition::current('ballot');
@@ -192,6 +172,11 @@ class ApiTest extends TestCase
         return $validBallot;
     }
 
+    /**
+     * Generates a fake, invalid ballot that should not pass the tests
+     *
+     * @return array
+     */
     private function fakeInvalidBallot()
     {
         $ballot = Edition::current('ballot');

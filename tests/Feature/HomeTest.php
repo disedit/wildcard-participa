@@ -21,11 +21,6 @@ class HomeTest extends TestCase
         $this->artisan('db:seed');
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_displays_booth_when_voting_is_open()
     {
         $edition = new Edition();
@@ -41,11 +36,6 @@ class HomeTest extends TestCase
                          ->assertSee('window.BoothMode');
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_displays_about_page_when_voting_is_pending()
     {
         $edition = new Edition();
@@ -62,11 +52,6 @@ class HomeTest extends TestCase
                          ->assertSee('About Page');
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_displays_placeholder_when_results_are_pending()
     {
         $edition = new Edition();
@@ -82,11 +67,6 @@ class HomeTest extends TestCase
                          ->assertSee('results-pending');
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_displays_results_when_results_are_in()
     {
         $edition = new Edition();

@@ -10,11 +10,6 @@ class BallotTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_it_can_encrypt_and_decrypt_a_ballot()
     {
         $ballot = new Ballot();
@@ -47,6 +42,11 @@ class BallotTest extends TestCase
         $this->assertTrue($check);
     }
 
+    /**
+     * Generates a fake ballot that should pass the tests
+     *
+     * @return array
+     */
     private function fakeBallot()
     {
         return [
