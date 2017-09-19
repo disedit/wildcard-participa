@@ -147,7 +147,7 @@
             background: lighten($brand-primary, 50%);
             transform: translateY(-4px);
             box-shadow: $card-raised-shadow;
-            border: 2px lighten($brand-primary, 10%) solid;
+            border-color: lighten($brand-primary, 10%);
         }
 
         &:active {

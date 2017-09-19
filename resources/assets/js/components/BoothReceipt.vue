@@ -175,6 +175,10 @@
     .further-actions {
         text-align: center;
         font-size: 1.25rem;
+
+        a {
+            white-space: nowrap;
+        }
     }
 
 

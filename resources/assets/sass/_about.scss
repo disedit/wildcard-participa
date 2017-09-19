@@ -64,12 +64,17 @@
         box-shadow: 0px 2px 15px -5px rgba(0, 0, 0, 0.5);
         margin-bottom: 0.75rem;
         margin-top: 0.75rem;
-        transition: ease-out 0.1s;
+        transition-timing-function: ease-out;
+        transition-duration: .15s;
+        border: 2px darken($gray-lighter, 10%) solid;
+        border-radius: 2px;
 
         &:hover {
             text-decoration: none;
-            box-shadow: 0px 2px 25px -5px rgba(0, 0, 0, 0.6);
-            transform: scale(1.02);
+            box-shadow: 0px 6px 25px -7px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+            background: lighten($brand-primary, 50%);
+            border-color: lighten($brand-primary, 10%);
         }
 
         h5 {

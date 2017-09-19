@@ -20,6 +20,10 @@
         padding-right: 2rem;
     }
 
+    .progress {
+        background: rgba(10, 20, 30, 0.1);
+    }
+
     &__section {
         font-size: 1.25rem;
         color: #FFF;
@@ -37,14 +41,19 @@
         display: block;
         position: relative;
         padding: 1rem 3rem 5rem 1rem;
-        box-shadow: 0px 2px 15px -5px rgba(0, 0, 0, 0.5);
+        box-shadow: $card-shadow;
         margin-bottom: 1rem;
-        transition: ease-out 0.1s;
+        transition-timing-function: ease-out;
+        transition-duration: .15s;
+        border: 2px darken($gray-lighter, 10%) solid;
+        border-radius: 2px;
 
         &:hover {
             text-decoration: none;
-            box-shadow: 0px 2px 25px -5px rgba(0, 0, 0, 0.6);
-            transform: scale(1.02);
+            box-shadow: $card-raised-shadow;
+            transform: translateY(-3px);
+            background: lighten($brand-primary, 50%);
+            border-color: lighten($brand-primary, 10%);
         }
     }
 
