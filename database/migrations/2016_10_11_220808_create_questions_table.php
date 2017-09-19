@@ -18,7 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('edition_id')->unsigned();
             $table->string('question');
             $table->string('description')->nullable();
-            $table->enum('template', ['simple', '2column']);
+            $table->enum('template', ['cards', 'simple', '2column'])->default('cards');
             $table->integer('min_options');
             $table->integer('max_options');
             $table->boolean('display_cost');
