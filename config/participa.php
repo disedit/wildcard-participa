@@ -45,9 +45,6 @@ return [
     /* Main logo to display on all pages */
     'logo' => 'logo.png',
 
-    /* Primary color of the application */
-    'primary_color' => '#2980b9',
-
     /* Maximum votes a single IP may cast */
     'max_per_ip' => 20,
 
@@ -71,6 +68,13 @@ return [
 
     /* Should SMS verification be required for online voting? */
     'disable_SMS_verification' => false,
+
+    /* Primary color of the application */
+    'primary_color' => '#2980b9',
+
+    /* Placeholder template shown while loading the options */
+    /* Possible options: 'cards', '2column' or 'simple' */
+    'loading_template' => '2column',
 
     /* Set up Google Analytics tracking */
     'google_analytics_ID' => 'UA-106217417-1',

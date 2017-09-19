@@ -1,5 +1,5 @@
 <template>
-    <div class="fake-ballot question template-2column">
+    <div :class="'fake-ballot question template-' + template">
         <div class="heading">
             <span class="filler"></span>
         </div>
@@ -8,8 +8,8 @@
             <span class="filler" style="width: 60%"></span>
         </div>
 
-        <div class="list-group">
-            <label v-for="index in 6" class="list-group-item list-group-item-action">
+        <div :class="{ 'option-group': true, 'list-group': template != 'cards' }">
+            <label v-for="index in 6" :class="{ 'option': true, 'list-group-item list-group-item-action': template != 'cards' }">
                 <div class="option-wrapper">
                     <span class="box-filler"></span>
                     <span class="filler"></span>
@@ -23,6 +23,16 @@
 <script>
     export default {
         name: 'ballot-loading',
+
+        data() {
+            return {
+                template: 'cards'
+            }
+        },
+
+        mounted() {
+            this.template = window.BoothConfig.loading_template;
+        }
     }
 </script>
 
@@ -81,6 +91,13 @@
 
     .list-group-item:hover {
         background: #fff;
+    }
+
+    .option:hover {
+        background: #FFF;
+        transform: none;
+        border-color: darken($gray-lighter, 10%);
+        box-shadow: $card-shadow;
     }
 
     @keyframes placeHolder {
