@@ -40,19 +40,50 @@ class Limit extends Model
     public static function exceeded($action, $limit, $editionId = null)
     {
         $editionId = ($editionId) ? $editionId : Edition::current()->id;
-        $count = Self::where('ip', '=', Self::ip())->where('action', '=', $action)->where('edition_id', $editionId)->count();
+        $count = Self::where('ip', '=', Self::ip())
+                    ->where('action', '=', $action)
+                    ->where('edition_id', $editionId)
+                    ->count();
 
         return $count >= $limit;
     }
 
     /**
-     * Lists IPs over the limit ordered by the date they exceeded it
+     * Groups
      *
      * @return boolean
      */
-    public function createReport()
+    public static function getReports($editionId, $action = 'vote')
     {
-        
+        $editionId = ($editionId) ? $editionId : Edition::current()->id;
+        $limit = ($action == 'vote') ? config('participa.max_per_ip') : config('participa.max_failed_lookups');
+        $reports = [];
+
+        $ips = Self::select('ip')
+                    ->where('edition_id', $editionId)
+                    ->where('action', $action)
+                    ->groupBy('ip')
+                    ->havingRaw('COUNT(ip) >= ' . $limit)
+                    ->get();
+
+        $dates = Self::select('ip', 'created_at')
+                    ->where('edition_id', $editionId)
+                    ->where('action', $action)
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+                    ->groupBy('ip')
+                    ->toArray();
+
+        foreach($ips as $ip) {
+            $reports[] = [
+                'type' => 'limit',
+                'ip' => $ip->ip,
+                'action' => $action,
+                'created_at' => $dates[$ip->ip][0]['created_at']
+            ];
+        }
+
+        return $reports;
     }
 
     /**
