@@ -6,16 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Limit extends Model
 {
+    /**
+     * Get the edition that the log belongs to.
+     */
+    public function edition()
+    {
+        return $this->belongsTo('App\Edition');
+    }
 
     /**
      * Log an action taken by an IP
      *
      * @return boolean
      */
-    public static function logAction($action)
+    public static function logAction($action, $editionId = null)
     {
+        $editionId = ($editionId) ? $editionId : Edition::current()->id;
         $limit = new Self;
 
+        $limit->edition_id = $editionId;
         $limit->ip = Self::ip();
         $limit->action = $action;
         $limit->user_agent = Self::userAgent();
@@ -28,11 +37,22 @@ class Limit extends Model
      *
      * @return boolean
      */
-    public static function exceeded($action, $limit)
+    public static function exceeded($action, $limit, $editionId = null)
     {
-        $count = Self::where('ip', '=', Self::ip())->where('action', '=', $action)->count();
+        $editionId = ($editionId) ? $editionId : Edition::current()->id;
+        $count = Self::where('ip', '=', Self::ip())->where('action', '=', $action)->where('edition_id', $editionId)->count();
 
         return $count >= $limit;
+    }
+
+    /**
+     * Lists IPs over the limit ordered by the date they exceeded it
+     *
+     * @return boolean
+     */
+    public function createReport()
+    {
+        
     }
 
     /**

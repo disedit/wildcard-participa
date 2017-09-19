@@ -15,10 +15,13 @@ class CreateLimitsTable extends Migration
     {
         Schema::create('limits', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('edition_id')->unsigned();
             $table->string('ip', 50);
             $table->string('action', 50);
             $table->text('user_agent');
             $table->timestamps();
+
+            $table->foreign('edition_id')->references('id')->on('editions');
         });
     }
 
