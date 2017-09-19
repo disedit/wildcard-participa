@@ -45,7 +45,8 @@ class HomeController extends Controller
             $user = $request->user();
             $inPerson = ($user) ? true : false;
             $token = ($inPerson) ? JWTAuth::fromUser($user) : null;
-            return view('booth', compact('edition', 'token', 'inPerson', 'pastEditions'));
+            $loadingTemplate = $edition->questions[0]->template;
+            return view('booth', compact('edition', 'token', 'inPerson', 'pastEditions', 'loadingTemplate'));
         }
 
         // If in limbo (after end_date and before publish_results), show placeholder

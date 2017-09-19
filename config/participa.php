@@ -72,10 +72,6 @@ return [
     /* Primary color of the application */
     'primary_color' => '#2980b9',
 
-    /* Placeholder template shown while loading the options */
-    /* Possible options: 'cards', '2column' or 'simple' */
-    'loading_template' => '2column',
-
     /* Set up Google Analytics tracking */
     'google_analytics_ID' => 'UA-106217417-1',
 

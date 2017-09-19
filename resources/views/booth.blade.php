@@ -25,7 +25,7 @@
         sms_max_attempts: {{ config('participa.sms_max_attempts', 3) }},
         max_per_ip: {{ config('participa.max_per_ip', 3) }},
         disable_SMS_verification: {{ var_export(config('participa.disable_SMS_verification', false), true) }},
-        loading_template: '{{ config('participa.loading_template', 'cards') }}'
+        loading_template: '{{ $loadingTemplate }}'
     }
 </script>
 <script src="{{ mix('js/app.js') }}"></script>
