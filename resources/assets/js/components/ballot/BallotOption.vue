@@ -69,6 +69,11 @@
         position: absolute;
         right: 1rem;
         bottom: 0.75rem;
+        z-index: 100;
+    }
+
+    .costum-control-indicator {
+        background: rgba(0, 0, 0, 0.5);
     }
 
     .disabled {

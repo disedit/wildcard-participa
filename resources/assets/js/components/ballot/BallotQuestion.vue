@@ -5,10 +5,11 @@
             <h2>{{ question.question }}</h2>
             <p class="description">{{ question.description }}</p>
         </div>
-        <div class="list-group">
+        <div :class="{ 'option-group': true, 'list-group': question.template != 'cards' }">
             <label v-for="option in question.options"
                 :class="{
-                    'list-group-item list-group-item-action': true,
+                    'option': true,
+                    'list-group-item list-group-item-action': question.template != 'cards',
                     'disabled' : isDisabled(option),
                     'selected' : isSelected(option)
                 }">
@@ -84,11 +85,6 @@
 
     .description {
         color: $gray-light;
-    }
-
-    .selected {
-        background: lighten($brand-primary, 50%);
-        box-shadow: inset -4px 0px 0px 0px $brand-primary;
     }
 
     .heading.has-number {

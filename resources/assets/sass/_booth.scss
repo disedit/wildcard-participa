@@ -1,3 +1,6 @@
+$shadow: 0 2px 10px -2px rgba(0,0,0,.2);
+$raised-shadow: 0 14px 32px 0 rgba(0,0,0,.2);
+
 .ballot-box {
     background: $gray-lighter;
     padding: 1.5rem;
@@ -129,24 +132,107 @@
     }
 }
 
-@include media-breakpoint-up(sm) {
+.template-cards {
+    .option {
+        position: relative;
+        width: 100%;
+        margin: 0.75rem 0;
+        padding: 1.25rem 1.25rem 3rem 1.25rem;
+        transition-timing-function: ease-out;
+        transition-duration: .15s;
+        transform: translateY(0);
+        box-shadow: $shadow;
+        border: 2px darken($gray-lighter, 10%) solid;
+        border-radius: 2px;
+        overflow: hidden;
+
+        &:hover {
+            background: lighten($brand-primary, 50%);
+            transform: translateY(-4px);
+            box-shadow: $raised-shadow;
+            border: 2px lighten($brand-primary, 10%) solid;
+        }
+
+        &:active {
+            background: lighten($brand-primary, 40%);
+        }
+
+        &.selected {
+            background: $brand-primary;
+            color: #FFF;
+            box-shadow: $raised-shadow;
+            transform: translateY(-4px);
+            border-color: $brand-primary;
+
+            &:hover {
+                background: darken($brand-primary, 5%);
+                border-color: darken($brand-primary, 5%);
+            }
+
+            .option-cost, a {
+                color: #FFF;
+                opacity: 0.8;
+            }
+
+            .custom-control-indicator {
+                box-shadow: 0 0 0 1px #F1F2F3, 0 0 0 3px #2980b9 !important;
+            }
+        }
+
+        &.disabled:hover {
+            background: #FFF;
+            color: $gray-lightest;
+            box-shadow: $shadow;
+            transform: none;
+            border: 2px darken($gray-lighter, 10%) solid;
+        }
+    }
+}
+
+.template-2column,
+.template-simple {
+    .selected {
+        background: lighten($brand-primary, 50%);
+        box-shadow: inset -4px 0px 0px 0px $brand-primary;
+    }
+}
+
+.template-simple {
+    .custom-control {
+        margin-right: 5rem;
+    }
+}
+
+@include media-breakpoint-up(lg) {
     .template-2column {
         .list-group {
             flex-direction: row;
             flex-wrap: wrap;
         }
 
-        label {
+        .list-group-item {
             width: 50%;
-            height: 100px;
+            height: 160px;
             align-items: flex-start;
             overflow: hidden;
+            padding-bottom: 3rem;
         }
     }
 
     .booth-mode .template-2column {
-        .list-group label {
+        .list-group-item {
             width: 33.3%;
+        }
+    }
+
+    .template-cards {
+        .option-group {
+            column-count: 2;
+            column-gap: 1.5rem;
+        }
+
+        .option {
+            height: 160px;
         }
     }
 }
