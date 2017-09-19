@@ -45,7 +45,7 @@ class HomeController extends Controller
             $user = $request->user();
             $inPerson = ($user) ? true : false;
             $token = ($inPerson) ? JWTAuth::fromUser($user) : null;
-            $loadingTemplate = $edition->questions[0]->template;
+            $loadingTemplate = (count($edition->questions)) ? $edition->questions[0]->template : 'cards';
             return view('booth', compact('edition', 'token', 'inPerson', 'pastEditions', 'loadingTemplate'));
         }
 
