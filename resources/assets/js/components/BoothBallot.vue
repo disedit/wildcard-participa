@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row flex-column flex-sm-row">
         <div :class="{'col-md-8': !boothMode, 'col-md-12': boothMode}">
             <form @submit.prevent="submitBallot">
                 <div v-if="Object.keys(ballot).length > 0">

@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-<div class="row">
+<div class="row flex-column flex-sm-row">
     <div class="col-md-8">
         <div class="placeholder results-pending">
             <i class="far fa-comment-alt" aria-hidden="true"></i>

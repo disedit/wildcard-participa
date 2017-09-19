@@ -1,13 +1,10 @@
 <template>
-    <div class="row ballot-verify">
-        <div class="col-md-12">
-            <verify-summary :selected="selected" />
-        </div>
-        <div class="col-md-12">
-            <div class="ballot-box ballot-phone">
-                <verify-in-person v-if="boothMode || disableSMSVerification" />
-                <verify-phone v-else :phone="phone" :country-code="countryCode" :sms-code="smsCode" :sms-requested="smsRequested" />
-            </div>
+    <div class="ballot-verify">
+        <verify-summary :selected="selected" />
+
+        <div class="ballot-box ballot-phone">
+            <verify-in-person v-if="boothMode || disableSMSVerification" />
+            <verify-phone v-else :phone="phone" :country-code="countryCode" :sms-code="smsCode" :sms-requested="smsRequested" />
         </div>
     </div>
 </template>
