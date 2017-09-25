@@ -4,10 +4,10 @@
         <div class="container mb-5">
             <edition />
             <div v-if="is_superadmin" class="row">
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <results />
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <reports />
                 </div>
             </div>
