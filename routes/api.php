@@ -13,8 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/ballot', 'BoothController@ballot_json');
-Route::get('/ballot/qr/{ref}', 'BoothController@ballot_qr');
+/* Booth funcitonality */
 Route::post('/precheck', 'BoothController@precheck');
-Route::post('/request_sms', 'BoothController@request_sms');
-Route::post('/cast_ballot', 'BoothController@cast_ballot');
+Route::post('/request_sms', 'BoothController@requestSms');
+Route::post('/cast_ballot', 'BoothController@castBallot');
+
+/* Front page blocks */
+Route::get('/sidebar', 'HomeController@sidebar');
+Route::get('/option/{option}', 'HomeController@option');
+
+/* Ballot helpers */
+Route::get('/ballot', 'BallotController@ballotJSON');
+Route::get('/ballot/qr/{ref}', 'BallotController@ballotQR');
+
+/* Admin area */
+Route::post('/anull_ballot', 'AdminController@anullBallot')->middleware('auth.api');
+Route::post('/id_lookup', 'AdminController@lookUp')->middleware('auth.api');
+Route::get('/results', 'AdminController@results')->middleware('auth.api');

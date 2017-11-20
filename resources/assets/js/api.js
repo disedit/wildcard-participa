@@ -1,34 +1,56 @@
 export default class Participa {
-  constructor () {
-    this.apiURL = '/api/';
-    //this.token = document.head.querySelector('meta[name="jwt-token"]').content;
-  }
+    constructor () {
+        this.apiURL = '/api/';
+    }
 
-  getBallot () {
-    return this._call('get', 'ballot');
-  }
+    getBallot() {
+        return this._call('get', 'ballot');
+    }
 
-  precheck (data) {
-    return this._call('post', 'precheck', data);
-  }
+    getResults(force) {
+        console.log(force);
+        return this._call('get', 'results', { params: { force } });
+    }
 
-  requestSMS(data) {
-    return this._call('post', 'request_sms', data);
-  }
+    getSidebar() {
+        return this._call('get', 'sidebar');
+    }
 
-  castBallot(data) {
-    return this._call('post', 'cast_ballot', data);
-  }
+    precheck(data) {
+        return this._call('post', 'precheck', data);
+    }
 
-  _call(type, url, data) {
-    return new Promise((resolve, reject) => {
-        axios[type](this.apiURL + url, data)
-          .then(response => {
-            resolve(response.data);
-          })
-          .catch(error => {
-            reject(error.response.data);
-          });
-      });
-  }
+    requestSMS(data) {
+        return this._call('post', 'request_sms', data);
+    }
+
+    castBallot(data) {
+        return this._call('post', 'cast_ballot', data);
+    }
+
+    anullBallot(data) {
+        return this._call('post', 'anull_ballot', data);
+    }
+
+    lookUp(data) {
+        return this._call('post', 'id_lookup', data);
+    }
+
+    _call(type, url, data) {
+        return new Promise((resolve, reject) => {
+            axios[type](this.apiURL + url, data).then(response => {
+                resolve(response.data);
+            }).catch(error => {
+                if(error.response.status == 500) {
+                    reject({
+                        'error': ['Error del sistema. És possible que aquest error siga temporal. Refresca la pàgina i torna a intentar-ho o posa\'t en contacte.']
+                    });
+                } else if(error.response.data.hasOwnProperty('errors')){
+                    reject(error.response.data.errors);
+                } else {
+                    reject(error.response.data);
+                }
+            });
+        });
+    }
 }

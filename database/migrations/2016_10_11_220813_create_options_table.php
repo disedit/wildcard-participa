@@ -15,14 +15,17 @@ class CreateOptionsTable extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('question_id');
+            $table->integer('question_id')->unsigned();
             $table->string('option');
-            $table->text('description');
-            $table->text('motivation');
-            $table->text('attachments');
-            $table->double('cost');
+            $table->text('description')->nullable();
+            $table->text('motivation')->nullable();
+            $table->text('attachments')->nullable();
+            $table->text('pictures')->nullable();
+            $table->double('cost', 10, 2)->nullable();
             $table->string('salt');
             $table->timestamps();
+
+            $table->foreign('question_id')->references('id')->on('questions');
         });
     }
 

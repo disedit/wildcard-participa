@@ -1,11 +1,15 @@
 <template>
     <div :class="'question template-' + question.template">
-        <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> {{ question.question }}</h2>
-        <p class="description">{{ question.description }}</p>
-        <div class="list-group">
+        <div :class="{ 'heading': true, 'has-number': displayNumber }">
+            <span v-if="displayNumber" class="number">{{ number }}</span>
+            <h2>{{ question.question }}</h2>
+            <p class="description">{{ question.description }}</p>
+        </div>
+        <div :class="{ 'option-group': true, 'list-group': question.template != 'cards' }">
             <label v-for="option in question.options"
                 :class="{
-                    'list-group-item list-group-item-action': true,
+                    'option': true,
+                    'list-group-item list-group-item-action': question.template != 'cards',
                     'disabled' : isDisabled(option),
                     'selected' : isSelected(option)
                 }">
@@ -33,7 +37,9 @@
 
         props: {
             question: Object,
-            selected: Array
+            selected: Array,
+            number: Number,
+            displayNumber: Boolean
         },
 
         computed: {
@@ -73,10 +79,6 @@
 <style scoped lang="scss">
     @import '../../../sass/_variables';
 
-    .question {
-
-    }
-
     h2 {
         font-size: 1.65rem;
     }
@@ -85,8 +87,16 @@
         color: $gray-light;
     }
 
-    .selected {
-        background: lighten($brand-primary, 50%);
-        border-right: 4px $brand-primary solid;
-    }    
+    .heading.has-number {
+        position: relative;
+        padding-left: 2.75rem;
+
+        .number {
+            color: $gray-light;
+            font-size: 2rem;
+            position: absolute;
+            left: 0;
+            top: -7px;
+        }
+    }
 </style>

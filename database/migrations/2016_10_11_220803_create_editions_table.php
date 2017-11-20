@@ -16,12 +16,16 @@ class CreateEditionsTable extends Migration
         Schema::create('editions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->dateTime('publish_results');
-            $table->text('docs');
-            $table->text('voting_places');
+            $table->text('docs')->nullable();
+            $table->text('voting_places')->nullable();
+            $table->text('about')->nullable();
+            $table->text('sidebar')->nullable();
+            $table->string('proposal_form')->default('');
+            $table->dateTime('proposal_deadline')->nullable();
             $table->boolean('published');
             $table->timestamps();
         });

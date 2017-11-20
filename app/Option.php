@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Option extends Model
 {
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'salt', 'created_at', 'updated_at'
+    ];
+
+    /**
      * Get the question that the option belongs to.
      */
     public function question()
@@ -15,10 +24,10 @@ class Option extends Model
     }
 
     /**
-     * Get all the ballots that voted for this option
+     * Get the result for the option.
      */
-    public function ballots()
+    public function result()
     {
-        return $this->hasMany('App\Ballot');
+        return $this->hasOne('App\Result');
     }
 }

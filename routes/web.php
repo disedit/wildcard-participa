@@ -12,15 +12,21 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('/booth/ballot', 'HomeController@index');
-Route::get('/booth/verify', 'HomeController@index');
-Route::get('/booth/receipt', 'HomeController@index');
+Route::get('/about', 'HomeController@about');
+Route::get('/propose', 'HomeController@propose');
+Route::get('/booth/{route}', 'HomeController@index');
+Route::get('/my_ip', 'HomeController@myIpAddress');
+Route::get('/lang/{language}', 'LanguageController@switchLanguage');
 
 Auth::routes();
 
 /* Archive */
-Route::get('/archive', 'ArchiveController@home');
-Route::get('/archive/{edition}', 'ArchiveController@edition');
+Route::get('/archive/{edition}', 'ArchiveController@results');
+Route::get('/archive/{edition}/about', 'ArchiveController@about');
+
+/* Ballot lookup */
+Route::get('/ballot/lookup', 'BallotController@ballotLookUp');
+Route::get('/ballot/{ballotRef}', 'BallotController@ballot');
 
 /* Admin */
-Route::get('/admin', 'AdminController@index');
+Route::get('/admin', 'AdminController@index')->middleware('auth');

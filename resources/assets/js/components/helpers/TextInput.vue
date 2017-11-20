@@ -3,7 +3,7 @@
     <label :for="name">
         {{label}}
         <b-tooltip v-if="tooltip" :content="tooltip" class="input-tooltip">
-            <i class="fa fa-question-circle" aria-hidden="true"></i>
+            <i class="far fa-question-circle" aria-hidden="true"></i>
         </b-tooltip>
     </label>
 
@@ -69,13 +69,14 @@
             margin-bottom: 0;
             color: lighten($gray-light, 25%);
             font-size: 1.2rem;
-            top: 1.4rem;
+            top: 1.5rem;
             left: 1.5rem;
             cursor: text;
             will-change: transform;
             transform: translateZ(0);
             -webkit-font-smoothing: antialiased;
             transition: 0.25s;
+            user-select: none;
         }
 
         input {
@@ -90,7 +91,7 @@
 
     .input.focused {
         label {
-            top: 0.5rem;
+            top: 0.8rem;
             left: 1.2rem;
             font-size: 1rem;
             color: $gray-light;

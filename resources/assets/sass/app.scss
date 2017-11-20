@@ -5,17 +5,14 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap-vue/dist/bootstrap-vue";
 
-// Animations
-@import "animations";
-
-
-.booth {
-    position: relative;
-}
-
+// Global
 .main-container {
     background: #FFF;
     padding: 1rem;
+}
+
+hr {
+    margin: 2rem 0;
 }
 
 input,
@@ -23,31 +20,18 @@ button {
     font-family: $font-family-base;
 }
 
-.ballot-box {
-    background: $gray-lighter;
-    padding: 1.5rem;
-
-    h3 {
-        font-weight: bold;
-    }
-}
-
 @include media-breakpoint-up(sm) {
     .main-container {
         padding: 2rem;
     }
-
-    .template-2column {
-        .list-group {
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        label {
-            width: 50%;
-            height: 100px;
-            align-items: flex-start;
-        }
-    }
-
 }
+
+// Modules
+@import "header";
+@import "sidebar";
+@import "about";
+@import "booth";
+@import "results";
+@import "placeholder";
+@import "footer";
+@import "animations";

@@ -2,18 +2,18 @@
     <div class="row ballot-confirmation">
         <div class="col-md-12">
             <div class="header">
-                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                <i class="far fa-thumbs-up" aria-hidden="true"></i>
                 <h2>{{ $t('booth_receipt.heading') }}</h2>
             </div>
-            <div class="receipt">
+            <div class="receipt" v-if="receipt.ref">
                 <div class="success">
                     {{ $t('booth_receipt.success') }}
                 </div>
                 <div class="ballot">
-                    <a :href="'/ballots/' + receipt.ref" target="_blank">
+                    <a :href="'/ballot/' + receipt.ref" target="_blank">
                         <img :src="'/api/ballot/qr/' + receipt.ref" alt="QR code" />
                         <h3>{{ receipt.ref }}</h3>
-                        <i class="fa fa-arrow-circle-right" aria-hidden="true" alt="Go to ballot"></i>
+                        <i class="far fa-arrow-circle-right" aria-hidden="true" alt="Go to ballot"></i>
                     </a>
                 </div>
             </div>
@@ -23,7 +23,7 @@
             </div>
             <div class="social-plugins">
                 <iframe
-                    :src="'https://www.facebook.com/plugins/like.php?href=' + encodeURI(shareable_url) + '&width=198&layout=button_count&action=like&size=large&show_faces=false&share=true&height=37&appId=252515324782640&locale=ca_ES'"
+                    :src="'https://www.facebook.com/plugins/like.php?href=' + encodeURI(shareable_url) + '&width=198&layout=button_count&action=like&size=large&show_faces=false&share=true&height=37&appId=180444172483336&locale=ca_ES'"
                     width="213"
                     allowTransparency="true"
                     scrolling="no"
@@ -32,7 +32,7 @@
                     height="37">
                  </iframe>
                  <iframe
-                    :src="'https://platform.twitter.com/widgets/tweet_button.html?size=l&url=' + encodeURI(shareable_url) + '&via=compromis&related=compromis&text=' + encodeURI($t('global.tweet')) + '&lang=es'"
+                    :src="'https://platform.twitter.com/widgets/tweet_button.html?size=l&url=' + encodeURI(shareable_url) + '&via=' + twitter + '&related=' + twitter + '&text=' + encodeURI($t('global.tweet')) + '&lang=es'"
                     class="twitter"
                     width="140"
                     height="37"
@@ -42,11 +42,10 @@
                  </iframe>
             </div>
             <hr />
-            <div class="links">
+            <div class="further-actions">
                 <a :href="council_url">{{ $t('booth_receipt.back_to_council') }}</a> ·
                 <router-link to="/">{{ $t('booth_receipt.back_to_booth') }}</router-link>
             </div>
-            <hr />
         </div>
     </div>
 </template>
@@ -60,7 +59,7 @@
             receipt: {
                 type: Object,
                 default: {
-                    ref: '111'
+                    ref: '000000'
                 }
             }
         },
@@ -70,6 +69,7 @@
                 municipality: '',
                 council_url: '',
                 shareable_url: '',
+                twitter: ''
             }
         },
 
@@ -77,6 +77,7 @@
             this.municipality = window.BoothConfig.name;
             this.council_url = window.BoothConfig.council_url;
             this.shareable_url = window.BoothConfig.url;
+            this.twitter = window.BoothConfig.twitter;
         }
     }
 </script>
@@ -131,6 +132,7 @@
 
         img {
             width: 75px;
+            height: 75px;
         }
 
         i {
@@ -170,9 +172,13 @@
         }
     }
 
-    .links {
+    .further-actions {
         text-align: center;
         font-size: 1.25rem;
+
+        a {
+            white-space: nowrap;
+        }
     }
 
 

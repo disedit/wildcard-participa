@@ -10,34 +10,32 @@ use App\Edition;
 class ArchiveController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Show the results for an edition
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
-    public function __construct()
+    public function results(Edition $edition)
     {
+        $results = $edition->fullResults();
+        $turnout = $edition->turnout()->count();
+        $census = $edition->voters()->count();
+        $pastEditions = Edition::pastEditions();
+        $isArchive = true;
 
+        return view('results', compact('edition', 'results', 'turnout', 'census', 'pastEditions', 'isArchive'));
     }
 
     /**
-     * Show the application dashboard.
+     * Show the Edition about page.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function home()
+    public function about(Edition $edition)
     {
-        $editions = Edition::orderBy('id', 'desc')->all();
-        return view('archive.list', compact('editions'));
-    }
+        $pastEditions = Edition::pastEditions();
+        $options = view('components.options', compact('edition'));
+        $isArchive = true;
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edition(Edition $edition)
-    {
-        $results = $edition->results();
-        return view('archive.edition', compact('edition', 'results'));
+        return view('about', compact('edition', 'pastEditions', 'options', 'isArchive'));
     }
 }

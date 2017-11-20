@@ -1,7 +1,7 @@
 <template>
     <div class="ballot-summary">
-        <button @click="goBack()" class="btn btn-secondary btn-sm">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        <button @click="goBack()" class="btn btn-light btn-sm">
+            <i class="far fa-pencil-alt" aria-hidden="true"></i>
             {{ $t('verify_summary.edit') }}
         </button>
 
@@ -10,8 +10,9 @@
                 <h3>{{ question.question }}</h3>
                 <ul class="options">
                     <li v-for="option in question.options">
-                        <i class="fa fa-check-square-o" aria-hidden="true"></i> {{ option.option }}
+                        <i class="far fa-check-square" aria-hidden="true"></i> {{ option.option }}
                     </li>
+                    <li v-if="question.options.length == 0"><em>{{ $t('verify_summary.blank') }}</em></li>
                 </ul>
             </div>
 
@@ -68,7 +69,6 @@
 
         h3 {
             font-size: 1.2rem;
-            font-weight: bold;
         }
 
         .options {
@@ -76,7 +76,7 @@
             padding-left: 0;
             line-height: 175%;
 
-            .fa {
+            .far {
                 margin-right: 10px;
             }
         }
@@ -98,6 +98,7 @@
         max-height: 200px;
         position: relative;
         transition: 0.25s;
+        overflow: hidden;
 
         .expand {
             display: flex;

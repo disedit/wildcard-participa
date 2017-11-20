@@ -3,56 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use NotificationChannels\Messagebird\Exceptions\CouldNotSendNotification;
 
 use App\Http\Requests;
 use App\Http\Requests\VoteRequest;
-use App\Edition;
 use App\Voter;
 use App\Ballot;
-use App\Question;
-use App\Option;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Limit;
 
 class BoothController extends Controller
 {
-
     /**
-     * JSON object with edition information, including ballot questions
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function ballot_json()
+    public function __construct()
     {
-        $edition = new Edition;
-        $edition = $edition->current('ballot');
-        return response()->json($edition);
+        $this->middleware('booth');
     }
 
     /**
-     * JSON object with edition information, including ballot questions
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function ballot_qr($ref)
-    {
-        \Debugbar::disable();
-        
-        $qr = QrCode::size(200)->generate($ref);
-
-        return response($qr)
-            ->header('Content-Type', 'image/svg+xml');
-    }
-
-    /**
-     * Show the application dashboard.
+     * Validate that a user can proceed to Step 2 (SMS Validation or Review)
      *
      * @return \Illuminate\Http\Response
      */
     public function precheck(VoteRequest $request)
     {
-        return response()
-            ->json(['success' => true]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -60,39 +38,34 @@ class BoothController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function request_sms(VoteRequest $request)
+    public function requestSms(VoteRequest $request)
     {
-        $edition = new Edition;
-        $edition = $edition->current();
-
-        $booth_mode = $this->booth_mode();
-        $flag       = false;
+        $editionId  = $request->get('edition_id');
+        $inPerson   = $request->user();
+        $flag       = null;
         $SID        = $request->input('SID');
         $phone      = $request->input('phone');
+        $voter      = Voter::findBySID($SID, $editionId);
 
-        $voter      = Voter::find_by_SID($SID, $edition->id);
-
-        if(!$booth_mode)
-        {
+        if(!$inPerson) {
             // Check if SMS code has already been sent for phone number
-            if($SMS_already_sent = $voter->SMS_already_sent($phone))
-            {
+            if($smsAlreadySent = $voter->smsAlreadySent($phone)) {
                 // if sent: redirect & attach warning
-                $flag = ['name' => 'SMS_already_sent', 'info' => $SMS_already_sent];
-            }
-            elseif($SMS_exceeded = $voter->SMS_exceeded())
-            {
+                $flag = ['name' => 'SMS_already_sent', 'info' => $smsAlreadySent];
+            } elseif($smsExceeded = $voter->smsExceeded()) {
                 // if exceeded: redirect & attach warning
-                $flag = ['name' => 'SMS_exceeded', 'info' => $SMS_exceeded];
-            }
-            else
-            {
-                $submitted = $voter->SMS_submit($phone);
+                $flag = ['name' => 'SMS_exceeded', 'info' => $smsExceeded];
+            } else {
 
-                if(!$submitted) return response()->json([
-                    'success' => false,
-                    'flag' => 'SMS_error'
-                ]);
+                try {
+                    $voter->smsSubmit($phone);
+                } catch(CouldNotSendNotification $e) {
+                    $voter->smsRollback();
+
+                    return response()->json([
+                        'SMS' => [__('participa.error_SMS')]
+                    ], 422);
+                }
             }
         }
 
@@ -107,54 +80,34 @@ class BoothController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function cast_ballot(VoteRequest $request)
+    public function castBallot(VoteRequest $request)
     {
-        $edition = new Edition;
-        $edition = $edition->current();
-
-        $booth_mode = $this->booth_mode();
-        $sms_code   = $request->input('sms_code');
+        $editionId  = $request->get('edition_id');
         $SID        = $request->input('SID');
-
-        $voter = Voter::find_by_SID($SID, $edition->id);
+        $voter      = Voter::findBySID($SID, $editionId);
 
         // Mark voter
-        $marked = $voter->mark($request, $booth_mode);
+        $marked = $voter->mark($request);
 
         // Submit ballot
-        if($marked)
-        {
+        if($marked) {
 
             $ballot = new Ballot;
-            $cast = $ballot->cast($request, $voter, $edition->id, $booth_mode);
+            $cast = $ballot->cast($request, $voter);
 
-            if(!$cast)
-            {
+            if(!$cast) {
                 // If an error occurred during the casting process,
                 // Unmark voter and display error
                 $voter->rollback();
                 return response()->json(['success' => false, 'error' => 'Error sistema']);
+            } else {
+                if(!$request->user()) Limit::logAction('vote');
             }
-
-        }
-        else
-        {
+        } else {
             return response()->json(['success' => false, 'error' => 'Error sistema']);
         }
 
         return response()->json(['success' => true, 'ballot' => $ballot]);
     }
 
-    /**
-     * Checks if we are in booth_mode and returns user's ID, or 0 if false
-     *
-     * @return int
-     */
-    private function booth_mode()
-    {
-        $payload = JWTAuth::getPayload(JWTAuth::getToken())->toArray();
-        if(!isset($payload['booth_mode']) || !isset($payload['user_id'])) return false;
-
-        return ($payload['booth_mode']) ? $payload['user_id'] : 0;
-    }
 }

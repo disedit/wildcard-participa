@@ -1,6 +1,6 @@
 <template>
     <span class="icon">
-        <i v-if="loading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+        <i v-if="loading" class="fa fa-spinner-third fa-spin" aria-hidden="true"></i>
         <i v-else :class="'fa fa-' + icon" aria-hidden="true"></i>
     </span>
 </template>

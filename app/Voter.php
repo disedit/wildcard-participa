@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifySMS;
+use App\Edition;
 
 class Voter extends Model
 {
+    use Notifiable;
+
     /**
      * Get the edition that the user belongs to.
      */
@@ -15,39 +20,42 @@ class Voter extends Model
     }
 
     /**
-     * Get all the ballots that the voter cast.
-     * If anonymous_voting is disabled
+     * Get the ballot cast by the voter.
+     * Only if anonymous_voting is disabled
      */
-    public function ballots()
+    public function ballot()
     {
-        if(config('participa.anonymous_voting') === false)
-            return $this->hasMany('App\Ballot');
+        if(config('participa.anonymous_voting') === false) {
+            return $this->hasOne('App\Ballot');
+        }
 
-        return false;
+        return $this;
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Find a voter by its ID
      */
-    public static function find_by_SID($SID, $edition_id)
+    public static function findBySID($SID, $editionId)
     {
-        return Self::where('SID', '=', $SID)->where('edition_id', '=', $edition_id)->first();
+        if(!$editionId) $editionId = Edition::current()->id;
+        return Self::where('SID', $SID)->where('edition_id', $editionId)->first();
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Check if an SMS code has already been sent to a particular phone
      */
-    public function SMS_already_sent($phone)
+    public function smsAlreadySent($phone)
     {
         return ($this->SMS_phone == $phone) ? array('time' => $this->SMS_time) : FALSE;
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Check if the voter has reached the maximum attempts allowed
+     * to request a different number to different phones
      */
-    public function SMS_exceeded()
+    public function smsExceeded()
     {
-        if($this->SMS_attempts >= config('participa.sms_max_attempts')){
+        if($this->SMS_attempts >= config('participa.sms_max_attempts')) {
             $last_number = explode(".", $this->SMS_phone);
             return array('last_country_code' => $last_number[0], 'last_number' => $last_number[1], 'time' => $this->SMS_time);
         }
@@ -56,61 +64,77 @@ class Voter extends Model
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Generate a new SMS token
      */
-    public function SMS_new_token()
+    public function smsNewToken()
     {
-        $code = random_int(111111,999999);
+        $code = random_int(100000,999999);
         return $code;
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Submit the SMS token to the provided phone number
      */
-    public function SMS_submit($phone)
+    public function smsSubmit($phone)
     {
-        $token = $this->SMS_new_token();
+        $token = $this->smsNewToken();
 
-        //$this->SMS_token = hash('sha256', $token . $this->SID);
         $this->SMS_token = $token;
         $this->SMS_phone = $phone;
         $this->SMS_attempts++;
         $this->SMS_time = date('Y-m-d H:i:s');
+        $this->save();
 
-        return $this->save();
+        return $this->notify(new VerifySMS());
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Rollback a voter's SMS status if SMS failed to send.
      */
-    public function create_signature()
+    public function smsRollback()
     {
-        $signature = $this->stamp . $this->SID . $this->ip_address . $this->ballot_time . config('app.key');
+        $this->SMS_token = '';
+        $this->SMS_attempts--;
+        $this->SMS_time = null;
+        $this->save();
+    }
+
+    /**
+     * Generate a SHA-256 hash to prevent tampering with the database
+     */
+    public function createSignature()
+    {
+        $signature = $this->SID . $this->ip_address . $this->ballot_time . $this->by_user_id . config('app.key');
         return hash('sha256', $signature);
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Mark a voter when they vote to prevent ballot stuffing
      */
-    public function mark($request, $user_id = 0)
+    public function mark($request)
     {
+        $userId = ($request->user()) ? $request->user()->id : null;
+
+        if(!$userId) $this->SMS_verified = 1;
         $this->ballot_cast = 1;
         $this->ballot_time = date("Y-m-d H:i:s");
         $this->ip_address = $request->ip();
         $this->user_agent = $request->header('User-Agent');
-        $this->signature = $this->create_signature();
-        $this->in_person = ($user_id) ? 1 : 0;
-        $this->by_user = $user_id;
+        $this->signature = $this->createSignature();
+        $this->by_user_id = $userId;
 
         return $this->save();
     }
 
     /**
-     * Get the option that the ballot belongs to.
+     * Reset a voter's status if an error occurs
      */
     public function rollback()
     {
         $this->ballot_cast = 0;
+        $this->ballot_time = null;
+        $this->signature = '';
+
         return $this->save();
     }
 

@@ -3,6 +3,9 @@ require('./bootstrap');
 window.Vue = require('vue');
 window.Bus = new Vue();
 
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
+
 import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
 import BootstrapVue from 'bootstrap-vue';
@@ -24,11 +27,16 @@ Vue.use(VueRouter);
 Vue.use(VueI18n);
 Vue.use(BootstrapVue);
 
+Raven
+    .config('https://1d16265ee614464995c70aa8ff00c816@sentry.io/216036')
+    .addPlugin(RavenVue, Vue)
+    .install();
+
 const scrollBehavior = (to, from, savedPosition) => {
     if (savedPosition) {
         return savedPosition;
     } else {
-        return { x: 0, y: 0 };
+        return { selector: '#boothView', offset: { x: 0, y: 0 } };
     }
 };
 
@@ -55,7 +63,7 @@ const messages = {
 }
 
 const i18n = new VueI18n({
-    locale: 'en',
+    locale: window.BoothConfig.locale,
     messages,
 });
 

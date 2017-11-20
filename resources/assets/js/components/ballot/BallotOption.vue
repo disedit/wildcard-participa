@@ -15,7 +15,6 @@
             <span class="custom-control-description">
                 <span class="option-name">{{ option.option }}</span>
                 <span v-if="displayCost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
-                <i v-if="selected" class="fa fa-check" aria-hidden="true"></i>
             </span>
         </div>
         <a href="#" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
@@ -58,17 +57,23 @@
     @import '../../../sass/_variables';
 
     .option-name {
-        margin-right: 1rem;
+        margin-right: 0.25rem;
     }
-    
+
     .option-cost {
         color: lighten($gray-light, 10%);
+        margin-right: 0.25rem;
     }
 
     .option-info {
         position: absolute;
         right: 1rem;
         bottom: 0.75rem;
+        z-index: 100;
+    }
+
+    .costum-control-indicator {
+        background: rgba(0, 0, 0, 0.5);
     }
 
     .disabled {

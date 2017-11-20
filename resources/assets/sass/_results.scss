@@ -1,0 +1,88 @@
+.results-page {
+    h2 {
+        .far {
+            color: $brand-primary;
+        }
+    }
+}
+
+.census {
+    margin-top: 2rem;
+}
+
+.results {
+    h3 {
+        margin-top: 2rem;
+    }
+
+    h5 {
+        color: $gray-dark;
+        padding-right: 2rem;
+    }
+
+    .progress {
+        background: rgba(10, 20, 30, 0.1);
+    }
+
+    &__section {
+        font-size: 1.25rem;
+        color: #FFF;
+        background: $gray-500;
+        margin: 1rem 0;
+        padding: 0.5rem 0.75rem;
+
+        &--top {
+            background: $brand-primary;
+        }
+    }
+
+    &__card {
+        width: 100%;
+        display: block;
+        position: relative;
+        padding: 1rem 3rem 5rem 1rem;
+        box-shadow: $card-shadow;
+        margin-bottom: 1rem;
+        transition-timing-function: ease-out;
+        transition-duration: .15s;
+        border: 2px darken($gray-lighter, 10%) solid;
+        border-radius: 2px;
+
+        &:hover {
+            text-decoration: none;
+            box-shadow: $card-raised-shadow;
+            transform: translateY(-3px);
+            background: lighten($brand-primary, 50%);
+            border-color: lighten($brand-primary, 10%);
+        }
+    }
+
+    &__votes {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+    }
+
+    &__pos {
+        font-size: 2rem;
+        position: absolute;
+        top: 0.5rem;
+        right: 1rem;
+        color: $gray-500;
+    }
+
+    &__points {
+        color: $gray;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .progress {
+        border-radius: 20px;
+    }
+
+    .progress-bar {
+        animation: loadbar 2s normal forwards ease-in-out;
+    }
+}

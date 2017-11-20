@@ -4,7 +4,8 @@ export default {
     },
     option: {
         cost: 'Cost',
-        motivation: 'Motivation'
+        motivation: 'Motivation',
+        attachments: 'Attached documents'
     },
     error: {
         heading: 'Error',
@@ -23,23 +24,26 @@ export default {
         more_info: 'More info',
     },
     verify_summary: {
-        edit: 'Edit ballot'
+        edit: 'Edit ballot',
+        blank: 'Blank vote'
     },
     verify_phone: {
         heading: 'Verify your ballot',
         phone_label: 'Mobile',
         code_label: 'SMS Code',
-        code_tooltip: 'Codi numeric',
-        phone_subheading: 'Lorem ipsum',
-        code_subheading: 'Lorem ipsum',
+        code_tooltip: 'Numeric code',
+        phone_subheading: 'Enter your mobil number. You will receive an SMS code to authenticate your vote.',
+        code_subheading: 'Type in the code you have received on your mobile.',
+        code_smalltext: 'The SMS may take some minutes to arrive. Ensure your phone is on and has signal.',
         request_sms_button: 'Text me the code',
         cast_ballot_button: 'Cast my ballot',
+        country_code: 'Country dial code',
     },
     verify_in_person: {
         button: 'Cast your ballot'
     },
     verify_flags: {
-        SMS_already_sent: 'The valid verification code for this mobile phone was sent on <strong>{time}</strong>',
+        SMS_already_sent: 'Use the code that was sent to this mobile phone on <strong>{time}</strong>',
         SMS_exceeded: 'You have exceeded the limit of <strong>{sms_max_attempts} SMSs per voter</strong>. Enter the code that you received on <strong>{last_number}</strong> on <strong>{time}</strong>'
     },
     booth_receipt: {

@@ -2,7 +2,7 @@
     <div class="verify-phone">
         <form @submit.prevent="requestSMS">
             <h3>
-                <i class="fa fa-mobile" aria-hidden="true"></i> {{ $t('verify_phone.heading') }}
+                <i class="fa fa-mobile-alt" aria-hidden="true"></i> {{ $t('verify_phone.heading') }}
             </h3>
 
             <p class="subheading">{{ $t('verify_phone.phone_subheading') }}</p>
@@ -21,12 +21,12 @@
                 @updateCountryCode="updateCountryCode"
                 @focus="phoneFocused = true"
                 @blur="phoneFocused = false">
-                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-edit btn-secondary btn-sm" type="button">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    <button v-show="canBeModified" @click="modifyPhone" class="btn btn-edit btn-light btn-sm" type="button">
+                        <i class="far fa-pencil-alt" aria-hidden="true"></i>
                     </button>
             </phone-input>
 
-            <transition name="slide" mode="out-in">
+            <transition name="slide">
                 <button v-show="!smsRequested" :class="'btn btn-primary btn-request btn-block btn-lg' + disabled" type="submit">
                     <spinner icon="paper-plane" :loading="isLoading" />
                     {{ $t('verify_phone.request_sms_button') }}
@@ -35,7 +35,7 @@
         </form>
 
 
-        <transition name="slide" mode="out-in">
+        <transition name="slide">
             <form v-if="smsRequested" @submit.prevent="castBallot">
                 <hr />
 

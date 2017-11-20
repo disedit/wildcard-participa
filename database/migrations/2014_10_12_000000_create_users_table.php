@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->rememberToken();
+            $table->boolean('is_superadmin');
             $table->timestamps();
         });
     }

@@ -1,9 +1,5 @@
 <template>
-    <div class="booth">
-        <router-link to="/">Step 1</router-link>
-        <router-link to="/booth/verify">Step 2</router-link>
-        <router-link to="/booth/receipt">Step 3</router-link>
-
+    <div class="booth" id="boothView">
         <transition :name="transitionName" mode="out-in">
             <router-view
                 class="child-view"
@@ -13,7 +9,8 @@
                 :phone="phone"
                 :country-code="countryCode"
                 :sms-code="smsCode"
-                :sms-requested="smsRequested" />
+                :sms-requested="smsRequested"
+                :receipt="receipt" />
         </transition>
 
         <error-modal :errors="errors" />
@@ -82,7 +79,7 @@
 
         watch: {
             selected: function(){
-                this.doneSelecting();
+                if(window.requestAnimationFrame) this.doneSelecting();
             }
         },
 
@@ -163,6 +160,7 @@
                 if(shouldScroll) {
                     jump('.ballot-identification', {
                         offset: -50,
+                        duration: 500,
                         callback: () => Bus.$emit('doneSelecting')
                     });
                 }
@@ -191,15 +189,15 @@
                     ballot: this.selected,
                     SID: this.ID,
                     phone: this.phone,
-                    countryCode: this.countryCode
+                    country_code: this.countryCode
                 }).then(response => {
-                    jump('.ballot-phone', { offset: -50 });
+                    jump('.ballot-phone', { offset: -50, duration: 500 });
                     this.smsRequested = true;
                     if(response.flag){
                         Bus.$emit('setFlag', response.flag);
                         if(response.flag.name == 'SMS_exceeded'){
                             this.phone = response.flag.info.last_number;
-                            this.countryCode = response.flag.info.last_country_code;
+                            this.countryCode = parseInt(response.flag.info.last_country_code);
                         }
                     }
                 }).catch(errors => {
@@ -214,7 +212,8 @@
                 Participa.castBallot({
                     ballot: this.selected,
                     SID: this.ID,
-                    phone: '00' + this.countryCode + this.phone,
+                    phone: this.phone,
+                    country_code: this.countryCode,
                     SMS_code: this.smsCode
                 }).then(response => {
                     this.receipt = response.ballot;
@@ -237,3 +236,10 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .booth {
+        padding-top: 2rem;
+        margin-top: -2rem;
+    }
+</style>

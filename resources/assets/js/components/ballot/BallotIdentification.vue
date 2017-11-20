@@ -17,12 +17,12 @@
         <hr />
 
         <button :class="'btn btn-vote btn-primary btn-lg btn-block' + disabled" type="submit">
-            <i v-if="disabled" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+            <i v-if="disabled" class="fa fa-spinner-third fa-spin" aria-hidden="true"></i>
             <i v-else class="fa fa-bullhorn" aria-hidden="true"></i>
             {{ $t('booth_identification.button') }}
         </button>
 
-        <p v-if="anonymous_voting" class="anonymous"><i class="fa fa-lock" aria-hidden="true"></i> {{ $t('booth_identification.anonymous_voting') }}</p>
+        <p v-if="anonymous_voting" class="anonymous"><i class="far fa-lock" aria-hidden="true"></i> {{ $t('booth_identification.anonymous_voting') }}</p>
     </div>
 </template>
 
@@ -69,6 +69,14 @@
         methods: {
             updateID(value) {
                 Bus.$emit('fieldUpdated', 'ID', value);
+
+                // Reset phone, country code and SMS request
+                // in case user came from a previous step
+                // and has changed their ID for whetever reason
+                Bus.$emit('fieldUpdated', 'phone', '');
+                Bus.$emit('fieldUpdated', 'countryCode', 34);
+                Bus.$emit('fieldUpdated', 'smsRequested', false);
+                Bus.$emit('fieldUpdated', 'smsCode', '');
             },
             focusID() {
                 this.autofocus = true;
