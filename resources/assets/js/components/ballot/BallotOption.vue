@@ -10,9 +10,7 @@
                 @change="selectOption(option, type)"
                 class="custom-control-input" />
 
-            <span class="custom-control-indicator"></span>
-
-            <span class="custom-control-description">
+            <span class="custom-control-label">
                 <span class="option-name">{{ option.option }}</span>
                 <span v-if="displayCost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
             </span>
