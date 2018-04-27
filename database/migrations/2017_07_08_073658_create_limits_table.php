@@ -18,6 +18,7 @@ class CreateLimitsTable extends Migration
             $table->integer('edition_id')->unsigned();
             $table->string('ip', 50);
             $table->string('action', 50);
+            $table->string('value', 100)->nullable();
             $table->text('user_agent');
             $table->timestamps();
 
