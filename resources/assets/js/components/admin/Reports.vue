@@ -13,7 +13,7 @@
             <hr class="mt-2 mb-3" />
 
             <div v-if="!loading" class="report-wrapper">
-                <div v-if="reports">
+                <div v-if="reports.length > 0">
                     <div v-for="report in reports" class="report">
                         <div v-if="report.type == 'limit'">
                             <span class="report-icon far fa-ban" aria-hidden="true"></span>
@@ -41,11 +41,11 @@
                                         <th>ref</th>
                                         <td>{{ report.data.ballot.ref }}</td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="anonymous_voting">
                                         <th>dni</th>
                                         <td>{{ report.data.voter.SID }}</td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="anonymous_voting">
                                         <th>mòvil</th>
                                         <td>{{ report.data.voter.SMS_phone }}</td>
                                     </tr>
@@ -73,8 +73,10 @@
                         </div>
                     </div>
                 </div>
-                <div v-else>
-                    Cap incidència a mostrar
+                <div v-else class="report-empty text-center">
+                    <span class="far fa-clipboard-check fa-3x fa-tw mt-3"></span>
+                    <h4 class="mt-2">Cap incidència</h4>
+                    <p>Tot correcte pel moment.</p>
                 </div>
             </div>
             <div v-else class="text-center">
@@ -92,12 +94,14 @@
         data() {
             return {
                 reports: {},
-                loading: true
+                loading: true,
+                anonymous_voting: false,
             }
         },
 
         mounted() {
             this.loadReports();
+            this.anonymous_voting = window.app.config.anonymous_voting;
         },
 
         methods: {
@@ -176,6 +180,10 @@
 
         &-info {
             font-size: 0.75rem;
+            color: $gray-light;
+        }
+
+        &-empty {
             color: $gray-light;
         }
     }
