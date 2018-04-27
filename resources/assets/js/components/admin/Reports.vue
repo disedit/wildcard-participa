@@ -120,10 +120,16 @@
             unblock(ip) {
                 this.loading = true;
 
-                Participa.unblockIp(ip)
-                    .then(response => {
-                        this.loadReports(); /* Refresh reports */
-                    });
+                const confirmed = confirm("Estàs segur que vols desbloquejar la IP " + ip + "?");
+
+                if(confirmed) {
+                    Participa.unblockIp(ip)
+                        .then(response => {
+                            this.loadReports(); /* Refresh reports */
+                        });
+                } else {
+                    this.loading = false;
+                }
             }
         }
     }
