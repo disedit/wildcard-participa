@@ -20,6 +20,7 @@ class CreateLimitsTable extends Migration
             $table->string('action', 50);
             $table->string('value', 100)->nullable();
             $table->text('user_agent');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('edition_id')->references('id')->on('editions');
