@@ -174,6 +174,8 @@ class AdminController extends Controller
                     ->get()
                     ->map(function ($item) {
                         $item['type'] = 'report';
+                        $item['data'] = json_decode($item['attachment']);
+                        unset($item['attachment']);
                         return $item;
                     })
                     ->toArray();
