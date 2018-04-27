@@ -16,26 +16,28 @@
                 <div v-if="reports">
                   <div v-for="report in reports" class="report">
                       <div v-if="report.type == 'limit'">
-                          <span class="report-date">
-                              {{ report.created_at }}
-                          </span>
-                          <span class="report-message" v-if="report.action == 'vote'">
+                          <span class="report-icon far fa-ban" aria-hidden="true"></span>
+                          <div class="report-message" v-if="report.action == 'vote'">
                               La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha excedit el límit de vots.
-                              <button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button>
-                          </span>
-                          <span class="report-message" v-else>
+                              <div><button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button></div>
+                          </div>
+                          <div class="report-message" v-else>
                               La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha sigut bloquejada per intentar esdevinar el camp DNI massa voltes.
-                              <button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button>
-                          </span>
+                              <div><button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button></div>
+                          </div>
+                          <div class="report-info">
+                              {{ report.created_at }}
+                          </div>
                       </div>
 
                       <div v-else>
-                          <span class="report-date">
-                              {{ report.created_at }}
-                          </span>
-                          <span class="report-message">
+                          <span class="report-icon far fa-file-alt" aria-hidden="true"></span>
+                          <div class="report-message">
                               {{ report.report }}
-                          </span>
+                          </div>
+                          <div class="report-info">
+                              {{ report.created_at }} | {{ report.user.name }}
+                          </div>
                       </div>
                   </div>
               </div>
@@ -95,13 +97,40 @@
     @import '../../../sass/_variables';
 
     .report-wrapper {
-        max-height: 400px;
+        max-height: 500px;
         overflow-y: scroll;
     }
 
     .report {
-        padding: 1rem 0;
+        padding: 0.5rem 0.5rem 0.5rem 2.5rem;
         border-bottom: 1px $gray-lighter solid;
+        position: relative;
+
+        &-icon {
+            position: absolute;
+            top: 0.75rem;
+            left: 0;
+            font-size: 2rem;
+            color: $gray-light;
+
+            &.fa-ban {
+                font-size: 1.75rem;
+            }
+        }
+
+        &-message {
+            .btn-outline-secondary {
+                padding: 0.15rem 0.5rem;
+                margin: 0.5rem 0;
+                font-size: 0.75rem;
+                border-radius: 20px;
+            }
+        }
+
+        &-info {
+            font-size: 0.75rem;
+            color: $gray-light;
+        }
     }
 
     .report:last-child {
