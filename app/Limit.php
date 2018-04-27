@@ -29,7 +29,7 @@ class Limit extends Model
      *
      * @return boolean
      */
-    public static function logAction($action, $editionId = null, $value)
+    public static function logAction($action, $editionId = null, $value = null)
     {
         $editionId = ($editionId) ? $editionId : Edition::current()->id;
         $limit = new Self;
