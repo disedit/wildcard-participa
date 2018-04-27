@@ -91,9 +91,9 @@ class Limit extends Model
      *
      * @return boolean
      */
-    public static function unblock($ip)
+    public static function unblock($ip, $editionId = null)
     {
-        $editionId = Edition::current()->id;
+        $editionId = ($editionId) ? $editionId : Edition::current()->id;
 
         return Self::where('edition_id', $editionId)
             ->where('ip', $ip)

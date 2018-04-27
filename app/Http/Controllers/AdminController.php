@@ -199,9 +199,23 @@ class AdminController extends Controller
      */
     public function unblock(Request $request)
     {
+        $user = Auth::user();
+        $edition = Edition::current();
         $ip = $request->input('ip');
 
-        $unblock = Limit::unblock($ip);
+        /* Unblock the IP */
+        $unblock = Limit::unblock($ip, $edition->id);
+
+        /* Create an automatic report */
+        $report = new Report();
+        $report->edition_id = $edition->id;
+        $report->user_id = $user->id;
+        $report->report = 'IP desbloquejada';
+        $report->reason = '';
+        $report->attachment = json_encode(['ip' => $ip]);
+        $report->ip_address = $request->ip();
+        $report->user_agent = $request->header('User-Agent');
+        $report->save();
 
         return response()->json(['ip' => $ip, 'deleted' => $unblock]);
     }
