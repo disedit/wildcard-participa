@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Edition;
 use App\Voter;
 use App\Report;
+use App\Limit;
 
 class AdminController extends Controller
 {
@@ -156,4 +157,68 @@ class AdminController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * Display results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reports(Request $request)
+    {
+        $full = $request->input('full', false);
+
+        $edition = Edition::current();
+
+        // Get anulled ballots and error reports
+        $reports = $edition->reports()
+                    ->with('user')
+                    ->get()
+                    ->map(function ($item) {
+                        $item['type'] = 'report';
+                        $item['data'] = json_decode($item['attachment']);
+                        unset($item['attachment']);
+                        return $item;
+                    })
+                    ->toArray();
+
+        // Get IPs over limit
+        $voteLimit = Limit::getReports($edition->id, 'vote');
+        $lookupLimit = Limit::getReports($edition->id, 'IDFailedLookUp');
+
+        // Combine all the info into one array and sort it by date
+        $combined = collect([$reports, $voteLimit, $lookupLimit])
+                    ->collapse()
+                    ->sortByDesc(function($item) {
+                        return strtotime($item['created_at']);
+                    })->values()->all();
+
+        return response()->json(['reports' => $combined]);
+    }
+
+    /**
+     * Unblock an IP
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unblock(Request $request)
+    {
+        $user = Auth::user();
+        $edition = Edition::current();
+        $ip = $request->input('ip');
+
+        /* Unblock the IP */
+        $unblock = Limit::unblock($ip, $edition->id);
+
+        /* Create an automatic report */
+        $report = new Report();
+        $report->edition_id = $edition->id;
+        $report->user_id = $user->id;
+        $report->report = 'IP desbloquejada';
+        $report->reason = '';
+        $report->attachment = json_encode(['ip' => $ip]);
+        $report->ip_address = $request->ip();
+        $report->user_agent = $request->header('User-Agent');
+        $report->save();
+
+        return response()->json(['ip' => $ip, 'deleted' => $unblock]);
+    }
 }

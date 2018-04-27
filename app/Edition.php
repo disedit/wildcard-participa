@@ -64,6 +64,14 @@ class Edition extends Model
     }
 
     /**
+     * Get the logged IPs beloging to the edition.
+     */
+    public function limits()
+    {
+        return $this->hasMany('App\Limit');
+    }
+
+    /**
      * Get the current edition, along with the ballot
      *
      * @return object
