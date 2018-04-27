@@ -21,11 +21,11 @@
                           </span>
                           <span class="report-message" v-if="report.action == 'vote'">
                               La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha excedit el límit de vots.
-                              <button>Desbloqueja</button>
+                              <button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button>
                           </span>
                           <span class="report-message" v-else>
                               La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha sigut bloquejada per intentar esdevinar el camp DNI massa voltes.
-                              <button>Desbloqueja</button>
+                              <button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button>
                           </span>
                       </div>
 
@@ -75,6 +75,16 @@
                     .then(response => {
                         this.reports = response.reports;
                         this.loading = false;
+                    });
+            },
+
+            /* Unblock an IP */
+            unblock(ip) {
+                this.loading = true;
+
+                Participa.unblockIp(ip)
+                    .then(response => {
+                        this.loadReports(); /* Refresh reports */
                     });
             }
         }

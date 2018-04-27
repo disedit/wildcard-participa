@@ -40,6 +40,10 @@ export default class Participa {
         return this._call('get', 'reports', { params: { full } });
     }
 
+    unblockIp(ip) {
+        return this._call('post', 'unblock', { ip });
+    }
+
     _call(type, url, data) {
         return new Promise((resolve, reject) => {
             axios[type](this.apiURL + url, data).then(response => {

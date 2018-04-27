@@ -87,6 +87,20 @@ class Limit extends Model
     }
 
     /**
+     * Groups
+     *
+     * @return boolean
+     */
+    public static function unblock($ip)
+    {
+        $editionId = Edition::current()->id;
+
+        return Self::where('edition_id', $editionId)
+            ->where('ip', $ip)
+            ->delete();
+    }
+
+    /**
      * Returns the user IP, accounting for Cloudflare
      *
      * @return string

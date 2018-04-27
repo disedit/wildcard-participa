@@ -191,4 +191,18 @@ class AdminController extends Controller
 
         return response()->json(['reports' => $combined]);
     }
+
+    /**
+     * Unblock an IP
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unblock(Request $request)
+    {
+        $ip = $request->input('ip');
+
+        $unblock = Limit::unblock($ip);
+
+        return response()->json(['ip' => $ip, 'deleted' => $unblock]);
+    }
 }
