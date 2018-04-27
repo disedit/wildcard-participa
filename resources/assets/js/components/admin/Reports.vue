@@ -20,11 +20,11 @@
                               {{ report.created_at }}
                           </span>
                           <span class="report-message" v-if="report.action == 'vote'">
-                              La IP <a href=""><strong>{{ report.ip }}</strong></a> ha excedit el límit de vots.
+                              La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha excedit el límit de vots.
                               <button>Desbloqueja</button>
                           </span>
                           <span class="report-message" v-else>
-                              La IP <a href=""><strong>{{ report.ip }}</strong></a> ha sigut bloquejada per intentar esdevinar el camp DNI massa voltes.
+                              La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha sigut bloquejada per intentar esdevinar el camp DNI massa voltes.
                               <button>Desbloqueja</button>
                           </span>
                       </div>
