@@ -9,11 +9,14 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
   - php artisan key:generate
   - php artisan migrate
+  - npm install npm@latest -g
+  - npm install
 
 before_install:
   - mysql -e 'CREATE DATABASE wildcard_participa_tests;'
 
 script:
+  - npm run production
   - phpunit
 
 services:
