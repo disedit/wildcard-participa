@@ -28,8 +28,7 @@ class ApiTest extends TestCase
         $response->assertSuccessful()
                  ->assertJson([
                      'id' => true,
-                     'name' => true,
-                     'questions' => true,
+                     'name' => true
                  ]);
     }
 
