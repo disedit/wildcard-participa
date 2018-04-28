@@ -93,6 +93,7 @@
 
             close() {
                 this.active = false;
+                Bus.$emit('focusOption', this.option);
             },
 
             toggleOption() {
