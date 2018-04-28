@@ -1,6 +1,6 @@
 @php
-    $docs = (!empty($edition->docs)) ? explode("\n", $edition->docs) : null;
-    $places = (!empty($edition->voting_places)) ? explode("\n", $edition->voting_places) : null;
+    $docs = (!empty($edition->docs)) ? explode("\n", $edition->docs) : array();
+    $places = (!empty($edition->voting_places)) ? explode("\n", $edition->voting_places) : array();
 @endphp
 
 <div class="sidebar">

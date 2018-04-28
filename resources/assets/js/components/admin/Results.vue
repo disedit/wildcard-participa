@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div v-if="turnout == 0" class="text-center">
+                <div v-if="turnout == 0" class="text-center results__empty">
                     <i class="far fa-envelope-open fa-3x fa-fw mt-3"></i>
                     <h4 class="mt-2">Cap vot encara</h4>
                     <p>Encara no s'ha emés cap papereta a aquesta votació</p>
@@ -137,9 +137,15 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../../sass/_variables';
+
     .results {
         &__refresh a:hover {
             text-decoration: none;
+        }
+
+        &__empty {
+            color: $gray-light;
         }
     }
 </style>

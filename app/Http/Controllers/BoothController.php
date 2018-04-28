@@ -101,7 +101,7 @@ class BoothController extends Controller
                 $voter->rollback();
                 return response()->json(['success' => false, 'error' => 'Error sistema']);
             } else {
-                if(!$request->user()) Limit::logAction('vote');
+                if(!$request->user()) Limit::logAction('vote', $editionId);
             }
         } else {
             return response()->json(['success' => false, 'error' => 'Error sistema']);

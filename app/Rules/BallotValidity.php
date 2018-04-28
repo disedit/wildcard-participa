@@ -55,7 +55,7 @@ class BallotValidity implements Rule
             })->first();
 
             /* If a question is not found, the ballot is invalid */
-            if(count($question) == 0) {
+            if(empty($question)) {
                 return false;
             }
 
@@ -78,7 +78,7 @@ class BallotValidity implements Rule
                 })->first();
 
                 /* If a selected option is not found, the ballot is invalid */
-                if(count($option) == 0) {
+                if(empty($option)) {
                     return false;
                 }
             }
