@@ -6,7 +6,8 @@
             <p class="description">{{ question.description }}</p>
         </div>
         <div :class="{ 'option-group': true, 'list-group': question.template != 'cards' }">
-            <label v-for="option in question.options"
+            <label
+                v-for="option in question.options"
                 :class="{
                     'option': true,
                     'list-group-item list-group-item-action': question.template != 'cards',
