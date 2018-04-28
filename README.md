@@ -1,4 +1,6 @@
 # Wildcard Participa
+[![Build Status](https://travis-ci.org/disedit/wildcard-participa.svg?branch=master)](https://travis-ci.org/disedit/wildcard-participa)
+
 ## About
 
 Wildcard Participa is an __online voting system__ aimed at city councils.
