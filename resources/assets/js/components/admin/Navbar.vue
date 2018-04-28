@@ -10,14 +10,14 @@
         </a>
 
         <b-collapse is-nav id="user_actions">
-            <b-nav is-nav-bar class="ml-auto">
+            <b-navbar-nav class="ml-auto">
                 <b-nav-item-dropdown :text="user.name" right>
                     <form method="post" action="/logout">
                         <input type="hidden" name="_token" :value="csrfToken" />
                         <button type="submit" class="dropdown-item"><i class="far fa-sign-out-alt" aria-hidden="true"></i> Tanca sessió</button>
                     </form>
                 </b-nav-item-dropdown>
-            </b-nav>
+            </b-navbar-nav>
         </b-collapse>
     </b-navbar>
 </template>
