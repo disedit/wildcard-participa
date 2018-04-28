@@ -131,6 +131,11 @@
 
 .template-cards {
     .option {
+      display: flex;
+      margin-bottom: 0;
+    }
+
+    .option-wrapper {
         position: relative;
         width: 100%;
         margin: 0.75rem 0;
@@ -153,36 +158,36 @@
         &:active {
             background: lighten($brand-primary, 45%);
         }
+    }
 
-        &.selected {
-            background: $brand-primary;
+    .option.selected .option-wrapper {
+        background: $brand-primary;
+        color: #FFF;
+        box-shadow: $card-raised-shadow;
+        transform: translateY(-4px);
+        border-color: $brand-primary;
+
+        &:hover {
+            background: darken($brand-primary, 5%);
+            border-color: darken($brand-primary, 5%);
+        }
+
+        .option-cost, a {
             color: #FFF;
-            box-shadow: $card-raised-shadow;
-            transform: translateY(-4px);
-            border-color: $brand-primary;
-
-            &:hover {
-                background: darken($brand-primary, 5%);
-                border-color: darken($brand-primary, 5%);
-            }
-
-            .option-cost, a {
-                color: #FFF;
-                opacity: 0.8;
-            }
-
-            .custom-control-indicator {
-                box-shadow: 0 0 0 1px #F1F2F3, 0 0 0 3px #2980b9 !important;
-            }
+            opacity: 0.8;
         }
 
-        &.disabled:hover {
-            background: #FFF;
-            color: $gray-lightest;
-            box-shadow: $card-shadow;
-            transform: none;
-            border: 2px darken($gray-lighter, 10%) solid;
+        .custom-control-label:before {
+            box-shadow: 0 0 0 1px #F1F2F3, 0 0 0 3px #2980b9 !important;
         }
+    }
+
+    .option.disabled:hover .option-wrapper {
+        background: #FFF;
+        color: $gray-lightest;
+        box-shadow: $card-shadow;
+        transform: none;
+        border: 2px darken($gray-lighter, 10%) solid;
     }
 }
 
@@ -217,16 +222,13 @@
   }
 
   .template-cards {
-      .option {
-          height: 160px;
-      }
-
       .option-group {
         display: flex;
         flex-wrap: wrap;
       }
 
-      .option-item {
+      .option {
+        height: 160px;
         width: 50%;
 
         &:nth-child(even) {
