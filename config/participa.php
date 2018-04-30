@@ -45,6 +45,12 @@ return [
     /* Main logo to display on all pages */
     'logo' => 'logo.png',
 
+    /* Main logo for dark backgrounds */
+    'logo_dark' => 'logo-dark.png',
+
+    /* Navbar: light or colorful */
+    'navbar' => 'colorful',
+
     /* Maximum votes a single IP may cast */
     'max_per_ip' => 20,
 
