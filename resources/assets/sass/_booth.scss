@@ -153,6 +153,10 @@
             transform: translateY(-4px);
             box-shadow: $card-raised-shadow;
             border-color: lighten($brand-primary, 10%);
+
+            .custom-control-label:before {
+                background: rgba(0, 0, 0, 0.1);
+            }
         }
 
         &:active {
