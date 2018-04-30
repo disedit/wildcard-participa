@@ -73,6 +73,15 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         .far {
             margin-right: 0.5rem;
         }
+
+        a:hover {
+            text-decoration: none;
+
+            span {
+              text-decoration: underline;
+            }
+        }
+
     }
 
     p:last-child {

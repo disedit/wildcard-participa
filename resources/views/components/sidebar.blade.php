@@ -26,22 +26,22 @@
                 <li class="sidebar__list__item">
                     @if(isset($isArchive) && Request::segment(3) == 'about')
                         {{-- This is the archive and we are in the about page --}}
-                        <a href="{{ secure_url('archive/' . $edition->id) }}"><i class="far fa-chart-bar" aria-hidden="true"></i>@lang('participa.results')</a>
+                        <a href="{{ secure_url('archive/' . $edition->id) }}"><i class="far fa-chart-bar fa-fw" aria-hidden="true"></i> <span>@lang('participa.results')</span></a>
                     @elseif(isset($isArchive) && Request::segment(3) != 'about')
                         {{-- This is the archive and we are in the main (results) page --}}
-                        <a href="{{ secure_url('archive/' . $edition->id . '/about') }}"><i class="far fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
+                        <a href="{{ secure_url('archive/' . $edition->id . '/about') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
                     @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen() )
                         {{-- This is not the archive, edition is open but we are not in the main vote page --}}
-                        <a href="{{ secure_url('') }}"><i class="far fa-bullhorn" aria-hidden="true"></i>@lang('participa.vote')</a>
+                        <a href="{{ secure_url('') }}"><i class="far fa-bullhorn fa-fw" aria-hidden="true"></i> <span>@lang('participa.vote')</span></a>
                     @elseif(!isset($isArchive) && Request::segment(1) != 'about' && !$edition->isPending())
                         {{-- This is not the archive, we are in the main page and it does not contain the about page  --}}
-                        <a href="{{ secure_url('about') }}"><i class="far fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
+                        <a href="{{ secure_url('about') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
                     @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->resultsPublished())
                         {{-- This is not the archive, we are in the about page and results are published  --}}
-                        <a href="{{ secure_url('') }}"><i class="far fa-chart-bar" aria-hidden="true"></i>@lang('participa.results')</a>
+                        <a href="{{ secure_url('') }}"><i class="far fa-chart-bar fa-fw" aria-hidden="true"></i> <span>@lang('participa.results')</span></a>
                     @elseif(Request::segment(1) == 'propose')
                         {{-- This is not the archive page and we are in the popose page --}}
-                        <a href="{{ secure_url('') }}"><i class="far fa-info-circle" aria-hidden="true"></i>@lang('participa.more_info')</a>
+                        <a href="{{ secure_url('') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
                     @endif
                 </li>
 
@@ -50,15 +50,15 @@
                         @php
                             $part = explode(",", $doc);
                         @endphp
-                        <li>
-                            <a href="{{ $var = isset($part[1]) ? $part[1] : '' }}" target="_blank" rel="noopener" class="sidebar__list__item">
+                        <li class="sidebar__list__item">
+                            <a href="{{ $var = isset($part[1]) ? $part[1] : '' }}" target="_blank" rel="noopener">
                                 @isset($part[2])
-                                    <i class="far fa-{{ $part[2] }}" aria-hidden="true"></i>
+                                    <i class="far fa-{{ $part[2] }} fa-fw" aria-hidden="true"></i>
                                 @else
-                                    <i class="far fa-file-alt" aria-hidden="true"></i>
+                                    <i class="far fa-file-alt fa-fw" aria-hidden="true"></i>
                                 @endif
 
-                                {{ $part[0] }}
+                                <span>{{ $part[0] }}</span>
                             </a>
                         </li>
                     @endforeach
