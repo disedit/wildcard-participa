@@ -1,12 +1,17 @@
 @php
     $logoUrl = (config('participa.navbar') == 'colorful')
-                    ? config('participa.logo_white', 'logo-white.png')
-                    : config('participa.logo', 'logo.png');
+                    ? config('participa.logo_dark')
+                    : config('participa.logo');
 @endphp
 
 <nav class="navbar fixed-top navbar-expand-lg {{ (config('participa.navbar') == 'colorful') ? 'navbar-dark' : 'navbar-light' }}">
   <a class="navbar-brand" href="/">
-      <img src="{{ secure_asset('images/' . $logoUrl) }}" alt="{{ config('app.name', 'Participa') }}" />
+        {{ $logoUrl }}
+        @if($logoUrl)
+            <img src="{{ secure_asset('images/' . $logoUrl) }}" alt="{{ config('app.name', 'Participa') }}" />
+        @else
+            {{ config('app.name', 'Participa') }}
+        @endif
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

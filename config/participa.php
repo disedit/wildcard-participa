@@ -43,10 +43,10 @@ return [
     */
 
     /* Main logo to display on all pages */
-    'logo' => 'logo.png',
+    'logo' => null,
 
     /* Main logo for dark backgrounds */
-    'logo_dark' => 'logo-dark.png',
+    'logo_dark' => null,
 
     /* Navbar: light or colorful */
     'navbar' => 'colorful',
