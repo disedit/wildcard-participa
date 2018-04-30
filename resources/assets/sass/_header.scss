@@ -46,6 +46,7 @@
   padding: 2rem 0;
   margin-bottom: 2rem;
   overflow: hidden;
+  border-bottom: 1px $gray-lighter solid;
 
   h2 {
     font-size: 2.5rem;
@@ -80,6 +81,38 @@
   .right-hands {
     background: url('../images/hands-right.svg');
     right: -103px;
+  }
+
+  &.vote-info-compact {
+    h2 {
+      font-size: 1.75rem;
+      margin-right: 0;
+    }
+
+    .vote-info__intro {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    .vote-info__action {
+      display: none;
+    }
+
+    .left-hands,
+    .right-hands {
+      top: -38px;
+      opacity: 0.5;
+      width: 200px;
+      height: 200px;
+    }
+
+    .left-hands {
+      left: -74px;
+    }
+
+    .right-hands {
+      right: -78px;
+    }
   }
 }
 

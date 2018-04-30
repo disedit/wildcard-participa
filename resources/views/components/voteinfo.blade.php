@@ -1,4 +1,4 @@
-<div class="vote-info">
+<div class="vote-info {{ (!Request::segment(1)) ? 'vote-info-full' : 'vote-info-compact' }}">
     <div class="left-hands"></div>
     <div class="right-hands"></div>
     <div class="container">
