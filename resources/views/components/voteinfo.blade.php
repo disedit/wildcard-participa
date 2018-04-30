@@ -1,4 +1,6 @@
 <div class="vote-info">
+    <div class="left-hands"></div>
+    <div class="right-hands"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-8 vote-info__text">
