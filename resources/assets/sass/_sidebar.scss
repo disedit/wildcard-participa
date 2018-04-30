@@ -4,6 +4,8 @@ $sidebar-text: $gray-light;
 $sidebar-text-secondary: lighten($sidebar-text, 15%);
 
 .sidebar {
+    position: relative;
+
     &__box {
         position: relative;
         background: $sidebar-background;
@@ -57,17 +59,6 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
           background: $brand-primary;
           background: $brand-primary-gradient;
         }
-
-        &:after {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 1rem;
-            border-top: 1rem transparent solid;
-            border-left: 1rem transparent solid;
-            border-bottom: 1rem transparent solid;
-            border-right: 1rem $sidebar-background solid;
-        }
     }
 
     &__propose {
@@ -113,6 +104,17 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
 
     p:last-child {
         margin-bottom: 0;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: -2rem;
+        top: 1.25rem;
+        border-top: 1rem transparent solid;
+        border-left: 1rem transparent solid;
+        border-bottom: 1rem transparent solid;
+        border-right: 1rem $sidebar-background solid;
     }
 }
 
