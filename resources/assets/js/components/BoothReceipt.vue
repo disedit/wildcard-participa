@@ -99,6 +99,7 @@
             font-size: 2.25rem;
             color: $gray;
             margin-top: 1rem;
+            font-weight: 700;
         }
     }
 

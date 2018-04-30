@@ -6,6 +6,7 @@
 
     h3 {
         font-weight: bold;
+        font-size: 1.5rem;
     }
 
     hr {
@@ -216,6 +217,12 @@
 }
 
 @include media-breakpoint-up(lg) {
+  .ballot-box {
+    h3 {
+      font-size: 1.75rem;
+    }
+  }
+
   .template-2column {
       .list-group {
           flex-direction: row;

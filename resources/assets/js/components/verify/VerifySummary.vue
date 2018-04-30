@@ -12,7 +12,7 @@
                     <li v-for="option in question.options">
                         <i class="far fa-check-square" aria-hidden="true"></i> {{ option.option }}
                     </li>
-                    <li v-if="question.options.length == 0"><em>{{ $t('verify_summary.blank') }}</em></li>
+                    <li v-if="question.options.length == 0"><em class="blank-vote">{{ $t('verify_summary.blank') }}</em></li>
                 </ul>
             </div>
 
@@ -72,6 +72,7 @@
 
         h3 {
             font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .options {
@@ -134,5 +135,9 @@
         .expand {
             background: transparent;
         }
+    }
+
+    .blank-vote {
+        opacity: 0.5;
     }
 </style>
