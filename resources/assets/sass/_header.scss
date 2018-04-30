@@ -47,6 +47,43 @@
     font-weight: 900;
     line-height: 1;
   }
+
+  .vote-info__action {
+    margin-top: 2rem;
+
+    a {
+      display: inline-block;
+      position: relative;
+      background: $white;
+      font-size: 1.25rem;
+      font-weight: bold;
+      padding: 0.75rem 2rem;
+      border-radius: 4px;
+      box-shadow: $box-shadow;
+      transition: 0.15s ease;
+
+      &:hover {
+        box-shadow: $box-raised-shadow;
+        text-decoration: none;
+        transform: translateY(-2px);
+
+        .fa {
+          border-right: 2px darken($gray-lighter, 10%) solid;
+        }
+      }
+
+      &:active {
+        transform: translateY(2px);
+      }
+
+      .fa {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+        border-right: 2px $gray-lighter solid;
+        padding-right: 0.75rem;
+      }
+    }
+  }
 }
 
 @include media-breakpoint-up(lg) {

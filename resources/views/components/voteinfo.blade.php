@@ -5,7 +5,7 @@
                 <h2>@lang('participa.heading')</h2>
                 <p>@lang('participa.subheading')</p>
                 <p class="vote-info__action">
-                    <a href="/">Vote</a>
+                    <a href="/" class="big-button"><i data-v-e1cbafd4="" aria-hidden="true" class="fa fa-bullhorn"></i> Vote</a>
                 </p>
             </div>
 
