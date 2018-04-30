@@ -7,7 +7,7 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
     &__box {
         position: relative;
         background: $sidebar-background;
-        padding: 1.75rem 1.5rem 1.5rem;
+        padding: 1.85rem 1.5rem 1.5rem;
         margin-bottom: 1.5rem;
 
         h3 {
@@ -36,7 +36,7 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
           left: 0;
           top: 0;
           right: 0;
-          height: 0.25rem;
+          height: 0.35rem;
           background: $sidebar-text-secondary;
         }
     }
@@ -51,7 +51,7 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
           left: 0;
           top: 0;
           right: 0;
-          height: 0.25rem;
+          height: 0.35rem;
           background: $brand-primary;
           background: $brand-primary-gradient;
         }
