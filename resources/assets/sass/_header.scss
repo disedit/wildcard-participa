@@ -12,6 +12,10 @@
   &-social {
     margin-right: 1rem;
 
+    .nav-item {
+      margin: 0.5rem 0;
+    }
+
     a {
       margin: 0 0.5rem;
       opacity: 0.75;
@@ -26,6 +30,10 @@
     .fa, .fab {
       font-size: 1.25rem;
     }
+  }
+
+  &-languages {
+    margin: 1rem 0;
   }
 }
 
@@ -50,5 +58,15 @@
     h2, p {
       margin-right: 100px;
     }
+  }
+
+  .navbar-social {
+    .nav-item {
+      margin: 0;
+    }
+  }
+
+  .navbar-languages {
+    margin: 0;
   }
 }
