@@ -14,7 +14,7 @@
 
     <title>@yield('title'){{ config('app.name', 'Participa') }}</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,500,700" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="/fonts/fontawesome/css/fontawesome.min.css" rel="stylesheet">
     <link href="/fonts/fontawesome/css/fa-regular.min.css" rel="stylesheet">
@@ -34,31 +34,19 @@
       ga('send', 'pageview');
     </script>
 
+    @section('header')
+        @include('components/header')
+
+        @if(!$inPerson)
+            <div class="main-banner">
+                @include('components/voteinfo')
+            </div>
+        @else
+            <hr />
+        @endif
+    @show
+
     <div class="container main-container">
-        @section('header')
-            <header class="header row flex-column flex-sm-row">
-                <div class="col-12 col-md-5 logo">
-                    <a href="/">
-                        <h1><img src="{{ secure_asset('images/' . config('participa.logo', 'logo.png')) }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
-                    </a>
-                </div>
-                <div class="col-12 col-md-7 links d-print-none">
-                    @include('components/social')
-                    @include('components/languages')
-                </div>
-            </header>
-
-            @if(!$inPerson)
-                <div class="row">
-                    <div class="col">
-                        @include('components/voteinfo')
-                    </div>
-                </div>
-            @else
-                <hr />
-            @endif
-        @show
-
         @isset($isArchive)
             <div class="alert alert-info mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
         @endisset

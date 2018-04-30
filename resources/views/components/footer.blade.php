@@ -30,5 +30,9 @@
                 <p>@lang('participa.help'): <a href="mailto:{{ config('participa.contact_email', 'participa@disedit.com') }}">{{ config('participa.contact_email', 'participa@disedit.com') }}</a></p>
             </address>
         </div>
+
+        <div class="footer-language">
+            @include('components/languages')
+        </div>
     </div>
 </footer>

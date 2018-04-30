@@ -1,11 +1,6 @@
 // Variables
 
-
 // Colors
-//
-// Grayscale and brand colors for use across Bootstrap.
-
-// Start with assigning color names to specific hex values.
 $white:  #fff;
 $black:  #000;
 $red:    #e74c3c;
@@ -17,7 +12,7 @@ $teal:   #5bc0de;
 $pink:   #ff5b77;
 $purple: #613d7c;
 
-// Create grayscale
+// Grayscale
 $gray-dark:                 #292b2c;
 $gray:                      #464a4c;
 $gray-light:                #636c72;
@@ -49,7 +44,7 @@ $enable-print-styles:       true;
 //
 // Settings for the `<body>` element.
 
-$body-bg:       #F1F2F3;
+$body-bg:       $white;
 $body-color:    $gray-dark;
 $inverse-bg:    $gray-dark;
 $inverse-color: $gray-lighter;
@@ -69,7 +64,7 @@ $link-hover-decoration: underline;
 //
 // Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif: "Roboto", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-sans-serif: "Muli", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 $font-family-serif:      Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:  Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 $font-family-base:       $font-family-sans-serif;
