@@ -36,7 +36,7 @@ const scrollBehavior = (to, from, savedPosition) => {
     if (savedPosition) {
         return savedPosition;
     } else {
-        return { selector: '#boothView', offset: { x: 0, y: 0 } };
+        return { offset: { x: 0, y: 0 } };
     }
 };
 
