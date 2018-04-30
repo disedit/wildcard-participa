@@ -7,10 +7,10 @@ $red:    #e74c3c;
 $orange: #e67e22;
 $yellow: #f1c40f;
 $green:  #2ecc71;
-$blue:   #2980b9;
+$blue:   #3133AA;
 $teal:   #5bc0de;
 $pink:   #ff5b77;
-$purple: #613d7c;
+$purple: #7A52BD;
 
 // Grayscale
 $gray-dark:                 #292b2c;
@@ -26,6 +26,7 @@ $brand-info:                $teal;
 $brand-warning:             $orange;
 $brand-danger:              $red;
 $brand-inverse:             $gray-dark;
+$brand-primary-gradient:    linear-gradient(135deg, $blue 0%, $purple 100%);
 
 
 // Options

@@ -1,4 +1,7 @@
 .navbar {
+  background: $brand-primary;
+  background: $brand-primary-gradient;
+
   .navbar-brand {
     h1 {
       margin-bottom: 0;
@@ -40,7 +43,7 @@
 .vote-info {
   position: relative;
   background: $gray-lightest;
-  padding: 2rem;
+  padding: 2rem 0;
   margin-bottom: 2rem;
   overflow: hidden;
 
@@ -48,27 +51,34 @@
     font-size: 2.5rem;
     font-weight: 900;
     line-height: 1;
+    padding-right: 4rem;
+  }
+
+  .vote-info__intro {
+    padding-right: 4rem;
   }
 
   .vote-info__action {
     margin-top: 2rem;
   }
 
-  .left-hands {
-    width: 250px;
-    height: 250px;
-    background: url('../images/hands-left.svg');
-    background-repeat: no-repeat;
-    position: absolute;
-    left: -113px;
-  }
-
+  .left-hands,
   .right-hands {
     width: 250px;
     height: 250px;
-    background: url('../images/hands-right.svg');
     background-repeat: no-repeat;
     position: absolute;
+    opacity: 0.25;
+  }
+
+  .left-hands {
+    background: url('../images/hands-left.svg');
+    left: -113px;
+    display: none;
+  }
+
+  .right-hands {
+    background: url('../images/hands-right.svg');
     right: -103px;
   }
 }
@@ -92,5 +102,18 @@
 
   .navbar-languages {
     margin: 0;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .vote-info {
+    .left-hands,
+    .right-hands {
+      opacity: 1;
+    }
+
+    .left-hands {
+      display: block;
+    }
   }
 }
