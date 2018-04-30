@@ -7,6 +7,7 @@
         list-style: none;
         border: 1px $gray-400 solid;
         min-width: 140px;
+        @include border-radius(0.25rem);
 
         & > a {
             display: block;
@@ -26,6 +27,7 @@
         &:hover {
             background: $gray-light;
             border: 1px $gray-light solid;
+            @include border-radius(0.25rem 0.25rem 0 0);
 
             a {
                 text-decoration: none;
@@ -43,6 +45,8 @@
         left: 0;
         right: 0;
         background: $gray-light;
+        @include border-radius(0 0 0.25rem 0.25rem);
+        overflow: hidden;
 
         li {
             list-style: none;

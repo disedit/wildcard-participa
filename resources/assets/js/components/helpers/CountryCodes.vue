@@ -27,12 +27,18 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../../sass/_variables';
+
     select {
         background-color: rgba(0, 0, 0, 0.15);
         border-width: 0;
-        border-radius: 0;
         width: 80px;
         height: 76px;
+        @if $enable-rounded {
+            border-radius: 0.25rem 0 0 0.25rem;
+        } @else {
+            border-radius: 0;
+        }
     }
 
     select:disabled {

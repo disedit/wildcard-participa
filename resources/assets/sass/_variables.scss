@@ -33,7 +33,7 @@ $brand-primary-gradient:    linear-gradient(135deg, $blue 0%, $purple 100%);
 //
 // Quickly modify global styling by enabling or disabling optional features.
 
-$enable-rounded:            false;
+$enable-rounded:            true;
 $enable-shadows:            false;
 $enable-gradients:          false;
 $enable-transitions:        true;

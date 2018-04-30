@@ -9,6 +9,8 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         background: $sidebar-background;
         padding: 1.85rem 1.5rem 1.5rem;
         margin-bottom: 1.5rem;
+        @include border-radius(0.25rem);
+        overflow: hidden;
 
         h3 {
             font-size: 1.55rem;

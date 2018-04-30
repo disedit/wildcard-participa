@@ -66,6 +66,9 @@
         border: 4px $gray-lighter solid;
         margin: 0 auto;
         padding: $summary-padding;
+        @if $enable-rounded {
+            border-radius: 0.25rem 0.25rem 0 0;
+        }
 
         h3 {
             font-size: 1.2rem;
@@ -89,6 +92,9 @@
             background: $gray-lighter;
             border-color: $gray-lighter;
             cursor: pointer;
+            @if $enable-rounded {
+                border-radius: 0 0 0 0.25rem;
+            }
         }
     }
 
