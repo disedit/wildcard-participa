@@ -29,6 +29,7 @@ return [
     'print' => 'Imprimeix',
     'close' => 'Tanca',
     'ordered_randomly' => 'Ordenades alteatòriament',
+    'SMS_notification' => 'Tu código para votar es :code',
 
     /*
     |--------------------------------------------------------------------------
