@@ -63,6 +63,10 @@
 
   &__action {
     margin-top: 2rem;
+
+    a {
+      font-size: 1rem;
+    }
   }
 
   .left-hands,
@@ -88,7 +92,7 @@
   &.vote-info--compact {
     h2 {
       font-size: 1.5rem;
-      margin-right: 100px;
+      padding-right: 110px;
     }
 
     .vote-info__intro {
@@ -119,10 +123,18 @@
 
 @include media-breakpoint-up(md) {
   .vote-info {
+    h2 {
+      font-size: 3rem;
+    }
+
+    &__action a {
+      font-size: 1.25rem;
+    }
+
     &.vote-info--compact {
       h2 {
         font-size: 1.85rem;
-        margin-right: 0;
+        padding-right: 0;
       }
 
       .vote-info__intro {
@@ -164,12 +176,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .vote-info {
-    h2 {
-      font-size: 3rem;
-    }
-  }
-
   .navbar-social {
     .nav-item {
       margin: 0;
@@ -179,7 +185,6 @@
   .navbar-languages {
     margin: 0;
   }
-
 }
 
 @media only screen and (min-width: 1400px) {
