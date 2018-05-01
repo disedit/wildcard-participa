@@ -42,10 +42,9 @@
   position: relative;
   background: $gray-lightest;
   padding: 2rem 0;
-  margin-bottom: 2rem;
   overflow: hidden;
   border-bottom: 1px $gray-lighter solid;
-  background-image: url('../images/pattern3.svg');
+  background-image: url('../images/pattern.svg');
   background-size: 633px;
 
   h2 {
@@ -119,7 +118,7 @@
   .vote-info {
     &.vote-info--compact {
       h2 {
-        font-size: 1.75rem;
+        font-size: 1.85rem;
         margin-right: 0;
       }
 

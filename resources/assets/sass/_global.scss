@@ -1,5 +1,5 @@
 body {
-  padding-top: 58px;
+  padding-top: 56px;
 }
 
 body.booth-mode {
@@ -41,4 +41,9 @@ hr {
     border-right: 2px $gray-lighter solid;
     padding-right: 0.75rem;
   }
+}
+
+.main-background {
+  padding: 2rem;
+  background: $white;
 }

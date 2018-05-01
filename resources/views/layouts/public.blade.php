@@ -42,19 +42,22 @@
         @endif
     @show
 
-    <div class="container main-container">
-        @isset($isArchive)
-            <div class="alert alert-info mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
-        @endisset
+    <div class="main-background">
+        <div class="container main-container">
+            @isset($isArchive)
+                <div class="alert alert-info mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
+            @endisset
 
-        @yield('content')
-
-        @section('footer')
-            <hr />
-
-            @include('components/footer')
-        @show
+            @yield('content')
+        </div>
     </div>
+
+    @section('footer')
+        <div class="container">
+            @include('components/footer')
+        </div>
+    @show
+
 
     <script>
         // Toggle Bootstrap menu without jQuery
