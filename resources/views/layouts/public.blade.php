@@ -42,7 +42,7 @@
         @endif
     @show
 
-    <div class="main-background">
+    <div class="main-background" id="content">
         <div class="container main-container">
             @isset($isArchive)
                 <div class="alert alert-info mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>

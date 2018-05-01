@@ -30,7 +30,7 @@
                     @elseif(isset($isArchive) && Request::segment(3) != 'about')
                         {{-- This is the archive and we are in the main (results) page --}}
                         <a href="{{ secure_url('archive/' . $edition->id . '/about') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
-                    @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen() )
+                    @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen())
                         {{-- This is not the archive, edition is open but we are not in the main vote page --}}
                         <a href="{{ secure_url('') }}"><i class="far fa-bullhorn fa-fw" aria-hidden="true"></i> <span>@lang('participa.vote')</span></a>
                     @elseif(!isset($isArchive) && Request::segment(1) != 'about' && !$edition->isPending())
@@ -67,7 +67,7 @@
 
             @if(!isset($isArchive) && $edition->inProposalPhase() && Request::segment(1) != 'propose')
                 <div class="sidebar__propose">
-                    <a href="{{ secure_url('propose') }}" class="btn btn-primary btn-lg btn-block"><i class="far fa-pencil-alt" aria-hidden="true"></i> @lang('participa.propose_cta')</a>
+                    <a href="{{ secure_url('propose') }}" class="btn btn-secondary btn-lg btn-block"><i class="far fa-pencil-alt" aria-hidden="true"></i> @lang('participa.propose_cta')</a>
                 </div>
             @endif
         </div>
@@ -121,7 +121,7 @@
                 @foreach($pastEditions as $edition)
                     <li class="sidebar__list__item">
                         <a href="{{ secure_url('archive/' . $edition->id) }}">
-                            <i class="far fa-calendar-alt" aria-hidden="true"></i> {{ human_month($edition->start_date) }}
+                            <i class="far fa-calendar-alt" aria-hidden="true"></i> <span>{{ human_month($edition->start_date) }}</span>
                         </a>
                     </li>
                 @endforeach

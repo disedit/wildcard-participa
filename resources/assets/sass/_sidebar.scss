@@ -34,6 +34,10 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
             word-break: break-word;
         }
 
+        .btn-secondary {
+          @include border-radius(0 0 0.25rem 0.25rem); 
+        }
+
         &:before {
           content: '';
           position: absolute;
