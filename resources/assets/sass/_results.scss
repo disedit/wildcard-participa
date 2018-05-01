@@ -1,5 +1,7 @@
 .results-page {
     h2 {
+        font-weight: 700;
+
         .far {
             color: $brand-primary;
         }
@@ -30,6 +32,7 @@
         background: $gray-500;
         margin: 1rem 0;
         padding: 0.5rem 0.75rem;
+        @include border-radius(0.25rem);
 
         &--top {
             background: $brand-primary;
@@ -46,7 +49,7 @@
         transition-timing-function: ease-out;
         transition-duration: .15s;
         border: 2px darken($gray-lighter, 10%) solid;
-        border-radius: 2px;
+        border-radius: 0.25rem;
 
         &:hover {
             text-decoration: none;

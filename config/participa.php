@@ -43,7 +43,13 @@ return [
     */
 
     /* Main logo to display on all pages */
-    'logo' => 'logo.png',
+    'logo' => null,
+
+    /* Main logo for dark backgrounds */
+    'logo_dark' => null,
+
+    /* Navbar: light or colorful */
+    'navbar' => 'colorful',
 
     /* Maximum votes a single IP may cast */
     'max_per_ip' => 20,

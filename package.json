@@ -19,7 +19,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "bootstrap": "^4.1.0",
+    "bootstrap": "^4.1.1",
     "bootstrap-vue": "^2.0.0-rc.9",
     "bulma": "^0.7.1",
     "format-number": "^3.0.0",
@@ -29,6 +29,7 @@
     "marked": "^0.3.19",
     "moment": "^2.22.1",
     "raven-js": "^3.24.2",
+    "smooth-scroll": "^12.1.5",
     "vue-focus": "^2.1.0",
     "vue-i18n": "^7.6.0",
     "vue-router": "^3.0.1",

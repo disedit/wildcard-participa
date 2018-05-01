@@ -12,7 +12,7 @@
                     <li v-for="option in question.options">
                         <i class="far fa-check-square" aria-hidden="true"></i> {{ option.option }}
                     </li>
-                    <li v-if="question.options.length == 0"><em>{{ $t('verify_summary.blank') }}</em></li>
+                    <li v-if="question.options.length == 0"><em class="blank-vote">{{ $t('verify_summary.blank') }}</em></li>
                 </ul>
             </div>
 
@@ -66,9 +66,13 @@
         border: 4px $gray-lighter solid;
         margin: 0 auto;
         padding: $summary-padding;
+        @if $enable-rounded {
+            border-radius: 0.25rem 0.25rem 0 0;
+        }
 
         h3 {
             font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .options {
@@ -89,6 +93,9 @@
             background: $gray-lighter;
             border-color: $gray-lighter;
             cursor: pointer;
+            @if $enable-rounded {
+                border-radius: 0 0 0 0.25rem;
+            }
         }
     }
 
@@ -128,5 +135,9 @@
         .expand {
             background: transparent;
         }
+    }
+
+    .blank-vote {
+        opacity: 0.5;
     }
 </style>

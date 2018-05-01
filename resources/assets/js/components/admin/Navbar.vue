@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable type="dark" variant="primary" :sticky="true">
+    <b-navbar toggleable type="dark" variant="primary" fixed="top">
         <b-nav-toggle target="user_actions"></b-nav-toggle>
 
         <a class="navbar-brand" href="/">

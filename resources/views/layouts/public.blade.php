@@ -14,7 +14,7 @@
 
     <title>@yield('title'){{ config('app.name', 'Participa') }}</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,900" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="/fonts/fontawesome/css/fontawesome.min.css" rel="stylesheet">
     <link href="/fonts/fontawesome/css/fa-regular.min.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 
     @include('components.metatags')
 </head>
-<body>
+<body <?php if($inPerson) echo 'class="booth-mode"'; ?>>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -34,45 +34,31 @@
       ga('send', 'pageview');
     </script>
 
-    <div class="container main-container">
-        @section('header')
-            <header class="header row flex-column flex-sm-row">
-                <div class="col-12 col-md-5 logo">
-                    <a href="/">
-                        <h1><img src="{{ secure_asset('images/' . config('participa.logo', 'logo.png')) }}" alt="{{ config('app.name', 'Participa') }}" /></h1>
-                    </a>
-                </div>
-                <div class="col-12 col-md-7 links d-print-none">
-                    @include('components/social')
-                    @include('components/languages')
-                </div>
-            </header>
+    @section('header')
+        @include('components/header')
 
-            @if(!$inPerson)
-                <div class="row">
-                    <div class="col">
-                        @include('components/voteinfo')
-                    </div>
-                </div>
-            @else
-                <hr />
-            @endif
-        @show
+        @if(!$inPerson)
+            @include('components/voteinfo')
+        @endif
+    @show
 
-        @isset($isArchive)
-            <div class="alert alert-info mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
-        @endisset
+    <div class="main-background" id="content">
+        <div class="container main-container">
+            @isset($isArchive)
+                <div class="alert alert-primary mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
+            @endisset
 
-        @yield('content')
-
-        @section('footer')
-            <hr />
-
-            @include('components/footer')
-        @show
+            @yield('content')
+        </div>
     </div>
 
-    @stack('scripts')
+    @section('footer')
+        <div class="container">
+            @include('components/footer')
+        </div>
+    @show
 
+    <script src="{{ mix('js/common.js') }}"></script>
+    @stack('scripts')
 </body>
 </html>

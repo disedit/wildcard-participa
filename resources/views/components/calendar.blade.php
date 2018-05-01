@@ -7,11 +7,11 @@
         $startMonth = date('n', $startTime) - 1;
         $endMonth   = date('n', $endTime) - 1;
     @endphp
-    <div class="calendar">
+    <div class="calendar d-none d-md-block">
         <div class="calendar__heading">@lang('participa.calendar_heading')</div>
         <div class="calendar__dates">
             @if($startMonth != $endMonth)
-                <div class="row calendar__date-columns">
+                <div class="d-flex calendar__date-columns">
                     <div class="col">
                         <div class="calendar__days"><strong>{{ $startDay }}</strong></div>
                         <div class="calendar__month">
