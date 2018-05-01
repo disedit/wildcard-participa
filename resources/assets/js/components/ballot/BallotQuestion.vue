@@ -82,22 +82,22 @@
 
     h2 {
         font-size: 1.65rem;
+        font-weight: 600;
     }
 
     .description {
         color: $gray-light;
     }
 
-    .heading.has-number {
+    .heading {
         position: relative;
-        padding-left: 2.75rem;
 
         .number {
-            color: $gray-light;
-            font-size: 2rem;
+            color: darken($gray-lighter, 20%);
+            font-size: 3rem;
             position: absolute;
-            left: 0;
-            top: -7px;
+            left: -50px;
+            top: -15px;
         }
     }
 </style>

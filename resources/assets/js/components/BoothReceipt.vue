@@ -99,6 +99,7 @@
             font-size: 2.25rem;
             color: $gray;
             margin-top: 1rem;
+            font-weight: 700;
         }
     }
 
@@ -111,7 +112,7 @@
         background: $brand-success;
         color: #FFF;
         border-radius: 0.5rem 0.5rem 0 0;
-        padding: 0.75rem;
+        padding: 0.5rem;
         font-size: 1rem;
         text-align: center;
     }
@@ -184,7 +185,7 @@
 
     @media (min-width: 768px) {
         .success {
-            padding: 0.75rem 1.25rem;
+            padding: 0.5rem 1.25rem;
             font-size: 1.25rem;
         }
     }

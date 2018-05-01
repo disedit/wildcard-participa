@@ -4,10 +4,15 @@ $sidebar-text: $gray-light;
 $sidebar-text-secondary: lighten($sidebar-text, 15%);
 
 .sidebar {
+    position: relative;
+
     &__box {
+        position: relative;
         background: $sidebar-background;
-        padding: 1.5rem;
+        padding: 1.85rem 1.5rem 1.5rem;
         margin-bottom: 1.5rem;
+        @include border-radius(0.25rem);
+        overflow: hidden;
 
         h3 {
             font-size: 1.55rem;
@@ -15,8 +20,10 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         }
 
         h4 {
-            font-size: 1.15rem;
+            font-size: 0.95rem;
             color: $sidebar-text;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         hr {
@@ -26,20 +33,35 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         a {
             word-break: break-word;
         }
+
+        .btn-lg {
+          @include border-radius(0 0 0.25rem 0.25rem);
+        }
+
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          height: 0.35rem;
+          background: $sidebar-text-secondary;
+        }
     }
 
     &__box--main {
         position: relative;
+        border-top: 0;
 
         &:before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 1rem;
-            border-top: 1rem transparent solid;
-            border-left: 1rem transparent solid;
-            border-bottom: 1rem transparent solid;
-            border-right: 1rem $sidebar-background solid;
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          height: 0.35rem;
+          background: $brand-primary;
+          background: $brand-primary-gradient;
         }
     }
 
@@ -73,16 +95,36 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
         .far {
             margin-right: 0.5rem;
         }
+
+        a:hover {
+            text-decoration: none;
+
+            span {
+              text-decoration: underline;
+            }
+        }
+
     }
 
     p:last-child {
         margin-bottom: 0;
     }
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: -2rem;
+        top: 1.25rem;
+        border-top: 1rem transparent solid;
+        border-left: 1rem transparent solid;
+        border-bottom: 1rem transparent solid;
+        border-right: 1rem $sidebar-background solid;
+    }
 }
 
 
 @include media-breakpoint-down(sm) {
-    .sidebar__box--main:before {
+    .sidebar:after {
         display: none;
     }
 }

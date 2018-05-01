@@ -15,7 +15,7 @@
                 <span v-if="displayCost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
             </span>
         </div>
-        <a href="#" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
+        <a href="#" ref="info" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
     </div>
 </template>
 
@@ -39,12 +39,20 @@
             }
         },
 
+        mounted() {
+            Bus.$on('focusOption', (option) => {
+                if(option.id == this.option.id) {
+                    this.$refs.info.focus();
+                }
+            });
+        },
+
         methods: {
             selectOption(option, type) {
                 Bus.$emit('optionSelected', option, type);
             },
 
-            displayInfo() {
+            displayInfo(e) {
                 Bus.$emit('openOptionModal', this.option, this.type, true, this.selected);
             }
         }

@@ -9,9 +9,7 @@
                 <label :for="name">
                     <i v-if="icon" :class="'fa fa-' + icon" aria-hidden="true"></i>
                     {{label}}
-                    <b-tooltip v-if="tooltip" :content="tooltip" class="input-tooltip">
-                        <i class="far fa-question-circle" aria-hidden="true"></i>
-                    </b-tooltip>
+                    <i v-if="tooltip" class="far fa-question-circle input-tooltip" aria-hidden="true" v-b-tooltip.hover :title="tooltip"></i>
                 </label>
 
                 <input
@@ -103,8 +101,8 @@
             margin-bottom: 0;
             color: lighten($gray-light, 25%);
             font-size: 1.2rem;
-            top: 1.5rem;
-            left: 1.5rem;
+            top: 1.4rem;
+            left: 1.2rem;
             cursor: text;
             will-change: transform;
             transform: translateZ(0);
@@ -116,22 +114,13 @@
         input {
             z-index: 1;
             position: absolute;
-            padding-top: 2rem;
+            padding-top: 1.8rem;
             padding-left: 1rem;
-            padding-bottom: 0.5rem;
-            border-width: 0.20rem;
-        }
-
-        select {
-            position: absolute;
-            left: 1.2rem;
-            top: 2.2rem;
-            width: 4rem;
-            z-index: 10;
-            background: $gray-lightest;
-            border: 0;
-            padding: 1px 3px;
-            border: 1px #C9CBCB solid;
+            padding-bottom: 0.4rem;
+            border-width: 0.2rem;
+            @if $enable-rounded {
+                border-radius: 0 0.25rem 0.25rem 0;
+            }
         }
     }
 
@@ -139,13 +128,13 @@
         label {
             top: 0.8rem;
             left: 1.2rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: $gray-light;
         }
     }
 
     .input-tooltip {
         display: inline;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 </style>
