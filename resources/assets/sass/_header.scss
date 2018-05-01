@@ -52,14 +52,16 @@
     font-weight: 900;
     line-height: 1;
     padding-right: 130px;
+    max-width: 730px;
   }
 
-  .vote-info__intro {
+  &__intro {
     padding-right: 130px;
     font-size: 0.95rem;
+    max-width: 630px;
   }
 
-  .vote-info__action {
+  &__action {
     margin-top: 2rem;
   }
 
@@ -132,14 +134,39 @@
   }
 }
 
+.calendar {
+  margin-left: auto;
+  background: $white;
+  overflow: hidden;
+  border: 1px rgba(0, 0, 0, 0.15) solid;
+  @include border-radius(0.25rem);
+  text-align: center;
+  width: 140px;
+
+  &__heading {
+    color: $white;
+    background: $brand-primary;
+    padding: 0.15rem;
+  }
+
+  &__dates {
+    font-size: 1.35rem;
+    background: $white;
+  }
+
+  &__month {
+    font-size: 1.15rem;
+  }
+
+  &__date-columns .col:first-child {
+    border-right: 1px rgba(0, 0, 0, 0.15) dashed;
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .vote-info {
     h2 {
       font-size: 3rem;
-    }
-
-    h2, p {
-      margin-right: 100px;
     }
   }
 
