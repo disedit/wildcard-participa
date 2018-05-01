@@ -62,8 +62,10 @@
                 this.clearBooth();
             }
 
-            let voteInfo = document.getElementsByClassName('vote-info')[0];
-            voteInfo.classList.add('vote-info--compact');
+            if(from.path != to.path) {
+                let voteInfo = document.getElementsByClassName('vote-info')[0];
+                voteInfo.classList.add('vote-info--compact');
+            }
 
             this.transitionName = transitionName;
             next();

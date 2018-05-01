@@ -1,5 +1,5 @@
 import SmoothScroll from 'smooth-scroll';
-const scroll = new SmoothScroll('a[href*="#"]', { header: '.navbar' });
+const scroll = new SmoothScroll('a[data-scroll]', { header: '.navbar' });
 
 // Toggle Bootstrap menu without jQuery
 let toggler = document.getElementsByClassName('navbar-toggler')[0],
