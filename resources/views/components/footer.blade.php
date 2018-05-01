@@ -1,4 +1,9 @@
-<footer class="footer media">
+<footer class="footer">
+    <div class="footer-language">
+        @include('components/languages')
+    </div>
+
+    <div class="media">
         <a href="{{ config('participa.council_url') }}" target="_blank" rel="noopener">
             <img src="{{ secure_asset('images/' . config('participa.council_logo', 'council.png')) }}" alt="{{ config('participa.council_name', 'Any Council') }}" class="d-flex align-self-start mr-3" />
         </a>
@@ -29,10 +34,6 @@
                 </p>
                 <p>@lang('participa.help'): <a href="mailto:{{ config('participa.contact_email', 'participa@disedit.com') }}">{{ config('participa.contact_email', 'participa@disedit.com') }}</a></p>
             </address>
-        </div>
-
-        <div class="footer-language">
-            @include('components/languages')
         </div>
     </div>
 </footer>
