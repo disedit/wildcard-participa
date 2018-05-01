@@ -1,8 +1,8 @@
 <template>
-    <b-modal id="optionModal" ref="optionModal" v-model="active" @hidden="close">
+    <b-modal id="optionModal" ref="optionModal" v-model="active" @hidden="close" class="option-modal">
         <div slot="modal-title" class="title">{{ option.option }}</div>
 
-        <div class="option-modal">
+        <div class="option-modal-body">
             <div v-html="option.description"></div>
 
             <h4 v-if="option.motivation">{{ $t('option.motivation') }}</h4>
@@ -120,11 +120,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    @import '../../../sass/_variables';
-
-    .title {
-        color: $brand-primary;
-    }
-</style>

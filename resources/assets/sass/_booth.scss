@@ -106,12 +106,16 @@
 .option-modal {
     .modal-title {
         color: $brand-primary;
+        line-height: 1;
+        font-weight: 700;
     }
 
     h4 {
         color: $gray;
-        font-size: 1.25rem;
+        font-size: 1rem;
         margin-top: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     .option-cost {
