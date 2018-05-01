@@ -69,7 +69,7 @@
         &__contents {
             h4 {
                 color: $gray;
-                font-size: 1.25rem;
+                font-size: 1.15rem;
                 font-weight: 700;
             }
         }
@@ -190,11 +190,11 @@
 
         .option-cost, a {
             color: #FFF;
-            opacity: 0.8;
+            opacity: 0.6;
         }
 
         .custom-control-label:before {
-            box-shadow: 0 0 0 1px #F1F2F3, 0 0 0 3px #2980b9 !important;
+            box-shadow: 0 0 0 1px #F1F2F3, 0 0 0 3px $brand-primary !important;
         }
     }
 
