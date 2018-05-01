@@ -48,14 +48,15 @@
   background-size: 633px;
 
   h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 900;
     line-height: 1;
-    padding-right: 4rem;
+    padding-right: 130px;
   }
 
   .vote-info__intro {
-    padding-right: 4rem;
+    padding-right: 130px;
+    font-size: 0.95rem;
   }
 
   .vote-info__action {
@@ -68,7 +69,7 @@
     height: 250px;
     background-repeat: no-repeat;
     position: absolute;
-    opacity: 0.25;
+    opacity: 0.5;
   }
 
   .left-hands {

@@ -120,7 +120,7 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
 
 
 @include media-breakpoint-down(sm) {
-    .sidebar__box--main:before {
+    .sidebar:after {
         display: none;
     }
 }
