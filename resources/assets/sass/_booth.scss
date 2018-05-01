@@ -263,6 +263,27 @@
       }
   }
 
+  .booth-mode .template-cards {
+    .option {
+      width: 33.333%;
+
+      &:nth-child(3n) {
+        padding-left: 0.75rem;
+        padding-right: 0;
+      }
+
+      &:nth-child(3n - 1) {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+
+      &:nth-child(3n - 2) {
+        padding-left: 0;
+        padding-right: 0.75rem;
+      }
+    }
+  }
+
   .booth-mode .template-2column {
       .list-group-item {
           width: 33.3%;
