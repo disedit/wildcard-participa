@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="main-footer">
     <div class="footer-language">
         @include('components/languages')
     </div>

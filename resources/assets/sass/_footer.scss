@@ -1,4 +1,4 @@
-.footer {
+.main-footer {
     margin-bottom: 5rem;
     padding-top: 2rem;
     border-top: 1px $gray-lighter solid;
@@ -33,7 +33,7 @@ address {
 }
 
 @include media-breakpoint-up(sm) {
-    .footer {
+    .main-footer {
         display: flex;
 
         .media {
