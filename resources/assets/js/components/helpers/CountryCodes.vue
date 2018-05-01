@@ -33,7 +33,7 @@
         background-color: rgba(0, 0, 0, 0.15);
         border-width: 0;
         width: 80px;
-        height: 76px;
+        height: 72px;
         @if $enable-rounded {
             border-radius: 0.25rem 0 0 0.25rem;
         } @else {
