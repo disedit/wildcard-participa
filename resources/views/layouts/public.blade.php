@@ -58,27 +58,7 @@
         </div>
     @show
 
-
-    <script>
-        // Toggle Bootstrap menu without jQuery
-        var toggler = document.getElementsByClassName('navbar-toggler')[0],
-            collapse = document.getElementsByClassName('navbar-collapse')[0];
-
-        function toggleMenu() {
-            collapse.classList.toggle('collapse');
-            collapse.classList.toggle('in');
-        }
-
-        function closeMenusOnResize() {
-            if (document.body.clientWidth >= 768) {
-                collapse.classList.add('collapse');
-                collapse.classList.remove('in');
-            }
-        }
-
-        window.addEventListener('resize', closeMenusOnResize, false);
-        toggler.addEventListener('click', toggleMenu, false);
-    </script>
+    <script src="{{ mix('js/common.js') }}"></script>
     @stack('scripts')
 </body>
 </html>
