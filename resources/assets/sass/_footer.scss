@@ -1,49 +1,49 @@
 .main-footer {
-    margin-bottom: 5rem;
-    padding-top: 2rem;
-    border-top: 1px $gray-lighter solid;
+  margin-bottom: 5rem;
+  padding-top: 2rem;
+  border-top: 1px $gray-lighter solid;
 
-    .languages {
-        background: $white;
-        margin-bottom: 2rem;
-    }
+  .languages {
+    background: $white;
+    margin-bottom: 2rem;
+  }
 }
 
 .council-details {
-    h5 {
-        font-weight: 600;
-    }
+  h5 {
+    font-weight: 600;
+  }
 
-    p:last-child {
-        margin-bottom: 0;
-    }
+  p:last-child {
+    margin-bottom: 0;
+  }
 
-    span {
-        margin-right: 0.5rem;
-        white-space: nowrap;
-    }
+  span {
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
 
-    a {
-        word-break: break-word;
-    }
+  a {
+    word-break: break-word;
+  }
 }
 
 address {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 @include media-breakpoint-up(sm) {
-    .main-footer {
-        display: flex;
+  .main-footer {
+    display: flex;
 
-        .media {
-          order: 1;
-          margin-right: auto;
-        }
-
-        .footer-language {
-            order: 2;
-            width: 180px;
-        }
+    .media {
+      order: 1;
+      margin-right: auto;
     }
+
+    .footer-language {
+      order: 2;
+      width: 180px;
+    }
+  }
 }
