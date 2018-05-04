@@ -36,10 +36,7 @@
 
     @section('header')
         @include('components/header')
-
-        @if(!$inPerson)
-            @include('components/voteinfo')
-        @endif
+        @include('components/voteinfo', ['inPerson' => $inPerson])
     @show
 
     <div class="main-background" id="content">
