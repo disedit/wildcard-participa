@@ -209,4 +209,41 @@ class AdminController extends Controller
 
         return response()->json(['ip' => $ip, 'deleted' => $unblock]);
     }
+
+    /**
+     * Lock or unlock the admin area
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function lock(Request $request)
+    {
+        $user = Auth::user();
+        $locked = $request->input('locked');
+        
+        if($locked) {
+            // Lock session...
+            // ...
+            // ...
+            return response()->json(['locked' => true]);
+        }
+        
+        // To unlock, a password is required
+        $request->validate([
+            'password' => 'required'
+        ]);
+
+        $credentials = [
+            'username' => $user->username,
+            'password' => $request->input('password')
+        ];
+
+        if(Auth::attempt($credentials)) {
+            // Unlock session...
+            // ...
+            // ...
+            return response()->json(['locked' => false]);
+        }
+        
+        return response()->json(['password' => ['Contrasenya incorrecta.']], 422);
+    }
 }

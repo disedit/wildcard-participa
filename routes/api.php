@@ -27,8 +27,11 @@ Route::get('/ballot', 'API\BallotController@ballotJSON');
 Route::get('/ballot/qr/{ref}', 'API\BallotController@ballotQR');
 
 /* Admin area */
-Route::post('/anull_ballot', 'API\AdminController@anullBallot')->middleware('auth.api');
-Route::post('/id_lookup', 'API\AdminController@lookUp')->middleware('auth.api');
-Route::post('/unblock', 'API\AdminController@unblock')->middleware('auth.api');
-Route::get('/results', 'API\AdminController@results')->middleware('auth.api');
-Route::get('/reports', 'API\AdminController@reports')->middleware('auth.api');
+Route::group(['middleware' => ['auth.api']], function () {
+    Route::post('/anull_ballot', 'API\AdminController@anullBallot');
+    Route::post('/id_lookup', 'API\AdminController@lookUp');
+    Route::post('/unblock', 'API\AdminController@unblock');
+    Route::post('/lock', 'API\AdminController@lock');
+    Route::get('/results', 'API\AdminController@results');
+    Route::get('/reports', 'API\AdminController@reports');
+});
