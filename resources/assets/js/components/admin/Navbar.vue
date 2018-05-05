@@ -12,6 +12,7 @@
     <b-collapse is-nav id="user_actions">
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown :text="user.name" right>
+          <button @click="$emit('lock')" class="dropdown-item"><i class="far fa-lock-alt" aria-hidden="true"></i> Bloqueja</button>
           <form method="post" action="/logout">
             <input type="hidden" name="_token" :value="csrfToken" />
             <button type="submit" class="dropdown-item"><i class="far fa-sign-out-alt" aria-hidden="true"></i> Tanca sessió</button>

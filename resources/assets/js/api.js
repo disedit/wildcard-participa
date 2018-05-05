@@ -44,6 +44,10 @@ export default class Participa {
     return this._call('post', 'unblock', { ip });
   }
 
+  lock(locked) {
+    return this._call('post', 'lock', { locked });
+  }
+
   _call(type, url, data) {
     return new Promise((resolve, reject) => {
       axios[type](this.apiURL + url, data).then(response => {

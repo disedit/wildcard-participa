@@ -18,7 +18,7 @@
         <hr class="mt-3" />
         <div class="row">
           <div class="col-sm-6">
-            <a href="/" target="_blank" :class="{ 'btn btn-lg btn-block': true, 'btn-success': editionIsOpen, 'btn-warning': !editionIsOpen, 'disabled': !editionIsOpen }">
+            <a href="/" target="_blank" @click="$emit('lock')" :class="{ 'btn btn-lg btn-block': true, 'btn-success': editionIsOpen, 'btn-warning': !editionIsOpen, 'disabled': !editionIsOpen }">
               <i class="far fa-check-square" aria-hidden="true"></i> Emet vots
             </a>
           </div>
@@ -76,7 +76,7 @@
           .then(response => {
             this.edition = response;
           });
-      }
+      },
     }
   }
 </script>
