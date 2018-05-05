@@ -133,7 +133,8 @@ return [
         'ballot' => 'La papereta',
         'phone' => 'El teu número de mòbil',
         'country_code' => 'Prefixe internacional',
-        'SMS_code' => 'El codi SMS'
+        'SMS_code' => 'El codi SMS',
+        'reason' => 'El camp justificació'
     ],
 
 ];
