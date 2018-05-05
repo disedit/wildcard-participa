@@ -17,7 +17,7 @@
         <h4>{{ $t('option.attachments') }}</h4>
 
         <ul class="option-attachments">
-          <li v-for="attachment in attachments">
+          <li v-for="(attachment, key) in attachments" :key="key" >
             <a :href="attachment[1]" target="_blank" rel="noopener">
               <i class="far fa-file-alt" aria-hidden="true" /> {{ attachment[0] }}
             </a>
@@ -26,7 +26,7 @@
       </div>
 
       <div v-if="option.pictures" class="option-pictures">
-        <div v-for="picture in pictures">
+        <div v-for="(picture, key) in pictures" :key="key">
           <img :src="picture[0]" alt="Imatge" />
         </div>
       </div>

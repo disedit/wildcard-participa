@@ -8,6 +8,7 @@
     <div :class="{ 'option-group': true, 'list-group': question.template != 'cards' }">
       <label
         v-for="option in question.options"
+        :key="option.id"
         :class="{
           'option': true,
           'list-group-item list-group-item-action': question.template != 'cards',

@@ -13,7 +13,6 @@
         </label>
 
         <input
-          ref="phoneField"
           type="text"
           pattern="\d*"
           :id="name"

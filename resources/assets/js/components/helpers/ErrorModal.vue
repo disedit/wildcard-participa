@@ -7,8 +7,8 @@
         <h2>{{ $t('error.heading') }}</h2>
       </div>
 
-      <div v-for="errorField in errors">
-        <div v-for="error in errorField" class="message">
+      <div v-for="errorField in errors" :key="errorField">
+        <div v-for="(error, key) in errorField" class="message" :key="key">
           {{ error }}
         </div>
       </div>
@@ -50,6 +50,7 @@
     methods: {
       close() {
         Bus.$emit('fieldUpdated', 'errors', {});
+        Bus.$emit('focusMainButton');
       }
     }
   }

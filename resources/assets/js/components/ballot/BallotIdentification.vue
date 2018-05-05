@@ -78,6 +78,7 @@
         Bus.$emit('fieldUpdated', 'smsRequested', false);
         Bus.$emit('fieldUpdated', 'smsCode', '');
       },
+
       focusID() {
         this.autofocus = true;
       }

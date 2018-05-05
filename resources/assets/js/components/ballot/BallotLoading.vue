@@ -9,7 +9,7 @@
     </div>
 
     <div :class="{ 'option-group': true, 'list-group': template != 'cards' }">
-      <label v-for="index in 6" :class="{ 'option': true, 'list-group-item list-group-item-action': template != 'cards' }">
+      <label v-for="index in 6" :key="index" :class="{ 'option': true, 'list-group-item list-group-item-action': template != 'cards' }">
         <div class="option-wrapper">
           <span class="box-filler"></span>
           <span class="filler"></span>

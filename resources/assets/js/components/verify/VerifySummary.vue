@@ -6,10 +6,10 @@
     </button>
 
     <div :class="{ 'questions': true, 'expanded': expanded }">
-      <div v-for="question in selected">
+      <div v-for="question in selected" :key="question.id">
         <h3>{{ question.question }}</h3>
         <ul class="options">
-          <li v-for="option in question.options">
+          <li v-for="option in question.options" :key="option.id">
             <i class="far fa-check-square" aria-hidden="true"></i> {{ option.option }}
           </li>
           <li v-if="question.options.length == 0"><em class="blank-vote">{{ $t('verify_summary.blank') }}</em></li>

@@ -14,7 +14,7 @@
 
       <div v-if="!loading" class="report-wrapper">
         <div v-if="reports.length > 0">
-          <div v-for="report in reports" class="report">
+          <div :key="key" v-for="(report, key) in reports" class="report">
             <div v-if="report.type == 'limit'">
               <span class="report-icon far fa-ban" aria-hidden="true"></span>
               <div class="report-message" v-if="report.action == 'vote'">
@@ -61,7 +61,7 @@
               </div>
               <div v-else class="report-data">
                 <table class="table table-sm my-2 table-bordered">
-                  <tr v-for="data, key in report.data">
+                  <tr v-for="(data, key) in report.data" :key="key">
                     <th>{{ key }}</th>
                     <td>{{ data }}</td>
                   </tr>

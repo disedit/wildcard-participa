@@ -3,7 +3,7 @@
     <div :class="{'col-md-8': !boothMode, 'col-md-12': boothMode}">
       <form @submit.prevent="submitBallot">
         <div v-if="Object.keys(ballot).length > 0">
-          <div v-for="(question, item) in ballot.questions">
+          <div :key="item" v-for="(question, item) in ballot.questions">
             <ballot-question :question="question" :selected="selected" :number="item + 1" :display-number="ballot.questions.length > 1" />
           </div>
         </div>
@@ -62,7 +62,3 @@
     }
   }
 </script>
-
-<style scoped lang="scss">
-
-</style>

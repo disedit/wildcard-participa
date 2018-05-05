@@ -37,7 +37,7 @@
           </tr>
         </table>
 
-        <div v-for="result in results" v-if="turnout > 0">
+        <div v-for="result in results" v-if="turnout > 0" :key="result.id">
           <h4>{{ result.question }}</h4>
           <table class="table table-sm">
             <colgroup>
@@ -47,7 +47,7 @@
             </colgroup>
 
             <tbody>
-              <tr v-for="option in result.options">
+              <tr v-for="option in result.options" :key="option.id">
                 <td>{{ option.option }}</td>
                 <td style="vertical-align: middle">
                   <div class="progress">
@@ -70,7 +70,6 @@
                 </td>
               </tr>
             </tbody>
-            </tr>
           </table>
         </div>
       </div>
