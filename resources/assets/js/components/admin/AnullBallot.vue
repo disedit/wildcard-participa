@@ -1,5 +1,9 @@
 <template>
-  <b-modal id="anullBallot" ref="anullBallot" @shown="focus('SID')" @hidden="clear">
+  <b-modal 
+    id="anullBallot" 
+    ref="anullBallot" 
+    @shown="focus('SID')" 
+    @hidden="clear">
     <div slot="modal-title">
       <span class="title">Anul·la una papereta</span>
     </div>
@@ -13,20 +17,54 @@
     <form @submit.prevent="ballotLookup" v-if="!success">
       <div class="form-group">
         <label for="SID">Identificador</label>
-        <input v-if="step == 1" type="text" v-model="SID" v-focus="focused == 'SID'" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('SID') }" ref="SID" id="SID" placeholder="DNI, NIF o Passaport" />
+        <input 
+          v-if="step == 1"
+          type="text"
+          ref="SID"
+          id="SID"
+          v-model="SID"
+          v-focus="focused == 'SID'"
+          :class="{ 
+            'form-control': true,
+            'is-invalid': errors.hasOwnProperty('SID')
+          }"
+          placeholder="DNI, NIF o Passaport" />
         <p v-if="step == 2">
           <strong>{{ SID }}</strong>
-          <a href="#" @click.prevent="back"><i class="far fa-pencil-alt" aria-hidden="true"></i></a>
+          <a href="#" @click.prevent="back">
+            <i class="far fa-pencil-alt" aria-hidden="true"></i>
+          </a>
         </p>
-        <div v-if="errors.hasOwnProperty('SID')" v-for="error in errors.SID" class="invalid-feedback">{{ error }}</div>
+        <div 
+          v-if="errors.hasOwnProperty('SID')" 
+          :key="key" 
+          v-for="(error, key) in errors.SID" 
+          class="invalid-feedback">
+          {{ error }}
+        </div>
       </div>
 
       <div v-if="step == 2">
         <div class="form-group">
           <label for="reason" class="mb-0">Justificació</label>
           <small class="form-text text-muted mt-0 mb-1">Breu descripció de l'incident pel qual s'anul·la aquesta papereta.</small>
-          <textarea ref="reason" id="reason" v-model="reason" v-focus="focused == 'reason'" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('reason') }"></textarea>
-          <div v-if="errors.hasOwnProperty('reason')" v-for="error in errors.reason" class="invalid-feedback">{{ error }}</div>
+          <textarea 
+            ref="reason"
+            id="reason"
+            v-model="reason"
+            v-focus="focused == 'reason'"
+            :class="{ 
+              'form-control': true,
+              'is-invalid': errors.hasOwnProperty('reason')
+            }">
+          </textarea>
+          <div 
+            v-if="errors.hasOwnProperty('reason')" 
+            :key="key" 
+            v-for="(error, key) in errors.reason" 
+            class="invalid-feedback">
+            {{ error }}
+          </div>
         </div>
 
         <div class="form-group mb-0">
@@ -70,7 +108,7 @@
         ip: '',
         success: false,
         errors: {},
-        focused: 'SID'
+        focused: null
       }
     },
 

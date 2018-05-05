@@ -1,20 +1,44 @@
 <template>
-  <b-modal id="lookUp" title="Troba un identificador" :hide-footer="true" @hidden="clear">
-    <form @submit.prevent="Lookup">
+  <b-modal 
+    id="lookUp" 
+    title="Troba un identificador" 
+    :hide-footer="true" 
+    @hidden="clear" 
+    @shown="focused = true">
+    <form @submit.prevent="lookUp">
       <div class="form-group">
         <label for="SID">El DNI, NIE o Passaport conté els caràcters...</label>
-        <input type="text" v-model="SID" v-focus="focused" :class="{ 'form-control': true, 'is-invalid': errors.hasOwnProperty('SID') }" ref="SID" id="SID" autocomplete="off" />
-        <div v-if="errors.hasOwnProperty('SID')" v-for="error in errors.SID" class="invalid-feedback">{{ error }}</div>
+        <input 
+          type="text"
+          ref="SID"
+          id="SID"
+          v-model="SID"
+          v-focus="focused"
+          @blur="focused = false"
+          :class="{
+            'form-control': true,
+            'is-invalid': errors.hasOwnProperty('SID') 
+          }"
+          autocomplete="off" />
+        <div 
+          v-if="errors.hasOwnProperty('SID')" 
+          :key="key" 
+          v-for="(error, key) in errors.SID" 
+          class="invalid-feedback">
+             {{ error }}
+        </div>
       </div>
     </form>
 
-    <div v-if="loading" class="alert alert-info"><i class="far fa-spinner-third fa-spin"></i> Carregant...</div>
+    <div v-if="loading" class="alert alert-info">
+      <i class="far fa-spinner-third fa-spin"></i> Carregant...
+    </div>
 
     <div v-if="results">
       <div v-if="results.length > 0">
         <table class="table table-striped table-sm table-bordered">
           <tbody>
-            <tr v-for="result in results">
+            <tr :key="key" v-for="(result, key) in results">
               <td v-html="$options.filters.highlight(result.SID, SID)"></td>
             </tr>
           </tbody>
@@ -43,7 +67,7 @@
       return {
         results: null,
         SID: '',
-        focused: true,
+        focused: false,
         errors: {},
         loading: false
       }
