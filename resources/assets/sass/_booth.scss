@@ -108,14 +108,17 @@
     color: $brand-primary;
     line-height: 1;
     font-weight: 700;
+    font-size: 1.75rem;
   }
 
   h4 {
-    color: $gray;
+    color: $gray-600;
     font-size: 1rem;
-    margin-top: 1rem;
+    margin: 1rem -1rem 0.5rem -1rem;
+    padding: 1rem 1rem 0 1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
+    border-top: 1px $gray-lighter solid;
   }
 
   .option-cost {
