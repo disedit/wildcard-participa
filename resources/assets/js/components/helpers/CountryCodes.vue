@@ -2,7 +2,7 @@
   <div>
     <label for="dialCode" class="sr-only">{{ $t('verify_phone.country_code') }}</label>
     <select id="dialCode" :value="value" @change="$emit('update', $event.target.value)" @focus="$emit('focus')" :disabled="disabled" class="custom-select">
-      <option v-for="code in countryCodes" :value="code.dialCode" :key="code.dialCode">
+      <option v-for="(code, key) in countryCodes" :value="code.dialCode" :key="key">
         +{{ code.dialCode }} - {{ code.name }}
       </option>
     </select>
