@@ -35,7 +35,7 @@ class VoteRequest extends FormRequest
 
         $countryCode = (isset($attributes['country_code'])) ? $attributes['country_code'] : null;
 
-        if(isset($attributes['SID'])) $attributes['SID'] = $this->cleanSID($attributes['SID']);
+        if(isset($attributes['SID'])) $attributes['SID'] = $this->hashSID($attributes['SID']);
         if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($countryCode, $attributes['phone']);
 
         $this->replace($attributes);
@@ -123,16 +123,18 @@ class VoteRequest extends FormRequest
      *
      * @return string
      */
-    public static function cleanSID($value)
+    public static function hashSID($value)
     {
         $value = filter_var($value, FILTER_SANITIZE_STRING);
 
         // Improve this with regex?
-        $value = str_replace(" ","",$value);
-        $value = str_replace("-","",$value);
-        $value = str_replace(".","",$value);
+        $value = str_replace(" ", "", $value);
+        $value = str_replace("-", "", $value);
+        $value = str_replace(".", "", $value);
 
         $value = strtoupper($value);
+
+        if(config('participa.hashed_SIDs')) $value = hash('sha512', $value);
 
         return $value;
     }

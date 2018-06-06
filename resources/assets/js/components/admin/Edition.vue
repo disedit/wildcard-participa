@@ -65,7 +65,7 @@
     mounted() {
       this.loadEdition();
       this.anonymousVoting = window.app.config.anonymous_voting;
-      this.enableIDLookUp = window.app.config.enable_ID_lookup;
+      this.enableIDLookUp = (window.app.config.hashed_SIDs) ? false : window.app.config.enable_ID_lookup;
       this.editionIsOpen = window.app.edition_is_open;
     },
 

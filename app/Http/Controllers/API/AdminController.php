@@ -38,7 +38,8 @@ class AdminController extends Controller
         $this->validate($request, $rules);
 
         /* Find the voter */
-        $voter = Voter::findBySID($request->input('SID'), $edition->id);
+        $SID = (config('hashed_SIDs')) ? hash('sha512', $request->input('SID')) : $request->input('SID');
+        $voter = Voter::findBySID($SID, $edition->id);
 
         if(!$voter) {
             return response()->json(['SID' => ['L\'identificador no s\'ha trobat al cens']], 422);

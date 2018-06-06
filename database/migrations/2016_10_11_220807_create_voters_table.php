@@ -16,7 +16,7 @@ class CreateVotersTable extends Migration
         Schema::create('voters', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('edition_id')->unsigned();
-            $table->string('SID', 20);
+            $table->string('SID', 128);
             $table->string('SMS_phone')->default('');
             $table->string('SMS_token')->default('');
             $table->integer('SMS_attempts')->default(0)->unsigned();
