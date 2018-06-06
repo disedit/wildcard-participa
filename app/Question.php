@@ -3,9 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Dimsav\Translatable\Translatable;
 
 class Question extends Model
 {
+    use Translatable;
+
+    /**
+     * The attributes that can be translated
+     *
+     * @var array
+     */
+    public $translatedAttributes = [
+        'question', 'description'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
