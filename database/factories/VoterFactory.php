@@ -14,7 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Voter::class, function (Faker\Generator $faker) {
     return [
-        'SID' => (config('hashed_SIDs')) ? hash('sha512', $faker->unique()->dni) : $faker->unique()->dni,
+        'SID' => (config('participa.hashed_SIDs')) ? hash('sha512', $faker->unique()->dni) : $faker->unique()->dni,
         'SMS_phone' => '',
         'SMS_token' => '',
         'SMS_attempts' => 0,
