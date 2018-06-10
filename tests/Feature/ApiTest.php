@@ -210,7 +210,7 @@ class ApiTest extends TestCase
       $editionId = Edition::current()->id;
       $voter = new Voter();
       $voter->edition_id = $editionId;
-      $voter->SID = config('participa.hashed_SIDs') ? hash('sha512', $SID) : $SID;
+      $voter->SID = config('participa.hashed_SIDs') ? hash('sha256', $SID) : $SID;
       $voter->save();
 
       return [

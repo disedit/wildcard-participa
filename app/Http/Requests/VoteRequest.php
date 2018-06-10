@@ -134,7 +134,7 @@ class VoteRequest extends FormRequest
 
         $value = strtoupper($value);
 
-        if(config('participa.hashed_SIDs')) $value = hash('sha512', $value);
+        if(config('participa.hashed_SIDs')) $value = hash('sha256', $value);
 
         return $value;
     }

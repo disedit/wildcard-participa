@@ -38,7 +38,7 @@ class AdminController extends Controller
         $this->validate($request, $rules);
 
         /* Find the voter */
-        $SID = (config('participa.hashed_SIDs')) ? hash('sha512', $request->input('SID')) : $request->input('SID');
+        $SID = (config('participa.hashed_SIDs')) ? hash('sha256', $request->input('SID')) : $request->input('SID');
         $voter = Voter::findBySID($SID, $edition->id);
 
         if(!$voter) {
