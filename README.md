@@ -51,6 +51,8 @@ Wildcard Participa is built on top of Laravel 5.6, which has the following requi
 
 - Run `npm install` and `npm run dev` or `npm run production` to generate the required assets. _(Note: Wildcard Participa uses FontAwesome Pro for its icons. This is an optional dependency, but you will need to purchase and set a FontAwesome Pro NPM token if you want to use the icons.)_
 
+- Finally, you can run `php artisan serve` to view the site.
+
 ## Create an edition
 ```
 php artisan edition:new
