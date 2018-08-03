@@ -15,7 +15,8 @@ class Edition extends Model
      * @var array
      */
     public $translatedAttributes = [
-        'name', 'description', 'docs', 'voting_places', 'about', 'sidebar'
+        'name', 'description', 'docs', 'voting_places', 'proposal_form',
+        'about', 'sidebar'
     ];
 
     /**

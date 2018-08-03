@@ -14,6 +14,7 @@ class EditionTranslation extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'docs', 'voting_places', 'about', 'sidebar'
+        'name', 'description', 'docs', 'voting_places', 'proposal_form',
+        'about', 'sidebar'
     ];
 }
