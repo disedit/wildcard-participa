@@ -168,6 +168,14 @@
   &__dates {
     font-size: 1.35rem;
     background: $white;
+
+    .col {
+      padding: 0.5rem;
+    }
+  }
+
+  &__days {
+    margin-bottom: -0.25rem;
   }
 
   &__month {
