@@ -76,7 +76,7 @@ Place a file containing all the valid IDs (one per line) in `/storage/app/census
 php artisan census:import file=census.csv
 ```
 
-_Note: If you have set the 'hashed_ids' option to true, this command will expect the IDs to be pre-hashed in SHA-256_
+_Note: If the 'hashed_ids' option is set to true, this command will expect the IDs to be pre-hashed in SHA-256_
 
 ## Customization
 The following files contain options to customize the site:

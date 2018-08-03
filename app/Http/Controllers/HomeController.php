@@ -40,6 +40,14 @@ class HomeController extends Controller
         $pastEditions = Edition::pastEditions();
         $forceOpen = $request->get('force_open');
 
+        if(!$edition) {
+            $message = 'Create your first edition by running
+                <pre>php artisan edition:new</pre>
+                or create a fake one to test: <pre>php artisan db:seed</pre>';
+
+            return view('errors.503', compact('message'));
+        }
+
         // If within voting window dates, show voting booth
         if($edition->isOpen() || $forceOpen){
             $user = $request->user();
