@@ -249,4 +249,27 @@ class Edition extends Model
         return $tab;
     }
 
+    /**
+     * Load templates and options for the About page
+     *
+     * @return array
+     */
+    public function buildAboutPage()
+    {
+        $edition = $this;
+        $options = view('components.options', compact('edition'));
+
+        $templateView = 'editions.' . $this->id . '_' . config('app.locale', 'ca');
+        $templateViewFallback = 'editions.' . $this->id . '_' . config('app.fallback_locale', 'ca');
+
+        if(view()->exists($templateView)) {
+            $template = view($templateView, compact('edition'));
+        } elseif(view()->exists($templateViewFallback)) {
+            $template = view($templateViewFallback, compact('edition'));
+        } else {
+            $template = '';
+        }
+
+        return ['options' => $options, 'template' => $template];
+    }
 }

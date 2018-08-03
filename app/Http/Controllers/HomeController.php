@@ -65,9 +65,9 @@ class HomeController extends Controller
 
         // If none of the previous conditions are met
         // display the About page as a placeholder before the vote.
-        $options = view('components.options', compact('edition'));
+        $page = $edition->buildAboutPage();
 
-        return view('about', compact('edition', 'pastEditions', 'options'));
+        return view('about', compact('edition', 'pastEditions', 'page'));
 
     }
 
@@ -80,9 +80,9 @@ class HomeController extends Controller
     {
         $edition = $this->edition;
         $pastEditions = Edition::pastEditions();
-        $options = view('components.options', compact('edition'));
+        $page = $edition->buildAboutPage();
 
-        return view('about', compact('edition', 'pastEditions', 'options'));
+        return view('about', compact('edition', 'pastEditions', 'page'));
     }
 
     /**
