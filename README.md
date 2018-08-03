@@ -16,7 +16,7 @@ Wildcard Participa is an __online voting system__ aimed at city councils.
 - __Accessibility__: Site optimized for people with disabilities, such as the visually impaired.
 
 ## Requirements
-Wildcard Participa uses Laravel 5.4, which has the following requirements:
+Wildcard Participa is built on top of Laravel 5.6, which has the following requirements:
 
 - PHP >= 7.0.0
 - OpenSSL PHP Extension
@@ -39,7 +39,7 @@ Wildcard Participa uses Laravel 5.4, which has the following requirements:
     git commit -m "Initial commit"
     ```
 
-- Rename the file `.env.example` to `.env` and add your database configuration.
+- Duplicate the example .env file `cp .env.example .env` and add your database configuration.
 - Run composer `composer install`.
 - Run the database migrations and set the app keys.
 
@@ -49,25 +49,30 @@ Wildcard Participa uses Laravel 5.4, which has the following requirements:
     php artisan jwt:generate
     ```
 
-- Create the admin users. You can add as many users as you want in one go by separating them with a space. You can also make them superadministrators by adding the `--superadmin` flag. The command will return a list of the users along with their generated passwords. Write these down in a safe place and distribute them among your staff.
+- Run `npm install` and `npm run dev` or `npm run production` to generate the required assets. _(Note: Wildcard Participa uses FontAwesome Pro for its icons. This is an optional dependency, but you will need to purchase and set a FontAwesome Pro NPM token if you want to use the icons.)_
 
-    ```
-    php artisan admins:create [users]
-    ```
+# Create an edition
+```
+php artisan edition:new
+```
 
-- Create the first vote/edition. This command will initiate the wizard, which will prompt you about the edition details, such as start and end dates. It will also offer the option to add questions and answers.
+This command will walk you through the edition creation process, prompting for start and end dates among other details, including the questions and options to go on the ballot.
 
-    ```
-    php artisan edition:new
-    ```
+If, however, you just want to test the site, you can run `php artisan db:seed` to create a fake edition with fake voters.
 
-- Finally, run `npm install` and `npm run watch` to preview the site. You can run `npm run production` when you are ready to deploy to a production server.
+# Create admin users
+```
+php artisan admins:create [users] (--superadmin)
+```
 
-## Setup
+You can add as many users as you want in one go by separating them with a space. You can also make them superadministrators by adding the `--superadmin` flag. The command will return a list of the users along with their generated passwords. Write these down in a safe place and distribute them among your staff.
+
+## Customization
 The following files contain options to customize the site:
-- `config/participa.php` contains the Council details and app-specific settings
+- `config/participa.php` contains the Council details and app-specific settings, including vote rules.
 -  `resources/assets/sass/_variables.scss` contains all the variables to customize the look and feel of the app.
-- `lang/*` contains all the language files.
+- `resources/lang/*` and `resources/assets/js/lang/*` contain all the PHP and JS language files.
+- `public/manifest.json` Web App Manifest
 
 ## Disclaimer
 
