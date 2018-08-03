@@ -1,3 +1,4 @@
+let fs = require('fs');
 let mix = require('laravel-mix');
 
 /*
@@ -18,6 +19,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .sass('resources/assets/sass/admin.scss', 'public/css')
    .copyDirectory('resources/assets/images', 'public/images');
+
+if (fs.existsSync('node_modules/@fortawesome/fontawesome-pro')) {
+    mix.sass('resources/assets/sass/fontawesome.scss', 'public/css');
+}
 
 if (mix.inProduction) {
     mix.version();

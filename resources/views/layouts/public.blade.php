@@ -16,10 +16,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,900" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fontawesome.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-regular.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-solid.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-brands.min.css" rel="stylesheet">
+    <link href="{{ mix('css/fontawesome.css') }}" rel="stylesheet">
 
     @include('components.metatags')
 </head>
