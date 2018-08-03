@@ -1,7 +1,6 @@
 # Wildcard Participa
 ## About
-
-Wildcard Participa is an __online voting system__ aimed at city councils.
+Wildcard Participa is an __online voting system__ for city councils.
 
 - __Ease of use__: Any registered citizen can cast a ballot by entering their ID and verifying their cellphone via an SMS code.
 - __Multiple questions__: People can vote on multiple questions at once and submit a unique ballot.
@@ -27,7 +26,6 @@ Wildcard Participa is built on top of Laravel 5.6, which has the following requi
 - MySQL, PostgreSQL, SQLite or SQL Server
 
 ## Installation
-
 - Clone this repo and reset it.
 
     ```
@@ -51,7 +49,7 @@ Wildcard Participa is built on top of Laravel 5.6, which has the following requi
 
 - Run `npm install` and `npm run dev` or `npm run production` to generate the required assets. _(Note: Wildcard Participa uses FontAwesome Pro for its icons. This is an optional dependency, but you will need to purchase and set a FontAwesome Pro NPM token if you want to use the icons.)_
 
-# Create an edition
+## Create an edition
 ```
 php artisan edition:new
 ```
@@ -60,22 +58,30 @@ This command will walk you through the edition creation process, prompting for s
 
 If, however, you just want to test the site, you can run `php artisan db:seed` to create a fake edition with fake voters.
 
-# Create admin users
+## Create admin users
 ```
 php artisan admins:create [users] (--superadmin)
 ```
 
 You can add as many users as you want in one go by separating them with a space. You can also make them superadministrators by adding the `--superadmin` flag. The command will return a list of the users along with their generated passwords. Write these down in a safe place and distribute them among your staff.
 
+## Import a census
+Place a file containing all the valid IDs (one per line) in `/storage/app/census` and run the following command, specifying the name of the file:
+
+```
+php artisan census:import file=census.csv
+```
+
+_Note: If you have set the 'hashed_ids' option to true, this command will expect the IDs to be pre-hashed in SHA-256_
+
 ## Customization
 The following files contain options to customize the site:
-- `config/participa.php` contains the Council details and app-specific settings, including vote rules.
--  `resources/assets/sass/_variables.scss` contains all the variables to customize the look and feel of the app.
-- `resources/lang/*` and `resources/assets/js/lang/*` contain all the PHP and JS language files.
-- `public/manifest.json` Web App Manifest
+- `/config/participa.php` contains the Council details and app-specific settings, including vote rules.
+- `/resources/assets/sass/_variables.scss` contains all the variables to customize the look and feel of the app.
+- `/resources/lang/*` and `resources/assets/js/lang/*` contain all the PHP and JS language files.
+- `/public/manifest.json` Web App Manifest
 
 ## Disclaimer
-
 Online voting is a tricky subject and no system is completely secure. __This is why we do not recommend that councils use systems like this to carry out important elections.__ This system was originally conceived to enable local councils to survey the opinion of their citizens to prioritize projects when drafting a budget.
 
 The method to verify a voter's identity used by this system is a compromise between __security__ and __ease of participation__. Ideally, online voting systems should require voters to enter their electronic ID to verify their identity. However, turnout would be very low under such a system and the result of the election would be righfully put into question.
