@@ -2,8 +2,6 @@
 
 @section('content')
     <div class="ballot-block ballot-block--error ballot-not-found text-center">
-        <h3>@lang('participa.error')</h3>
-
         <i aria-hidden="true" class="far fa-hand-point-down"></i>
         <h2>@lang('participa.error_503')</h2>
         <p class="mt-4 mb-0">@lang('participa.error_503_text')</p>

@@ -4,7 +4,7 @@
 <meta name="description" content="@lang('participa.description')" />
 <link rel="manifest" href="{{ secure_url('manifest.json') }}">
 <link rel="shortcut icon" href="{{ secure_asset('images/favicon.png') }}">
-<link rel="icon" type="image/png" href="{{ secure_asset('images/favicon.big.png') }}" sizes="192x192">
+<link rel="icon" type="image/png" href="{{ secure_asset('images/favicon.big.png') }}" sizes="310x310">
 <link rel="apple-touch-icon" href="{{ secure_asset('images/favicon.big.png') }}">
 <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Participa') }}">
 <meta name="msapplication-TileColor" content="{{ config('participa.primary_color', '#2980b9') }}">

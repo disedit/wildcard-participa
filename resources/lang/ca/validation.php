@@ -134,7 +134,7 @@ return [
         'SID' => 'L\'identificador',
         'ballot' => 'El camp papereta',
         'phone' => 'El teu número de mòbil',
-        'country_code' => 'El prefixe internacional',
+        'country_code' => 'El prefix internacional',
         'SMS_code' => 'El codi SMS',
         'reason' => 'El camp justificació'
     ],

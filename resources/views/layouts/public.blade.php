@@ -23,7 +23,7 @@
 
     @include('components.metatags')
 </head>
-<body <?php if($inPerson) echo 'class="booth-mode"'; ?>>
+<body class="{{ 'lang-' . config('app.locale') }}{{ ($inPerson) ? ' booth-mode' : '' }}">
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -50,8 +50,10 @@
     </div>
 
     @section('footer')
-        <div class="container">
-            @include('components/footer')
+        <div class="footer-background">
+            <div class="container">
+                @include('components/footer')
+            </div>
         </div>
     @show
 

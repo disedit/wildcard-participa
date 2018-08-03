@@ -67,6 +67,25 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
 
   &__propose {
     margin: 1rem -1.5rem -1.5rem -1.5rem;
+
+    a.btn {
+      text-align: left;
+      font-size: 1rem;
+      padding: 1rem 1.5rem;
+      background: lighten($brand-primary, 60%);
+      border: 0;
+      color: $brand-primary;
+      font-weight: bold;
+
+      &:hover {
+        background: lighten($green, 35%);
+        color: darken($green, 10%);
+      }
+
+      .far {
+        margin-right: 0.75rem;
+      }
+    }
   }
 
   &__secondary {
@@ -94,6 +113,7 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
 
     .far {
       margin-right: 0.5rem;
+      margin-top: 0.25rem;
     }
 
     a:hover {

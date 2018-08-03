@@ -64,7 +64,7 @@ return [
     'anonymous_voting' => false,
 
     /* Whether IDs are hashed or not */
-    'hashed_SIDs' => false,
+    'hashed_SIDs' => env('PARTICIPA_HASHED', false),
 
     /* Whether admins may look up IDs to troubleshoot in-person voting.
        If IDs are hashed this option cannot be true and will be ignored */

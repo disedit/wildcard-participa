@@ -31,7 +31,7 @@ Wildcard Participa uses Laravel 5.4, which has the following requirements:
 - Clone this repo and reset it.
 
     ```
-    git clone https://gitlab.com/disedit/wildcard-participa.git project_name
+    git clone https://github.com/disedit/wildcard-participa.git project_name
     cd project_name
     rm -rf .git
     git init

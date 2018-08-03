@@ -1,7 +1,12 @@
 @if(config('participa.facebook'))
+    @php
+        $fbText = explode('/', config('participa.facebook'));
+        $fbText = (substr($fbText[3], -1) == '/') ? substr($fbText[3], 0, -1) : $fbText[3];
+    @endphp
     <li class="nav-item">
         <a href="{{ config('participa.facebook') }}" target="_blank" rel="noopener">
             <i class="fab fa-facebook" aria-hidden="true"></i>
+            <span class="d-xs-inline d-lg-none">/{{ $fbText }}</span>
         </a>
     </li>
 @endif

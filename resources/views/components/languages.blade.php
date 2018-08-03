@@ -5,7 +5,7 @@
 
 <ul class="languages">
     <li class="languages__current">
-        <a href="/">
+        <a href="javascript:;">
             {{ $languages[$current_language] }}
             <i class="fa fa-caret-down" aria-hidden="true"></i>
          </a>

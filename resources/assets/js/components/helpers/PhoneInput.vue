@@ -111,6 +111,7 @@
     }
 
     input {
+      height: auto;
       z-index: 1;
       position: absolute;
       padding-top: 1.8rem;

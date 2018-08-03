@@ -7,7 +7,7 @@
         $startMonth = date('n', $startTime) - 1;
         $endMonth   = date('n', $endTime) - 1;
     @endphp
-    <div class="calendar d-none d-md-block">
+    <div class="calendar">
         <div class="calendar__heading">@lang('participa.calendar_heading')</div>
         <div class="calendar__dates">
             @if($startMonth != $endMonth)

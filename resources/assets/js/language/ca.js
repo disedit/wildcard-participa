@@ -1,6 +1,6 @@
 export default {
   global: {
-    tweet: ''
+    tweet: 'He votat en què projectes vull que [city_name] invertisca'
   },
   option: {
     cost: 'Cost',
@@ -16,7 +16,7 @@ export default {
     heading: 'Identificació',
     subheading: 'Pots votar si tens més de <strong>{min_age} anys</strong> i estàs empadronat a <strong>{municipality}</strong>',
     label: 'DNI, NIE o Passport',
-    tooltip: 'Passaport només si eres resident extranger',
+    tooltip: 'Passaport només si eres resident estranger',
     button: 'Vota',
     anonymous_voting: 'El teu vot és anònim i serà encriptat'
   },
@@ -37,19 +37,19 @@ export default {
     code_smalltext: 'L\'SMS pot tardar uns minuts en arribar. Assegura\'t que el teu mòbil està encés i té cobertura.',
     request_sms_button: 'Envia\'m el codi',
     cast_ballot_button: 'Confirma el meu vot',
-    country_code: 'Prefixe internacional',
+    country_code: 'Prefix internacional',
   },
   verify_in_person: {
     button: 'Confirma'
   },
   verify_flags: {
-    SMS_already_sent: 'Introdueix el codi SMS ja es va enviar al mòbil introduit el <strong>{time}</strong>',
+    SMS_already_sent: 'Introdueix el codi SMS que ja es va enviar al mòbil introduit el <strong>{time}</strong>',
     SMS_exceeded: 'Has sobrepassat el límit de <strong>{sms_max_attempts} intents SMSs per votant</strong>. Introdueix el codi que vares rebre al número <strong>{last_number}</strong> el <strong>{time}</strong>'
   },
   booth_receipt: {
     heading: 'Gràcies per participar!',
     success: 'El teu vot ha estat emés correctament',
-    social: 'Convida les teues amistats a participar i fem la [city_name] que volem entre tots i totes ;)',
+    social: 'Convida les teues amistats a participar i fem [city_name] que volem entre tots i totes ;)',
     back_to_council: 'Ves a la pàgina de l\'Ajuntament',
     back_to_booth: 'Emet un altre vot'
   },

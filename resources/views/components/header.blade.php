@@ -6,12 +6,11 @@
 
 <nav class="navbar fixed-top navbar-expand-lg {{ (config('participa.navbar') == 'colorful') ? 'navbar-dark' : 'navbar-light' }}">
   <a class="navbar-brand" href="/">
-        {{ $logoUrl }}
-        @if($logoUrl)
-            <img src="{{ secure_asset('images/' . $logoUrl) }}" alt="{{ config('app.name', 'Participa') }}" />
-        @else
-            {{ config('app.name', 'Participa') }}
-        @endif
+      @if($logoUrl)
+          <img src="{{ secure_asset('images/' . $logoUrl) }}" alt="{{ config('app.name', 'Participa') }}" width="150" />
+      @else
+          {{ config('app.name', 'Participa') }}
+      @endif
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

@@ -23,7 +23,7 @@
                     @endif
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-lg-4 d-none d-lg-block">
                     @include('components/calendar')
                 </div>
             </div>

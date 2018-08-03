@@ -1,6 +1,6 @@
 export default {
   global: {
-    tweet: ''
+    tweet: 'I have voted on which projects I want [city_name] to invest in'
   },
   option: {
     cost: 'Cost',
@@ -33,8 +33,8 @@ export default {
     code_label: 'SMS Code',
     code_tooltip: 'Numeric code',
     phone_subheading: 'Enter your mobil number. You will receive an SMS code to authenticate your vote.',
-    code_subheading: 'Type in the code you have received on your mobile.',
-    code_smalltext: 'The SMS may take some minutes to arrive. Ensure your phone is on and has signal.',
+    code_subheading: 'Type in the code you have received on your mobile phone.',
+    code_smalltext: 'The SMS may take some minutes to arrive. Ensure that your phone is on and not out of coverage.',
     request_sms_button: 'Text me the code',
     cast_ballot_button: 'Cast my ballot',
     country_code: 'Country dial code',
@@ -44,7 +44,7 @@ export default {
   },
   verify_flags: {
     SMS_already_sent: 'Use the code that was sent to this mobile phone on <strong>{time}</strong>',
-    SMS_exceeded: 'You have exceeded the limit of <strong>{sms_max_attempts} SMSs per voter</strong>. Enter the code that you received on <strong>{last_number}</strong> on <strong>{time}</strong>'
+    SMS_exceeded: 'You have exceeded the limit of <strong>{sms_max_attempts} SMSs per voter</strong>. Enter the code that you last received on <strong>{last_number}</strong> on <strong>{time}</strong>'
   },
   booth_receipt: {
     heading: 'Thanks for your participation',
