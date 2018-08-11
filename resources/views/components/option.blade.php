@@ -14,7 +14,7 @@
     <span class="option-cost">{{ number($option->cost, 0) . '€' }}</span>
 @endif
 
-@if (! empty($option->attachments))
+@if (!empty($option->attachments))
     <h4>@lang('participa.option_attachments')</h3>
 
     <ul class="option-attachments">
@@ -28,7 +28,7 @@
     </ul>
 @endif
 
-@if (! empty($option->pictures))
+@if (!empty($option->pictures))
     <div class="option-pictures">
         @foreach ($option->pictures as $pic)
             @php

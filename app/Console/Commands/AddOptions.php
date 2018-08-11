@@ -40,7 +40,7 @@ class AddOptions extends Command
     {
         $questionId = $this->option('question');
 
-        if (! $questionId) {
+        if (!$questionId) {
             $createQuestion = $this->choice('The question ID was not specified. Create one?', ['Yes', 'No'], 0);
 
             if ($createQuestion == 'Yes') {

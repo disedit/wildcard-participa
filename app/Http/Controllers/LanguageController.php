@@ -15,7 +15,7 @@ class LanguageController extends Controller
     {
         $cookie = cookie()->forever('language', $language);
 
-        if (! is_null($request->input('home'))) {
+        if (!is_null($request->input('home'))) {
             return redirect('/')->withCookie($cookie);
         } else {
             return back()->withCookie($cookie);

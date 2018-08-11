@@ -73,7 +73,7 @@ class CacheResults extends Command
         $dontSave = $this->option('no-save');
         $this->edition = ($editionId) ? Edition::where('id', $editionId)->first() : Edition::current();
 
-        if (! $this->edition) {
+        if (!$this->edition) {
             $this->error('No active edition was found');
             return;
         }
@@ -84,18 +84,18 @@ class CacheResults extends Command
         $this->line('');
         $this->line('');
 
-        if (! $dontSave) $this->save();
+        if (!$dontSave) $this->save();
 
-        if (! $this->errors) {
+        if (!$this->errors) {
             $this->info('Ballot check finished without errors.');
-            if (! $dontSave) $this->line('Results cached successfully.');
+            if (!$dontSave) $this->line('Results cached successfully.');
         } else {
             $this->error('Ballot check finisheded with errors. The following ballots are invalid!');
 
             $this->table(['Cast at', 'Ballot ref.'], $this->errors);
         }
 
-        if (! $dontSave){
+        if (!$dontSave){
             Cache::forever('last_tally_finished' . $this->edition->id, time());
             Cache::forever('last_tally_integrity' . $this->edition->id, $this->integrity);
 
@@ -116,7 +116,7 @@ class CacheResults extends Command
         $validBallots = 0;
         $bar = $this->output->createProgressBar(count($ballots));
         foreach ($ballots as $ballot) {
-            if (! $ballot->check() || ! $decodedBallot = $ballot->decrypt()) {
+            if (!$ballot->check() || !$decodedBallot = $ballot->decrypt()) {
                 $this->errors[] = [$ballot->cast_at, $ballot->ref];
                 continue;
             }

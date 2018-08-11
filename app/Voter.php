@@ -37,7 +37,7 @@ class Voter extends Model
      */
     public static function findBySID($SID, $editionId)
     {
-        if (! $editionId) $editionId = Edition::current()->id;
+        if (!$editionId) $editionId = Edition::current()->id;
         return Self::where('SID', $SID)->where('edition_id', $editionId)->first();
     }
 
@@ -119,7 +119,7 @@ class Voter extends Model
     {
         $userId = ($request->user()) ? $request->user()->id : null;
 
-        if (! $userId) $this->SMS_verified = 1;
+        if (!$userId) $this->SMS_verified = 1;
         $this->ballot_cast = 1;
         $this->ballot_time = date('Y-m-d H:i:s');
         $this->ip_address = $request->ip();

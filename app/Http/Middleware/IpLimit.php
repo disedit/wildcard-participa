@@ -27,7 +27,7 @@ class IpLimit
             ], 422);
         }
 
-        if (! $inPerson && Limit::exceeded('Vote', $maxVotes, $request->get('edition_id'))) {
+        if (!$inPerson && Limit::exceeded('Vote', $maxVotes, $request->get('edition_id'))) {
             return response()->json([
                 'IpLimit' => [__('participa.error_ip_limit_exceeded')]
             ], 422);

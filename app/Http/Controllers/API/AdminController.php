@@ -44,7 +44,7 @@ class AdminController extends Controller
             : $request->input('SID');
         $voter = Voter::findBySID($SID, $edition->id);
 
-        if (! $voter) {
+        if (!$voter) {
             return response()->json([
                 'SID' => ['L\'identificador no s\'ha trobat al cens']
             ], 422);
@@ -53,7 +53,7 @@ class AdminController extends Controller
         /* Retreive ballot submitted by the voter */
         $ballot = $voter->ballot()->first();
 
-        if (! $ballot) {
+        if (!$ballot) {
             return response()->json([
                 'SID' => ['L\'identificador no ha emés cap vot.']
             ], 422);
@@ -66,7 +66,7 @@ class AdminController extends Controller
         }
 
         /* Do not submit report and delete ballot if not double confirmed */
-        if (! $confirm) {
+        if (!$confirm) {
             return response()->json(['success' => true]);
         }
 

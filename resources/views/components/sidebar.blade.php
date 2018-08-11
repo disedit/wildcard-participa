@@ -30,13 +30,13 @@
                     @elseif (isset($isArchive) && Request::segment(3) != 'about')
                         {{-- This is the archive and we are in the main (results) page --}}
                         <a href="{{ secure_url('archive/' . $edition->id . '/about') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
-                    @elseif (! isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen())
+                    @elseif (!isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen())
                         {{-- This is not the archive, edition is open but we are not in the main vote page --}}
                         <a href="{{ secure_url('') }}"><i class="far fa-bullhorn fa-fw" aria-hidden="true"></i> <span>@lang('participa.vote')</span></a>
-                    @elseif (! isset($isArchive) && Request::segment(1) != 'about' && !$edition->isPending())
+                    @elseif (!isset($isArchive) && Request::segment(1) != 'about' && !$edition->isPending())
                         {{-- This is not the archive, we are in the main page and it does not contain the about page  --}}
                         <a href="{{ secure_url('about') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
-                    @elseif (! isset($isArchive) && Request::segment(1) == 'about' && $edition->resultsPublished())
+                    @elseif (!isset($isArchive) && Request::segment(1) == 'about' && $edition->resultsPublished())
                         {{-- This is not the archive, we are in the about page and results are published  --}}
                         <a href="{{ secure_url('') }}"><i class="far fa-chart-bar fa-fw" aria-hidden="true"></i> <span>@lang('participa.results')</span></a>
                     @elseif (Request::segment(1) == 'propose')
@@ -65,7 +65,7 @@
                 @endif
             </ul>
 
-            @if (! isset($isArchive) && $edition->inProposalPhase() && Request::segment(1) != 'propose')
+            @if (!isset($isArchive) && $edition->inProposalPhase() && Request::segment(1) != 'propose')
                 <div class="sidebar__propose">
                     <a href="{{ secure_url('propose') }}" class="btn btn-secondary btn-lg btn-block"><i class="far fa-pencil-alt" aria-hidden="true"></i> @lang('participa.propose_cta')</a>
                 </div>
@@ -102,7 +102,7 @@
         </div>
     @endif
 
-    @if (! $edition->isPending())
+    @if (!$edition->isPending())
         @component('components.ballot_lookup', ['in_sidebar' => true])
         @endcomponent
     @endif

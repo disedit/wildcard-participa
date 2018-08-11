@@ -1,5 +1,5 @@
 <div class="vote-info {{ (!Request::segment(1)) ? 'vote-info--full' : 'vote-info--compact' }}">
-    @if (! $inPerson)
+    @if (!$inPerson)
         <div class="left-hands"></div>
         <div class="right-hands"></div>
         <div class="container">

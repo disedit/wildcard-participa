@@ -204,7 +204,7 @@ class Edition extends Model
      */
     public function inProposalPhase()
     {
-        if (! $this->proposal_form) return false;
+        if (!$this->proposal_form) return false;
         $proposalDeadline = strtotime($this->proposal_deadline);
         $now = time();
 

@@ -48,7 +48,7 @@ class BoothController extends Controller
         $phone      = $request->input('phone');
         $voter      = Voter::findBySID($SID, $editionId);
 
-        if (! $inPerson) {
+        if (!$inPerson) {
             // Check if SMS code has already been sent for phone number
             if ($smsAlreadySent = $voter->smsAlreadySent($phone)) {
                 // if sent: redirect & attach warning

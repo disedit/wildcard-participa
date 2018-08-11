@@ -40,7 +40,7 @@ class HomeController extends Controller
         $pastEditions = Edition::pastEditions();
         $forceOpen = $request->get('force_open');
 
-        if (! $edition) {
+        if (!$edition) {
             $message = 'Create your first edition by running
                 <pre>php artisan edition:new</pre>
                 or create a fake one to test: <pre>php artisan db:seed</pre>';

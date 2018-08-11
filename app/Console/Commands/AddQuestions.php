@@ -74,7 +74,7 @@ class AddQuestions extends Command
         $editionId = $this->option('edition');
         $this->edition = ($editionId) ? Edition::where('id', $editionId)->first() : Edition::current();
 
-        if (! $this->edition) {
+        if (!$this->edition) {
             $this->error('Edition not found.');
 
             $proceed = $this->choice('Create new one?', ['Yes', 'No'], 0);
