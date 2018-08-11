@@ -10,7 +10,6 @@
 </template>
 
 <script>
-
   import Spinner from '../helpers/Spinner';
 
   export default {
@@ -20,27 +19,26 @@
       Spinner
     },
 
-    data() {
+    data () {
       return {
         isLoading: false,
       }
     },
 
     computed: {
-      disabled: function() {
+      disabled: function () {
         return this.isLoading ? ' disabled' : ''
       }
     },
 
-    created() {
+    created () {
       Bus.$on('VerifyPhoneLoading', (isLoading) => this.isLoading = isLoading);
     },
 
     methods: {
-      castBallot() {
+      castBallot () {
         Bus.$emit('castBallot');
       }
     }
-
   }
 </script>

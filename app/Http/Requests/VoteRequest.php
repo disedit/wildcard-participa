@@ -35,8 +35,8 @@ class VoteRequest extends FormRequest
 
         $countryCode = (isset($attributes['country_code'])) ? $attributes['country_code'] : null;
 
-        if(isset($attributes['SID'])) $attributes['SID'] = $this->hashSID($attributes['SID']);
-        if(isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($countryCode, $attributes['phone']);
+        if (isset($attributes['SID'])) $attributes['SID'] = $this->hashSID($attributes['SID']);
+        if (isset($attributes['phone'])) $attributes['phone'] = $this->cleanPhone($countryCode, $attributes['phone']);
 
         $this->replace($attributes);
 
@@ -84,12 +84,12 @@ class VoteRequest extends FormRequest
         ];
 
         // SMS verification rules. Only when applicable.
-        if($isRequestSMS || $isCastBallot) {
+        if ($isRequestSMS || $isCastBallot) {
             $rules['phone'] = $verificationRequired ? $phoneRules : '';
             $rules['country_code'] = $verificationRequired ? 'required|numeric' : '';
         }
 
-        if($isCastBallot) {
+        if ($isCastBallot) {
             $rules['SMS_code'] = $verificationRequired ? $smsRules : '';
         }
 
@@ -111,8 +111,8 @@ class VoteRequest extends FormRequest
         $phone = $countryCode . '.' . $phone;
 
         // Improve this with regex?
-        $phone = str_replace(" ", "", $phone);
-        $phone = str_replace("-", "", $phone);
+        $phone = str_replace(' ', '', $phone);
+        $phone = str_replace('-', '', $phone);
 
         return $phone;
     }
@@ -128,13 +128,13 @@ class VoteRequest extends FormRequest
         $value = filter_var($value, FILTER_SANITIZE_STRING);
 
         // Improve this with regex?
-        $value = str_replace(" ", "", $value);
-        $value = str_replace("-", "", $value);
-        $value = str_replace(".", "", $value);
+        $value = str_replace(' ', '', $value);
+        $value = str_replace('-', '', $value);
+        $value = str_replace('.', '', $value);
 
         $value = strtoupper($value);
 
-        if(config('participa.hashed_SIDs')) $value = hash('sha256', $value);
+        if (config('participa.hashed_SIDs')) $value = hash('sha256', $value);
 
         return $value;
     }

@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    @if($ballot)
+    @if ($ballot)
         <div class="ballot-receipt">
             <div class="ballot ballot-block">
                 <h3 class="ballot__edition">
@@ -14,10 +14,10 @@
                 </h2>
 
                 <div class="ballot__contents">
-                    @foreach($ballot->decryptWithOptions() as $questionId => $content)
+                    @foreach ($ballot->decryptWithOptions() as $questionId => $content)
                         <h4>{{ $content['question']->question }}</h4>
                         <table class="table table-sm table-striped mt-3">
-                            @foreach($content['options'] as $option)
+                            @foreach ($content['options'] as $option)
                                 <tr>
                                     <td width="20"><i aria-hidden="true" class="far fa-check-square"></i></td>
                                     <td>{{ $option->option }}</td>

@@ -19,7 +19,7 @@
     },
 
     methods: {
-      loadSidebar() {
+      loadSidebar () {
         Participa.getSidebar()
           .then(response => {
             this.sidebar = response;

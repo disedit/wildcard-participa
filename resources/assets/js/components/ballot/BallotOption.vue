@@ -1,6 +1,10 @@
 <template>
   <div class="option-wrapper">
-    <div :class="{ 'custom-checkbox': (type == 'checkbox'), 'custom-radio': (type == 'radio') ,'custom-control': true }">
+    <div :class="{
+      'custom-checkbox': (type === 'checkbox'),
+      'custom-radio': (type === 'radio') ,
+      'custom-control': true
+    }">
       <input
         :name="'ballot[' + option.question_id + ']'"
         :value="option.id"
@@ -15,7 +19,9 @@
         <span v-if="displayCost && option.cost > 0" class="option-cost">{{ option.cost | formatCurrency }}</span>
       </span>
     </div>
-    <a href="#" ref="info" v-if="option.description" class="option-info" @click.prevent="displayInfo">{{ $t('booth_option.more_info') }}</a>
+    <a href="#" ref="info" v-if="option.description" class="option-info" @click.prevent="displayInfo">
+      {{ $t('booth_option.more_info') }}
+    </a>
   </div>
 </template>
 
@@ -34,25 +40,25 @@
     },
 
     filters: {
-      formatCurrency: function(value) {
+      formatCurrency: function (value) {
         return format({ suffix: '€', integerSeparator: '.', round: 0 })(value);
       }
     },
 
-    mounted() {
+    mounted () {
       Bus.$on('focusOption', (option) => {
-        if(option.id == this.option.id) {
+        if (option.id === this.option.id) {
           this.$refs.info.focus();
         }
       });
     },
 
     methods: {
-      selectOption(option, type) {
+      selectOption (option, type) {
         Bus.$emit('optionSelected', option, type);
       },
 
-      displayInfo(e) {
+      displayInfo (e) {
         Bus.$emit('openOptionModal', this.option, this.type, true, this.selected);
       }
     }

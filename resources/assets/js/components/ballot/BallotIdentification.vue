@@ -22,7 +22,10 @@
       {{ $t('booth_identification.button') }}
     </button>
 
-    <p v-if="anonymous_voting" class="anonymous"><i class="far fa-lock" aria-hidden="true"></i> {{ $t('booth_identification.anonymous_voting') }}</p>
+    <p v-if="anonymous_voting" class="anonymous">
+      <i class="far fa-lock" aria-hidden="true"></i>
+      {{ $t('booth_identification.anonymous_voting') }}
+    </p>
   </div>
 </template>
 
@@ -41,7 +44,7 @@
       identifier: String
     },
 
-    data() {
+    data () {
       return {
         municipality: '',
         min_age: '16',
@@ -50,24 +53,24 @@
       }
     },
 
-    created() {
+    created () {
       this.anonymous_voting = window.BoothConfig.anonymous_voting;
       this.municipality = window.BoothConfig.name;
       this.min_age = window.BoothConfig.min_age;
     },
 
-    mounted() {
+    mounted () {
       Bus.$on('doneSelecting', this.focusID);
     },
 
     computed: {
-      disabled: function() {
+      disabled: function () {
         return this.loading ? ' disabled' : ''
       }
     },
 
     methods: {
-      updateID(value) {
+      updateID (value) {
         Bus.$emit('fieldUpdated', 'ID', value);
 
         // Reset phone, country code and SMS request
@@ -79,7 +82,7 @@
         Bus.$emit('fieldUpdated', 'smsCode', '');
       },
 
-      focusID() {
+      focusID () {
         this.autofocus = true;
       }
     }

@@ -15,15 +15,25 @@
       <div v-if="!loading" class="report-wrapper">
         <div v-if="reports.length > 0">
           <div :key="key" v-for="(report, key) in reports" class="report">
-            <div v-if="report.type == 'limit'">
+            <div v-if="report.type === 'limit'">
               <span class="report-icon far fa-ban" aria-hidden="true"></span>
-              <div class="report-message" v-if="report.action == 'vote'">
-                La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha excedit el límit de vots.
-                <div><button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button></div>
+              <div class="report-message" v-if="report.action === 'vote'">
+                La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener">
+                <strong>{{ report.ip }}</strong></a> ha excedit el límit de vots.
+                <div>
+                  <button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">
+                    Desbloqueja
+                  </button>
+                </div>
               </div>
               <div class="report-message" v-else>
-                La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener"><strong>{{ report.ip }}</strong></a> ha sigut bloquejada per intentar esdevinar el camp DNI massa voltes.
-                <div><button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">Desbloqueja</button></div>
+                La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener">
+                <strong>{{ report.ip }}</strong></a> ha sigut bloquejada per intentar esdevinar el camp DNI massa voltes.
+                <div>
+                  <button @click.prevent="unblock(report.ip)" class="btn btn-outline-secondary btn-sm">
+                    Desbloqueja
+                  </button>
+                </div>
               </div>
               <div class="report-info">
                 {{ report.created_at }}
@@ -91,7 +101,7 @@
   export default {
     name: 'reports',
 
-    data() {
+    data () {
       return {
         reports: {},
         loading: true,
@@ -99,14 +109,14 @@
       }
     },
 
-    mounted() {
+    mounted () {
       this.loadReports();
       this.anonymous_voting = window.app.config.anonymous_voting;
     },
 
     methods: {
       /* Fetch results from server */
-      loadReports(full) {
+      loadReports (full) {
         this.loading = true;
 
         Participa.getReports(full)
@@ -117,12 +127,12 @@
       },
 
       /* Unblock an IP */
-      unblock(ip) {
+      unblock (ip) {
         this.loading = true;
 
-        const confirmed = confirm("Estàs segur que vols desbloquejar la IP " + ip + "?");
+        const confirmed = confirm('Estàs segur que vols desbloquejar la IP ' + ip + '?');
 
-        if(confirmed) {
+        if (confirmed) {
           Participa.unblockIp(ip)
             .then(response => {
               this.loadReports(); /* Refresh reports */

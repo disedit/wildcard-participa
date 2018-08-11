@@ -4,7 +4,11 @@
 
     <div class="ballot-box ballot-phone">
       <verify-in-person v-if="boothMode || disableSMSVerification" />
-      <verify-phone v-else :phone="phone" :country-code="countryCode" :sms-code="smsCode" :sms-requested="smsRequested" />
+      <verify-phone v-else
+        :phone="phone"
+        :country-code="countryCode"
+        :sms-code="smsCode"
+        :sms-requested="smsRequested" />
     </div>
   </div>
 </template>

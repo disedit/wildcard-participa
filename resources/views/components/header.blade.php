@@ -6,7 +6,7 @@
 
 <nav class="navbar fixed-top navbar-expand-lg {{ (config('participa.navbar') == 'colorful') ? 'navbar-dark' : 'navbar-light' }}">
   <a class="navbar-brand" href="/">
-      @if($logoUrl)
+      @if ($logoUrl)
           <img src="{{ secure_asset('images/' . $logoUrl) }}" alt="{{ config('app.name', 'Participa') }}" width="150" />
       @else
           {{ config('app.name', 'Participa') }}

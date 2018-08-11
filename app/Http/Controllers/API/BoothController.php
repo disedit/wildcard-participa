@@ -48,12 +48,12 @@ class BoothController extends Controller
         $phone      = $request->input('phone');
         $voter      = Voter::findBySID($SID, $editionId);
 
-        if(!$inPerson) {
+        if (! $inPerson) {
             // Check if SMS code has already been sent for phone number
-            if($smsAlreadySent = $voter->smsAlreadySent($phone)) {
+            if ($smsAlreadySent = $voter->smsAlreadySent($phone)) {
                 // if sent: redirect & attach warning
                 $flag = ['name' => 'SMS_already_sent', 'info' => $smsAlreadySent];
-            } elseif($smsExceeded = $voter->smsExceeded()) {
+            } elseif ($smsExceeded = $voter->smsExceeded()) {
                 // if exceeded: redirect & attach warning
                 $flag = ['name' => 'SMS_exceeded', 'info' => $smsExceeded];
             } else {
@@ -91,18 +91,18 @@ class BoothController extends Controller
         $marked = $voter->mark($request);
 
         // Submit ballot
-        if($marked) {
+        if ($marked) {
 
             $ballot = new Ballot;
             $cast = $ballot->cast($request, $voter);
 
-            if(!$cast) {
+            if (!$cast) {
                 // If an error occurred during the casting process,
                 // Unmark voter and display error
                 $voter->rollback();
                 return response()->json(['success' => false, 'error' => 'Error sistema']);
             } else {
-                if(!$request->user()) Limit::logAction('vote', $editionId);
+                if (!$request->user()) Limit::logAction('vote', $editionId);
             }
         } else {
             return response()->json(['success' => false, 'error' => 'Error sistema']);

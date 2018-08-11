@@ -31,14 +31,14 @@
       Reports
     },
 
-    data() {
+    data () {
       return {
         is_superadmin: false
       }
     },
 
-    created() {
-      if(window.app.user.is_superadmin)
+    created () {
+      if (window.app.user.is_superadmin)
         this.is_superadmin = true;
     }
   }

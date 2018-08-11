@@ -18,12 +18,25 @@
         <hr class="mt-3" />
         <div class="row">
           <div class="col-sm-6">
-            <a href="/" target="_blank" :class="{ 'btn btn-lg btn-block': true, 'btn-success': editionIsOpen, 'btn-warning': !editionIsOpen, 'disabled': !editionIsOpen }">
+            <a href="/"
+              target="_blank"
+              :class="{
+                'btn btn-lg btn-block': true,
+                'btn-success': editionIsOpen,
+                'btn-warning': !editionIsOpen,
+                'disabled': !editionIsOpen
+              }">
               <i class="far fa-check-square" aria-hidden="true"></i> Emet vots
             </a>
           </div>
           <div class="col-sm">
-            <b-btn v-if="!anonymousVoting" v-b-modal.anullBallot :class="{ 'btn btn-danger btn-lg btn-block': true, 'disabled': !editionIsOpen }">
+            <b-btn
+              v-if="!anonymousVoting"
+              v-b-modal.anullBallot
+              :class="{
+                'btn btn-danger btn-lg btn-block': true,
+                'disabled': !editionIsOpen
+              }">
               <i class="far fa-ban" aria-hidden="true"></i> Anul·la vot
             </b-btn>
           </div>
@@ -53,7 +66,7 @@
       LookUp
     },
 
-    data() {
+    data () {
       return {
         edition: {},
         anonymousVoting: false,
@@ -62,7 +75,7 @@
       }
     },
 
-    mounted() {
+    mounted () {
       this.loadEdition();
       this.anonymousVoting = window.app.config.anonymous_voting;
       this.enableIDLookUp = (window.app.config.hashed_SIDs) ? false : window.app.config.enable_ID_lookup;
@@ -71,7 +84,7 @@
 
     methods: {
       /* Fetch ballot from server */
-      loadEdition() {
+      loadEdition () {
         Participa.getBallot()
           .then(response => {
             this.edition = response;

@@ -4,7 +4,11 @@
       <form @submit.prevent="submitBallot">
         <div v-if="Object.keys(ballot).length > 0">
           <div :key="item" v-for="(question, item) in ballot.questions">
-            <ballot-question :question="question" :selected="selected" :number="item + 1" :display-number="ballot.questions.length > 1" />
+            <ballot-question
+              :question="question"
+              :selected="selected"
+              :number="item + 1"
+              :display-number="ballot.questions.length > 1" />
           </div>
         </div>
         <div v-else>

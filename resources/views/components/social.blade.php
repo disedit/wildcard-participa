@@ -1,4 +1,4 @@
-@if(config('participa.facebook'))
+@if (config('participa.facebook'))
     @php
         $fbText = explode('/', config('participa.facebook'));
         $fbText = (substr($fbText[3], -1) == '/') ? substr($fbText[3], 0, -1) : $fbText[3];
@@ -11,7 +11,7 @@
     </li>
 @endif
 
-@if(config('participa.twitter'))
+@if (config('participa.twitter'))
     <li class="nav-item">
         <a href="https://twitter.com/{{ config('participa.twitter') }}" target="_blank" rel="noopener">
             <i class="fab fa-twitter-square" aria-hidden="true"></i> {{ '@' . config('participa.twitter') }}
@@ -19,7 +19,7 @@
     </li>
 @endif
 
-@if(config('participa.council_url'))
+@if (config('participa.council_url'))
     @php
         $simpleUrl = config('participa.council_url');
         $simpleUrl = preg_replace('/(https?\:\/\/)(www\.)?/', '', $simpleUrl);

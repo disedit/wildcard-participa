@@ -1,8 +1,8 @@
 <template>
-  <b-modal 
-    id="anullBallot" 
-    ref="anullBallot" 
-    @shown="focus('SID')" 
+  <b-modal
+    id="anullBallot"
+    ref="anullBallot"
+    @shown="focus('SID')"
     @hidden="clear">
     <div slot="modal-title">
       <span class="title">Anul·la una papereta</span>
@@ -17,53 +17,55 @@
     <form @submit.prevent="ballotLookup" v-if="!success">
       <div class="form-group">
         <label for="SID">Identificador</label>
-        <input 
-          v-if="step == 1"
+        <input
+          v-if="step === 1"
           type="text"
           ref="SID"
           id="SID"
           v-model="SID"
-          v-focus="focused == 'SID'"
-          :class="{ 
+          v-focus="focused === 'SID'"
+          :class="{
             'form-control': true,
             'is-invalid': errors.hasOwnProperty('SID')
           }"
           placeholder="DNI, NIF o Passaport" />
-        <p v-if="step == 2">
+        <p v-if="step === 2">
           <strong>{{ SID }}</strong>
           <a href="#" @click.prevent="back">
             <i class="far fa-pencil-alt" aria-hidden="true"></i>
           </a>
         </p>
-        <div 
-          v-if="errors.hasOwnProperty('SID')" 
-          :key="key" 
-          v-for="(error, key) in errors.SID" 
-          class="invalid-feedback">
-          {{ error }}
+        <div v-if="errors.hasOwnProperty('SID')">
+          <div
+            v-for="(error, key) in errors.SID"
+            :key="key"
+            class="invalid-feedback">
+            {{ error }}
+          </div>
         </div>
       </div>
 
-      <div v-if="step == 2">
+      <div v-if="step === 2">
         <div class="form-group">
           <label for="reason" class="mb-0">Justificació</label>
           <small class="form-text text-muted mt-0 mb-1">Breu descripció de l'incident pel qual s'anul·la aquesta papereta.</small>
-          <textarea 
+          <textarea
             ref="reason"
             id="reason"
             v-model="reason"
-            v-focus="focused == 'reason'"
-            :class="{ 
+            v-focus="focused === 'reason'"
+            :class="{
               'form-control': true,
               'is-invalid': errors.hasOwnProperty('reason')
             }">
           </textarea>
-          <div 
-            v-if="errors.hasOwnProperty('reason')" 
-            :key="key" 
-            v-for="(error, key) in errors.reason" 
-            class="invalid-feedback">
-            {{ error }}
+          <div v-if="errors.hasOwnProperty('reason')">
+            <div
+              v-for="(error, key) in errors.reason"
+              :key="key"
+              class="invalid-feedback">
+              {{ error }}
+            </div>
           </div>
         </div>
 
@@ -78,10 +80,10 @@
 
     <div slot="modal-footer">
       <button ref="close" class="btn btn-secondary" @click="hideModal">Tanca</button>
-      <button v-if="step == 1 && !success" class="btn btn-danger" @click.prevent="ballotLookup">
+      <button v-if="step === 1 && !success" class="btn btn-danger" @click.prevent="ballotLookup">
         <i class="far fa-search" aria-hidden="true"></i> Troba la papereta
       </button>
-      <button v-if="step == 2" class="btn btn-danger" @click.prevent="anullBallot">
+      <button v-if="step === 2" class="btn btn-danger" @click.prevent="anullBallot">
         <i class="far fa-ban" aria-hidden="true"></i> Anul·la la papereta
       </button>
       <button v-if="success" class="btn btn-danger" @click="success = false">
@@ -97,9 +99,11 @@
   export default {
     name: 'anull-ballot',
 
-    directives: { focus },
+    directives: {
+      focus
+    },
 
-    data() {
+    data () {
       return {
         step: 1,
         SID: '',
@@ -112,27 +116,27 @@
       }
     },
 
-    mounted() {
+    mounted () {
       this.user = window.app.user;
       this.ip = window.app.ip;
     },
 
     watch: {
-      SID: function() {
+      SID: function () {
         this.errors = {};
       },
 
-      reason: function() {
+      reason: function () {
         this.errors = {};
       }
     },
 
     methods: {
-      focus(field) {
+      focus (field) {
         this.focused = field;
       },
 
-      ballotLookup() {
+      ballotLookup () {
         Participa.anullBallot({
           SID: this.SID
         }).then(response => {
@@ -145,7 +149,7 @@
         });
       },
 
-      anullBallot() {
+      anullBallot () {
         Participa.anullBallot({
           SID: this.SID,
           reason: this.reason,
@@ -160,11 +164,11 @@
         });
       },
 
-      hideModal() {
+      hideModal () {
         this.$refs.anullBallot.hide();
       },
 
-      clear() {
+      clear () {
         this.SID = '';
         this.reason = '';
         this.step = 1;
@@ -172,7 +176,7 @@
         this.success = false;
       },
 
-      back() {
+      back () {
         this.step = 1;
         this.focus('SID');
       },

@@ -1,14 +1,14 @@
 <template>
-  <b-modal 
-    id="lookUp" 
-    title="Troba un identificador" 
-    :hide-footer="true" 
-    @hidden="clear" 
+  <b-modal
+    id="lookUp"
+    title="Troba un identificador"
+    :hide-footer="true"
+    @hidden="clear"
     @shown="focused = true">
     <form @submit.prevent="lookUp">
       <div class="form-group">
         <label for="SID">El DNI, NIE o Passaport conté els caràcters...</label>
-        <input 
+        <input
           type="text"
           ref="SID"
           id="SID"
@@ -17,15 +17,16 @@
           @blur="focused = false"
           :class="{
             'form-control': true,
-            'is-invalid': errors.hasOwnProperty('SID') 
+            'is-invalid': errors.hasOwnProperty('SID')
           }"
           autocomplete="off" />
-        <div 
-          v-if="errors.hasOwnProperty('SID')" 
-          :key="key" 
-          v-for="(error, key) in errors.SID" 
-          class="invalid-feedback">
-             {{ error }}
+        <div v-if="errors.hasOwnProperty('SID')">
+          <div
+            v-for="(error, key) in errors.SID"
+            :key="key"
+            class="invalid-feedback">
+               {{ error }}
+          </div>
         </div>
       </div>
     </form>
@@ -43,12 +44,15 @@
             </tr>
           </tbody>
         </table>
-        <small v-if="results.length == 10" class="form-text text-muted">
+        <small v-if="results.length === 10" class="form-text text-muted">
           Únicament es mostren els <strong>10 primers identificadors</strong> per seguretat.
         </small>
       </div>
       <div v-else>
-        <div class="alert alert-danger"><i class="far fa-times" aria-hidden="true"></i> No s'ha trobat cap identificador</div>
+        <div class="alert alert-danger">
+          <i class="far fa-times" aria-hidden="true"></i>
+          No s'ha trobat cap identificador
+        </div>
       </div>
     </div>
   </b-modal>
@@ -61,7 +65,9 @@
   export default {
     name: 'look-up',
 
-    directives: { focus },
+    directives: {
+      focus
+    },
 
     data() {
       return {
@@ -74,21 +80,21 @@
     },
 
     watch: {
-      SID: function(value) {
-        if(value.length > 0) this.lookUp(value);
+      SID: function (value) {
+        if (value.length > 0) this.lookUp(value);
         this.errors = {};
       }
     },
 
     filters: {
-      highlight: function(value, keyword) {
+      highlight: function (value, keyword) {
         var reg = new RegExp(keyword, 'gi');
         return value.replace(reg, (word) => '<span class="highlight">' + word + '</span>');
       }
     },
 
     methods: {
-      lookUp: debounce(function() {
+      lookUp: debounce(function () {
         this.loading = true;
 
         Participa.lookUp({
@@ -104,7 +110,7 @@
         });
       }, 500),
 
-      clear() {
+      clear () {
         this.errors = {};
         this.results = null;
         this.SID = '';

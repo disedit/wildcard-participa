@@ -28,7 +28,7 @@ class HasNotVoted implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(!$this->voter) return true;
+        if (!$this->voter) return true;
 
         return ($this->voter->ballot_cast === 0);
     }

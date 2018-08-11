@@ -43,7 +43,7 @@ class ResetCensus extends Command
 
         $this->info('Reseting census on edition ' . $edition->name . ' ...');
 
-        foreach($edition->voters()->get() as $voter) {
+        foreach ($edition->voters()->get() as $voter) {
             $voter->SMS_phone = '';
             $voter->SMS_token = '';
             $voter->SMS_attempts = 0;

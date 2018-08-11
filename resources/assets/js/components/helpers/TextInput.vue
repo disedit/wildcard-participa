@@ -42,13 +42,13 @@
       warning: Boolean
     },
 
-    data() {
+    data () {
       return {
         focused: false
       }
     },
 
-    mounted() {
+    mounted () {
       this.focused = this.value || this.autofocus ? true : false;
     }
   }

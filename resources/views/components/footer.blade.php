@@ -12,15 +12,15 @@
             <address>
                 <h5 class="mt-0">{{ config('participa.council_name', 'Any Council') }}</h5>
                 <p>
-                    @if(config('participa.contact_address'))
+                    @if (config('participa.contact_address'))
                         <span><i class="far fa-map-marker-alt" aria-hidden="true"></i> {{ config('participa.contact_address') }}</span>
                     @endif
 
-                    @if(config('participa.contact_phone'))
+                    @if (config('participa.contact_phone'))
                         <span><i class="far fa-phone" aria-hidden="true"></i> {{ config('participa.contact_phone') }}</span>
                     @endif
 
-                    @if(config('participa.council_url'))
+                    @if (config('participa.council_url'))
                         @php
                             $simpleUrl = config('participa.council_url');
                             $simpleUrl = preg_replace('/(https?\:\/\/)(www\.)?/', '', $simpleUrl);

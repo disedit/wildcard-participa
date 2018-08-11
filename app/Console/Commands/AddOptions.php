@@ -40,10 +40,10 @@ class AddOptions extends Command
     {
         $questionId = $this->option('question');
 
-        if(!$questionId) {
+        if (! $questionId) {
             $createQuestion = $this->choice('The question ID was not specified. Create one?', ['Yes', 'No'], 0);
 
-            if($createQuestion == 'Yes') {
+            if ($createQuestion == 'Yes') {
                 $this->call('edition:questions');
                 $this->handle();
             } else {
@@ -59,6 +59,6 @@ class AddOptions extends Command
         $option->save();
 
         $addOption = $this->choice('Add another option?', ['Yes', 'No'], 0);
-        if($addOption == 'Yes') $this->handle();
+        if ($addOption === 'Yes') $this->handle();
     }
 }

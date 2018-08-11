@@ -20,7 +20,7 @@ class Ballot extends Model
      */
     public function voter()
     {
-        if(config('participa.anonymous_voting') === false) {
+        if (config('participa.anonymous_voting') === false) {
             return $this->belongsTo('App\Voter');
         }
 
@@ -45,9 +45,9 @@ class Ballot extends Model
     {
         $ballotToEncrypt = [];
 
-        foreach($ballot as $question) {
+        foreach ($ballot as $question) {
             $options = [];
-            foreach($question['options'] as $option) {
+            foreach ($question['options'] as $option) {
                 $ballotToEncrypt[$question['id']][$option['id']] = 1.000;
             }
         }
@@ -71,11 +71,11 @@ class Ballot extends Model
         $ballot = $this->decrypt();
         $withOptions = [];
 
-        foreach($ballot as $questionId => $options) {
-            $option_keys = array_keys($options);
+        foreach ($ballot as $questionId => $options) {
+            $optionKeys = array_keys($options);
             $withOptions[$questionId] = [
                     'question' => \App\Question::where('id', $questionId)->first(),
-                    'options' => \App\Option::whereIn('id', $option_keys)->get(),
+                    'options' => \App\Option::whereIn('id', $optionKeys)->get(),
                     'points' => $options
                 ];
         }
@@ -90,7 +90,7 @@ class Ballot extends Model
     {
         $newRef = str_random(10);
         $exists = Self::where('ref', $newRef)->count();
-        if($exists) return $this->createRef();
+        if ($exists) return $this->createRef();
         return $newRef;
     }
 
@@ -125,8 +125,8 @@ class Ballot extends Model
         $this->by_user_id = $userId;
 
         /* Prevent identifiable information about voter from being saved */
-        if(config('participa.anonymous_voting') === false) {
-            $this->cast_at = date("Y-m-d H:i:s");
+        if (config('participa.anonymous_voting') === false) {
+            $this->cast_at = date('Y-m-d H:i:s');
             $this->voter_id = $voter->id;
             $this->ip_address = $request->ip();
             $this->user_agent = $request->header('User-Agent');

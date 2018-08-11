@@ -56,7 +56,7 @@ class ApiTest extends TestCase
         $response = $this->json('POST', '/api/request_sms', [
             'SID' => $voter['SID'],
             'country_code' => 34,
-            'phone' => rand(600000000,799999999)
+            'phone' => rand(600000000, 799999999)
         ]);
 
         $response->assertSuccessful()
@@ -160,7 +160,7 @@ class ApiTest extends TestCase
         $validBallot = [];
         $questionKey = 0;
 
-        foreach($ballot->questions as $question) {
+        foreach ($ballot->questions as $question) {
             $questionKey++;
             $times = rand($question->min_options, $question->max_options);
             $validBallot[$questionKey] = ['id' => $question->id, 'options' => array()];
@@ -185,7 +185,7 @@ class ApiTest extends TestCase
         $invalidBallot = [];
         $questionKey = 0;
 
-        foreach($ballot->questions as $question) {
+        foreach ($ballot->questions as $question) {
             $questionKey++;
             $times = $question->max_options + 1;
             $invalidBallot[$questionKey] = ['id' => $question->id, 'options' => array()];

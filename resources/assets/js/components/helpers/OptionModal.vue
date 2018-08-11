@@ -50,7 +50,7 @@
   export default {
     name: 'option-modal',
 
-    data() {
+    data () {
       return {
         active: false,
         option: {},
@@ -61,29 +61,29 @@
     },
 
     filters: {
-      formatCurrency: function(value) {
+      formatCurrency: function (value) {
         return format({ suffix: '€', integerSeparator: '.', round: 0 })(value);
       }
     },
 
-    created() {
+    created () {
       Bus.$on('openOptionModal', (option, type, showSelect, selected) => this.open(option, type, showSelect, selected));
     },
 
     computed: {
-      attachments: function() {
-        if(this.option.attachments)
+      attachments: function () {
+        if (this.option.attachments)
           return this.parseList(this.option.attachments);
       },
 
-      pictures: function() {
-        if(this.option.pictures)
+      pictures: function () {
+        if (this.option.pictures)
           return this.parseList(this.option.pictures);
       },
     },
 
     methods: {
-      open(option, type, showSelect, selected) {
+      open (option, type, showSelect, selected) {
         this.option = option;
         this.type = type;
         this.showSelect = showSelect;
@@ -91,13 +91,13 @@
         this.active = true;
       },
 
-      close() {
+      close () {
         this.active = false;
         Bus.$emit('focusOption', this.option);
       },
 
-      toggleOption() {
-        if(this.type == 'radio' && this.selected) {
+      toggleOption () {
+        if (this.type === 'radio' && this.selected) {
           Bus.$emit('clearQuestion', this.option);
         } else {
           Bus.$emit('optionSelected', this.option, this.type);
@@ -109,7 +109,7 @@
         let lines = list.split('\n');
         let arrayList = [];
 
-        if(list.length == 0) return;
+        if (list.length === 0) return;
 
         lines.forEach((line) => {
           arrayList.push(line.split(','));

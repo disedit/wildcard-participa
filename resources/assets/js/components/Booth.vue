@@ -31,38 +31,38 @@
       OptionModal
     },
 
-    data() {
+    data () {
       return {
-      ballot: {},
-      selected: [],
-      errors: {},
-      receipt: {},
-      ID: '',
-      phone: '',
-      countryCode: 34,
-      smsCode: '',
-      smsRequested: false,
-      transitionName: 'slide-left'
+        ballot: {},
+        selected: [],
+        errors: {},
+        receipt: {},
+        ID: '',
+        phone: '',
+        countryCode: 34,
+        smsCode: '',
+        smsRequested: false,
+        transitionName: 'slide-left'
       }
     },
 
     beforeRouteUpdate (to, from, next) {
       let transitionName = 'slide-left';
 
-      if(from.path == '/booth/verify' && to.path == '/') transitionName = 'slide-right';
+      if (from.path === '/booth/verify' && to.path === '/') transitionName = 'slide-right';
 
-      if(from.path == '/booth/receipt' && to.path == '/booth/verify'){
+      if (from.path === '/booth/receipt' && to.path === '/booth/verify'){
         // Should not be allowed. Redirect to first step
         this.clearBooth();
         this.$router.push({ path: '/' });
       }
 
-      if(from.path == '/booth/receipt' && to.path == '/'){
+      if (from.path === '/booth/receipt' && to.path === '/'){
         // If going from receipt to first step, clear the form
         this.clearBooth();
       }
 
-      if(from.path != to.path) {
+      if (from.path !== to.path) {
         let voteInfo = document.getElementsByClassName('vote-info')[0];
         voteInfo.classList.add('vote-info--compact');
       }
@@ -71,7 +71,7 @@
       next();
     },
 
-    created() {
+    created () {
       this.loadBallot();
       Bus.$on('optionSelected', (option, type) => this.handleOptionChange(option, type));
       Bus.$on('clearQuestion', (option) => this.clearQuestion(option));
@@ -83,8 +83,8 @@
     },
 
     watch: {
-      selected: function(){
-        if(window.requestAnimationFrame) this.doneSelecting();
+      selected: function () {
+        if (window.requestAnimationFrame) this.doneSelecting();
       }
     },
 
@@ -100,11 +100,11 @@
       },
 
       /* Load an emtpy ballot onto 'selected' */
-      initialSelected() {
+      initialSelected () {
         /* Hack: Prevent original ballot value from updating */
         let ballot = JSON.parse( JSON.stringify( this.ballot.questions ) );
 
-        ballot.forEach(function(question, index) {
+        ballot.forEach(function (question, index) {
           ballot[index].options = new Array();
         });
 
@@ -112,8 +112,8 @@
       },
 
       /* When user selects an option */
-      handleOptionChange(option, type) {
-        if(type == 'radio') {
+      handleOptionChange (option, type) {
+        if (type === 'radio') {
           this.radioOptions(option);
         } else {
           this.checkboxOptions(option);
@@ -121,9 +121,9 @@
       },
 
       /* Handles option selection for single-choice questions */
-      radioOptions(option) {
+      radioOptions (option) {
         let selected = this.selected;
-        const questionIndex = selected.findIndex((q) => q.id == option.question_id);
+        const questionIndex = selected.findIndex((q) => q.id === option.question_id);
 
         selected[questionIndex].options = new Array(option);
 
@@ -132,12 +132,12 @@
       },
 
       /* Handles option selection for multiple-choice questions */
-      checkboxOptions(option) {
+      checkboxOptions (option) {
         let selected = this.selected;
-        const questionIndex = selected.findIndex((q) => q.id == option.question_id);
-        let optionIndex = selected[questionIndex].options.findIndex((o) => o.id == option.id);
+        const questionIndex = selected.findIndex((q) => q.id === option.question_id);
+        let optionIndex = selected[questionIndex].options.findIndex((o) => o.id === option.id);
 
-        if(optionIndex >= 0){
+        if (optionIndex >= 0){
           selected[questionIndex].options.splice(optionIndex, 1);
         } else {
           selected[questionIndex].options.push(option);
@@ -147,22 +147,22 @@
       },
 
       /* Provides a method to clear a radio question */
-      clearQuestion(option) {
-        const questionIndex = this.selected.findIndex((q) => q.id == option.question_id);
+      clearQuestion (option) {
+        const questionIndex = this.selected.findIndex((q) => q.id === option.question_id);
         let questions = this.selected[questionIndex];
         questions.options = [];
         this.$set(this.selected, questionIndex, questions);
       },
 
       /* Scroll to ID field, if all questions have been fully answered */
-      doneSelecting() {
+      doneSelecting () {
         let completed = [];
 
-        this.selected.forEach((question) => completed.push(question.max_options == question.options.length));
+        this.selected.forEach((question) => completed.push(question.max_options === question.options.length));
 
         const shouldScroll = completed.every((value) => value === true);
 
-        if(shouldScroll) {
+        if (shouldScroll) {
           jump('.ballot-identification', {
             offset: -50,
             duration: 500,
@@ -172,7 +172,7 @@
       },
 
       /* Precheck before step 2. Checks if ID exists or has been used */
-      submitBallotForVerification() {
+      submitBallotForVerification () {
         Bus.$emit('BoothBallotLoading', true);
 
         Participa.precheck({
@@ -186,7 +186,7 @@
       },
 
       /* Request SMS code to verify ballot */
-      requestSMS() {
+      requestSMS () {
 
         Bus.$emit('VerifyPhoneLoading', true);
 
@@ -198,9 +198,9 @@
         }).then(response => {
           jump('.ballot-phone', { offset: -50, duration: 500 });
           this.smsRequested = true;
-          if(response.flag){
+          if (response.flag) {
             Bus.$emit('setFlag', response.flag);
-            if(response.flag.name == 'SMS_exceeded'){
+            if (response.flag.name === 'SMS_exceeded') {
               this.phone = response.flag.info.last_number;
               this.countryCode = parseInt(response.flag.info.last_country_code);
             }

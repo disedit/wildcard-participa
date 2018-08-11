@@ -1,13 +1,13 @@
 <template>
   <div class="flag">
     <div
-      v-if="flag.name == 'SMS_already_sent'"
+      v-if="flag.name === 'SMS_already_sent'"
       v-html="$t('verify_flags.SMS_already_sent', { time: flag.info.time })"
       class="alert alert-info">
     </div>
 
     <div
-      v-if="flag.name == 'SMS_exceeded'"
+      v-if="flag.name === 'SMS_exceeded'"
       v-html="$t('verify_flags.SMS_exceeded', { sms_max_attempts, last_number: flag.info.last_number, time: flag.info.time })"
       class="alert alert-warning">
     </div>
@@ -24,7 +24,7 @@
       flag: [Boolean, Object]
     },
 
-    data() {
+    data () {
       return {
         sms_max_attempts: window.BoothConfig.sms_max_attempts
       };

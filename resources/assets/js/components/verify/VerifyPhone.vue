@@ -88,7 +88,7 @@
       smsRequested: Boolean,
     },
 
-    data() {
+    data () {
       return {
         isLoading: false,
         phoneFocused: false,
@@ -98,58 +98,57 @@
     },
 
     computed: {
-      disabled: function() {
+      disabled: function () {
         return this.isLoading ? ' disabled' : ''
       },
-      canBeModified: function() {
+      canBeModified: function () {
         let SMS_exceeded = false;
-        if(typeof this.flag == 'object') {
-          if(this.flag.name == 'SMS_exceeded') SMS_exceeded = true;
+        if (typeof this.flag === 'object') {
+          if (this.flag.name === 'SMS_exceeded') SMS_exceeded = true;
         }
-        return this.smsRequested == true && !SMS_exceeded;
+        return this.smsRequested === true && !SMS_exceeded;
       }
     },
 
-    created() {
+    created () {
       Bus.$on('VerifyPhoneLoading', (isLoading) => this.isLoading = isLoading);
       Bus.$on('setFlag', (flag) => this.flag = flag);
     },
 
-    mounted() {
+    mounted () {
       this.phoneFocused = true;
     },
 
     methods: {
-      updatePhone(value) {
+      updatePhone (value) {
         Bus.$emit('fieldUpdated', 'phone', value);
       },
 
-      updateSMSCode(value) {
+      updateSMSCode (value) {
         Bus.$emit('fieldUpdated', 'smsCode', value);
       },
 
-      updateCountryCode(value) {
+      updateCountryCode (value) {
         Bus.$emit('fieldUpdated', 'countryCode', Number(value));
         this.phoneFocused = true;
       },
 
-      modifyPhone(){
+      modifyPhone (){
         Bus.$emit('fieldUpdated', 'smsRequested', false);
         Bus.$emit('fieldUpdated', 'smsCode', '');
         this.flag = false;
         this.phoneFocused = true;
       },
 
-      requestSMS() {
+      requestSMS () {
         Bus.$emit('requestSMS');
         this.smsCodeFocused = true;
       },
 
-      castBallot() {
+      castBallot () {
         Bus.$emit('castBallot');
       }
     }
-
   }
 </script>
 

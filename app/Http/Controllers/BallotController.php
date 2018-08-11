@@ -29,7 +29,7 @@ class BallotController extends Controller
      */
     public function ballotLookUp(Request $request)
     {
-        if($request->get('ref')) {
+        if ($request->get('ref')) {
             return redirect('ballot/' . $request->get('ref'));
         }
 

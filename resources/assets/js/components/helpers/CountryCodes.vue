@@ -1,7 +1,13 @@
 <template>
   <div>
     <label for="dialCode" class="sr-only">{{ $t('verify_phone.country_code') }}</label>
-    <select id="dialCode" :value="value" @change="$emit('update', $event.target.value)" @focus="$emit('focus')" :disabled="disabled" class="custom-select">
+    <select
+      id="dialCode"
+      :value="value"
+      @change="$emit('update', $event.target.value)"
+      @focus="$emit('focus')"
+      :disabled="disabled"
+      class="custom-select">
       <option v-for="(code, key) in countryCodes" :value="code.dialCode" :key="key">
         +{{ code.dialCode }} - {{ code.name }}
       </option>
@@ -20,7 +26,7 @@
       disabled: Boolean
     },
 
-    data() {
+    data () {
       return {
         countryCodes: country_codes
       }

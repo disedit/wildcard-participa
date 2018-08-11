@@ -12,7 +12,9 @@
           <li v-for="option in question.options" :key="option.id">
             <i class="far fa-check-square" aria-hidden="true"></i> {{ option.option }}
           </li>
-          <li v-if="question.options.length == 0"><em class="blank-vote">{{ $t('verify_summary.blank') }}</em></li>
+          <li v-if="question.options.length === 0">
+            <em class="blank-vote">{{ $t('verify_summary.blank') }}</em>
+          </li>
         </ul>
       </div>
 
@@ -38,17 +40,17 @@
     },
 
     computed: {
-      arrowDirection() {
+      arrowDirection () {
         return this.expanded ? 'up' : 'down';
       }
     },
 
     methods: {
-      goBack() {
+      goBack () {
         Bus.$emit('goToStep', '/');
       },
 
-      expand() {
+      expand () {
         this.expanded = !this.expanded;
       }
     }
