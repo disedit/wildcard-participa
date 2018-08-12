@@ -1,6 +1,7 @@
 .navbar {
   background: $brand-primary;
   background: $brand-primary-gradient;
+  height: 3.5rem;
 
   h1 {
     margin: 0;
@@ -164,7 +165,7 @@
   border: 1px rgba(0, 0, 0, 0.15) solid;
   @include border-radius(0.25rem);
   text-align: center;
-  width: 8.75rem;
+  width: 8rem;
 
   &__heading {
     color: $white;
