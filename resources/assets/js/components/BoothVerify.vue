@@ -3,8 +3,12 @@
     <verify-summary :selected="selected" />
 
     <div class="ballot-box ballot-phone">
-      <verify-in-person v-if="boothMode || disableSMSVerification" />
-      <verify-phone v-else
+      <verify-in-person
+        v-if="boothMode || disableSMSVerification"
+        key="verify-in-person" />
+      <verify-phone
+        v-else
+        key="verify-phone"
         :phone="phone"
         :country-code="countryCode"
         :sms-code="smsCode"

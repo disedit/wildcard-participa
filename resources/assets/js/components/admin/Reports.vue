@@ -12,12 +12,12 @@
 
       <hr class="mt-2 mb-3" />
 
-      <div v-if="!loading" class="report-wrapper">
-        <div v-if="reports.length > 0">
+      <div v-if="!loading" key="reports-loaded" class="report-wrapper">
+        <div v-if="reports.length > 0" key="reports-not-empty">
           <div :key="key" v-for="(report, key) in reports" class="report">
-            <div v-if="report.type === 'limit'">
+            <div v-if="report.type === 'limit'" key="report-limit">
               <span class="report-icon far fa-ban" aria-hidden="true"></span>
-              <div class="report-message" v-if="report.action === 'vote'">
+              <div v-if="report.action === 'vote'" key="report-exceeded-votes" class="report-message">
                 La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener">
                 <strong>{{ report.ip }}</strong></a> ha excedit el límit de vots.
                 <div>
@@ -26,7 +26,7 @@
                   </button>
                 </div>
               </div>
-              <div class="report-message" v-else>
+              <div v-else key="report-exceeded-attempts" class="report-message">
                 La IP <a :href="'http://ip-api.com/#' + report.ip" target="_blank" rel="noopener">
                 <strong>{{ report.ip }}</strong></a> ha sigut bloquejada per intentar esdevinar el camp DNI massa voltes.
                 <div>
@@ -39,13 +39,12 @@
                 {{ report.created_at }}
               </div>
             </div>
-
-            <div v-else>
+            <div v-else key="report-custom">
               <span class="report-icon far fa-file-alt" aria-hidden="true"></span>
               <div class="report-message">
                 {{ report.report }}
               </div>
-              <div v-if="report.data.ballot" class="report-data">
+              <div v-if="report.data.ballot" key="report-ballot" class="report-data">
                 <table class="table table-sm my-2 table-bordered">
                   <tr>
                     <th>ref</th>
@@ -69,7 +68,7 @@
                   </tr>
                 </table>
               </div>
-              <div v-else class="report-data">
+              <div v-else key="report-other" class="report-data">
                 <table class="table table-sm my-2 table-bordered">
                   <tr v-for="(data, key) in report.data" :key="key">
                     <th>{{ key }}</th>
@@ -83,13 +82,13 @@
             </div>
           </div>
         </div>
-        <div v-else class="report-empty text-center">
+        <div v-else key="reports-empty" class="report-empty text-center">
           <span class="far fa-clipboard-check fa-3x fa-tw mt-3"></span>
           <h4 class="mt-2">Cap incidència</h4>
           <p>Tot correcte pel moment.</p>
         </div>
       </div>
-      <div v-else class="text-center">
+      <div v-else key="reports-loading" class="text-center">
         <i class="far fa-spinner-third fa-spin fa-3x fa-fw mt-3"></i>
         <h4 class="mt-2">Carregant...</h4>
       </div>

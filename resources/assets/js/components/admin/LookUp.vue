@@ -36,7 +36,7 @@
     </div>
 
     <div v-if="results">
-      <div v-if="results.length > 0">
+      <div v-if="results.length > 0" key="lookup-with-results">
         <table class="table table-striped table-sm table-bordered">
           <tbody>
             <tr :key="key" v-for="(result, key) in results">
@@ -48,7 +48,7 @@
           Únicament es mostren els <strong>10 primers identificadors</strong> per seguretat.
         </small>
       </div>
-      <div v-else>
+      <div v-else key="lookup-no-results">
         <div class="alert alert-danger">
           <i class="far fa-times" aria-hidden="true"></i>
           No s'ha trobat cap identificador

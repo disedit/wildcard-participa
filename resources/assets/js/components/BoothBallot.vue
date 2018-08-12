@@ -2,7 +2,7 @@
   <div class="row flex-column flex-sm-row">
     <div :class="{'col-md-8': !boothMode, 'col-md-12': boothMode}">
       <form @submit.prevent="submitBallot">
-        <div v-if="Object.keys(ballot).length > 0">
+        <div v-if="Object.keys(ballot).length > 0" key="ballot-loaded">
           <div :key="item" v-for="(question, item) in ballot.questions">
             <ballot-question
               :question="question"
@@ -11,7 +11,7 @@
               :display-number="ballot.questions.length > 1" />
           </div>
         </div>
-        <div v-else>
+        <div v-else key="ballot-loading">
           <ballot-loading />
         </div>
 
