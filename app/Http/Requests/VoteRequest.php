@@ -138,5 +138,4 @@ class VoteRequest extends FormRequest
 
         return $value;
     }
-
 }

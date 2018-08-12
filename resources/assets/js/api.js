@@ -8,7 +8,6 @@ export default class Participa {
   }
 
   getResults (force) {
-    console.log(force);
     return this._call('get', 'results', { params: { force } });
   }
 
