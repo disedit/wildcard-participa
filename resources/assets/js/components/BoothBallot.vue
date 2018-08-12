@@ -40,7 +40,7 @@
       Sidebar
     },
 
-    data() {
+    data () {
       return {
         isLoading: false,
         boothMode: false,
@@ -53,9 +53,10 @@
       identifier: String,
     },
 
-    created() {
+    created () {
       this.boothMode = window.BoothMode;
       Bus.$on('BoothBallotLoading', (isLoading) => this.isLoading = isLoading);
+      document.title = window.BoothConfig.app_name;
     },
 
     methods: {

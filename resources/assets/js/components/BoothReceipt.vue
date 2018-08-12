@@ -1,5 +1,5 @@
 <template>
-  <div class="row ballot-confirmation">
+  <div class="row ballot-confirmation" role="status" aria-live="assertive" aria-atomic="true">
     <div class="col-md-12">
       <div class="header">
         <i class="far fa-thumbs-up" aria-hidden="true"></i>
@@ -23,6 +23,7 @@
       </div>
       <div class="social-plugins">
         <iframe
+          title="Facebook"
           :src="'https://www.facebook.com/plugins/like.php?href=' + encodeURI(shareable_url) + '&width=198&layout=button_count&action=like&size=large&show_faces=false&share=true&height=37&appId=180444172483336&locale=ca_ES'"
           width="213"
           allowTransparency="true"
@@ -32,6 +33,7 @@
           height="37">
          </iframe>
          <iframe
+          title="Twitter"
           :src="'https://platform.twitter.com/widgets/tweet_button.html?size=l&url=' + encodeURI(shareable_url) + '&via=' + twitter + '&related=' + twitter + '&text=' + encodeURI($t('global.tweet')) + '&lang=es'"
           class="twitter"
           width="140"
@@ -41,9 +43,12 @@
           frameBorder="0">
          </iframe>
       </div>
-      <hr />
+
+      <hr aria-hidden="true" />
+
       <div class="further-actions">
-        <a :href="council_url">{{ $t('booth_receipt.back_to_council') }}</a> ·
+        <a :href="council_url">{{ $t('booth_receipt.back_to_council') }}</a>
+        <span aria-hidden="true">·</span>
         <router-link to="/">{{ $t('booth_receipt.back_to_booth') }}</router-link>
       </div>
     </div>
@@ -78,6 +83,7 @@
       this.council_url = window.BoothConfig.council_url;
       this.shareable_url = window.BoothConfig.url;
       this.twitter = window.BoothConfig.twitter;
+      document.title = this.$t('booth_receipt.heading') + ' - ' + window.BoothConfig.app_name;
     }
   }
 </script>

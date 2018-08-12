@@ -21,6 +21,8 @@ return [
     | Global
     |--------------------------------------------------------------------------
     */
+    'select_language' => 'Selecciona idioma / Select your language',
+    'current_language' => 'Current language',
     'calendar_heading' => 'Poll',
     'help' => 'Help and support',
     'is_archive' => 'The information shown below belongs to a poll that ended on <strong>:end_date</strong> and is archived. You may go to the <a href="/">latest poll</a> for information on the current vote.',

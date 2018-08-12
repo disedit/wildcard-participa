@@ -21,6 +21,8 @@ return [
     | Global
     |--------------------------------------------------------------------------
     */
+    'select_language' => 'Selecciona idioma / Select your language',
+    'current_language' => 'Idioma actual',
     'calendar_heading' => 'Votación',
     'help' => 'Incidencias y ayuda',
     'is_archive' => 'Esta votación finalizó el <strong>:end_date</strong> y está archivada. Ves a la <a href="/">edición actual</a> para consultar la votación en curso.',

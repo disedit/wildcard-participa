@@ -5,7 +5,7 @@
 }
 
 .main-footer {
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
 
   .languages {
     background: $white;
@@ -14,12 +14,13 @@
 }
 
 .council-details {
-  h5 {
+  h3 {
     font-weight: 600;
+    font-size: 1.25rem;
   }
 
-  p:last-child {
-    margin-bottom: 0;
+  p {
+    margin-bottom: 0.75rem;
   }
 
   span {

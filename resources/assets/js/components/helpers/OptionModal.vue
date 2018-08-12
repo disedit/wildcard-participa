@@ -62,7 +62,12 @@
 
     filters: {
       formatCurrency: function (value) {
-        return format({ suffix: '€', integerSeparator: '.', round: 0 })(value);
+        if(window.BoothConfig.locale == 'es'
+        || window.BoothConfig.locale == 'ca') {
+          return format({ suffix: '€', integerSeparator: '.', round: 0 })(value);
+        }
+
+        return format({ prefix: '€', integerSeparator: ',', round: 0 })(value);
       }
     },
 

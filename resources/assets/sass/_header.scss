@@ -4,6 +4,13 @@
 
   .navbar-brand {
     font-weight: 700;
+
+    h1 {
+      margin: 0;
+      line-height: 1;
+      font-size: 0;
+      font-weight: normal;
+    }
   }
 
   &.navbar-dark a {

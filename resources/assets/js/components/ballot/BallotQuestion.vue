@@ -1,11 +1,17 @@
 <template>
-  <div :class="'question template-' + question.template">
+  <section :class="'question template-' + question.template"
+    :aria-labelledby="'question-' + question.id"
+    role="group">
     <div :class="{ 'heading': true, 'has-number': displayNumber }">
       <span v-if="displayNumber" class="number">{{ number }}</span>
-      <h2>{{ question.question }}</h2>
+      <h2 :id="'question-' + question.id">{{ question.question }}</h2>
       <p class="description">{{ question.description }}</p>
     </div>
-    <div :class="{ 'option-group': true, 'list-group': question.template !== 'cards' }">
+    <div
+      :class="{
+        'option-group': true,
+        'list-group': question.template != 'cards'
+      }">
       <label
         v-for="option in question.options"
         :key="option.id"
@@ -23,8 +29,9 @@
           :display-cost="displayCost" />
       </label>
     </div>
-    <hr />
-  </div>
+
+    <hr  aria-hidden="true" />
+  </section>
 </template>
 
 <script>

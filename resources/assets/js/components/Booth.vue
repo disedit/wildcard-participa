@@ -1,5 +1,5 @@
 <template>
-  <div class="booth" id="boothView">
+  <section class="booth" id="boothView" :aria-label="$t('booth.label')">
     <transition :name="transitionName" mode="out-in">
       <router-view
         class="child-view"
@@ -15,7 +15,7 @@
 
     <error-modal :errors="errors" />
     <option-modal />
-  </div>
+  </section>
 </template>
 
 <script>

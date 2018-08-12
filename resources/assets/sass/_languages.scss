@@ -20,11 +20,13 @@
       }
     }
 
-    &:hover .languages__menu {
+    &:hover .languages__menu,
+    &:focus-within .languages__menu {
       display: block;
     }
 
-    &:hover {
+    &:hover,
+    &:focus-within {
       background: $gray-light;
       border: 1px $gray-light solid;
       @include border-radius(0.25rem 0.25rem 0 0);

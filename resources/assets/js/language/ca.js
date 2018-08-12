@@ -12,6 +12,9 @@ export default {
     challenge: 'Si penses que es tracta d\'un error o necessites ajuda, posa\'t en contacte amb',
     back: 'Torna'
   },
+  booth: {
+    label: 'Formulari de votació'
+  },
   booth_identification: {
     heading: 'Identificació',
     subheading: 'Pots votar si tens més de <strong>{min_age} anys</strong> i estàs empadronat a <strong>{municipality}</strong>',
@@ -38,6 +41,7 @@ export default {
     request_sms_button: 'Envia\'m el codi',
     cast_ballot_button: 'Confirma el meu vot',
     country_code: 'Prefix internacional',
+    modify_phone: 'Modify phone number'
   },
   verify_in_person: {
     button: 'Confirma'

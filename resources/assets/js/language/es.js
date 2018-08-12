@@ -12,6 +12,9 @@ export default {
     challenge: 'Si piensas que se trata de un error o necesitas ayuda, ponte en contacto con',
     back: 'Vuelve'
   },
+  booth: {
+    label: 'Formulario de votación'
+  },
   booth_identification: {
     heading: 'Identificación',
     subheading: 'Puedes votar si tienes más de <strong>{min_age} años</strong> y estás empadronado en <strong>{municipality}</strong>',
@@ -38,6 +41,7 @@ export default {
     request_sms_button: 'Envíame el código',
     cast_ballot_button: 'Confirma mi voto',
     country_code: 'Prefijo internacional',
+    modify_phone: 'Modificar número de móvil'
   },
   verify_in_person: {
     button: 'Confirma'

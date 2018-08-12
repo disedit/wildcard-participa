@@ -35,7 +35,7 @@
       errors: Object
     },
 
-    data() {
+    data () {
       return {
         contact_email: window.BoothConfig.contact_email
       }
@@ -46,9 +46,9 @@
     },
 
     methods: {
-      close() {
+      close () {
         Bus.$emit('fieldUpdated', 'errors', {});
-        Bus.$emit('focusMainButton');
+        Bus.$emit('focusMainButton', this.errors);
       }
     }
   }
