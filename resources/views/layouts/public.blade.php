@@ -33,6 +33,9 @@
       ga('send', 'pageview');
     </script>
 
+    <a href="#content" class="sr-only sr-only-focusable">@lang('participa.skip_to_content')</a>
+    <a href="#languages" class="sr-only sr-only-focusable">@lang('participa.select_language')</a>
+
     @section('header')
         @include('components/header')
         @include('components/voteinfo', ['inPerson' => $inPerson])

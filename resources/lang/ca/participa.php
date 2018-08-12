@@ -21,6 +21,7 @@ return [
     | Global
     |--------------------------------------------------------------------------
     */
+    'skip_to_content' => 'Ves directament al contingut',
     'select_language' => 'Selecciona idioma / Select your language',
     'current_language' => 'Idioma actual',
     'calendar_heading' => 'Votació',

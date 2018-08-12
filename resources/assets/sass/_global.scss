@@ -44,3 +44,13 @@ hr {
   background: $white;
   min-height: 500px;
 }
+
+.sr-only-focusable:focus {
+  position: absolute !important;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  background: $brand-primary;
+  color: $white;
+  padding: 0.5rem;
+}
