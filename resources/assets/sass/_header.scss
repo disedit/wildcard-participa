@@ -2,15 +2,15 @@
   background: $brand-primary;
   background: $brand-primary-gradient;
 
+  h1 {
+    margin: 0;
+    line-height: 1;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
   .navbar-brand {
     font-weight: 700;
-
-    h1 {
-      margin: 0;
-      line-height: 1;
-      font-size: 0;
-      font-weight: normal;
-    }
   }
 
   &.navbar-dark a {
@@ -175,6 +175,7 @@
   &__dates {
     font-size: 1.35rem;
     background: $white;
+    padding: 0.25rem;
 
     .col {
       padding: 0.5rem;
