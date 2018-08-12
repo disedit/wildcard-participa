@@ -5,7 +5,7 @@
 }
 
 .main-footer {
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
 
   .languages {
     background: $white;
@@ -20,7 +20,7 @@
   }
 
   p {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.25rem;
   }
 
   span {
@@ -30,6 +30,10 @@
 
   a {
     word-break: break-word;
+  }
+
+  .wai-logo {
+    margin-top: 1.5rem;
   }
 }
 

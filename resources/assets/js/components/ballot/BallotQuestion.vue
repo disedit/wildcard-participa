@@ -88,24 +88,26 @@
 <style scoped lang="scss">
   @import '../../../sass/_variables';
 
-  h2 {
-    font-size: 1.65rem;
-    font-weight: 600;
-  }
+  .question {
+    h2 {
+      font-size: 1.65rem;
+      font-weight: 600;
+    }
 
-  .description {
-    color: $gray-light;
-  }
+    .description {
+      color: $gray-light;
+    }
 
-  .heading {
-    position: relative;
+    .heading {
+      position: relative;
 
-    .number {
-      color: darken($gray-lighter, 20%);
-      font-size: 3rem;
-      position: absolute;
-      left: -50px;
-      top: -15px;
+      .number {
+        color: darken($gray-lighter, 20%);
+        font-size: 3rem;
+        position: absolute;
+        left: -50px;
+        top: -15px;
+      }
     }
   }
 </style>

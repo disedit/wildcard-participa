@@ -83,13 +83,13 @@
     border-radius: 0.25rem;
     padding: 1rem;
     font-size: 1.15rem;
-  }
 
-  .message--contest {
-    background: #FFF;
-    color: $gray-light;
-    font-size: 0.85rem;
-    border: 2px $gray-light solid;
+    &--contest {
+      background: #FFF;
+      color: $gray-light;
+      font-size: 0.85rem;
+      border: 2px $gray-light solid;
+    }
   }
 
   .footer {

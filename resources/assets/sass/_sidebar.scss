@@ -46,21 +46,21 @@ $sidebar-text: $gray-light;
       height: 0.35rem;
       background: $sidebar-text;
     }
-  }
 
-  &__box--main {
-    position: relative;
-    border-top: 0;
+    &--main {
+      position: relative;
+      border-top: 0;
 
-    &:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      height: 0.35rem;
-      background: $brand-primary;
-      background: $brand-primary-gradient;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 0.35rem;
+        background: $brand-primary;
+        background: $brand-primary-gradient;
+      }
     }
   }
 

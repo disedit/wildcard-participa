@@ -99,13 +99,13 @@
 
   .vote-status {
     font-size: 2rem;
-  }
 
-  .vote-status--open {
-    color: $green;
-  }
+    &--open {
+      color: $green;
+    }
 
-  .vote-status--closed {
-    color: $gray-light;
+    &--closed {
+      color: $gray-light;
+    }
   }
 </style>

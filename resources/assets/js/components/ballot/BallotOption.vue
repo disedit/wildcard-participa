@@ -94,12 +94,13 @@
   }
 
   .disabled {
-    .option-name, .option-cost {
-      color: lighten($gray-light, 20%);
+    .option-name {
+      color: lighten($gray-light, 10%);
     }
 
-    a {
-      color: $gray-light;
+    .option-cost,
+    .option-info {
+      color: lighten($gray-light, 30%);
     }
   }
 </style>
