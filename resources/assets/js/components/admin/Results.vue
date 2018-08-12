@@ -104,6 +104,7 @@
 
     mounted () {
       this.loadResults();
+      Bus.$on('refreshResults', () => this.loadResults(true));
     },
 
     computed: {

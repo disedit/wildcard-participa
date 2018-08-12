@@ -156,6 +156,7 @@
           this.clear();
           this.success = true;
           this.$refs.close.focus();
+          Bus.$emit('refreshResults');
           Bus.$emit('refreshReports');
         }).catch(errors => {
           this.errors = errors;
