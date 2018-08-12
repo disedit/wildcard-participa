@@ -50,11 +50,11 @@
                     <th>ref</th>
                     <td>{{ report.data.ballot.ref }}</td>
                   </tr>
-                  <tr v-if="anonymous_voting">
+                  <tr v-if="!anonymous_voting">
                     <th>dni</th>
                     <td>{{ report.data.voter.SID }}</td>
                   </tr>
-                  <tr v-if="anonymous_voting">
+                  <tr v-if="!anonymous_voting">
                     <th>mòvil</th>
                     <td>{{ report.data.voter.SMS_phone }}</td>
                   </tr>
@@ -111,6 +111,7 @@
     mounted () {
       this.loadReports();
       this.anonymous_voting = window.app.config.anonymous_voting;
+      Bus.$on('refreshReports', this.loadReports);
     },
 
     methods: {
