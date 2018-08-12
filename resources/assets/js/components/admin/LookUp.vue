@@ -20,11 +20,10 @@
             'is-invalid': errors.hasOwnProperty('SID')
           }"
           autocomplete="off" />
-        <div v-if="errors.hasOwnProperty('SID')">
+        <div v-if="errors.hasOwnProperty('SID')" class="invalid-feedback">
           <div
             v-for="(error, key) in errors.SID"
-            :key="key"
-            class="invalid-feedback">
+            :key="key">
                {{ error }}
           </div>
         </div>
