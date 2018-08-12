@@ -239,7 +239,7 @@
 
     .list-group-item {
       width: 50%;
-      height: 160px;
+      height: 10rem;
       align-items: flex-start;
       overflow: hidden;
       padding-bottom: 3rem;
@@ -253,7 +253,7 @@
     }
 
     .option {
-    height: 160px;
+    height: 10rem;
     width: 50%;
 
     &:nth-child(even) {

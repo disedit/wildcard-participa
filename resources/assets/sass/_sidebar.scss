@@ -83,7 +83,7 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
       }
 
       .far {
-        margin-right: 0.75rem;
+        margin-right: 0.5rem;
       }
     }
   }
@@ -114,16 +114,20 @@ $sidebar-text-secondary: lighten($sidebar-text, 15%);
     .far {
       margin-right: 0.5rem;
       margin-top: 0.25rem;
+      flex-shrink: 0;
     }
 
-    a:hover {
-      text-decoration: none;
+    a {
+      display: flex;
 
-      span {
-        text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+
+        span {
+          text-decoration: underline;
+        }
       }
     }
-
   }
 
   p:last-child {

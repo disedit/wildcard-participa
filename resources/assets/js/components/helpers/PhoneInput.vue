@@ -92,7 +92,7 @@
 
   .input {
     position: relative;
-    height: 71px;
+    height: 4.4375rem;
 
     label {
       z-index: 10;

@@ -86,7 +86,7 @@
 
                     <li>
                         <span class="sidebar__list__item">
-                            <i class="far fa-map-marker-alt" aria-hidden="true"></i>
+                            <i class="far fa-map-marker-alt fa-fw" aria-hidden="true"></i>
 
                             <span>
                                 {{ $part[0] }}

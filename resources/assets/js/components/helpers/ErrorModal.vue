@@ -59,16 +59,16 @@
 
   .header {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 1.25rem;
 
     i {
-      font-size: 68px;
+      font-size: 4.25rem;
       color: $gray;
       animation: thumbs-down 1s;
     }
 
     h2 {
-      font-size: 46px;
+      font-size: 2.85rem;
       color: $gray;
     }
   }
@@ -77,18 +77,18 @@
     text-align: center;
     width: 100%;
     max-width: 500px;
-    margin: 15px auto;
+    margin: 1rem auto;
     border: 2px $brand-danger solid;
     color: $brand-danger;
-    border-radius: 5px;
-    padding: 12px;
-    font-size: 18px;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    font-size: 1.15rem;
   }
 
   .message--contest {
     background: #FFF;
     color: $gray-light;
-    font-size: 14px;
+    font-size: 0.85rem;
     border: 2px $gray-light solid;
   }
 

@@ -6,7 +6,7 @@
   &__current {
     list-style: none;
     border: 1px $gray-400 solid;
-    min-width: 140px;
+    min-width: 8.75rem;
     @include border-radius(0.25rem);
 
     & > a {

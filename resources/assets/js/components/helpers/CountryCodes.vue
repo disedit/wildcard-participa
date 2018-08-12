@@ -7,7 +7,7 @@
       @change="$emit('update', $event.target.value)"
       @focus="$emit('focus')"
       :disabled="disabled"
-      class="custom-select">
+      class="custom-select country-code-select">
       <option v-for="(code, key) in countryCodes" :value="code.dialCode" :key="key">
         +{{ code.dialCode }} - {{ code.name }}
       </option>
@@ -37,11 +37,11 @@
 <style lang="scss" scoped>
   @import '../../../sass/_variables';
 
-  select {
+  .country-code-select {
     background-color: rgba(0, 0, 0, 0.15);
     border-width: 0;
-    width: 80px;
-    height: 72px;
+    width: 5rem;
+    height: 4.5rem;
     @if $enable-rounded {
       border-radius: 0.25rem 0 0 0.25rem;
     } @else {
@@ -49,7 +49,7 @@
     }
   }
 
-  select:disabled {
+  .country-code-select:disabled {
     background-color: rgba(0, 0, 0, 0.15);
   }
 </style>
