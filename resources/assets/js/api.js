@@ -27,8 +27,8 @@ export default class Participa {
     return this._call('post', 'cast_ballot', data);
   }
 
-  anullBallot (data) {
-    return this._call('post', 'anull_ballot', data);
+  annulBallot (data) {
+    return this._call('post', 'annul_ballot', data);
   }
 
   lookUp (data) {

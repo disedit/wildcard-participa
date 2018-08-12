@@ -32,7 +32,7 @@
           <div class="col-sm">
             <b-btn
               v-if="!anonymousVoting"
-              v-b-modal.anullBallot
+              v-b-modal.annulBallot
               :class="{
                 'btn btn-danger btn-lg btn-block': true,
                 'disabled': !editionIsOpen
@@ -49,20 +49,20 @@
       </div>
     </div>
 
-    <anull-ballot />
+    <annul-ballot />
     <look-up />
   </div>
 </template>
 
 <script>
-  import AnullBallot from './AnullBallot';
+  import AnnulBallot from './AnnulBallot';
   import LookUp from './LookUp';
 
   export default {
     name: 'edition',
 
     components: {
-      AnullBallot,
+      AnnulBallot,
       LookUp
     },
 

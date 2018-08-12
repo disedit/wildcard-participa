@@ -16,11 +16,11 @@ use App\Limit;
 class AdminController extends Controller
 {
     /**
-     * Anull a ballot
+     * Annul a ballot
      *
      * @return \Illuminate\Http\Response
      */
-    public function anullBallot(Request $request)
+    public function annulBallot(Request $request)
     {
 
         if (config('participa.anonymous_voting') === true)
@@ -166,7 +166,7 @@ class AdminController extends Controller
 
         $edition = Edition::current();
 
-        // Get anulled ballots and error reports
+        // Get annuled ballots and error reports
         $reports = $edition->reports()
                         ->with('user')
                         ->get()

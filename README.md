@@ -9,7 +9,7 @@ Wildcard Participa is an __online voting system__ for city councils.
 - __Questions__: The questions can be single or multiple choice. (_Ranked voting in the works_)
 - __In-person voting__: System to set up one or more polling stations, where citizens may go and enter their ballots manually or have a staff member do it for them. This feature is especially aimed at senior citizens, who may not have an internet connection or a cellphone.
 - __Anonymous voting__. Ballots are encrypted and diassociated from the voter when they are cast. (_Optional_)
-- __Ballot annulment__: When anonymous voting is not enabled, administrators may anull a ballot that has been cast online to replace it with one cast in-person.
+- __Ballot annulment__: When anonymous voting is not enabled, administrators may annul a ballot that has been cast online to replace it with one cast in-person.
 - __ID Look-up__: Administrators can search the census to troubleshoot common problems with in-person voting (_i.e. the ID was entered incorrectly into the census, or it is missing_).
 - __Results page__: Display the results when the vote ends or when you specify.
 - __Campaigning__: Each edition has a dedicated About page, which is displayed before the vote opens and is 100% customizable. Furthermore, every option has its dedicated description page, where voters can learn more to make an informed decision.

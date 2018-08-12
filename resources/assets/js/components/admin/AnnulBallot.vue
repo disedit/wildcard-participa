@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    id="anullBallot"
-    ref="anullBallot"
+    id="annulBallot"
+    ref="annulBallot"
     @shown="focus('SID')"
     @hidden="clear">
     <div slot="modal-title">
@@ -35,11 +35,10 @@
             <i class="far fa-pencil-alt" aria-hidden="true"></i>
           </a>
         </p>
-        <div v-if="errors.hasOwnProperty('SID')">
+        <div v-if="errors.hasOwnProperty('SID')" class="invalid-feedback">
           <div
             v-for="(error, key) in errors.SID"
-            :key="key"
-            class="invalid-feedback">
+            :key="key">
             {{ error }}
           </div>
         </div>
@@ -59,12 +58,11 @@
               'is-invalid': errors.hasOwnProperty('reason')
             }">
           </textarea>
-          <div v-if="errors.hasOwnProperty('reason')">
+          <div v-if="errors.hasOwnProperty('reason')" class="invalid-feedback">
             <div
               v-for="(error, key) in errors.reason"
-              :key="key"
-              class="invalid-feedback">
-              {{ error }}
+              :key="key">
+              {{ error[0] }}
             </div>
           </div>
         </div>
@@ -83,7 +81,7 @@
       <button v-if="step === 1 && !success" class="btn btn-danger" @click.prevent="ballotLookup">
         <i class="far fa-search" aria-hidden="true"></i> Troba la papereta
       </button>
-      <button v-if="step === 2" class="btn btn-danger" @click.prevent="anullBallot">
+      <button v-if="step === 2" class="btn btn-danger" @click.prevent="annulBallot">
         <i class="far fa-ban" aria-hidden="true"></i> Anul·la la papereta
       </button>
       <button v-if="success" class="btn btn-danger" @click="success = false">
@@ -97,7 +95,7 @@
   import { focus } from 'vue-focus';
 
   export default {
-    name: 'anull-ballot',
+    name: 'annul-ballot',
 
     directives: {
       focus
@@ -137,7 +135,7 @@
       },
 
       ballotLookup () {
-        Participa.anullBallot({
+        Participa.annulBallot({
           SID: this.SID
         }).then(response => {
           this.step = 2;
@@ -149,8 +147,8 @@
         });
       },
 
-      anullBallot () {
-        Participa.anullBallot({
+      annulBallot () {
+        Participa.annulBallot({
           SID: this.SID,
           reason: this.reason,
           confirm: true
@@ -158,6 +156,7 @@
           this.clear();
           this.success = true;
           this.$refs.close.focus();
+          Bus.$emit('refreshReports');
         }).catch(errors => {
           this.errors = errors;
           this.focus('reason');
@@ -165,12 +164,13 @@
       },
 
       hideModal () {
-        this.$refs.anullBallot.hide();
+        this.$refs.annulBallot.hide();
       },
 
       clear () {
         this.SID = '';
         this.reason = '';
+        this.focused = null;
         this.step = 1;
         this.errors = {};
         this.success = false;
