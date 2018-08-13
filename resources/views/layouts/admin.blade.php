@@ -9,7 +9,7 @@
         <meta name="jwt-token" content="{{ $token }}">
     @endisset
 
-    <title>Admin</title>
+    <title>Admin - {{ config('app.name', 'Participa') }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,900" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
