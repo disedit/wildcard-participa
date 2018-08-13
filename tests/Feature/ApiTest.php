@@ -39,9 +39,9 @@ class ApiTest extends TestCase
         ]);
         $response->assertStatus(422);
 
-        $validSID = Voter::first()->SID;
+        $voter = $this->newVoter();
         $response = $this->json('POST', '/api/precheck', [
-            'SID' => $validSID
+            'SID' => $voter['SID']
         ]);
 
         $response->assertStatus(200)
@@ -52,11 +52,11 @@ class ApiTest extends TestCase
 
     public function test_it_requests_an_sms_code()
     {
-        $voter = Voter::first();
+        $voter = $this->newVoter();;
         $response = $this->json('POST', '/api/request_sms', [
-            'SID' => $voter->SID,
+            'SID' => $voter['SID'],
             'country_code' => 34,
-            'phone' => rand(600000000,799999999)
+            'phone' => rand(600000000, 799999999)
         ]);
 
         $response->assertSuccessful()
@@ -67,8 +67,9 @@ class ApiTest extends TestCase
 
     public function test_it_casts_a_ballot_as_online_voter()
     {
-        $voter = Voter::first();
+        $newVoter = $this->newVoter();
 
+        $voter = Voter::find($newVoter['object']->id);
         $voter->SMS_phone = '34.612345678';
         $voter->SMS_token = '123456';
         $voter->SMS_attempts = 1;
@@ -76,7 +77,7 @@ class ApiTest extends TestCase
         $voter->save();
 
         $response = $this->json('POST', '/api/cast_ballot', [
-            'SID' => $voter->SID,
+            'SID' => $newVoter['SID'],
             'country_code' => '34',
             'phone' => '612345678',
             'SMS_code' => $voter->SMS_token,
@@ -92,10 +93,10 @@ class ApiTest extends TestCase
     public function test_it_casts_a_ballot_as_offline_voter()
     {
         $admin = User::first();
-        $voter = Voter::first();
+        $voter = $this->newVoter();
 
         $response = $this->actingAs($admin)->json('POST', '/api/cast_ballot', [
-            'SID' => $voter->SID,
+            'SID' => $voter['SID'],
             'ballot' => $this->fakeValidBallot()
         ]);
 
@@ -107,8 +108,9 @@ class ApiTest extends TestCase
 
     public function test_it_fails_when_ballot_is_invalid()
     {
-        $voter = Voter::first();
+        $newVoter = $this->newVoter();
 
+        $voter = Voter::find($newVoter['object']->id);
         $voter->SMS_phone = '34.612345678';
         $voter->SMS_token = '123456';
         $voter->SMS_attempts = 1;
@@ -116,7 +118,7 @@ class ApiTest extends TestCase
         $voter->save();
 
         $response = $this->json('POST', '/api/cast_ballot', [
-            'SID' => $voter->SID,
+            'SID' => $newVoter['SID'],
             'country_code' => '34',
             'phone' => '612345678',
             'sms_code' => $voter->SMS_token,
@@ -128,8 +130,9 @@ class ApiTest extends TestCase
 
     public function test_it_fails_when_SMS_code_is_invalid()
     {
-        $voter = Voter::first();
+        $newVoter = $this->newVoter();
 
+        $voter = Voter::find($newVoter['object']->id);
         $voter->SMS_phone = '34.612345678';
         $voter->SMS_token = '123456';
         $voter->SMS_attempts = 1;
@@ -137,7 +140,7 @@ class ApiTest extends TestCase
         $voter->save();
 
         $response = $this->json('POST', '/api/cast_ballot', [
-            'SID' => $voter->SID,
+            'SID' => $newVoter['SID'],
             'country_code' => '34',
             'phone' => '612345678',
             'sms_code' => '654321'
@@ -157,7 +160,7 @@ class ApiTest extends TestCase
         $validBallot = [];
         $questionKey = 0;
 
-        foreach($ballot->questions as $question) {
+        foreach ($ballot->questions as $question) {
             $questionKey++;
             $times = rand($question->min_options, $question->max_options);
             $validBallot[$questionKey] = ['id' => $question->id, 'options' => array()];
@@ -182,7 +185,7 @@ class ApiTest extends TestCase
         $invalidBallot = [];
         $questionKey = 0;
 
-        foreach($ballot->questions as $question) {
+        foreach ($ballot->questions as $question) {
             $questionKey++;
             $times = $question->max_options + 1;
             $invalidBallot[$questionKey] = ['id' => $question->id, 'options' => array()];
@@ -196,4 +199,23 @@ class ApiTest extends TestCase
         return $invalidBallot;
     }
 
+    /**
+     * Creates a new voter
+     *
+     * @return array
+     */
+    private function newVoter()
+    {
+      $SID = rand(100000, 999999);
+      $editionId = Edition::current()->id;
+      $voter = new Voter();
+      $voter->edition_id = $editionId;
+      $voter->SID = config('participa.hashed_SIDs') ? hash('sha256', $SID) : $SID;
+      $voter->save();
+
+      return [
+        'SID' => $SID,
+        'object' => $voter
+      ];
+    }
 }

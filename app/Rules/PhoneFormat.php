@@ -25,12 +25,12 @@ class PhoneFormat implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(!is_numeric($value)) return false;
+        if (!is_numeric($value)) return false;
 
         /* Alert a Spanish user if mobile phone is not exactly 9 numbers */
         /* Consider switching to more robust solution for international users */
         $dialCode = explode('.', $value);
-        if($dialCode == '34' && strlen($value) != 9) return false;
+        if ($dialCode == '34' && strlen($value) != 9) return false;
 
         return true;
     }

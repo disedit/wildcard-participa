@@ -20,7 +20,7 @@ class BoothTest extends DuskTestCase
      */
     public function test_a_voter_can_cast_a_ballot_online()
     {
-        $this->artisan('migrate:refresh', ['--seed' => true]);
+        $this->artisan('migrate:fresh', ['--seed' => true]);
 
         // Get a voter that hasn't voted yet
         $voter = Voter::where('ballot_cast', 0)->first();

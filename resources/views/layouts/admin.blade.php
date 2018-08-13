@@ -9,15 +9,14 @@
         <meta name="jwt-token" content="{{ $token }}">
     @endisset
 
-    <title>Admin</title>
+    <title>Admin - {{ config('app.name', 'Participa') }}</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,900" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ mix('css/admin.css') }}" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fontawesome.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-regular.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-solid.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-brands.min.css" rel="stylesheet">
+    @if (file_exists(public_path('css/fontawesome.css')))
+        <link href="{{ mix('css/fontawesome.css') }}" rel="stylesheet">
+    @endif
 
 </head>
 <body>

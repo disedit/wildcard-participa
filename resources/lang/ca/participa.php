@@ -12,7 +12,7 @@ return [
     'facebook_locale' => 'ca_ES',
     'heading' => 'Tu decideixes en què inverteix l\'Ajuntament!',
     'subheading' => 'El Govern de [city_name] t\'obri la possibilitat de participar activament en les decisions que més t\'afecten.',
-    'tweet' => '',
+    'tweet' => 'He votat en què projectes vull que [city_name] invertisca',
     'description' => 'Tu decideixes les inversions de l\'Ajuntament. El Govern de [city_name] t\'obri la possibilitat de participar activament en les decisions que més t\'afecten. Junts volem millorar [city_name], i el teu vot compta!',
     'keywords' => '[city_name], ajuntament, ayuntamiento, govern, obert, participacio ciutadana, democracia participativa, [city_name] participa, votació, votación, referendum',
 
@@ -21,6 +21,9 @@ return [
     | Global
     |--------------------------------------------------------------------------
     */
+    'skip_to_content' => 'Ves directament al contingut',
+    'select_language' => 'Selecciona idioma / Select your language',
+    'current_language' => 'Idioma actual',
     'calendar_heading' => 'Votació',
     'help' => 'Incidències i ajuda',
     'is_archive' => 'Aquesta votació va finalitzar el <strong>:end_date</strong> i està arxivada. Ves a l\'<a href="/">edició actual</a> per a consultar la votació en curs.',
@@ -28,7 +31,8 @@ return [
     'vote' => 'Vota',
     'print' => 'Imprimeix',
     'close' => 'Tanca',
-    'ordered_randomly' => 'Ordenades alteatòriament',
+    'ordered_randomly' => 'Ordenades aleatòriament',
+    'SMS_notification' => 'El teu codi per a votar és :code',
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +46,7 @@ return [
     'propose_cta' => 'Envia la teua proposta',
     'voting_places' => 'Punts de votació',
     'voting_text' => 'Si necessites ajuda amb la votació, pots dirigir-te a un dels següents punts de votació en persona.',
-    'contact' => 'Dubes o incidències?',
+    'contact' => 'Dubtes o incidències?',
     'contact_text' => 'Ens pots contactar a la següent adreça electrònica: <a href="mailto::contact_email">:contact_email</a>.',
     'past_editions' => 'Votacions anteriors',
 
@@ -95,6 +99,8 @@ return [
     */
     'error_404' => 'Error 404',
     'error_404_text' => 'No hem trobat la pàgina que estaves buscant.',
+    'error_503' => 'Tasques de manteniment',
+    'error_503_text' => 'Estem realitzant tasques de manteniment. Torna en uns minuts.',
     'error_SMS' => 'Error enviant l\'SMS',
     'error_ip_limit_exceeded' => 'Has sobrepassat el límit de vots que una mateixa IP pot emetre',
     'error_lookup_limit_exceeded' => 'Has introduit un Identificador erroni massa vegades',
@@ -105,7 +111,7 @@ return [
     | Months
     |--------------------------------------------------------------------------
     */
-    'months_short' => ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Oct', 'Set', 'Nov', 'Des'],
+    'months_short' => ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Set', 'Nov', 'Des'],
     'months_long' => ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'setembre', 'octubre', 'novembre', 'desembre'],
 
 ];

@@ -16,8 +16,6 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('edition_id')->unsigned();
-            $table->string('question');
-            $table->string('description')->nullable();
             $table->enum('template', ['cards', 'simple', '2column'])->default('cards');
             $table->integer('min_options');
             $table->integer('max_options');
@@ -27,6 +25,17 @@ class CreateQuestionsTable extends Migration
             $table->timestamps();
 
             $table->foreign('edition_id')->references('id')->on('editions');
+        });
+
+        Schema::create('question_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('question_id')->unsigned();
+            $table->string('locale')->index();
+            $table->string('question');
+            $table->string('description')->nullable();
+
+            $table->unique(['question_id','locale']);
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

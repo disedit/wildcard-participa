@@ -132,10 +132,11 @@ return [
 
     'attributes' => [
         'SID' => 'L\'identificador',
-        'ballot' => 'La papereta',
+        'ballot' => 'El camp papereta',
         'phone' => 'El teu número de mòbil',
-        'country_code' => 'Prefixe internacional',
-        'SMS_code' => 'El codi SMS'
+        'country_code' => 'El prefix internacional',
+        'SMS_code' => 'El codi SMS',
+        'reason' => 'El camp justificació'
     ],
 
 ];

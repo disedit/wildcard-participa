@@ -67,7 +67,9 @@ class Limit extends Model
     public static function getReports($editionId, $action = 'vote')
     {
         $editionId = ($editionId) ? $editionId : Edition::current()->id;
-        $limit = ($action == 'vote') ? config('participa.max_per_ip') : config('participa.max_failed_lookups');
+        $limit = ($action == 'vote')
+            ? config('participa.max_per_ip')
+            : config('participa.max_failed_lookups');
         $reports = [];
 
         $ips = Self::select('ip')
@@ -85,7 +87,7 @@ class Limit extends Model
                     ->groupBy('ip')
                     ->toArray();
 
-        foreach($ips as $ip) {
+        foreach ($ips as $ip) {
             $reports[] = [
                 'type' => 'limit',
                 'ip' => $ip->ip,
@@ -112,13 +114,15 @@ class Limit extends Model
     }
 
     /**
-     * Returns the user IP, accounting for Cloudflare
+     * Returns the user IP, accounting for Cloudflare (consider modifying ip())
      *
      * @return string
      */
     public static function ip()
     {
-        return (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : \Request::ip();
+        return (isset($_SERVER['HTTP_CF_CONNECTING_IP']))
+            ? $_SERVER['HTTP_CF_CONNECTING_IP']
+            : \Request::ip();
     }
 
     /**

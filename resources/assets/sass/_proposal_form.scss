@@ -1,0 +1,18 @@
+.proposal-form {
+  overflow: hidden;
+  margin: 0 -15px;
+
+  iframe {
+    margin-top: -65px;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .proposal-form {
+    margin: 0;
+
+    iframe {
+      margin-top: -170px;
+    }
+  }
+}

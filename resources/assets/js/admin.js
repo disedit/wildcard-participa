@@ -17,12 +17,12 @@ window.Participa = new Participa();
 Vue.use(BootstrapVue);
 
 Raven
-    .config('https://1d16265ee614464995c70aa8ff00c816@sentry.io/216036')
-    .addPlugin(RavenVue, Vue)
-    .install();
+  .config('https://1d16265ee614464995c70aa8ff00c816@sentry.io/216036')
+  .addPlugin(RavenVue, Vue)
+  .install();
 
 const app = new Vue({
-    el: '#admin',
-    components: { Admin },
-    template: '<admin />',
+  el: '#admin',
+  components: { Admin },
+  template: '<admin />',
 });

@@ -63,7 +63,11 @@ return [
     /* Whether voting should be anonymous or not */
     'anonymous_voting' => false,
 
-    /* Whether admins may look up IDs to troubleshoot in-person voting */
+    /* Whether IDs are hashed or not */
+    'hashed_SIDs' => env('PARTICIPA_HASHED', false),
+
+    /* Whether admins may look up IDs to troubleshoot in-person voting.
+       If IDs are hashed this option cannot be true and will be ignored */
     'enable_ID_lookup' => true,
 
     /* Minumum age at which citizens may participate */

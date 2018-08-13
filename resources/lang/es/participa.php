@@ -7,13 +7,13 @@ return [
     | Site name, locales and metatags
     |--------------------------------------------------------------------------
     */
-    'locale' => 'ca',
+    'locale' => 'es',
     'twitter_locale' => 'es',
-    'facebook_locale' => 'ca_ES',
-    'heading' => 'Tu decideixes en què inverteix l\'Ajuntament!',
-    'subheading' => 'El Govern de [city_name] t\'obri la possibilitat de participar activament en les decisions que més t\'afecten.',
-    'tweet' => '',
-    'description' => 'Tu decideixes les inversions de l\'Ajuntament. El Govern de [city_name] t\'obri la possibilitat de participar activament en les decisions que més t\'afecten. Junts volem millorar [city_name], i el teu vot compta!',
+    'facebook_locale' => 'es_ES',
+    'heading' => '¡Tú decides en qué invierte el Ayuntamiento!',
+    'subheading' => 'El Gobierno de [city_name] te abre la posibilidad de participar activamente en las decisioines que más te afectan.',
+    'tweet' => 'He votado en qué proyectos quiero que @Es[city_name] invierta',
+    'description' => 'Tú decides las inversiones del Ayuntamiento. El Gobierno de [city_name] te abre la posibilidad de participar activamente en las decisioines que más te afectan. Juntos queremos mejorar [city_name], ¡y tu voto cuenta!',
     'keywords' => '[city_name], ajuntament, ayuntamiento, govern, obert, participacio ciutadana, democracia participativa, [city_name] participa, votació, votación, referendum',
 
     /*
@@ -21,38 +21,42 @@ return [
     | Global
     |--------------------------------------------------------------------------
     */
-    'calendar_heading' => 'Votació',
-    'help' => 'Incidències i ajuda',
-    'is_archive' => 'Aquesta votació va finalitzar el <strong>:end_date</strong> i està arxivada. Ves a l\'<a href="/">edició actual</a> per a consultar la votació en curs.',
+    'skip_to_content' => 'Ir directamente al contenido',
+    'select_language' => 'Selecciona idioma / Select your language',
+    'current_language' => 'Idioma actual',
+    'calendar_heading' => 'Votación',
+    'help' => 'Incidencias y ayuda',
+    'is_archive' => 'Esta votación finalizó el <strong>:end_date</strong> y está archivada. Ves a la <a href="/">edición actual</a> para consultar la votación en curso.',
     'error' => 'Error',
     'vote' => 'Vota',
-    'print' => 'Imprimeix',
-    'close' => 'Tanca',
-    'ordered_randomly' => 'Ordenades alteatòriament',
+    'print' => 'Imprime',
+    'close' => 'Cierra',
+    'ordered_randomly' => 'Ordenadas [city_name]toriamente',
+    'SMS_notification' => 'Tu código para votar es :code',
 
     /*
     |--------------------------------------------------------------------------
     | Sidebar
     |--------------------------------------------------------------------------
     */
-    'poll' => 'Votació',
-    'current_poll' => 'Votació actual',
-    'sidebar_dates' => 'Des del :start_date fins a :end_date',
-    'more_info' => 'Més informació',
-    'propose_cta' => 'Envia la teua proposta',
-    'voting_places' => 'Punts de votació',
-    'voting_text' => 'Si necessites ajuda amb la votació, pots dirigir-te a un dels següents punts de votació en persona.',
-    'contact' => 'Dubes o incidències?',
-    'contact_text' => 'Ens pots contactar a la següent adreça electrònica: <a href="mailto::contact_email">:contact_email</a>.',
-    'past_editions' => 'Votacions anteriors',
+    'poll' => 'Votación',
+    'current_poll' => 'Votación actual',
+    'sidebar_dates' => 'Desde el :start_date hasta :end_date',
+    'more_info' => 'Más información',
+    'propose_cta' => 'Envía tu propuesta',
+    'voting_places' => 'Puntos de votación',
+    'voting_text' => 'Si necesitas ayuda con la votación, puedes dirigirte a uno de los siguientes puntos de votación en persona.',
+    'contact' => '¿Dudas o incidencias?',
+    'contact_text' => 'Nos puedes contactar en la siguiente dirección electrónica: <a href="mailto::contact_email">:contact_email</a>.',
+    'past_editions' => 'Votaciones anteriores',
 
     /*
     |--------------------------------------------------------------------------
     | Placeholder
     |--------------------------------------------------------------------------
     */
-    'voting_closed' => 'Votació tancada',
-    'awaiting_results' => 'Els resultats es faran públics el <strong>:publish_date</strong> a les <strong>:publish_time</strong>',
+    'voting_closed' => 'Votación cerrada',
+    'awaiting_results' => 'Los resultados se harán públicos el <strong>:publish_date</strong> a las <strong>:publish_time</strong>',
 
 
     /*
@@ -60,40 +64,54 @@ return [
     | Results
     |--------------------------------------------------------------------------
     */
-    'results' => 'Resultats',
-    'census' => 'Cens',
-    'turnout' => 'Participació',
-    'votes' => 'vot|vots',
-    'top_results' => '[1] Projecte més votat|[2] Dos projectes més votats|[3] Tres projectes més votats|[4] Quatre projectes més votats|[5,*] :num projectes més votats',
-    'other_results' => 'Resta',
+    'results' => 'Resultados',
+    'census' => 'Censo',
+    'turnout' => 'Participación',
+    'votes' => 'voto|votos',
+    'top_results' => '[1] Proyecto más votado|[2] Dos proyectos más votados|[3] Tres proyectos más votados|[4] Cuatro proyectos más votados|[5,*] :num proyectos más votados',
+    'other_results' => 'Resto',
 
     /*
     |--------------------------------------------------------------------------
     | Option information
     |--------------------------------------------------------------------------
     */
-    'option_motivation' => 'Motivació',
-    'option_cost' => 'Cost',
-    'option_attachments' => 'Documentació adjunta',
+    'option_motivation' => 'Motivación',
+    'option_cost' => 'Coste',
+    'option_attachments' => 'Documentación adjunta',
 
     /*
     |--------------------------------------------------------------------------
     | Ballot lookup
     |--------------------------------------------------------------------------
     */
-    'ballot_lookup' => 'Troba la teua papereta',
-    'ballot_lookup_help' => 'Escriu el número de referència de la teua papereta a continuació per a verificar que s\'ha recomptat correctament.',
-    'ballot_ref' => 'Núm. de referència',
-    'ballot_not_found' => 'La papereta no s\'ha trobat',
-    'ballot_not_found_text' => 'No hem trobat cap papereta amb referència <code>:ref</code><br />a la base de dades.',
-    'ballot_not_found_help' => 'Si penses que es tracta d\'un error, posa\'t en contacte amb <a href="mailto::email">:email</a>.',
+    'ballot_lookup' => 'Encuentra tu papeleta',
+    'ballot_lookup_help' => 'Escribe el número de referencia de tu papeleta a continuación para verificar que se ha recontado correctamente.',
+    'ballot_ref' => 'Nº de referencia',
+    'ballot_not_found' => 'La papeleta no se ha encontrado',
+    'ballot_not_found_text' => 'No hemos encontrado ninguna papeleta con referncia <code>:ref</code><br />en la base de datos.',
+    'ballot_not_found_help' => 'Si piensas que se trata de un error, ponte en contacto con <a href="mailto::email">:email</a>.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Errors
+    |--------------------------------------------------------------------------
+    */
+    'error_404' => 'Error 404',
+    'error_404_text' => 'No hemos encontrado la página que estabas buscando.',
+    'error_503' => 'Tareas de mantenimiento',
+    'error_503_text' => 'Estamos realizando tareas de mantenimiento. Vuelve en unos minutos.',
+    'error_SMS' => 'Error al enviar el SMS',
+    'error_ip_limit_exceeded' => 'Has sobrepasado el límite de votos que puede emitir una misma IP.',
+    'error_lookup_limit_exceeded' => 'Has introducido un indetificador erróneo demasiadas veces.',
+    'error_token_expired' => 'Tu token de seguridad ha expirado. Refresca la pàgina y vuelve a intentarlo.',
 
     /*
     |--------------------------------------------------------------------------
     | Months
     |--------------------------------------------------------------------------
     */
-    'months_short' => ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Oct', 'Nov', 'Des'],
-    'months_long' => ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'octubre', 'novembre', 'desembre'],
+    'months_short' => ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Des'],
+    'months_long' => ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
 
 ];

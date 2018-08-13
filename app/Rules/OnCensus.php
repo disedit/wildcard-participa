@@ -29,7 +29,7 @@ class OnCensus implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(!$this->voter) {
+        if (!$this->voter) {
             Limit::logAction('IDFailedLookUp', null, $value);
             return false;
         }

@@ -2,7 +2,7 @@
     $inPerson = (isset($inPerson)) ? $inPerson : false;
 @endphp
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,14 +16,13 @@
 
     <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,900" rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fontawesome.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-regular.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-solid.min.css" rel="stylesheet">
-    <link href="/fonts/fontawesome/css/fa-brands.min.css" rel="stylesheet">
+    @if (file_exists(public_path('css/fontawesome.css')))
+        <link href="{{ mix('css/fontawesome.css') }}" rel="stylesheet">
+    @endif
 
     @include('components.metatags')
 </head>
-<body <?php if($inPerson) echo 'class="booth-mode"'; ?>>
+<body class="{{ 'lang-' . config('app.locale') }}{{ ($inPerson) ? ' booth-mode' : '' }}">
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -34,15 +33,15 @@
       ga('send', 'pageview');
     </script>
 
+    <a href="#content" class="sr-only sr-only-focusable">@lang('participa.skip_to_content')</a>
+    <a href="#languages" class="sr-only sr-only-focusable">@lang('participa.select_language')</a>
+
     @section('header')
         @include('components/header')
-
-        @if(!$inPerson)
-            @include('components/voteinfo')
-        @endif
+        @include('components/voteinfo', ['inPerson' => $inPerson])
     @show
 
-    <div class="main-background" id="content">
+    <main class="main-background" id="content">
         <div class="container main-container">
             @isset($isArchive)
                 <div class="alert alert-primary mb-4"><i class="far fa-archive" aria-hidden="true"></i> @lang('participa.is_archive', ['end_date' => human_date($edition->end_date) . ' ' . date('Y', strtotime($edition->end_date))])</div>
@@ -50,11 +49,13 @@
 
             @yield('content')
         </div>
-    </div>
+    </main>
 
     @section('footer')
-        <div class="container">
-            @include('components/footer')
+        <div class="footer-background">
+            <div class="container">
+                @include('components/footer')
+            </div>
         </div>
     @show
 

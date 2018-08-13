@@ -36,16 +36,16 @@ class BallotValidity implements Rule
     public function passes($attribute, $ballotQuestions)
     {
         /* The value given must be an array */
-        if(!is_array($ballotQuestions)) {
+        if (!is_array($ballotQuestions)) {
             return false;
         }
 
         /* Fetch the edition's questions to ensure */
         $validQuestions = Question::where('edition_id', $this->editionId)->with('options')->get();
 
-        foreach($ballotQuestions as $ballotQuestion) {
+        foreach ($ballotQuestions as $ballotQuestion) {
             /* The question must contain an ID and options key */
-            if(!isset($ballotQuestion['id']) || !isset($ballotQuestion['options'])){
+            if (!isset($ballotQuestion['id']) || !isset($ballotQuestion['options'])){
                 return false;
             }
 
@@ -55,30 +55,30 @@ class BallotValidity implements Rule
             })->first();
 
             /* If a question is not found, the ballot is invalid */
-            if(empty($question)) {
+            if (empty($question)) {
                 return false;
             }
 
             /* If a question has more or fewer answers than allowed,
                inform the user via a more specific error message */
-            if(count($ballotQuestion['options']) > $question->max_options) {
+            if (count($ballotQuestion['options']) > $question->max_options) {
                 $this->errorMessage = __('validation.custom.ballot.ballot_max');
                 return false;
             }
 
-            if(count($ballotQuestion['options']) < $question->min_options) {
+            if (count($ballotQuestion['options']) < $question->min_options) {
                 $this->errorMessage = trans_choice('validation.custom.ballot.ballot_min', $question->min_options, ['min_options' => $question->min_options , 'question' => $question->question]);
                 return false;
             }
 
-            foreach($ballotQuestion['options'] as $ballotOption) {
+            foreach ($ballotQuestion['options'] as $ballotOption) {
                 /* Find the selected options among the question's valid answers */
                 $option = $question->options->filter(function ($validOption, $key) use ($ballotOption) {
                     return $validOption->id === $ballotOption['id'];
                 })->first();
 
                 /* If a selected option is not found, the ballot is invalid */
-                if(empty($option)) {
+                if (empty($option)) {
                     return false;
                 }
             }

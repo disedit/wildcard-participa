@@ -3,15 +3,15 @@
     $places = (!empty($edition->voting_places)) ? explode("\n", $edition->voting_places) : array();
 @endphp
 
-<div class="sidebar">
-    <div class="sidebar__box sidebar__box--main">
-        @isset($isArchive)
-            <h4>@lang('participa.poll')</h4>
+<aside class="sidebar">
+    <section aria-labelledby="current-poll" class="sidebar__box sidebar__box--main">
+        @isset ($isArchive)
+            <h3 id="current-poll">@lang('participa.poll')</h3>
         @else
-            <h4>@lang('participa.current_poll')</h4>
+            <h3 id="current-poll">@lang('participa.current_poll')</h3>
         @endif
 
-        <h3>{{ $edition->name }}</h3>
+        <h4>{{ $edition->name }}</h4>
         <p class="sidebar__secondary">@lang('participa.sidebar_dates', ['start_date' => human_date($edition->start_date), 'end_date' => human_date($edition->end_date)])</p>
 
         <div class="sidebar__social-plugins">
@@ -21,38 +21,39 @@
         </div>
 
         <div v-if="docs">
-            <hr />
+            <hr aria-hidden="true" />
+
             <ul class="sidebar__list">
                 <li class="sidebar__list__item">
-                    @if(isset($isArchive) && Request::segment(3) == 'about')
+                    @if (isset($isArchive) && Request::segment(3) == 'about')
                         {{-- This is the archive and we are in the about page --}}
                         <a href="{{ secure_url('archive/' . $edition->id) }}"><i class="far fa-chart-bar fa-fw" aria-hidden="true"></i> <span>@lang('participa.results')</span></a>
-                    @elseif(isset($isArchive) && Request::segment(3) != 'about')
+                    @elseif (isset($isArchive) && Request::segment(3) != 'about')
                         {{-- This is the archive and we are in the main (results) page --}}
                         <a href="{{ secure_url('archive/' . $edition->id . '/about') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
-                    @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen())
+                    @elseif (!isset($isArchive) && Request::segment(1) == 'about' && $edition->isOpen())
                         {{-- This is not the archive, edition is open but we are not in the main vote page --}}
                         <a href="{{ secure_url('') }}"><i class="far fa-bullhorn fa-fw" aria-hidden="true"></i> <span>@lang('participa.vote')</span></a>
-                    @elseif(!isset($isArchive) && Request::segment(1) != 'about' && !$edition->isPending())
+                    @elseif (!isset($isArchive) && Request::segment(1) != 'about' && !$edition->isPending())
                         {{-- This is not the archive, we are in the main page and it does not contain the about page  --}}
                         <a href="{{ secure_url('about') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
-                    @elseif(!isset($isArchive) && Request::segment(1) == 'about' && $edition->resultsPublished())
+                    @elseif (!isset($isArchive) && Request::segment(1) == 'about' && $edition->resultsPublished())
                         {{-- This is not the archive, we are in the about page and results are published  --}}
                         <a href="{{ secure_url('') }}"><i class="far fa-chart-bar fa-fw" aria-hidden="true"></i> <span>@lang('participa.results')</span></a>
-                    @elseif(Request::segment(1) == 'propose')
+                    @elseif (Request::segment(1) == 'propose')
                         {{-- This is not the archive page and we are in the popose page --}}
                         <a href="{{ secure_url('') }}"><i class="far fa-info-circle fa-fw" aria-hidden="true"></i> <span>@lang('participa.more_info')</span></a>
                     @endif
                 </li>
 
-                @if(count($docs) > 0)
-                    @forelse($docs as $doc)
+                @if (count($docs) > 0)
+                    @forelse ($docs as $doc)
                         @php
                             $part = explode(",", $doc);
                         @endphp
                         <li class="sidebar__list__item">
                             <a href="{{ $var = isset($part[1]) ? $part[1] : '' }}" target="_blank" rel="noopener">
-                                @isset($part[2])
+                                @isset ($part[2])
                                     <i class="far fa-{{ $part[2] }} fa-fw" aria-hidden="true"></i>
                                 @else
                                     <i class="far fa-file-alt fa-fw" aria-hidden="true"></i>
@@ -65,33 +66,33 @@
                 @endif
             </ul>
 
-            @if(!isset($isArchive) && $edition->inProposalPhase() && Request::segment(1) != 'propose')
+            @if (!isset($isArchive) && $edition->inProposalPhase() && Request::segment(1) != 'propose')
                 <div class="sidebar__propose">
                     <a href="{{ secure_url('propose') }}" class="btn btn-secondary btn-lg btn-block"><i class="far fa-pencil-alt" aria-hidden="true"></i> @lang('participa.propose_cta')</a>
                 </div>
             @endif
         </div>
-    </div>
+    </section>
 
-    @if(count($places) > 0)
-        <div class="sidebar__box" v-if="voting_places">
-            <h4>@lang('participa.voting_places')</h4>
+    @if (count($places) > 0)
+        <section aria-labelledby="voting-places" class="sidebar__box" v-if="voting_places">
+            <h3 id="voting-places">@lang('participa.voting_places')</h3>
             <p class="sidebar__secondary">@lang('participa.voting_text')</p>
-            <hr />
+            <hr  aria-hidden="true" />
             <ul class="sidebar__list">
-                @foreach($places as $place)
+                @foreach ($places as $place)
                     @php
                         $part = explode(",", $place);
                     @endphp
 
                     <li>
                         <span class="sidebar__list__item">
-                            <i class="far fa-map-marker-alt" aria-hidden="true"></i>
+                            <i class="far fa-map-marker-alt fa-fw" aria-hidden="true"></i>
 
                             <span>
                                 {{ $part[0] }}
 
-                                @isset($part[1])
+                                @isset ($part[1])
                                     <span class="sidebar__secondary">{{ $part[1] }}</span>
                                 @endisset
                             </span>
@@ -99,26 +100,26 @@
                     </li>
                 @endforeach
             </ul>
-        </div>
+        </section>
     @endif
 
-    @if(!$edition->isPending())
+    @if (!$edition->isPending())
         @component('components.ballot_lookup', ['in_sidebar' => true])
         @endcomponent
     @endif
 
-    <div class="sidebar__box">
-        <h4>@lang('participa.contact')</h4>
+    <section aria-labelledby="contact"  class="sidebar__box">
+        <h3 id="contact">@lang('participa.contact')</h3>
         <p>@lang('participa.contact_text', ['contact_email' => config('participa.contact_email')])</p>
-    </div>
+    </section>
 
-    @isset($pastEditions)
-        @if(count($pastEditions) > 0)
-            <div class="sidebar__box">
-                <h4>@lang('participa.past_editions')</h4>
+    @isset ($pastEditions)
+        @if (count($pastEditions) > 0)
+            <section aria-labelledby="past-editions" class="sidebar__box">
+                <h3 id="past-editions">@lang('participa.past_editions')</h3>
 
                 <ul class="sidebar__list">
-                @foreach($pastEditions as $edition)
+                @foreach ($pastEditions as $edition)
                     <li class="sidebar__list__item">
                         <a href="{{ secure_url('archive/' . $edition->id) }}">
                             <i class="far fa-calendar-alt" aria-hidden="true"></i> <span>{{ human_month($edition->start_date) }}</span>
@@ -126,11 +127,11 @@
                     </li>
                 @endforeach
                 </ul>
-            </div>
+            </section>
         @endif
     @endisset
 
     <div>
         {!! $edition->sidebar !!}
     </div>
-</div>
+</aside>

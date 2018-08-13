@@ -24,7 +24,7 @@ class BallotTest extends TestCase
     {
         $ballot = new Ballot();
         $ref = $ballot->createRef();
-        $refLength = (strlen($ref) == 10);
+        $refLength = (strlen($ref) === 10);
 
         $this->assertDatabaseMissing('ballots', ['ref' => $ref])
              ->assertTrue($refLength);

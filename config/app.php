@@ -174,7 +174,7 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\Debugbar\ServiceProvider::class,
+        Dimsav\Translatable\TranslatableServiceProvider::class,
         NotificationChannels\Messagebird\MessagebirdServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,

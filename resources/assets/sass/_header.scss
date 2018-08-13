@@ -1,6 +1,14 @@
 .navbar {
   background: $brand-primary;
   background: $brand-primary-gradient;
+  height: 3.5rem;
+
+  h1 {
+    margin: 0;
+    line-height: 1;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
 
   .navbar-brand {
     font-weight: 700;
@@ -89,7 +97,7 @@
     right: -103px;
   }
 
-  &.vote-info--compact {
+  &--compact {
     h2 {
       font-size: 1.5rem;
       padding-right: 110px;
@@ -135,7 +143,7 @@
       font-size: 1.25rem;
     }
 
-    &.vote-info--compact {
+    &--compact {
       h2 {
         font-size: 1.85rem;
         padding-right: 0;
@@ -157,7 +165,7 @@
   border: 1px rgba(0, 0, 0, 0.15) solid;
   @include border-radius(0.25rem);
   text-align: center;
-  width: 140px;
+  width: 8rem;
 
   &__heading {
     color: $white;
@@ -168,6 +176,15 @@
   &__dates {
     font-size: 1.35rem;
     background: $white;
+    padding: 0.25rem;
+
+    .col {
+      padding: 0.5rem;
+    }
+  }
+
+  &__days {
+    margin-bottom: -0.25rem;
   }
 
   &__month {

@@ -3,9 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Dimsav\Translatable\Translatable;
 
 class Edition extends Model
 {
+    use Translatable;
+
+    /**
+     * The attributes that can be translated
+     *
+     * @var array
+     */
+    public $translatedAttributes = [
+        'name', 'description', 'docs', 'voting_places', 'proposal_form',
+        'about', 'sidebar'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -80,9 +93,9 @@ class Edition extends Model
     {
         $edition = Self::where('published', '=', $published);
 
-        if($withBallot) {
-            $edition->with(['questions' => function($questionsQuery) {
-                $questionsQuery->with(['options' => function($optionsQuery) {
+        if ($withBallot) {
+            $edition->with(['questions' => function ($questionsQuery) {
+                $questionsQuery->with(['options' => function ($optionsQuery) {
                     $optionsQuery->orderByRaw('rand()'); // Fix this later
                 }])->orderBy('id', 'asc');
             }]);
@@ -112,7 +125,7 @@ class Edition extends Model
      */
     public function fullResults()
     {
-        $results = $this->questions()->with(['options' => function($optionsQuery) {
+        $results = $this->questions()->with(['options' => function ($optionsQuery) {
             $optionsQuery->with('result');
         }])->get();
 
@@ -191,7 +204,7 @@ class Edition extends Model
      */
     public function inProposalPhase()
     {
-        if(!$this->proposal_form) return false;
+        if (!$this->proposal_form) return false;
         $proposalDeadline = strtotime($this->proposal_deadline);
         $now = time();
 
@@ -207,14 +220,14 @@ class Edition extends Model
     {
         $tab = [];
 
-        foreach($results as $question) {
+        foreach ($results as $question) {
             $options = $question->options->sortByDesc('result.points');
             $optionsWithResults = [];
             $questionResults = $question->results()->get();
             $total = $questionResults->sum('points');
             $max = $questionResults->max('points');
 
-            foreach($options->values()->all() as $option) {
+            foreach ($options->values()->all() as $option) {
                 $points = ($option->result) ? $option->result->points : 0;
                 $percentage = ($total > 0) ? ($points * 100) / $total : 0;
                 $relative = ($max > 0) ? ($points * 100) / $max : 0;
@@ -237,4 +250,27 @@ class Edition extends Model
         return $tab;
     }
 
+    /**
+     * Load templates and options for the About page
+     *
+     * @return array
+     */
+    public function buildAboutPage()
+    {
+        $edition = $this;
+        $options = view('components.options', compact('edition'));
+
+        $templateView = 'editions.' . $this->id . '_' . config('app.locale', 'ca');
+        $templateViewFallback = 'editions.' . $this->id . '_' . config('app.fallback_locale', 'ca');
+
+        if (view()->exists($templateView)) {
+            $template = view($templateView, compact('edition'));
+        } elseif (view()->exists($templateViewFallback)) {
+            $template = view($templateViewFallback, compact('edition'));
+        } else {
+            $template = '';
+        }
+
+        return ['options' => $options, 'template' => $template];
+    }
 }

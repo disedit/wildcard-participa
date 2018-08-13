@@ -15,19 +15,28 @@ class CreateEditionsTable extends Migration
     {
         Schema::create('editions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('description')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->dateTime('publish_results');
-            $table->text('docs')->nullable();
-            $table->text('voting_places')->nullable();
-            $table->text('about')->nullable();
-            $table->text('sidebar')->nullable();
-            $table->string('proposal_form')->default('');
             $table->dateTime('proposal_deadline')->nullable();
             $table->boolean('published');
             $table->timestamps();
+        });
+
+        Schema::create('edition_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('edition_id')->unsigned();
+            $table->string('locale')->index();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->text('docs')->nullable();
+            $table->text('voting_places')->nullable();
+            $table->string('proposal_form')->default('');
+            $table->text('about')->nullable();
+            $table->text('sidebar')->nullable();
+
+            $table->unique(['edition_id','locale']);
+            $table->foreign('edition_id')->references('id')->on('editions')->onDelete('cascade');
         });
     }
 

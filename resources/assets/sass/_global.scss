@@ -1,13 +1,9 @@
 body {
-  padding-top: 56px;
-}
-
-body.booth-mode {
-  padding-top: 100px;
+  padding-top: 3.5rem;
 }
 
 hr {
-    margin: 2rem 0;
+  margin: 2rem 0;
 }
 
 .big-button {
@@ -47,4 +43,14 @@ hr {
   padding: 2rem 0;
   background: $white;
   min-height: 500px;
+}
+
+.sr-only-focusable:focus {
+  position: absolute !important;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  background: $brand-primary;
+  color: $white;
+  padding: 0.5rem;
 }

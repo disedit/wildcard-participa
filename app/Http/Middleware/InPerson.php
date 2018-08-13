@@ -17,7 +17,7 @@ class InPerson
     public function handle($request, Closure $next)
     {
         try {
-            if(JWTAuth::getToken()){
+            if (JWTAuth::getToken()){
                 JWTAuth::parseToken()->authenticate();
             }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
