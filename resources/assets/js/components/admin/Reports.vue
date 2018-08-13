@@ -151,6 +151,8 @@
   .report-wrapper {
     max-height: 500px;
     overflow-y: scroll;
+    margin: -1rem -1.25rem -1.25rem -1.25rem;
+    padding: 1rem 1.25rem 1.25rem 1.25rem;
   }
 
   .report {
