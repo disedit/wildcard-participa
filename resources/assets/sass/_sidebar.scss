@@ -133,15 +133,16 @@ $sidebar-text: $gray-light;
     margin-bottom: 0;
   }
 
-  &:after {
+  &:before {
     content: '';
     position: absolute;
-    left: -2rem;
+    left: -0.75rem;
     top: 1.25rem;
-    border-top: 1rem transparent solid;
-    border-left: 1rem transparent solid;
-    border-bottom: 1rem transparent solid;
-    border-right: 1rem $sidebar-background solid;
+    height: 1.5rem;
+    width: 1.5rem;
+    background: $sidebar-background;
+    transform: rotate(45deg);
+    border-radius: 0 0 0 0.25rem;
   }
 }
 
