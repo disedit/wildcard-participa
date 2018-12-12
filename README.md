@@ -46,7 +46,6 @@ Wildcard Participa is built on top of Laravel 5.6, which has the following requi
     ```
     php artisan migrate
     php artisan key:generate
-    php artisan jwt:generate
     ```
 
 - Run `npm install` and `npm run dev` or `npm run production` to generate the required assets. _(Note: Wildcard Participa uses FontAwesome Pro for its icons. This is an optional dependency, but you will need to purchase and set a FontAwesome Pro NPM token if you want to use the icons.)_
@@ -81,8 +80,8 @@ _Note: If the 'hashed_ids' option is set to true, this command will expect the I
 ## Customization
 The following files contain options to customize the site:
 - `/config/participa.php` contains the Council details and app-specific settings, including vote rules.
-- `/resources/assets/sass/_variables.scss` contains all the variables to customize the look and feel of the app.
-- `/resources/lang/*` and `resources/assets/js/lang/*` contain all the PHP and JS language files.
+- `/resources/sass/_variables.scss` contains all the variables to customize the look and feel of the app.
+- `/resources/lang/*` and `resources/js/lang/*` contain all the PHP and JS language files.
 - `/public/manifest.json` Web App Manifest
 
 ## Disclaimer
